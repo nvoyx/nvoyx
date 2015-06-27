@@ -1,0 +1,16 @@
+{
+	"HOST":"localhost",
+	"USER":"",
+	"PASS":"",
+	"DBNAME":"",
+	"SALT":"",
+	"PORT":0,
+	"SOCKET":"/var/lib/mysql/mysql.sock",
+	"DWEBP":"/usr/bin/dwebp",
+	"CWEBP":"/usr/bin/cwebp",
+	"XCACHE":1,
+	"TTL":86400,
+	"SUPERUSER":"superuser",
+	"SUPERPASSWORD":"",
+	"SUPERCONTACT":"John Doe"
+}
