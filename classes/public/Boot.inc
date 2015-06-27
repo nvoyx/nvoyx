@@ -849,7 +849,6 @@ class Boot{
 		self::$SYS["mysqlhostinfo"] =  mysqli_get_host_info(self::$DB);
 		self::$SYS["cached"] = self::$DB->DB_IS_CACHED();
 		self::$SYS["salt"] = self::$DB->DB_FETCH_OPTION("SALT");
-		self::$SYS["ffmpeg"] = self::$DB->DB_FETCH_OPTION("FFMPEG");
 		self::$SYS["dwebp"] = self::$DB->DB_FETCH_OPTION("DWEBP");
 		self::$SYS["cwebp"] = self::$DB->DB_FETCH_OPTION("CWEBP");
 		self::$SYS["modcss"] = 0;
