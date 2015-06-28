@@ -1661,7 +1661,7 @@
 					{
 						"name":"'js'",
 						"notes":"'<p>references to any javascript files used on the public pages</p>'",
-						"value":"'[\"jquery-2.1.1.min.js\",\"jquery-ui-1.10.2.custom.min.js\",\"ckbase.js\",\"../ckeditor/ckeditor.js\",\"../ckeditor/adapters/jquery.js\",\"public.js\"]'"
+						"value":"'[\"jquery-2.1.1.min.js\",\"jquery-ui-1.10.2.custom.min.js\",\"nvx.pagi.1.0.0.js\",\"ckbase.js\",\"../ckeditor/ckeditor.js\",\"../ckeditor/adapters/jquery.js\",\"public.js\"]'"
 					},
 					{
 						"name":"'live'",
