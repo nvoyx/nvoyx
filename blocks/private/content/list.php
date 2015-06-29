@@ -38,6 +38,13 @@ foreach($NVX_TYPE->FETCH_ARRAY() as $type){
 			$create[$a]=0;
 		}
 		
+		/* test whether the current user is a member of a dept allowed to edit these pages */
+		if($NVX_DEPT->GRANTED($NVX_USER->FETCH_ARRAY()['dept'],$type['id'])){
+			$dept[$a]=1;
+		} else {
+			$dept[$a]=0;
+		}
+		
 		/* create a list of all pages for that content type */
 		$NVX_DB->DB_CLEAR(array("ALL"));
 		$NVX_DB->DB_SET_FILTER("`page`.`tid`={$type['id']}");
@@ -65,6 +72,7 @@ $type_filter = $NVX_DB->DB_QUERY("SELECT","* FROM `user`")[0]["user.filter"];
 	<a class="fr" href="/settings/user/logout">LOGOUT</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/">FRONT</a>
 </div>
 
+<?php if($NVX_DEPT->GRANTED($NVX_USER->FETCH_ENTRY('dept'))){ ?>
 <div class="blank box">	
 	<div class="blank header">
 		<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-system.png">
@@ -92,14 +100,14 @@ $type_filter = $NVX_DB->DB_QUERY("SELECT","* FROM `user`")[0]["user.filter"];
 		?>
 		<div class="blank links fl big">
 			<?php foreach($rs as $r){
-				
-				if($NVX_USER->GRANTED($NVX_PATH->FETCH_ENTRY($r["link"])["access"])){ ?>
-					<a class="blank mini fl" href="<?php echo $r["link"]; ?>"><?php echo $r["txt"];?></a>
+				if($NVX_DEPT->GRANTED($NVX_USER->FETCH_ENTRY('dept'))){ ?>
+				<a class="blank mini fl" href="<?php echo $r["link"]; ?>"><?php echo $r["txt"];?></a>
 				<?php }
 			} ?>
 		</div>
 	</div>
 </div>
+<?php } ?>
 
 <div class="blank box">
 	<div class="blank header">
@@ -145,8 +153,8 @@ if(is_array($options)){
 				<h2 class="blank fl">CONTENT</h2>
 		<?php
 		
-		/* is this user allowed to create/delete pages of this type */
-		if($create[$b]==1){
+		/* is this user allowed to create/delete pages of this type AND are they a member of a dept with access to these pages */
+		if($create[$b]==1 && $dept[$b]==1){
 			
 			?><a class="fr" href="/settings/content/add/<?php echo $tid[$b];?>">ADD</a><?php
 			
@@ -264,10 +272,11 @@ if(is_array($options)){
 			
 				<div class="blank row">
 					<label class="blank fl half"><a href="https://<?php echo $r["URL"];?>"><?php echo ucwords($r["TITLE"]);?></a></label>
+					<?php if($dept[$b]==1){ ?>
 					<a title="edit" href="<?php echo "/settings/content/edit/".$page["page.id"];?>"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-edit.png"></a>
 					<?php if($create[$b]==1){ ?>
 					<a title="delete" href="<?php echo "/settings/content/delete/".$page["page.id"];?>"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-delete.png"></a>
-					<?php } ?>
+					<?php }} ?>
 				</div>
 			
 				<?php
