@@ -15,6 +15,7 @@
 class User{
 	
 	protected static $instance;
+	protected static $DB;
 	static $USER = array();
 	
 	
@@ -25,10 +26,13 @@ class User{
 	 * CONNECT()
 	 * connect to this class
 	 */
-	public static function CONNECT() {
+	public static function CONNECT($db) {
         
 		/* is this the first time the class has been connected to */
 		if( !self::$instance ) {
+			
+			/* link with public/db */
+			self::$DB = $db;
 			
 			/* create a new instance */
 			self::$instance = new self();
