@@ -626,6 +626,12 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 			 * @instance
 			 * Group information
 			 */ 
+			$NVX_DEPT = Dept::CONNECT($NVX_BOOT,$NVX_DB,$NVX_USER);
+			
+			/**
+			 * @instance
+			 * Group information
+			 */ 
 			$NVX_GROUP = Group::CONNECT($NVX_DB,$NVX_BOOT);
 			
 			/**
