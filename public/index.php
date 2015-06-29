@@ -90,7 +90,7 @@ $NVX_SETUP->TABLES($NVX_DB,$NVX_BOOT,$config);
  * @instance
  * User information
  */
-$NVX_USER = User::CONNECT();
+$NVX_USER = User::CONNECT($NVX_DB);
 
 /**
  * @instance
