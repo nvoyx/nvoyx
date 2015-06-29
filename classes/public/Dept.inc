@@ -63,20 +63,34 @@ class Dept{
 	 * FETCH_ENTRY()
 	 * return an entry from the dept array
 	 */
-	public function FETCH_ENTRY($n){ return self::$DEPT["{$n}"]; }
+	public function FETCH_ENTRY($n){
+		foreach(self::$DEPT as $r){
+			if($r['id']==$n){
+				return self::$DEPT[$r['name']];
+			}
+		}
+		return false;
+	}
+	
 	
 	
 	/*
 	 * GRANTED()
-	 * is this user a member of the default Web department
+	 * is this dept a member of the default Web department
 	 */
-	public function GRANTED($id){
-		if(stristr(self::$USER["type"],$req)){
-			return true;}
-		else{
-			return false;
-		}	
+	public function GRANTED($id,$tid=false){
+		if($id==1){
+			return true;
+		}
+		if($tid){
+			$rs=$this->FETCH_ENTRY($id)['access'];
+			if(in_array($tid,$rs)){
+				return true;
+			}
+		}
+		return false;
 	}
+	
 	
 	
 	/* --- PRIVATE METHODS --- */
