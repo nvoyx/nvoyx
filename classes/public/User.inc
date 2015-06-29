@@ -115,6 +115,9 @@ class User{
 			/* grab the user contact details */
 			self::$USER["contact"] = $_SESSION['contact'];
 			
+			/* grab the user dept reference */
+			self::$USER["dept"] = $_SESSION['dept'];
+			
 		} else {
 			
 			/* don't know who this is, so give them the most basic permissions */
