@@ -164,11 +164,11 @@ class _Dept{
 							case "access":
 								
 								/* encode the sanitised array */
-								$v[$key] = self::$BOOT->JSON($v[$key],"encode");
+								$v[$key] = self::$BOOT->JSON($value,"encode");
 								break;
 
 								
-						case "name":
+							case "name":
 																
 								/* store the urls */
 								$v[$key]=$value;
