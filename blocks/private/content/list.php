@@ -79,6 +79,7 @@ $type_filter = $NVX_DB->DB_QUERY("SELECT","* FROM `user`")[0]["user.filter"];
 				array("link"=>"/settings/ajaxmanager/list","txt"=>"AJAX"),
 				array("link"=>"/settings/block/list","txt"=>"BLOCKS"),
 				array("link"=>"/settings/debug/list","txt"=>"DEBUG"),
+				array("link"=>"/settings/dept/list","txt"=>"DEPARTMENTS"),
 				array("link"=>"/settings/group/list","txt"=>"GROUPS"),
 				array("link"=>"/settings/imagecache/list","txt"=>"IMAGE CACHE"),
 				array("link"=>"/settings/member/list","txt"=>"MEMBERS"),
