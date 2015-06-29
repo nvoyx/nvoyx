@@ -267,6 +267,7 @@ class _User{
 								if($value!=""){$v[$key]=$value;}else{$v[$key]="s";}
 								break;
 								
+							case "dept":
 							case "filter":
 								
 								/* store the content type filter for this user */
@@ -281,7 +282,7 @@ class _User{
 						/* push changes into user table */
 						self::$DB->DB_CLEAR(array("ALL"));
 						self::$DB->DB_SET_FILTER("`user`.`id`={$uid}");
-						self::$DB->DB_QUERY("UPDATE","`user` SET `user`.`username`='{$v["username"]}',`user`.`password`='{$v["password"]}',`user`.`contact`='{$v["contact"]}',`user`.`telephone`='{$v["telephone"]}',`user`.`email`='{$v["email"]}',`user`.`type`='{$v["type"]}',`user`.`filter`={$v["filter"]}");
+						self::$DB->DB_QUERY("UPDATE","`user` SET `user`.`username`='{$v["username"]}',`user`.`password`='{$v["password"]}',`user`.`contact`='{$v["contact"]}',`user`.`telephone`='{$v["telephone"]}',`user`.`email`='{$v["email"]}',`user`.`type`='{$v["type"]}',`user`.`filter`={$v["filter"]},`user`.`dept`={$v["dept"]}");
 					}
 					break;
 			endswitch;
