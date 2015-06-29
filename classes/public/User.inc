@@ -15,6 +15,9 @@
 class User{
 	
 	protected static $instance;
+	protected static $DB;
+	protected static $BOOT;
+	protected static $VAR;
 	static $USER = array();
 	
 	
@@ -25,10 +28,19 @@ class User{
 	 * CONNECT()
 	 * connect to this class
 	 */
-	public static function CONNECT() {
+	public static function CONNECT($db,$boot,$var) {
         
 		/* is this the first time the class has been connected to */
 		if( !self::$instance ) {
+			
+			/* link with public/db */
+			self::$DB = $db;
+			
+			/* link with public/boot */
+			self::$BOOT = $boot;
+			
+			/* link with public/var */
+			self::$VAR = $var;
 			
 			/* create a new instance */
 			self::$instance = new self();
@@ -102,6 +114,9 @@ class User{
 			
 			/* grab the user contact details */
 			self::$USER["contact"] = $_SESSION['contact'];
+			
+			/* grab the user dept reference */
+			self::$USER["dept"] = $_SESSION['dept'];
 			
 		} else {
 			

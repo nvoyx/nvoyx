@@ -3,34 +3,35 @@
 /** 
  * 
  * @author Wayne Ashley <nvoyxmail@gmail.com> 
- * @copyright 2012 Wayne Ashley
+ * @copyright 2015 Wayne Ashley
  * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License, version 3 (GPL-3.0)
  *
  */
- 
+
 /** 
  * @class
- * Collection of portal bumf
+ * Collection of Department bumf
  */
   
-class _Portal{
+class _Dept{
 	
 	protected static $instance;
 	protected static $BOOT;
 	protected static $DB;
 	protected static $USER;
 	protected static $GROUP;
+	protected static $DEPT;
 	protected static $HTML;
-
+	
 	
 	/* --- PUBLIC METHODS --- */
 	
-	
+		
 	/*
 	 * CONNECT()
 	 * connect to this class
 	 */
-	public static function CONNECT($boot,$db,$user,$group) {
+	public static function CONNECT($boot,$db,$user,$group,$dept) {
 		
 		/* is this the first time the class has been connected to */
 		if( !self::$instance ) {
@@ -47,6 +48,9 @@ class _Portal{
 			/* link with public/group */
 			self::$GROUP = $group;
 			
+			/* link with public/dept */
+			self::$GROUP = $dept;
+			
 			/* create a new instance */
 			self::$instance = new self();		
 		}
@@ -54,7 +58,7 @@ class _Portal{
 		/* return instance */
 		return self::$instance;
 	}
-		
+	
 	
 	/*
 	 * FETCH_HTML()
@@ -68,7 +72,7 @@ class _Portal{
 	
 	/*
 	 * __construct()
-	 * build an instance
+	 * build an instance 
 	 */
 	private function __construct() {
 		
@@ -82,11 +86,11 @@ class _Portal{
 			self::$HTML=$this->$rs();
 		}
 	}
-
+	
 	
 	/*
 	 * _list()
-	 * grab any content associated with the portal / list page
+	 * grab any content associated with the departments / list page
 	 */
 	private function _list(){
 		
@@ -97,7 +101,7 @@ class _Portal{
 	
 	/*
 	 * _add()
-	 * grab any content associated with the portal / add page
+	 * grab any content associated with the departments / add page
 	 */
 	private function _add(){
 		
@@ -108,15 +112,15 @@ class _Portal{
 	
 	/*
 	 * _edit()
-	 * process and grab any content associated with the portal / edit page
+	 * process and grab any content associated with the departments / edit page
 	 */
 	private function _edit(){
 		
-		/* check that we have a numeric reference for the portal */
+		/* check that we have a numeric reference for the redirect */
 		if(is_numeric(self::$BOOT->FETCH_ENTRY("breadcrumb",3))){
 			
 			/* process any fields that have been posted by this page */
-			$this->POSTED(self::$BOOT->FETCH_ENTRY("breadcrumb",3));
+			$this->POSTED("edit",self::$BOOT->FETCH_ENTRY("breadcrumb",3));
 			
 			/* return any output for storage */
 			return self::$BOOT->FETCH_ENTRY("blocks") ."/private/". self::$BOOT->FETCH_ENTRY("breadcrumb",1) . "/" . self::$BOOT->FETCH_ENTRY("breadcrumb",2) . ".php";
@@ -125,74 +129,68 @@ class _Portal{
 	
 	
 	/*
-	 * _list()
-	 * grab any content associated with the portal / delete page
-	 * 
+	 * _delete()
+	 *  grab any content associated with the departments / delete page
 	 */
 	private function _delete(){
 		
-		/* check that we have a numeric reference for the portal */
+		/* check that we have a numeric reference for the redirect */
 		if(is_numeric(self::$BOOT->FETCH_ENTRY("breadcrumb",3))){
 			
 			/* return any output for storage */
 			return self::$BOOT->FETCH_ENTRY("blocks") ."/private/". self::$BOOT->FETCH_ENTRY("breadcrumb",1) . "/" . self::$BOOT->FETCH_ENTRY("breadcrumb",2) . ".php";
 		}
-	}
-
+	}	
+	
 	
 	/*
 	 * POSTED()
-	 * handle posted data
 	 */
-	private function POSTED($pid){
+	private function POSTED($form,$rid=false){
 		
 		/* do we have posted data */
 		if($_POST){
 			
-			/* iterate over the posted data */
-			foreach($_POST as $key=>$value ){
-				switch($key):
-										
-					case "name":
-					case "active":
-						
-						/* sanitise value and store in array */
-						$v[$key] = self::$BOOT->TEXT($value);
-						break;
-					
-					case "values":
-						
-						/* convert the posted JSON encoded string to an array */
-						$value = self::$BOOT->JSON($value,"decode");
-						
-						/* if we have an array */
-						if($value!=null){
-							
-							/* sanitise the contents of the array */
-							$value = self::$BOOT->TEXT($value);
-							
-							/* JSON encode the values */
-							$v[$key] = self::$BOOT->JSON($value,"encode");
-							
-						} else {
-							
-							/* mauually create an empty JSON array */
-							$v["$key"]="[\"\"]";
-						}
-						break;
-											
-				endswitch;
-			}
-			
-			
-			/* do we have valid values to update */
-			if(is_array($v)){
+			/* switch by html form */
+			switch($form):
 				
-				/* push changes into portal table */
-				self::$DB->DB_CLEAR(array("ALL"));
-				self::$DB->DB_SET_FILTER("`portal`.`id`={$pid}");
-				self::$DB->DB_QUERY("UPDATE","`portal` SET `portal`.`name`='{$v["name"]}',`portal`.`active`='{$v["active"]}',`portal`.`values`='{$v["values"]}'");
-			}
+				
+				case "edit":
+					
+					/* cycle through the posted values */
+					foreach($_POST as $key=>$value ){
+					
+						/* sanitise the posted values */
+						$value = self::$BOOT->TEXT($value);
+						
+						switch($key):
+							
+							case "access":
+								
+								/* encode the sanitised array */
+								$v[$key] = self::$BOOT->JSON($value,"encode");
+								break;
+
+								
+							case "name":
+																
+								/* store the urls */
+								$v[$key]=$value;
+								break;
+
+						endswitch;
+					}
+					
+					/* do we have an array of values */
+					if(is_array($v)){
+				
+						/* push changes into redirects table */
+						self::$DB->DB_CLEAR(array("ALL"));
+						self::$DB->DB_SET_FILTER("`dept`.`id`={$rid}");
+						self::$DB->DB_QUERY("UPDATE","`dept` SET `dept`.`name`='{$v["name"]}',`dept`.`access`='{$v["access"]}'");
+					}
+					break;
+			endswitch;
 		}
 	}
 }

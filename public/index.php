@@ -88,15 +88,16 @@ $NVX_SETUP->TABLES($NVX_DB,$NVX_BOOT,$config);
 
 /**
  * @instance
- * User information
- */
-$NVX_USER = User::CONNECT();
-
-/**
- * @instance
  * CMS Variables
  */
 $NVX_VAR = Variables::CONNECT($NVX_DB,$NVX_BOOT);
+
+/**
+ * @instance
+ * User information
+ */
+$NVX_USER = User::CONNECT($NVX_DB,$NVX_BOOT,$NVX_VAR);
+
 
 /* is the current user not an admin or above */
 if(!$NVX_USER->GRANTED("a")){
@@ -421,6 +422,12 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 			
 			
 		}
+		
+		/**
+		 * @instance
+		 * Dept information
+		 */ 
+		$NVX_DEPT = Dept::CONNECT($NVX_BOOT,$NVX_DB,$NVX_USER);
 	
 		/**
 		 * @instance
@@ -514,6 +521,12 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 				
 				/* set $TYPE */
 				$TYPE = $NVX_TYPE->FETCH_BY_TID($PAGE["tid"]);
+				
+				/**
+				 * @instance
+				 * Dept information
+				 */ 
+				$NVX_DEPT = Dept::CONNECT($NVX_BOOT,$NVX_DB,$NVX_USER);
 								
 				/**
 				 * @instance
@@ -623,6 +636,12 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 			
 			/**
 			 * @instance
+			 * Dept information
+			 */ 
+			$NVX_DEPT = Dept::CONNECT($NVX_BOOT,$NVX_DB,$NVX_USER);
+			
+			/**
+			 * @instance
 			 * Group information
 			 */ 
 			$NVX_GROUP = Group::CONNECT($NVX_DB,$NVX_BOOT);
@@ -631,7 +650,7 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 			 * @instance
 			 * CMS request information
 			*/
-			$NVX_CMS = $rs::CONNECT($NVX_BOOT,$NVX_DB,$NVX_USER,$NVX_GROUP);
+			$NVX_CMS = $rs::CONNECT($NVX_BOOT,$NVX_DB,$NVX_USER,$NVX_GROUP,$NVX_DEPT);
 			
 			/* is this an ajax call  or a debug xcache / info call */
 			if($NVX_BOOT->FETCH_ENTRY("breadcrumb",1)=="ajax" || ($NVX_BOOT->FETCH_ENTRY("breadcrumb",1)=="debug" && (

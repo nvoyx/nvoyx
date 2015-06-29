@@ -20,6 +20,7 @@ class _User{
 	protected static $DB;
 	protected static $USER;
 	protected static $GROUP;
+	protected static $DEPT;
 	protected static $HTML;
 	
 	
@@ -30,7 +31,7 @@ class _User{
 	 * CONNECT()
 	 * connect to this class
 	 */
-	public static function CONNECT($boot,$db,$user,$group) {
+	public static function CONNECT($boot,$db,$user,$group,$dept) {
 		
 		/* is this the first time the class has been connected to */
 		if( !self::$instance ) {
@@ -46,6 +47,9 @@ class _User{
 			
 			/* link with public/group */
 			self::$GROUP = $group;
+			
+			/* link with public/dept */
+			self::$DEPT = $dept;
 			
 			/* create a new instance */
 			self::$instance = new self();		
@@ -182,6 +186,7 @@ class _User{
 					$_SESSION["type"]=$rs[0]["user.type"];
 					$_SESSION["id"]=$rs[0]["user.id"];
 					$_SESSION["contact"]=self::$BOOT->CYPHER(array("TYPE"=>"decrypt","STRING"=>$rs[0]["user.contact"]));
+					$_SESSION["dept"]=$rs[0]["user.dept"];
 					
 					/* redirect to the content listings */
 					self::$BOOT->HEADER(array("LOCATION"=>"/settings/content/list"));
@@ -267,6 +272,7 @@ class _User{
 								if($value!=""){$v[$key]=$value;}else{$v[$key]="s";}
 								break;
 								
+							case "dept":
 							case "filter":
 								
 								/* store the content type filter for this user */
@@ -281,7 +287,7 @@ class _User{
 						/* push changes into user table */
 						self::$DB->DB_CLEAR(array("ALL"));
 						self::$DB->DB_SET_FILTER("`user`.`id`={$uid}");
-						self::$DB->DB_QUERY("UPDATE","`user` SET `user`.`username`='{$v["username"]}',`user`.`password`='{$v["password"]}',`user`.`contact`='{$v["contact"]}',`user`.`telephone`='{$v["telephone"]}',`user`.`email`='{$v["email"]}',`user`.`type`='{$v["type"]}',`user`.`filter`={$v["filter"]}");
+						self::$DB->DB_QUERY("UPDATE","`user` SET `user`.`username`='{$v["username"]}',`user`.`password`='{$v["password"]}',`user`.`contact`='{$v["contact"]}',`user`.`telephone`='{$v["telephone"]}',`user`.`email`='{$v["email"]}',`user`.`type`='{$v["type"]}',`user`.`filter`={$v["filter"]},`user`.`dept`={$v["dept"]}");
 					}
 					break;
 			endswitch;

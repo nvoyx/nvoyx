@@ -50,9 +50,176 @@ class Html5{
         return self::$instance;
     }
 	
+	
+	/*
+	 * URL_PARENT()
+	 * tests whether a supplied url is a parent of the current page
+	 */
+	public function URL_PARENT($a){
+		
+		/* grab the current url */
+		$bc=self::$BOOT->FETCH_ENTRY("breadcrumb");
+		
+		/* if the passed url has a leading forward-slash */
+		if(substr($a["URL"],0,1) == "/"){
+			
+			/* only the homepage may be returned, so strip anything else */
+			$a["URL"] = substr($a["URL"],1);
+		}
+		
+		/* take the url and split it */
+		$u=explode("/",$a["URL"]);
+		
+		/* do we have fewer levels in the URL than the breadcrumb has */
+		if($a["LEVELS"]<count($bc)){
+			
+			/* cycle through the split url */
+			for($x=0;$x<count($u);$x++){
+				
+				/* if the current entry does not equal "" */
+				if($u[$x]!=""){
+					
+					/* if the current entry does not equal the equivalent entry for the breadcrumb, return false */
+					if($u[$x]!=$bc[$x]){return false;}
+				}
+			}
+			
+			/* we have a parent, return true */
+			return true;
+			
+		} else {
+			
+			/* we don't have a parent, return false */
+			return false;
+		}
+	}
+	
+	
+	/*
+	 * URL_CURRENT()
+	 * is the supplied node id the same as that of the current page
+	 */
+	public function URL_CURRENT($nid){ if(self::$PAGE["id"]==$nid){return true;} else {return false;} }
+	
+	
+	/* URL_LEVELS()
+	 * how many levels deep is the passed url
+	 */
+	public function URL_LEVELS($u){
+		
+		/* convert the url to lowercase */
+		$u = strtolower($u);
+		
+		/* does the url have any get variables tagged on */
+		if(stristr($u,"?")){
+			
+			/* strip the get variables */
+			$u = substr($u,0,strpos($u,"?"));
+		}
+		
+		/* grab the website domain */
+		$d = self::$BOOT->FETCH_ENTRY("domain");
+		
+		/* strip any protocol references */
+		$u = str_replace(array("http://","https://",$d),"",$u);
+		
+		/* return the number of levels for the sanitised url */
+		return count(explode("/",$u)) -1;
+	}
+	
+	
+	/*
+	 * URL_BY_NID()
+	 * fetch the url for a given page by it's node id (resolve any substitutions)
+	 */
+	public function URL_BY_NID($a){
+		
+		/* are we testing against the homepage */
+		if($a["NID"]==self::$VAR->FETCH_ENTRY("front")[0]){$a["ALIAS"]="";}
+		
+		/* if the prefix isn't empty, tag a forward slash to the end of it */
+		if($a["PREFIX"]!=""){$a["PREFIX"] .= "/";}
+		
+		/* build the complete url */
+		$a["URL"] = self::$BOOT->FETCH_ENTRY("domain") .  "/" . $a["PREFIX"] . $a["ALIAS"];
+		
+		/* cycle by any text susbsitutions in the url */
+		for($x=0;$x<substr_count($a["URL"],"[");$x++){
+			
+			/* created date */
+			if(stristr($a["URL"],"[cd:")){
+				
+				/* grab everything after the start of the created date tag definition */
+				$r = substr($a["URL"],strpos($a["URL"],"[cd:")+4);
+				
+				/* grab everything until the closing of the tag */
+				$r = substr($r,0,strpos($r,"]"));
+				
+				/* use the date format $r to create a real time based on the [tags][created] value, and subsitute this into the passed URL */
+				$a["URL"] = str_replace("[cd:{$r}]",date("$r",strtotime($a["TAGS"]["CREATED"])),$a["URL"]);
+			}
+			
+			/* page id */
+			if(stristr($a["URL"],"[id:]")){
+				/* subsitute the page node id into the passed URL */
+				$a["URL"] = str_replace("[id:]",$a["TAGS"]["NODE"],$a["URL"]);
+			}
+			
+			/* sselect */
+			if(stristr($a["URL"],"[ss:")){
+				
+				/* grab everything after the start of the sselect tag definition */
+				$r = substr($a["URL"],strpos($a["URL"],"[ss:")+4);
+				
+				/* grab everything until the closing of the tag */
+				$r = substr($r,0,strpos($r,"]"));
+								
+				/* subsitute the selected sselect value into the passed URL */
+				$a["URL"] = str_replace("[ss:{$r}]",$a["TAGS"]["SSELECT"],$a["URL"]);				
+			}
+			
+			/* mselect */
+			if(stristr($a["URL"],"[ms:")){
+				
+				/* grab everything after the start of the mselect tag definition */
+				$r = substr($a["URL"],strpos($a["URL"],"[ms:")+4);
+				
+				/* grab everything until the closing of the tag */
+				$r = substr($r,0,strpos($r,"]"));
+								
+				/* subsitute the selected mselect value into the passed URL */
+				$a["URL"] = str_replace("[ms:{$r}]",$a["TAGS"]["MSELECT"],$a["URL"]);				
+			}
+		}
+		
+		/* grab the number of levels this url has */
+		$a["LEVELS"] = $this->URL_LEVELS($a["URL"]);
+		
+		/* is the requested url for the current page */
+		$a["CURRENT"] = $this->URL_CURRENT($a["NID"]);
+		
+		/* is the requested url the parent of the current page */
+		$a["PARENT"] = $this->URL_PARENT($a);
+		
+		/* return the url array */
+		return $a;
+	}
+	
+	
+	/* 
+	 * URL()
+	 * what sort of url request do we have
+	 */
+	public function URL($a){
+		if(is_array($a)){
+			//we have an array, so it must be an internal page reference
+			return $this->URL_BY_NID($a);
+		} else {
+			//we have a string which may or may not be internal	REALLY BIG TODO!!!!
+		}	
+	}
+	
 
-	
-	
 	/**
 	 * UL()
 	 * handy function for debugging, convert an array to soemething more readily viewable within the browser

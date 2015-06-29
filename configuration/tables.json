@@ -165,6 +165,33 @@
 					}
 				]
 	},
+{
+		"TABLE":"dept",
+		"CHARACTER SET":"utf8mb4",
+		"COLLATE":"utf8mb4_bin",
+		"ENGINE":"MyISAM",
+		"FIELDS":	[
+					{
+						"NAME":"name",
+						"TYPE":"VARCHAR",
+						"LENGTH":"255"
+					},
+					{
+						"NAME":"access",
+						"TYPE":"VARCHAR",
+						"LENGTH":"2048",
+						"DEFAULT":"[]"
+					}
+				],
+		"ENTRIES":	[
+					{
+						"name":"'Web'",
+						"tid":"'[]'",
+						"access":"'a'",
+						"params":"'[\"\"]'"
+					}
+				]
+	},
 	{
 		"TABLE":"filelist",
 		"CHARACTER SET":"utf8mb4",
@@ -1141,6 +1168,22 @@
 					{
 						"url":"'/settings/redirects/delete'",
 						"access":"'a'"
+					},
+					{
+						"url":"'/settings/dept/list'",
+						"access":"'a'"
+					},
+					{
+						"url":"'/settings/dept/add'",
+						"access":"'a'"
+					},
+					{
+						"url":"'/settings/dept/edit'",
+						"access":"'a'"
+					},
+					{
+						"url":"'/settings/dept/delete'",
+						"access":"'a'"
 					}
 				]
 	},
@@ -1539,6 +1582,13 @@
 						"DEFAULT":"a"
 					},
 					{
+						"NAME":"dept",
+						"TYPE":"INT",
+						"LENGTH":"10",
+						"NULL":"no",
+						"DEFAULT":"1"
+					},
+					{
 						"NAME":"filter",
 						"TYPE":"INT",
 						"LENGTH":"10",
@@ -1661,7 +1711,7 @@
 					{
 						"name":"'js'",
 						"notes":"'<p>references to any javascript files used on the public pages</p>'",
-						"value":"'[\"jquery-2.1.1.min.js\",\"jquery-ui-1.10.2.custom.min.js\",\"ckbase.js\",\"../ckeditor/ckeditor.js\",\"../ckeditor/adapters/jquery.js\",\"public.js\"]'"
+						"value":"'[\"jquery-2.1.1.min.js\",\"jquery-ui-1.10.2.custom.min.js\",\"nvx.pagi.1.0.0.js\",\"ckbase.js\",\"../ckeditor/ckeditor.js\",\"../ckeditor/adapters/jquery.js\",\"public.js\"]'"
 					},
 					{
 						"name":"'live'",
