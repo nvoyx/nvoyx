@@ -19,6 +19,7 @@ $uid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
 /* grab all currently registered users */
 $NVX_DB->DB_CLEAR(array("ALL"));
 $users = $NVX_DB->DB_QUERY("SELECT","* FROM `user`");
+$depts = $NVX_DB->DB_QUERY("SELECT","* FROM `dept`");
 
 /* lookup the user details */
 foreach($users as $user){if($user["user.id"]==$uid){break;}}
@@ -83,11 +84,17 @@ if(isset($user)){ ?>
 			<label class="blank fl">Dept</label>
 			<div class="blank select fr half">
 				<?php
-				if($user["user.dept"]==0){$flg = " selected";} else {$flg="";} ?>
-				<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'dept');return false;">Web</a>
+				foreach($depts as $dept){
+				if($dept["dept.id"]==$user['user.dept']){$flg = " selected";} else {$flg="";} ?>
+				<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'dept');return false;"><?=$dept['dept.name'];?></a>
+				<?php } ?>
 			</div>
 			<select class="hide" name="dept" id="dept">
-				<?php if($user["user.dept"]==0){$flg = " selected";} else {$flg="";} ?>
+				<?php
+				foreach($depts as $dept){
+				if($dept["dept.id"]==$user['user.dept']){$flg = " selected";} else {$flg="";} ?>
+				<option<?php echo $flg; ?> value="<?=$dept['dept.id'];?>"><?=$dept['dept.name'];?></option>
+				<?php } ?>
 			</select>
 		</div>
 		
