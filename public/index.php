@@ -638,7 +638,7 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 			 * @instance
 			 * CMS request information
 			*/
-			$NVX_CMS = $rs::CONNECT($NVX_BOOT,$NVX_DB,$NVX_USER,$NVX_GROUP);
+			$NVX_CMS = $rs::CONNECT($NVX_BOOT,$NVX_DB,$NVX_USER,$NVX_GROUP,$NVX_DEPT);
 			
 			/* is this an ajax call  or a debug xcache / info call */
 			if($NVX_BOOT->FETCH_ENTRY("breadcrumb",1)=="ajax" || ($NVX_BOOT->FETCH_ENTRY("breadcrumb",1)=="debug" && (
