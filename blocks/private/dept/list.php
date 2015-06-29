@@ -30,8 +30,8 @@ $departments = $NVX_DB->DB_QUERY("SELECT","* FROM `dept`");
 	<?php /* cycle through the departments */ $x=0;foreach($departments as $department){ ?>
 	<div class="blank row">
 		<label class="blank fl half"><?php echo ucwords($department["dept.name"]);?></label>
-		<a title="edit" href="<?php echo "/settings/dept/edit/".$department["dept.id"];?>"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-edit.png"></a>
 		<?php if($x>0){?>
+		<a title="edit" href="<?php echo "/settings/dept/edit/".$department["dept.id"];?>"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-edit.png"></a>
 		<a title="delete" href="<?php echo "/settings/dept/delete/".$department["dept.id"];?>"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-delete.png"></a>
 		<?php } ?>
 	</div>
