@@ -88,15 +88,16 @@ $NVX_SETUP->TABLES($NVX_DB,$NVX_BOOT,$config);
 
 /**
  * @instance
- * User information
- */
-$NVX_USER = User::CONNECT($NVX_DB);
-
-/**
- * @instance
  * CMS Variables
  */
 $NVX_VAR = Variables::CONNECT($NVX_DB,$NVX_BOOT);
+
+/**
+ * @instance
+ * User information
+ */
+$NVX_USER = User::CONNECT($NVX_DB,$NVX_BOOT,$NVX_VAR);
+
 
 /* is the current user not an admin or above */
 if(!$NVX_USER->GRANTED("a")){
