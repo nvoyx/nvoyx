@@ -80,6 +80,18 @@ if(isset($user)){ ?>
 		</div>
 		
 		<div class="blank row">
+			<label class="blank fl">Dept</label>
+			<div class="blank select fr half">
+				<?php
+				if($user["user.dept"]==0){$flg = " selected";} else {$flg="";} ?>
+				<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'dept');return false;">System Admin</a>
+			</div>
+			<select class="hide" name="dept" id="dept">
+				<?php if($user["user.dept"]==0){$flg = " selected";} else {$flg="";} ?>
+			</select>
+		</div>
+		
+		<div class="blank row">
 			<label for="contact" class="blank fl">
 				Contact<br>
 				<span class="current-length tt"><?php echo strlen($NVX_BOOT->CYPHER(array("TYPE"=>"decrypt","STRING"=>$user["user.username"])));?></span><span class="tt"> of 128</span>
