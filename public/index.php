@@ -422,6 +422,12 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 			
 			
 		}
+		
+		/**
+		 * @instance
+		 * Dept information
+		 */ 
+		$NVX_DEPT = Dept::CONNECT($NVX_BOOT,$NVX_DB,$NVX_USER);
 	
 		/**
 		 * @instance
@@ -515,6 +521,12 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 				
 				/* set $TYPE */
 				$TYPE = $NVX_TYPE->FETCH_BY_TID($PAGE["tid"]);
+				
+				/**
+				 * @instance
+				 * Dept information
+				 */ 
+				$NVX_DEPT = Dept::CONNECT($NVX_BOOT,$NVX_DB,$NVX_USER);
 								
 				/**
 				 * @instance
@@ -624,7 +636,7 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 			
 			/**
 			 * @instance
-			 * Group information
+			 * Dept information
 			 */ 
 			$NVX_DEPT = Dept::CONNECT($NVX_BOOT,$NVX_DB,$NVX_USER);
 			
