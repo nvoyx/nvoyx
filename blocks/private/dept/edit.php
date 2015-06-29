@@ -31,11 +31,11 @@ if(isset($department)){ ?>
 /* grab a list of all types */
 $types=array();
 foreach($NVX_TYPE->FETCH_ARRAY() as $rs){
-	$types[$rs['id']]=$rs['name'];
+	$types[$rs['name']]=$rs['id'];
 }
 
-/* explode the access tids for this dept. */ $access=$NVX_BOOT->JSON($department['dept.access'],'decode');
-print_r($access);
+/* explode the access tids for this dept. */
+$access=$NVX_BOOT->JSON($department['dept.access'],'decode');
 
 ?>
 
@@ -64,19 +64,19 @@ print_r($access);
 		
 		<div class="blank row">
 			<label class="blank fl">Access</label>
-			<div class="blank select fr half">
+			<div class="blank mselect fr half">
 				<?php
 				foreach($types as $tkey=>$tval) { 
-				if(in_array($tkey,$access)){$flg = " selected";} else {$flg="";} ?>
-				<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'access');return false;"><?=$tval;?></a>
+				if(in_array($tval,$access)){$flg = " selected";} else {$flg="";} ?>
+				<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'access');return false;"><?=$tkey;?></a>
 				<?php
 				} ?>
 			</div>
-			<select class="hide" name="access[]" id="access">
+			<select class="hide" name="access[]" id="access" multiple>
 				<?php
 				foreach($types as $tkey=>$tval) { 
-				if(in_array($tkey,$access)){$flg = " selected";} else {$flg="";} ?>
-				<option<?php echo $flg; ?> value="<?=$tval;?>"></option>
+				if(in_array($tval,$access)){$flg = " selected";} else {$flg="";} ?>
+				<option<?php echo $flg; ?> value="<?=$tval;?>"><?=$tkey;?></option>
 				<?php
 				} ?>
 			</select>
