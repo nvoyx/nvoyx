@@ -1539,6 +1539,13 @@
 						"DEFAULT":"a"
 					},
 					{
+						"NAME":"dept",
+						"TYPE":"INT",
+						"LENGTH":"10",
+						"NULL":"no",
+						"DEFAULT":"0"
+					},
+					{
 						"NAME":"filter",
 						"TYPE":"INT",
 						"LENGTH":"10",
