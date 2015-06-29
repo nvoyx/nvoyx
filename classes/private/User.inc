@@ -182,6 +182,7 @@ class _User{
 					$_SESSION["type"]=$rs[0]["user.type"];
 					$_SESSION["id"]=$rs[0]["user.id"];
 					$_SESSION["contact"]=self::$BOOT->CYPHER(array("TYPE"=>"decrypt","STRING"=>$rs[0]["user.contact"]));
+					$_SESSION["dept"]=$rs[0]["user.dept"];
 					
 					/* redirect to the content listings */
 					self::$BOOT->HEADER(array("LOCATION"=>"/settings/content/list"));
