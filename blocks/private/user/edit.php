@@ -84,7 +84,7 @@ if(isset($user)){ ?>
 			<div class="blank select fr half">
 				<?php
 				if($user["user.dept"]==0){$flg = " selected";} else {$flg="";} ?>
-				<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'dept');return false;">System Admin</a>
+				<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'dept');return false;">Web</a>
 			</div>
 			<select class="hide" name="dept" id="dept">
 				<?php if($user["user.dept"]==0){$flg = " selected";} else {$flg="";} ?>
