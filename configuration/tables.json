@@ -165,6 +165,33 @@
 					}
 				]
 	},
+{
+		"TABLE":"dept",
+		"CHARACTER SET":"utf8mb4",
+		"COLLATE":"utf8mb4_bin",
+		"ENGINE":"MyISAM",
+		"FIELDS":	[
+					{
+						"NAME":"name",
+						"TYPE":"VARCHAR",
+						"LENGTH":"255"
+					},
+					{
+						"NAME":"access",
+						"TYPE":"VARCHAR",
+						"LENGTH":"2048",
+						"DEFAULT":"[]"
+					}
+				],
+		"ENTRIES":	[
+					{
+						"name":"'Web'",
+						"tid":"'[]'",
+						"access":"'a'",
+						"params":"'[\"\"]'"
+					}
+				]
+	},
 	{
 		"TABLE":"filelist",
 		"CHARACTER SET":"utf8mb4",
