@@ -162,9 +162,9 @@ class _Dept{
 						switch($key):
 							
 							case "access":
-
-								/* store the urls */
-								$v[$key]=$value;
+								
+								/* encode the sanitised array */
+								$v[$key] = self::$BOOT->JSON($v[$key],"encode");
 								break;
 
 								
