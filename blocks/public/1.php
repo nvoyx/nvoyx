@@ -20,7 +20,9 @@
 	<div>
 		<img class='fl'src='/settings/resources/files/images/public/header-client.png' height='24' >
 		<a href="/settings/content/list">Admin</a> | 
+		<?php if($NVX_DEPT->GRANTED($NVX_USER->FETCH_ARRAY()['dept'],$PAGE['tid'])){ ?>
 		<a href="/settings/content/edit/<?php echo $PAGE["id"]; ?>">Edit</a> | 
+		<?php } ?>
 		<a href="/settings/user/logout">Logout</a>
 	</div>
 </div>
