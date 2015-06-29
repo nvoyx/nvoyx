@@ -1168,6 +1168,22 @@
 					{
 						"url":"'/settings/redirects/delete'",
 						"access":"'a'"
+					},
+					{
+						"url":"'/settings/dept/list'",
+						"access":"'a'"
+					},
+					{
+						"url":"'/settings/dept/add'",
+						"access":"'a'"
+					},
+					{
+						"url":"'/settings/dept/edit'",
+						"access":"'a'"
+					},
+					{
+						"url":"'/settings/dept/delete'",
+						"access":"'a'"
 					}
 				]
 	},
