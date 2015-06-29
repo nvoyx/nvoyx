@@ -19,6 +19,8 @@ class _Textarea{
 	protected static $BOOT;
 	protected static $DB;
 	protected static $USER;
+	protected static $GROUP;
+	protected static $DEPT;
 	protected static $HTML;
 	
 	
@@ -29,7 +31,7 @@ class _Textarea{
 	 * CONNECT()
 	 * connect to this class
 	 */
-	public static function CONNECT($boot,$db,$user,$type) {
+	public static function CONNECT($boot,$db,$user,$group,$dept) {
 		
 		/* is this the first time the class has been connected to */
 		if( !self::$instance ) {
@@ -42,6 +44,12 @@ class _Textarea{
 			
 			/* link with public/user */
 			self::$USER = $user;
+			
+			/* link with public/group */
+			self::$GROUP = $group;
+			
+			/* link with public/dept */
+			self::$DEPT = $dept;
 			
 			/* create a new instance */
 			self::$instance = new self();		

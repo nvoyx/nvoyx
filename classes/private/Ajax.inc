@@ -20,6 +20,7 @@ class _Ajax{
 	protected static $DB;
 	protected static $USER;
 	protected static $GROUP;
+	protected static $DEPT;
 	protected static $HTML;
 
 	
@@ -30,7 +31,7 @@ class _Ajax{
 	 * CONNECT()
 	 * connect to this class
 	 */
-	public static function CONNECT($boot,$db,$user,$group) {
+	public static function CONNECT($boot,$db,$user,$group,$dept) {
 		
 		/* is this the first time this class has been connected to */
 		if( !self::$instance ) {
@@ -46,6 +47,9 @@ class _Ajax{
 			
 			/* link with public/group */
 			self::$GROUP = $group;
+			
+			/* link with public/group */
+			self::$DEPT = $dept;
 			
 			/* create a new instance */
 			self::$instance = new self();		

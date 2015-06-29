@@ -20,6 +20,7 @@ class _Debug{
 	protected static $DB;
 	protected static $USER;
 	protected static $GROUP;
+	protected static $DEPT;
 	protected static $HTML;
 
 	
@@ -30,7 +31,7 @@ class _Debug{
 	 * CONNECT()
 	 * connect to this class
 	 */
-	public static function CONNECT($boot,$db,$user,$group) {
+	public static function CONNECT($boot,$db,$user,$group,$dept) {
 		
 		/* is this the first time the class has been connected to */
 		if( !self::$instance ) {
@@ -46,6 +47,9 @@ class _Debug{
 			
 			/* link with public/group */
 			self::$GROUP = $group;
+			
+			/* link with public/dept */
+			self::$DEPT = $dept;
 			
 			/* create a new instance */
 			self::$instance = new self();		
