@@ -100,9 +100,11 @@ $type_filter = $NVX_DB->DB_QUERY("SELECT","* FROM `user`")[0]["user.filter"];
 		?>
 		<div class="blank links fl big">
 			<?php foreach($rs as $r){
-				if($NVX_DEPT->GRANTED($NVX_USER->FETCH_ENTRY('dept'))){ ?>
+				if($NVX_USER->GRANTED($NVX_PATH->FETCH_ENTRY($r["link"])["access"])){
+					if($r['txt']!='MEMBERS' || ($r['txt']=='MEMBERS' && $NVX_VAR->FETCH_ENTRY('members')[0]==1)){ ?>
 				<a class="blank mini fl" href="<?php echo $r["link"]; ?>"><?php echo $r["txt"];?></a>
 				<?php }
+				}
 			} ?>
 		</div>
 	</div>

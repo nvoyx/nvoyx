@@ -34,8 +34,10 @@ $users = $NVX_DB->DB_QUERY("SELECT","* FROM `user`");
 	<?php /* cycle through the users*/ foreach($users as $user){ ?>
 	<div class="blank row">
 		<label class="blank fl half"><?php echo ucwords($NVX_BOOT->CYPHER(array("TYPE"=>"decrypt","STRING"=>$user["user.username"])));?></label>
+		<?php if($user['user.type']!='s' || $NVX_USER->GRANTED('s')){ ?>
 		<a title="edit" href="<?php echo "/settings/user/edit/".$user["user.id"];?>"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-edit.png"></a>
 		<a title="delete" href="<?php echo "/settings/user/delete/".$user["user.id"];?>"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-delete.png"></a>
+		<?php } ?>
 	</div>
 	<?php } ?>
 	
