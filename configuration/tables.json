@@ -1742,6 +1742,11 @@
 						"name":"'404'",
 						"notes":"'<p>node id of 404 error page</p>'",
 						"value":"'[\"3\"]'"
+					},
+					{
+						"name":"'members'",
+						"notes":"'<p>enable site membership</p>'",
+						"value":"'[\"0\"]'"
 					}
 				]
 	}
