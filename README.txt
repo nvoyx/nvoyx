@@ -6,6 +6,8 @@ MySql or MariaDB
 WebP
 ImageMagick
 XCache (both opcode and variable should be enabled)
+Aspell (plus any languages you want to support)
+php-fpm php-cli php-common php-mysql php-gd php-xml php-mbstring php-mcrypt php-xcache php-pdo php-pear php-pecl-imagick php-process php-pspell php-devel
 
 
 FOLDER/FILE SETUP
