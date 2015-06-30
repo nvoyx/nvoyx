@@ -883,19 +883,19 @@
 					},
 					{
 						"url":"'/settings/user/list'",
-						"access":"'s'"
+						"access":"'a'"
 					},
 					{
 						"url":"'/settings/user/add'",
-						"access":"'s'"
+						"access":"'a'"
 					},
 					{
 						"url":"'/settings/user/edit'",
-						"access":"'s'"
+						"access":"'a'"
 					},
 					{
 						"url":"'/settings/user/delete'",
-						"access":"'s'"
+						"access":"'a'"
 					},
 					{
 						"url":"'/settings/group/list'",
