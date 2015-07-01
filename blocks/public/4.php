@@ -41,7 +41,7 @@ if($NVX_BOOT->FETCH_ENTRY("timestamp")>$p["pulled"]+$p["frequency"]){
 	$NVX_BOOT->SET_CACHE("blocks",$NVX_BLOCK->FETCH_ARRAY());
 	
 	/* we need to force the cache to be grabbed afresh */
-	if(!$cache){}else{unset($cache);}
+	if(!$cache){}else{$cache=false;}
 }
 
 /* do we have this block on cache */
