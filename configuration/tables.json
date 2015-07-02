@@ -186,9 +186,7 @@
 		"ENTRIES":	[
 					{
 						"name":"'Web'",
-						"tid":"'[]'",
-						"access":"'a'",
-						"params":"'[\"\"]'"
+						"access":"'a'"
 					}
 				]
 	},
