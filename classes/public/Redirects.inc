@@ -76,13 +76,18 @@ class Redirects{
 		self::$DB->DB_SET_ORDER(array("`redirects`.`old`"=>"ASC"));
 		$redirects = self::$DB->DB_QUERY("SELECT","* FROM `redirects`");
 		
-		/* cycle through the redirects */
-		foreach($redirects as $redirect){
-			
-			/* organise the path details */
-			$r[$redirect["redirects.old"]] = array("id"=>$redirect["redirects.id"],
-											"old"=>$redirect["redirects.old"],
-											"new"=>$redirect["redirects.new"]);	
+		/* create an array to hold the redirects */
+		$r=array();
+		
+		/* cycle through the redirects (if we have any) */
+		if($redirects){
+			foreach($redirects as $redirect){
+
+				/* organise the path details */
+				$r[$redirect["redirects.old"]] = array("id"=>$redirect["redirects.id"],
+												"old"=>$redirect["redirects.old"],
+												"new"=>$redirect["redirects.new"]);	
+			}
 		}
 		
 		/* store the redirect details */
