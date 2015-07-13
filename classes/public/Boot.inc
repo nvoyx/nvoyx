@@ -629,7 +629,7 @@ class Boot{
 		for($a=0;$a<count($accents);$a=$a+2){$t = str_replace($accents[$a],$accents[$a+1],$t);}
 		
 		/* return the string as lowercase, replace whitespace with underscores and strip anything outside the ranges 0-9 a-Z _- */
-		return strtolower(preg_replace(array('/[^-a-zA-Z0-9_ -]/','/\s+/'),array('','_','_'),$t));
+		return strtolower(preg_replace(array('/[^-a-zA-Z0-9_ -]/','/\s+/'),array('','-'),$t));
 	}
 	
 	
