@@ -68,7 +68,7 @@ if($tid){
 		$NVX_DB->DB_QUERY("DELETE","FROM `page`");
 
 		/* create an array of field types */
-		$ftypes = array("datebox","filelist","imagelist","mselect","sselect","textarea","textbox","videolist","heirarchy","tagbox");
+		$ftypes = array("datebox","filelist","imagelist","mselect","sselect","textarea","textbox","heirarchy","tagbox");
 
 		/* cycle through the field types */
 		foreach($ftypes as $ftype){
