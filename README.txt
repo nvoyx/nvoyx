@@ -21,6 +21,8 @@ create the following directories:
 	session
 	socket
 	tmp
+	rollback
+	recovery
 
 copy configuration/config.json.example to configuration/config.json and set to writeable by the server.
 
