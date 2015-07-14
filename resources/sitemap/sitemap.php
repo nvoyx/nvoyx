@@ -21,7 +21,7 @@ xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
 <?php
 
 /*  grab the type class*/
-$TYPE = Type::CONNECT(self::$DB,
+$TYPE = \NVOYX\site\Type::CONNECT(self::$DB,
 					self::$BOOT,
 					self::$VAR->FETCH_ENTRY("front")[0]);
 

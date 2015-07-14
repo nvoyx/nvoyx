@@ -23,7 +23,7 @@ echo"<?xml version='1.0' encoding='UTF-8'?>";
 <atom:link href='http://<?php echo self::$BOOT->FETCH_ENTRY('domain');?>/settings/resources/rss/rss.xml' rel='self' type='application/rss+xml' />
 <?php
 	/*  grab the type class*/
-	$TYPE = Type::CONNECT(self::$DB,
+	$TYPE = \NVOYX\site\Type::CONNECT(self::$DB,
 					self::$BOOT,
 					self::$VAR->FETCH_ENTRY("front")[0]);
 
