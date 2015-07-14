@@ -13,9 +13,9 @@
  */
 
 /* delete a variable entry */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$NVX_DB->DB_SET_FILTER("`id`={$NVX_BOOT->FETCH_ENTRY("breadcrumb",3)}");
-$NVX_DB->DB_QUERY("DELETE","FROM `variables`");
+$NVX_DB->CLEAR(array("ALL"));
+$NVX_DB->SET_FILTER("`id`={$NVX_BOOT->FETCH_ENTRY("breadcrumb",3)}");
+$NVX_DB->QUERY("DELETE","FROM `variables`");
 
 /* redirect to the variable listings */
 $NVX_BOOT->HEADER(array("LOCATION"=>"/settings/variables/list"));

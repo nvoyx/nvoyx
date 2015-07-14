@@ -115,8 +115,8 @@ class Group{
 		$t = self::$BOOT->FETCH_ENTRY("timestamp");
 		
 		/* add a blank group entry */
-		self::$DB->DB_CLEAR(array("ALL"));
-		$gid = self::$DB->DB_QUERY("INSERT","INTO `group` (`id`,`position`,`name`,`assoc`,`access`,`variants`,`nfid`,`outline`) " . 
+		self::$DB->CLEAR(array("ALL"));
+		$gid = self::$DB->QUERY("INSERT","INTO `group` (`id`,`position`,`name`,`assoc`,`access`,`variants`,`nfid`,`outline`) " . 
 									"VALUES (NULL,999,'{$t}','[]','a',1,0,'[]')");
 									
 		/* redirect to the new group-edit */
@@ -189,9 +189,9 @@ class Group{
 							$gid = str_replace("group-","",$key);
 							
 							/* update the group database */
-							self::$DB->DB_CLEAR(array("ALL"));
-							self::$DB->DB_SET_FILTER("`group`.`id`={$gid}");
-							self::$DB->DB_QUERY("UPDATE","`group` SET `group`.`position`={$a}");
+							self::$DB->CLEAR(array("ALL"));
+							self::$DB->SET_FILTER("`group`.`id`={$gid}");
+							self::$DB->QUERY("UPDATE","`group` SET `group`.`position`={$a}");
 						}
 					}					
 					break;
@@ -208,9 +208,9 @@ class Group{
 							case "fields":
 								
 								/* grab the group outline for this gid */
-								self::$DB->DB_CLEAR(array("ALL"));
-								self::$DB->DB_SET_FILTER("`group`.`id`={$gid}");
-								$outline = self::$DB->DB_QUERY("SELECT","`group`.`outline` FROM `group`");
+								self::$DB->CLEAR(array("ALL"));
+								self::$DB->SET_FILTER("`group`.`id`={$gid}");
+								$outline = self::$DB->QUERY("SELECT","`group`.`outline` FROM `group`");
 								
 								/* convert the JSON encoded group outline to an array */
 								$outline = self::$BOOT->JSON($outline[0]["group.outline"],"decode");
@@ -283,9 +283,9 @@ class Group{
 						foreach($fts as $ft){
 							
 							/* we can delete all references to this group in all the field types */
-							self::$DB->DB_CLEAR(array("ALL"));
-							self::$DB->DB_SET_FILTER("`{$ft}`.`gid`={$gid}");
-							self::$DB->DB_QUERY("DELETE","FROM `{$ft}`");
+							self::$DB->CLEAR(array("ALL"));
+							self::$DB->SET_FILTER("`{$ft}`.`gid`={$gid}");
+							self::$DB->QUERY("DELETE","FROM `{$ft}`");
 						}
 						
 					} else {
@@ -315,9 +315,9 @@ class Group{
 								
 								/* build a filter to select distinct rows from the field type data matching group and field type */
 								$r = "`{$ft}`.`fid` !=" . implode(" AND `{$ft}`.`fid` !=",$r);
-								self::$DB->DB_CLEAR(array("ALL"));
-								self::$DB->DB_SET_FILTER("`{$ft}`.`gid`={$gid} AND ({$r})");
-								$rs = self::$DB->DB_QUERY("SELECT","DISTINCT(`{$ft}`.`fid`) FROM `{$ft}`");
+								self::$DB->CLEAR(array("ALL"));
+								self::$DB->SET_FILTER("`{$ft}`.`gid`={$gid} AND ({$r})");
+								$rs = self::$DB->QUERY("SELECT","DISTINCT(`{$ft}`.`fid`) FROM `{$ft}`");
 								
 								/* have we found any distinct entries */
 								if(isset($rs)){
@@ -326,9 +326,9 @@ class Group{
 									foreach($rs as $r){
 										
 										/* delete all field type entries matching this group and field id */
-										self::$DB->DB_CLEAR(array("ALL"));
-										self::$DB->DB_SET_FILTER("`{$ft}`.`gid`={$gid} AND `{$ft}`.`fid`={$r["{$ft}.fid"]}");
-										self::$DB->DB_QUERY("DELETE","FROM `{$ft}`");
+										self::$DB->CLEAR(array("ALL"));
+										self::$DB->SET_FILTER("`{$ft}`.`gid`={$gid} AND `{$ft}`.`fid`={$r["{$ft}.fid"]}");
+										self::$DB->QUERY("DELETE","FROM `{$ft}`");
 									}
 								}
 							}
@@ -336,9 +336,9 @@ class Group{
 					}
 					
 					/* update the group table */
-					self::$DB->DB_CLEAR(array("ALL"));
-					self::$DB->DB_SET_FILTER("`group`.`id`={$gid}");
-					self::$DB->DB_QUERY("UPDATE","`group` SET `group`.`name`='{$v["name"]}',`group`.`assoc`='{$v["assoc"]}',`group`.`access`='{$v["access"]}',`group`.`outline`='{$v["outline"]}',`group`.`variants`='{$v["variants"]}'");
+					self::$DB->CLEAR(array("ALL"));
+					self::$DB->SET_FILTER("`group`.`id`={$gid}");
+					self::$DB->QUERY("UPDATE","`group` SET `group`.`name`='{$v["name"]}',`group`.`assoc`='{$v["assoc"]}',`group`.`access`='{$v["access"]}',`group`.`outline`='{$v["outline"]}',`group`.`variants`='{$v["variants"]}'");
 					break;
 			endswitch;			
 		}

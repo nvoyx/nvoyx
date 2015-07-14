@@ -32,9 +32,9 @@ foreach($TYPE->FETCH_ARRAY() as $t){
 	if($t["view"]=="u"){
 	
 		/* grab any pages belonging to this type */
-		self::$DB->DB_CLEAR(array("ALL"));
-		self::$DB->DB_SET_FILTER("`page`.`tid`={$t['id']} AND `page`.`published`=1");
-		$pages = self::$DB->DB_QUERY("SELECT","`page`.`id`,`page`.`tid`,`page`.`alias`,`page`.`modified`,`page`.`importance`,`page`.`date` FROM `page`");
+		self::$DB->CLEAR(array("ALL"));
+		self::$DB->SET_FILTER("`page`.`tid`={$t['id']} AND `page`.`published`=1");
+		$pages = self::$DB->QUERY("SELECT","`page`.`id`,`page`.`tid`,`page`.`alias`,`page`.`modified`,`page`.`importance`,`page`.`date` FROM `page`");
 		
 		/* if we have any pages of this type */
 		if($pages){

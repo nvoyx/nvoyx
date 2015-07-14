@@ -13,9 +13,9 @@
  */
 
 /* delete a blank path entry */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$NVX_DB->DB_SET_FILTER("`id`={$NVX_BOOT->FETCH_ENTRY("breadcrumb",3)}");
-$NVX_DB->DB_QUERY("DELETE","FROM `path`");
+$NVX_DB->CLEAR(array("ALL"));
+$NVX_DB->SET_FILTER("`id`={$NVX_BOOT->FETCH_ENTRY("breadcrumb",3)}");
+$NVX_DB->QUERY("DELETE","FROM `path`");
 
 /* redirect to the path listings */
 $NVX_BOOT->HEADER(array("LOCATION"=>"/settings/path/list"));

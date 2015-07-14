@@ -45,9 +45,9 @@ if($data["node"]["ttp"]==""){$data["node"]["ttp"]="NULL";}
 if($data["node"]["ttc"]==""){$data["node"]["ttc"]="NULL";}
 
 /* update the node */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$NVX_DB->DB_SET_FILTER("`page`.`id`={$nid}");
-$NVX_DB->DB_QUERY("UPDATE","`page` SET "
+$NVX_DB->CLEAR(array("ALL"));
+$NVX_DB->SET_FILTER("`page`.`id`={$nid}");
+$NVX_DB->QUERY("UPDATE","`page` SET "
 		. "`page`.`title`='{$data["node"]["title"]}', "
 		. "`page`.`heading`='{$data["node"]["heading"]}',"
 		. "`page`.`teaser`='{$data["node"]["teaser"]}',"
@@ -73,9 +73,9 @@ $zip->open($NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid."/".$rid.".zip");
 foreach($dtypes as $dt){
 	
 	/* clear any entries for this dtype and this node */
-	$NVX_DB->DB_CLEAR(array("ALL"));
-	$NVX_DB->DB_SET_FILTER("`nid`={$nid}");
-	$NVX_DB->DB_QUERY("DELETE","FROM `{$dt}`");
+	$NVX_DB->CLEAR(array("ALL"));
+	$NVX_DB->SET_FILTER("`nid`={$nid}");
+	$NVX_DB->QUERY("DELETE","FROM `{$dt}`");
 	
 
 	/* do we have any data for the current dtype */
@@ -85,8 +85,8 @@ foreach($dtypes as $dt){
 		foreach($data[$dt] as $d){
 			
 			/* put the entry into the database */
-			$NVX_DB->DB_CLEAR(array("ALL"));
-			$NVX_DB->DB_QUERY("INSERT","INTO `{$dt}` (`id`,`nid`,`gid`,`vid`,`pid`,`fid`,`values`) " . 
+			$NVX_DB->CLEAR(array("ALL"));
+			$NVX_DB->QUERY("INSERT","INTO `{$dt}` (`id`,`nid`,`gid`,`vid`,`pid`,`fid`,`values`) " . 
 							"VALUES ({$d["id"]},{$d["nid"]},{$d["gid"]},{$d["vid"]},{$d["pid"]},{$d["fid"]},'{$d["values"]}')");
 							
 			switch ($dt):

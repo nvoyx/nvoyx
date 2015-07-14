@@ -141,9 +141,9 @@ class Setup{
 		self::$BOOT = $Boot;
 		
 		/* go fetch an array of the current tables associated with this database */
-		self::$DB->DB_CLEAR(array("ALL"));
+		self::$DB->CLEAR(array("ALL"));
 		
-		$rs = self::$DB->DB_QUERY("COUNT TABLES","");
+		$rs = self::$DB->QUERY("COUNT TABLES","");
 				
 		/* failed to find any tables, */
 		if($rs==0){
@@ -162,12 +162,12 @@ class Setup{
 				foreach($rs as $r){
 					
 					/* drop the specified table if it exists */
-					self::$DB->DB_CLEAR(array("ALL"));
-					self::$DB->DB_QUERY("DROP TABLE","`{$r['TABLE']}`");
+					self::$DB->CLEAR(array("ALL"));
+					self::$DB->QUERY("DROP TABLE","`{$r['TABLE']}`");
 										
 					/* create an empty table as specified including our standard primary key*/
-					self::$DB->DB_CLEAR(array("ALL"));
-					self::$DB->DB_QUERY("CREATE TABLE","`{$r['TABLE']}` (`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT, PRIMARY KEY(`id`)) ENGINE {$r['ENGINE']} CHARACTER SET {$r['CHARACTER SET']} COLLATE {$r['COLLATE']}");
+					self::$DB->CLEAR(array("ALL"));
+					self::$DB->QUERY("CREATE TABLE","`{$r['TABLE']}` (`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT, PRIMARY KEY(`id`)) ENGINE {$r['ENGINE']} CHARACTER SET {$r['CHARACTER SET']} COLLATE {$r['COLLATE']}");
 					
 					/* cycle through the columns to be attached to this table */
 					foreach($r['FIELDS'] as $c){
@@ -225,8 +225,8 @@ class Setup{
 						if($q!=""){
 							
 							/* add the  column to the table */
-							self::$DB->DB_CLEAR(array("ALL"));
-							self::$DB->DB_QUERY("ALTER TABLE",$q);
+							self::$DB->CLEAR(array("ALL"));
+							self::$DB->QUERY("ALTER TABLE",$q);
 						}
 						
 					}
@@ -256,8 +256,8 @@ class Setup{
 								$row["val"] = "(" . substr($row["val"],0,-2) . ")";
 																
 								/* insert the row into the database table */
-								self::$DB->DB_CLEAR(array("ALL"));
-								self::$DB->DB_QUERY("INSERT","INTO `{$r['TABLE']}` {$row['key']} VALUES {$row['val']}");
+								self::$DB->CLEAR(array("ALL"));
+								self::$DB->QUERY("INSERT","INTO `{$r['TABLE']}` {$row['key']} VALUES {$row['val']}");
 							
 								/* if the row we have just added belongs to the user table */
 								if($r["TABLE"]=="user"){
@@ -268,8 +268,8 @@ class Setup{
 									$u["contact"] = self::$BOOT->CYPHER(array("TYPE"=>"encrypt","STRING"=>$Config["SUPERCONTACT"]));
 									
 									/* push changes into user table */
-									self::$DB->DB_CLEAR(array("ALL"));
-									self::$DB->DB_QUERY("UPDATE","`user` SET `user`.`username`='{$u["username"]}',`user`.`password`='{$u["password"]}',`user`.`contact`='{$u["contact"]}'");
+									self::$DB->CLEAR(array("ALL"));
+									self::$DB->QUERY("UPDATE","`user` SET `user`.`username`='{$u["username"]}',`user`.`password`='{$u["password"]}',`user`.`contact`='{$u["contact"]}'");
 								}
 							}
 						}

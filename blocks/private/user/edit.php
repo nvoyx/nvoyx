@@ -17,9 +17,9 @@ $uid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
 
 
 /* grab all currently registered users */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$users = $NVX_DB->DB_QUERY("SELECT","* FROM `user`");
-$depts = $NVX_DB->DB_QUERY("SELECT","* FROM `dept`");
+$NVX_DB->CLEAR(array("ALL"));
+$users = $NVX_DB->QUERY("SELECT","* FROM `user`");
+$depts = $NVX_DB->QUERY("SELECT","* FROM `dept`");
 
 /* lookup the user details */
 foreach($users as $user){if($user["user.id"]==$uid){break;}}

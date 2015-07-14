@@ -39,10 +39,10 @@ foreach($NVX_GROUP->FETCH_ARRAY() as $GROUP){
 $nvids = $NVX_BOOT->JSON($nvids,"encode");
 
 /* add a page to the database and grab its nid */
-$NVX_DB->DB_CLEAR(array("ALL"));
+$NVX_DB->CLEAR(array("ALL"));
 $q = "INTO `page` (`id`,`tid`,`nvids`,`title`,`alias`,`heading`,`date`,`modified`,`by`) VALUES " .
 		"(null,{$tid},'{$nvids}','nvoyxid{$mt}','nvoyxid{$alias}','{$mt}','{$mt}','{$mt}',{$NVX_USER->FETCH_ENTRY("id")})";
-$nid = $NVX_DB->DB_QUERY("INSERT",$q);
+$nid = $NVX_DB->QUERY("INSERT",$q);
 
 
 /* check that a new page has been created, create a rollback folder then go visit it */

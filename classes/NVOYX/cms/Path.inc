@@ -178,9 +178,9 @@ class Path{
 			if(is_array($v)){
 				
 				/* push changes into path table */
-				self::$DB->DB_CLEAR(array("ALL"));
-				self::$DB->DB_SET_FILTER("`path`.`id`={$pid}");
-				self::$DB->DB_QUERY("UPDATE","`path` SET `path`.`url`='{$v["url"]}',`path`.`access`='{$v["access"]}'");
+				self::$DB->CLEAR(array("ALL"));
+				self::$DB->SET_FILTER("`path`.`id`={$pid}");
+				self::$DB->QUERY("UPDATE","`path` SET `path`.`url`='{$v["url"]}',`path`.`access`='{$v["access"]}'");
 			}
 		}
 	}

@@ -13,7 +13,7 @@
  */
 
 /* add a blank member entry */
-$NVX_DB->DB_CLEAR(array("ALL"));
+$NVX_DB->CLEAR(array("ALL"));
 
 /* encrypted timestamp */
 $r = $NVX_BOOT->CYPHER(array("TYPE"=>"encrypt","STRING"=>$NVX_BOOT->FETCH_ENTRY("timestamp")));
@@ -21,7 +21,7 @@ $r = $NVX_BOOT->CYPHER(array("TYPE"=>"encrypt","STRING"=>$NVX_BOOT->FETCH_ENTRY(
 /* joined date  is now*/
 $j = date('Y-m-d H:i:00',$NVX_BOOT->FETCH_ENTRY("timestamp"));
 
-$mid = $NVX_DB->DB_QUERY("INSERT","INTO `member` (`id`,`username`,`password`,`joined`) " . 
+$mid = $NVX_DB->QUERY("INSERT","INTO `member` (`id`,`username`,`password`,`joined`) " . 
 							"VALUES (NULL,'{$r}','{$r}','{$j}')");
 
 /* redirect to the new member edit */

@@ -181,9 +181,9 @@ class Ajaxmanager{
 			if(is_array($v)){
 				
 				/* push changes into path table */
-				self::$DB->DB_CLEAR(array("ALL"));
-				self::$DB->DB_SET_FILTER("`path`.`id`={$id}");
-				self::$DB->DB_QUERY("UPDATE","`path` SET `path`.`url`='{$v["url"]}',`path`.`access`='{$v["access"]}'");
+				self::$DB->CLEAR(array("ALL"));
+				self::$DB->SET_FILTER("`path`.`id`={$id}");
+				self::$DB->QUERY("UPDATE","`path` SET `path`.`url`='{$v["url"]}',`path`.`access`='{$v["access"]}'");
 				
 				/* has the file name changed */
 				if($v["url"] != $v["orig_url"]){

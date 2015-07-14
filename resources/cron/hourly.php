@@ -20,13 +20,13 @@ $now = date('Y-m-d H:i:00.00',self::$BOOT->FETCH_ENTRY("timestamp"));
 foreach($options as $option){
 	
 	/* clear any db query settings  */
-	self::$DB->DB_CLEAR(array("ALL"));
+	self::$DB->CLEAR(array("ALL"));
 			
 	/* filter by any pages that should now be either published or closed */
-	self::$DB->DB_SET_FILTER("`page`.`{$option[0]}`=1 && `page`.`{$option[1]}` <= '{$now}'");
+	self::$DB->SET_FILTER("`page`.`{$option[0]}`=1 && `page`.`{$option[1]}` <= '{$now}'");
 			
 	/* fetch the query results */
-	$rs = self::$DB->DB_QUERY("SELECT","`page`.`id`,`page`.`{$option[1]}` FROM `page`");
+	$rs = self::$DB->QUERY("SELECT","`page`.`id`,`page`.`{$option[1]}` FROM `page`");
 
 	/* do we have any pages with auto information */
 	if($rs){
@@ -35,10 +35,10 @@ foreach($options as $option){
 		foreach($rs as $r){
 			
 				/* update the db listing for these files */
-				self::$DB->DB_CLEAR(array("ALL"));
-				self::$DB->DB_SET_LIMIT(1);
-				self::$DB->DB_SET_FILTER("`page`.`id`={$r["page.id"]}");
-				self::$DB->DB_QUERY("UPDATE","`page` SET `page`.`{$option[0]}`=0,`page`.`{$option[1]}`=NULL,`page`.`published`={$option[2]}");
+				self::$DB->CLEAR(array("ALL"));
+				self::$DB->SET_LIMIT(1);
+				self::$DB->SET_FILTER("`page`.`id`={$r["page.id"]}");
+				self::$DB->QUERY("UPDATE","`page` SET `page`.`{$option[0]}`=0,`page`.`{$option[1]}`=NULL,`page`.`published`={$option[2]}");
 		}
 		
 		/* we need to clear all cached data */

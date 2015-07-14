@@ -16,9 +16,9 @@
 $nid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
 
 /* select the page tid */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$NVX_DB->DB_SET_FILTER("`page`.`id`={$nid}");
-$tid = $NVX_DB->DB_QUERY("SELECT","`page`.`tid` FROM `page`");
+$NVX_DB->CLEAR(array("ALL"));
+$NVX_DB->SET_FILTER("`page`.`id`={$nid}");
+$tid = $NVX_DB->QUERY("SELECT","`page`.`tid` FROM `page`");
 
 /* if we have a page type */
 if($tid){
@@ -63,9 +63,9 @@ if($tid){
 		}
 		
 		/* delete the page reference */
-		$NVX_DB->DB_CLEAR(array("ALL"));
-		$NVX_DB->DB_SET_FILTER("`page`.`id`={$nid}");
-		$NVX_DB->DB_QUERY("DELETE","FROM `page`");
+		$NVX_DB->CLEAR(array("ALL"));
+		$NVX_DB->SET_FILTER("`page`.`id`={$nid}");
+		$NVX_DB->QUERY("DELETE","FROM `page`");
 
 		/* create an array of field types */
 		$ftypes = array("datebox","filelist","imagelist","mselect","sselect","textarea","textbox","heirarchy","tagbox");
@@ -74,9 +74,9 @@ if($tid){
 		foreach($ftypes as $ftype){
 			
 			/* delete any field references */
-			$NVX_DB->DB_CLEAR(array("ALL"));
-			$NVX_DB->DB_SET_FILTER("`{$ftype}`.`nid`={$nid}");
-			$NVX_DB->DB_QUERY("DELETE","FROM `{$ftype}`");
+			$NVX_DB->CLEAR(array("ALL"));
+			$NVX_DB->SET_FILTER("`{$ftype}`.`nid`={$nid}");
+			$NVX_DB->QUERY("DELETE","FROM `{$ftype}`");
 		}		
 	}
 }

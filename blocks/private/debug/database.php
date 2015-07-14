@@ -12,8 +12,8 @@
  * returns database tables
  */
 
-$NVX_DB->DB_CLEAR(array("ALL"));
-$tables = $NVX_DB->DB_QUERY("SHOW TABLES",false);
+$NVX_DB->CLEAR(array("ALL"));
+$tables = $NVX_DB->QUERY("SHOW TABLES",false);
 
 if(array_key_exists("table",$_GET)){
 	
@@ -24,12 +24,12 @@ if(array_key_exists("table",$_GET)){
 }
 
 /* grab the auto_increment value for this table */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$next_id = $NVX_DB->DB_QUERY("NEXT ID",$t);
+$NVX_DB->CLEAR(array("ALL"));
+$next_id = $NVX_DB->QUERY("NEXT ID",$t);
 
 /* grab the table columns */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$columns = $NVX_DB->DB_QUERY("FETCH COLUMNS",$t);
+$NVX_DB->CLEAR(array("ALL"));
+$columns = $NVX_DB->QUERY("FETCH COLUMNS",$t);
 
 /* has data been posted */
 if(!empty($_POST)){
@@ -137,9 +137,9 @@ if(!empty($_POST)){
 		if($query["id"]>-1){
 			
 			/* remove the row from the table */
-			$NVX_DB->DB_CLEAR(array("ALL"));
-			$NVX_DB->DB_SET_FILTER("`id`={$query["id"]}");
-			$NVX_DB->DB_QUERY("DELETE","FROM `{$t}`");
+			$NVX_DB->CLEAR(array("ALL"));
+			$NVX_DB->SET_FILTER("`id`={$query["id"]}");
+			$NVX_DB->QUERY("DELETE","FROM `{$t}`");
 		}
 	}
 	
@@ -153,9 +153,9 @@ if(!empty($_POST)){
 			$query["outline"] = "`{$t}` SET ".implode(", ",$query["outline"]);
 			
 			/* push changes into the table */
-			$NVX_DB->DB_CLEAR(array("ALL"));
-			$NVX_DB->DB_SET_FILTER("`{$t}`.`id`={$query["id"]}");
-			$NVX_DB->DB_QUERY("UPDATE",$query["outline"]);
+			$NVX_DB->CLEAR(array("ALL"));
+			$NVX_DB->SET_FILTER("`{$t}`.`id`={$query["id"]}");
+			$NVX_DB->QUERY("UPDATE",$query["outline"]);
 			
 		}
 	}
@@ -180,13 +180,13 @@ if(!empty($_POST)){
 		$query["output"] .= " VALUES (".implode(", ",$query["outline"]).")";
 		
 		/* push changes into the table */
-		$NVX_DB->DB_CLEAR(array("ALL"));
-		$NVX_DB->DB_QUERY("INSERT",$query["output"]);
+		$NVX_DB->CLEAR(array("ALL"));
+		$NVX_DB->QUERY("INSERT",$query["output"]);
 	}
 }
 
-$NVX_DB->DB_CLEAR(array("ALL"));
-$rows = $NVX_DB->DB_QUERY("SELECT","* FROM `{$t}`");
+$NVX_DB->CLEAR(array("ALL"));
+$rows = $NVX_DB->QUERY("SELECT","* FROM `{$t}`");
 
 ?>
 

@@ -13,9 +13,9 @@
  */
 
 /* delete a redirects entry */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$NVX_DB->DB_SET_FILTER("`id`={$NVX_BOOT->FETCH_ENTRY("breadcrumb",3)}");
-$NVX_DB->DB_QUERY("DELETE","FROM `redirects`");
+$NVX_DB->CLEAR(array("ALL"));
+$NVX_DB->SET_FILTER("`id`={$NVX_BOOT->FETCH_ENTRY("breadcrumb",3)}");
+$NVX_DB->QUERY("DELETE","FROM `redirects`");
 
 /* redirect to the redirects listings */
 $NVX_BOOT->HEADER(array("LOCATION"=>"/settings/redirects/list"));

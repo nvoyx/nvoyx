@@ -37,9 +37,9 @@ if(array_key_exists("parents",$_POST)){
 		$nids = $NVX_BOOT->JSON($nids,"encode");
 		
 		/* grab any suitable pages */
-		$NVX_DB->DB_CLEAR(array("ALL"));
-		$NVX_DB->DB_SET_FILTER("`heirarchy`.`gid`={$gid} AND `heirarchy`.`fid`={$fid} AND `heirarchy`.`values` LIKE '%{$nids}%' AND `page`.`id`=`heirarchy`.`nid` AND `page`.`id`!={$nid}");
-		$pages = $NVX_DB->DB_QUERY("SELECT","DISTINCT(`page`.`id`),`page`.`title` FROM `heirarchy`,`page`");
+		$NVX_DB->CLEAR(array("ALL"));
+		$NVX_DB->SET_FILTER("`heirarchy`.`gid`={$gid} AND `heirarchy`.`fid`={$fid} AND `heirarchy`.`values` LIKE '%{$nids}%' AND `page`.`id`=`heirarchy`.`nid` AND `page`.`id`!={$nid}");
+		$pages = $NVX_DB->QUERY("SELECT","DISTINCT(`page`.`id`),`page`.`title` FROM `heirarchy`,`page`");
 		
 		/* if we have suitable entries */
 		if($pages){

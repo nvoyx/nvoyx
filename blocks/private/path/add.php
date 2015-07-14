@@ -13,8 +13,8 @@
  */
 
 /* add a blank path entry */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$pid = $NVX_DB->DB_QUERY("INSERT","INTO `path` (`id`,`url`,`access`) " . 
+$NVX_DB->CLEAR(array("ALL"));
+$pid = $NVX_DB->QUERY("INSERT","INTO `path` (`id`,`url`,`access`) " . 
 							"VALUES (NULL,'/{$NVX_BOOT->FETCH_ENTRY("timestamp")}','s')");
 
 /* redirect to the new path-edit */

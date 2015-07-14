@@ -207,9 +207,9 @@ class Block{
 			if(is_array($v)){
 				
 				/* push changes into block table */
-				self::$DB->DB_CLEAR(array("ALL"));
-				self::$DB->DB_SET_FILTER("`block`.`id`={$bid}");
-				self::$DB->DB_QUERY("UPDATE","`block` SET `block`.`name`='{$v["name"]}',`block`.`tid`='{$v["tid"]}',`block`.`access`='{$v["access"]}',`block`.`params`='{$v["params"]}'");
+				self::$DB->CLEAR(array("ALL"));
+				self::$DB->SET_FILTER("`block`.`id`={$bid}");
+				self::$DB->QUERY("UPDATE","`block` SET `block`.`name`='{$v["name"]}',`block`.`tid`='{$v["tid"]}',`block`.`access`='{$v["access"]}',`block`.`params`='{$v["params"]}'");
 			}
 		}
 	}

@@ -14,8 +14,8 @@
 
 
 /* fetch all the current members */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$members = $NVX_DB->DB_QUERY("SELECT","`member`.`id`,`member`.`title`,`member`.`firstname`,`member`.`lastname`,`member`.`state`,`member`.`username` FROM `member`");
+$NVX_DB->CLEAR(array("ALL"));
+$members = $NVX_DB->QUERY("SELECT","`member`.`id`,`member`.`title`,`member`.`firstname`,`member`.`lastname`,`member`.`state`,`member`.`username` FROM `member`");
 ?>
 
 <img class="blank" src="/settings/resources/files/images/private/header-top.png" width="714" height="26">

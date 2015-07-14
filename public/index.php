@@ -56,13 +56,13 @@ $NVX_SETUP = \NVOYX\site\Setup::CONNECT($_SERVER['DOCUMENT_ROOT']."/../configura
 $config = $NVX_SETUP->FETCH_OPTIONS();
 
 /* configure the website */
-\NVOYX\site\Db::DB_CONFIGURE($config);
+\NVOYX\site\Db::CONFIGURE($config);
 
 /*
  * @instance
  * connect to the Db
  */
-$NVX_DB = \NVOYX\site\Db::DB_CONNECT();
+$NVX_DB = \NVOYX\site\Db::CONNECT();
 
 /* if db connection has failed */
 if (mysqli_connect_errno()) {
@@ -293,9 +293,9 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 				$NVX_PAGE->CLEAR();
 				
 				/*grab any heirarchy data from the heirarchy table */
-				$NVX_DB->DB_CLEAR(array("ALL"));
-				$NVX_DB->DB_SET_FILTER("`page`.`id`=`heirarchy`.`nid`");
-				$rs = $NVX_DB->DB_QUERY("SELECT","`heirarchy`.`values`,`heirarchy`.`nid`,`page`.`alias`,`page`.`tid` FROM `heirarchy`,`page`");
+				$NVX_DB->CLEAR(array("ALL"));
+				$NVX_DB->SET_FILTER("`page`.`id`=`heirarchy`.`nid`");
+				$rs = $NVX_DB->QUERY("SELECT","`heirarchy`.`values`,`heirarchy`.`nid`,`page`.`alias`,`page`.`tid` FROM `heirarchy`,`page`");
 				
 				/* do we have any heirarchy data */
 				if($rs){
@@ -332,9 +332,9 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 									
 									
 									/* grab details for this heirarchy level page */
-									$NVX_DB->DB_CLEAR(array("ALL"));
-									$NVX_DB->DB_SET_FILTER("`page`.`id`={$n}");
-									$page_alias = $NVX_DB->DB_QUERY("SELECT","`page`.`id`,`page`.`tid`,`page`.`alias` FROM `page`");
+									$NVX_DB->CLEAR(array("ALL"));
+									$NVX_DB->SET_FILTER("`page`.`id`={$n}");
+									$page_alias = $NVX_DB->QUERY("SELECT","`page`.`id`,`page`.`tid`,`page`.`alias` FROM `page`");
 									
 									/* if we have an alias */
 									if($page_alias){

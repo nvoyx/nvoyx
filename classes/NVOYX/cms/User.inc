@@ -174,9 +174,9 @@ class User{
 				$_POST["password"] = self::$BOOT->CYPHER(array("TYPE"=>"encrypt","STRING"=>$_POST["password"]));
 				
 				/* look for a user matching this record */
-				self::$DB->DB_CLEAR(array("ALL"));
-				self::$DB->DB_SET_FILTER("`user`.`username`='{$_POST["username"]}' AND `user`.`password`='{$_POST["password"]}'");
-				$rs = self::$DB->DB_QUERY("SELECT","* FROM `user`");
+				self::$DB->CLEAR(array("ALL"));
+				self::$DB->SET_FILTER("`user`.`username`='{$_POST["username"]}' AND `user`.`password`='{$_POST["password"]}'");
+				$rs = self::$DB->QUERY("SELECT","* FROM `user`");
 				
 				/* we have a user record */
 				if(isset($rs)){
@@ -287,9 +287,9 @@ class User{
 					if(is_array($v)){
 				
 						/* push changes into user table */
-						self::$DB->DB_CLEAR(array("ALL"));
-						self::$DB->DB_SET_FILTER("`user`.`id`={$uid}");
-						self::$DB->DB_QUERY("UPDATE","`user` SET `user`.`username`='{$v["username"]}',`user`.`password`='{$v["password"]}',`user`.`contact`='{$v["contact"]}',`user`.`telephone`='{$v["telephone"]}',`user`.`email`='{$v["email"]}',`user`.`type`='{$v["type"]}',`user`.`filter`={$v["filter"]},`user`.`dept`={$v["dept"]}");
+						self::$DB->CLEAR(array("ALL"));
+						self::$DB->SET_FILTER("`user`.`id`={$uid}");
+						self::$DB->QUERY("UPDATE","`user` SET `user`.`username`='{$v["username"]}',`user`.`password`='{$v["password"]}',`user`.`contact`='{$v["contact"]}',`user`.`telephone`='{$v["telephone"]}',`user`.`email`='{$v["email"]}',`user`.`type`='{$v["type"]}',`user`.`filter`={$v["filter"]},`user`.`dept`={$v["dept"]}");
 					}
 					break;
 			endswitch;

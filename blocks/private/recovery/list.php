@@ -13,13 +13,13 @@
  */
 
 /* grab the "type filter variable" */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$NVX_DB->DB_SET_FILTER("`user`.`id`={$_SESSION['id']}");
-$type_filter = $NVX_DB->DB_QUERY("SELECT","* FROM `user`")[0]["user.filter"];
+$NVX_DB->CLEAR(array("ALL"));
+$NVX_DB->SET_FILTER("`user`.`id`={$_SESSION['id']}");
+$type_filter = $NVX_DB->QUERY("SELECT","* FROM `user`")[0]["user.filter"];
 
 /* grab all currently registered users */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$users = $NVX_DB->DB_QUERY("SELECT","* FROM `user`");
+$NVX_DB->CLEAR(array("ALL"));
+$users = $NVX_DB->QUERY("SELECT","* FROM `user`");
 
 /* create an empty user array */
 $u = array();

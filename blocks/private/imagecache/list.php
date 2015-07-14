@@ -13,9 +13,9 @@
  */
 
 /* grab the imagecaches */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$NVX_DB->DB_SET_ORDER(array("`imagecache`.`name`"=>"ASC"));
-$imagecaches = $NVX_DB->DB_QUERY("SELECT","* FROM `imagecache`");
+$NVX_DB->CLEAR(array("ALL"));
+$NVX_DB->SET_ORDER(array("`imagecache`.`name`"=>"ASC"));
+$imagecaches = $NVX_DB->QUERY("SELECT","* FROM `imagecache`");
 ?>
 
 <img class="blank" src="/settings/resources/files/images/private/header-top.png" width="714" height="26">

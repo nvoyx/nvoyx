@@ -17,8 +17,8 @@ $did = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
 
 
 /* grab all departments */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$departments = $NVX_DB->DB_QUERY("SELECT","* FROM `dept`");
+$NVX_DB->CLEAR(array("ALL"));
+$departments = $NVX_DB->QUERY("SELECT","* FROM `dept`");
 
 /* lookup the department details */
 foreach($departments as $department){if($department["dept.id"]==$did){break;}}

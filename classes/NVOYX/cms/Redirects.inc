@@ -208,9 +208,9 @@ class Redirects{
 					if(is_array($v)){
 				
 						/* push changes into redirects table */
-						self::$DB->DB_CLEAR(array("ALL"));
-						self::$DB->DB_SET_FILTER("`redirects`.`id`={$rid}");
-						self::$DB->DB_QUERY("UPDATE","`redirects` SET `redirects`.`old`='{$v["old"]}',`redirects`.`new`='{$v["new"]}'");
+						self::$DB->CLEAR(array("ALL"));
+						self::$DB->SET_FILTER("`redirects`.`id`={$rid}");
+						self::$DB->QUERY("UPDATE","`redirects` SET `redirects`.`old`='{$v["old"]}',`redirects`.`new`='{$v["new"]}'");
 					}
 					break;
 			endswitch;

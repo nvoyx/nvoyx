@@ -125,8 +125,8 @@ class Block{
 			$r = self::$BOOT->JSON($a,"encode");
 		
 			/* update the specified block details on the database */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_QUERY("UPDATE","`block` SET `block`.`params`='{$r}' WHERE `block`.`id`={$i}");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->QUERY("UPDATE","`block` SET `block`.`params`='{$r}' WHERE `block`.`id`={$i}");
 		}
 	}
 	
@@ -168,9 +168,9 @@ class Block{
 		if(!$cache){
 			
 			/* grab the block details from the database */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_ORDER(array("`block`.`name`"=>"ASC"));
-			$rs = self::$DB->DB_QUERY("SELECT","* FROM `block`");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_ORDER(array("`block`.`name`"=>"ASC"));
+			$rs = self::$DB->QUERY("SELECT","* FROM `block`");
 			
 			/* for each db block */
 			foreach($rs as $r){

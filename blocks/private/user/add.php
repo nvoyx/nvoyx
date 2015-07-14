@@ -13,9 +13,9 @@
  */
 
 /* add a blank user entry */
-$NVX_DB->DB_CLEAR(array("ALL"));
+$NVX_DB->CLEAR(array("ALL"));
 $date = date('Y-m-d',$NVX_BOOT->FETCH_ENTRY("timestamp"));
-$pid = $NVX_DB->DB_QUERY("INSERT","INTO `user` (`id`,`username`,`password`,`type`,`filter`,`dept`,`date`,`last`) " . 
+$pid = $NVX_DB->QUERY("INSERT","INTO `user` (`id`,`username`,`password`,`type`,`filter`,`dept`,`date`,`last`) " . 
 							"VALUES (NULL,'{$NVX_BOOT->CYPHER(array("TYPE"=>"encrypt","STRING"=>$NVX_BOOT->FETCH_ENTRY("timestamp")))}',".
 											"'{$NVX_BOOT->CYPHER(array("TYPE"=>"encrypt","STRING"=>$NVX_BOOT->FETCH_ENTRY("timestamp")))}','a',0,1,'{$date}','0000-00-00 00:00:00')");
 

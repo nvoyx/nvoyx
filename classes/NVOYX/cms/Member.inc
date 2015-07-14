@@ -190,10 +190,9 @@ class Member{
 						$v[$key] = $value;
 						
 						/* check through existing comments and replies, updating the approved field as appropriate */
-						self::$DB->DB_CLEAR(array("ALL"));
-						self::$DB->DB_SET_FILTER("`comments`.`mid`={$mid}");
-						self::$DB->DB_QUERY("UPDATE","`comments` SET `comments`.`approved`={$v[$key]}",true);
-						//echo self::$DB->DB_DEBUG();die();
+						self::$DB->CLEAR(array("ALL"));
+						self::$DB->SET_FILTER("`comments`.`mid`={$mid}");
+						self::$DB->QUERY("UPDATE","`comments` SET `comments`.`approved`={$v[$key]}",true);
 						break;
 					
 					default:
@@ -208,10 +207,10 @@ class Member{
 			if(is_array($v)){
 				
 				/* push changes into member table */
-				self::$DB->DB_CLEAR(array("ALL"));
-				self::$DB->DB_SET_LIMIT(1);
-				self::$DB->DB_SET_FILTER("`member`.`id`={$mid}");
-				self::$DB->DB_QUERY("UPDATE","`member` SET `member`.`title`='{$v["title"]}',".
+				self::$DB->CLEAR(array("ALL"));
+				self::$DB->SET_LIMIT(1);
+				self::$DB->SET_FILTER("`member`.`id`={$mid}");
+				self::$DB->QUERY("UPDATE","`member` SET `member`.`title`='{$v["title"]}',".
 									"`member`.`firstname`='{$v["firstname"]}',".
 									"`member`.`lastname`='{$v["lastname"]}',".
 									"`member`.`position`='{$v["position"]}',".

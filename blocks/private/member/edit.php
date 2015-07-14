@@ -16,10 +16,10 @@
 $mid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
 
 /* lookup the members details */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$NVX_DB->DB_SET_FILTER("`member`.`id`={$mid}");
-$NVX_DB->DB_SET_LIMIT(1);
-$rs = $NVX_DB->DB_QUERY("SELECT","* FROM `member`");
+$NVX_DB->CLEAR(array("ALL"));
+$NVX_DB->SET_FILTER("`member`.`id`={$mid}");
+$NVX_DB->SET_LIMIT(1);
+$rs = $NVX_DB->QUERY("SELECT","* FROM `member`");
 
 /* create an empty array to hold the decyphered member details */
 $member=array();
