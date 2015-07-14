@@ -37,7 +37,7 @@ $TYPE = $NVX_TYPE->FETCH_BY_TID($PAGE["tid"]);
 if(($TYPE["comments"]==1 || $TYPE["comments"]==2) && $PAGE["comments"]==1){
 							
 	/* set $COMMENTS */
-	$NVX_COMMENTS = Comments::CONNECT($NVX_DB,$NVX_BOOT);		
+	$NVX_COMMENTS = \NVOYX\site\Comments::CONNECT($NVX_DB,$NVX_BOOT);		
 
 	/* grab any comments and replies*/
 	$comments = $NVX_COMMENTS->FETCH_BY_NID($PAGE['id']);
