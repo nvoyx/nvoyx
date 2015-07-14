@@ -13,7 +13,7 @@
  */
 
 /* array of cms folders with content to be viewed */
-$folders = array("ckimages","documents","images","session","tmp","videos");
+$folders = array("ckimages","documents","images","session","tmp");
 
 /* do we have a get variable folder */
 if(array_key_exists("folder",$_GET)){
