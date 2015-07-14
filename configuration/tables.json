@@ -1737,14 +1737,14 @@
 						"value":"'[\"/settings/resources/ckeditor/plugins/aspell/spellerpages/server-scripts/spellchecker.php\",\"/settings/resources/captcha/captcha.php\",\"/settings/resources/cron/hourly.php\",\"/settings/resources/cron/daily.php\",\"/settings/resources/cron/weekly.php\",\"/settings/resources/cron/monthly.php\",\"/settings/resources/sitemap/sitemap.php\",\"/settings/resources/rss/rss.php\",\"/settings/resources/browser/upgrade.php\"]'"
 					},
 					{
-						"name":"'404'",
-						"notes":"'<p>node id of 404 error page</p>'",
-						"value":"'[\"3\"]'"
-					},
-					{
 						"name":"'members'",
 						"notes":"'<p>enable site membership</p>'",
 						"value":"'[\"0\"]'"
+					},
+					{
+						"name":"'404'",
+						"notes":"'<p>node id of 404 error page</p>'",
+						"value":"'[\"3\"]'"
 					}
 				]
 	}
