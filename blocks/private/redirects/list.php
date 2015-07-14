@@ -32,12 +32,12 @@ $redirects = $NVX_DB->DB_QUERY("SELECT","* FROM `redirects`");
 		<a class="fr" href="/settings/redirects/add">ADD</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/settings/content/list">UP</a>
 	</div>
 	
-	<?php /* cycle through the redirects */ foreach($redirects as $redirect){ ?>
+	<?php /* cycle through the redirects */ if($redirects){ foreach($redirects as $redirect){ ?>
 	<div class="blank row">
 		<label class="blank fl half"><?=$redirect["redirects.old"];?></label>
 		<a title="edit" href="<?="/settings/redirects/edit/".$redirect["redirects.id"];?>"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-edit.png"></a>
 		<a title="delete" href="<?php echo "/settings/redirects/delete/".$redirect["redirects.id"];?>"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-delete.png"></a>
 	</div>
-	<?php } ?>
+	<?php }} ?>
 	
 </div>
