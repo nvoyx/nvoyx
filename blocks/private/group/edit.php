@@ -114,7 +114,6 @@ if(isset($group)){ ?>
 				<a class="blank mini fl" href="<?php echo "/settings/tagbox/add/{$group["id"]}/{$group["nfid"]}"; ?>">TAGBOX</a>
 				<a class="blank mini fl" href="<?php echo "/settings/textarea/add/{$group["id"]}/{$group["nfid"]}"; ?>">TEXTAREA</a>
 				<a class="blank mini fl" href="<?php echo "/settings/textbox/add/{$group["id"]}/{$group["nfid"]}"; ?>">TEXTBOX</a>
-				<a class="blank mini fl" href="<?php echo "/settings/videolist/add/{$group["id"]}/{$group["nfid"]}"; ?>">VIDEOLIST</a>
 			</div>
 		</div>
 		
