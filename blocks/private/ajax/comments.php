@@ -34,9 +34,9 @@ if(array_key_exists("action",$p)){
 					$p["pass"] = $NVX_BOOT->CYPHER(array("STRING"=>$p["pass"],"TYPE"=>"encrypt"));
 					
 					/* attempt to fetch the requested member details */
-					$NVX_DB->DB_CLEAR(array("ALL"));
-					$NVX_DB->DB_SET_FILTER("`member`.`username`='{$p["user"]}' AND `member`.`password`='{$p["pass"]}'");
-					$member = $NVX_DB->DB_QUERY("SELECT","`member`.* FROM `member`");
+					$NVX_DB->CLEAR(array("ALL"));
+					$NVX_DB->SET_FILTER("`member`.`username`='{$p["user"]}' AND `member`.`password`='{$p["pass"]}'");
+					$member = $NVX_DB->QUERY("SELECT","`member`.* FROM `member`");
 					
 					/* have we found a valid member */
 					if($member){
@@ -85,8 +85,8 @@ if(array_key_exists("action",$p)){
 							
 							$date = date("Y-m-d H:i:s",$NVX_BOOT->FETCH_ENTRY("timestamp"));
 							
-							$NVX_DB->DB_CLEAR(array("ALL"));
-							$cmt = $NVX_DB->DB_QUERY("INSERT","INTO `comments` (`id`,`mid`,`nid`,`approved`,`date`,`values`) " . 
+							$NVX_DB->CLEAR(array("ALL"));
+							$cmt = $NVX_DB->QUERY("INSERT","INTO `comments` (`id`,`mid`,`nid`,`approved`,`date`,`values`) " . 
 								"VALUES (NULL,{$p["member"]},{$p["node"]},1,'{$date}','{$p["comment"]}')");
 								
 							echo $cmt;
@@ -123,8 +123,8 @@ if(array_key_exists("action",$p)){
 							
 							$date = date("Y-m-d H:i:s",$NVX_BOOT->FETCH_ENTRY("timestamp"));
 							
-							$NVX_DB->DB_CLEAR(array("ALL"));
-							$rply = $NVX_DB->DB_QUERY("INSERT","INTO `comments` (`id`,`mid`,`nid`,`rid`,`approved`,`date`,`values`) " . 
+							$NVX_DB->CLEAR(array("ALL"));
+							$rply = $NVX_DB->QUERY("INSERT","INTO `comments` (`id`,`mid`,`nid`,`rid`,`approved`,`date`,`values`) " . 
 								"VALUES (NULL,{$p["member"]},{$p["node"]},{$p["rid"]},1,'{$date}','{$p["reply"]}')");
 								
 							echo $rply;

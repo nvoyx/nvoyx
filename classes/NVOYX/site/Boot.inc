@@ -224,7 +224,7 @@ class Boot{
 			if(is_array($value)){$value=$this->JSON($value,"encode");}
 			
 			/* pass the json encoded string for caching with xcache */
-			self::$DB->DB_SET_CACHE($key,$value);
+			self::$DB->SET_CACHE($key,$value);
 		}
 	}
 	
@@ -241,7 +241,7 @@ class Boot{
 			if(!stristr($key, self::$SYS["domain"])){$key = self::$SYS["domain"].$key;}
 			
 			/* try to fetch the cached data */
-			$cache = self::$DB->DB_GET_CACHE($key);
+			$cache = self::$DB->GET_CACHE($key);
 			
 			/* is the returned data a JSON encoded array */
 			if(strpos($cache,"[")==0 || strpos($cache,"{")==0){
@@ -849,11 +849,11 @@ class Boot{
 		self::$SYS["mimes"] = self::$SYS["files"] . "/images/mimes";
 		self::$SYS["ckimages"] = self::$SYS["files"] . "/images/ckeditor";
 		self::$SYS["documents"] = self::$SYS["files"] . "/documents";
-		self::$SYS["mysqlhostinfo"] =  mysqli_get_host_info(self::$DB->DB_FETCH_DB());
-		self::$SYS["cached"] = self::$DB->DB_IS_CACHED();
-		self::$SYS["salt"] = self::$DB->DB_FETCH_OPTION("SALT");
-		self::$SYS["dwebp"] = self::$DB->DB_FETCH_OPTION("DWEBP");
-		self::$SYS["cwebp"] = self::$DB->DB_FETCH_OPTION("CWEBP");
+		self::$SYS["mysqlhostinfo"] =  mysqli_get_host_info(self::$DB->FETCH_DB());
+		self::$SYS["cached"] = self::$DB->IS_CACHED();
+		self::$SYS["salt"] = self::$DB->FETCH_OPTION("SALT");
+		self::$SYS["dwebp"] = self::$DB->FETCH_OPTION("DWEBP");
+		self::$SYS["cwebp"] = self::$DB->FETCH_OPTION("CWEBP");
 		self::$SYS["modcss"] = 0;
 		self::$SYS["modjs"] = 0;
 	}

@@ -13,8 +13,8 @@
  */
 
 /* add a blank type entry */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$tid = $NVX_DB->DB_QUERY("INSERT","INTO `type` (`id`,`name`,`parent`,`prefix`,`view`,`createdelete`,`rss`,`body`,`comments`,`template`,`tags`) " . 
+$NVX_DB->CLEAR(array("ALL"));
+$tid = $NVX_DB->QUERY("INSERT","INTO `type` (`id`,`name`,`parent`,`prefix`,`view`,`createdelete`,`rss`,`body`,`comments`,`template`,`tags`) " . 
 							"VALUES (NULL,'{$NVX_BOOT->FETCH_ENTRY("timestamp")}',-1,'','s','s',0,0,0,3,'[]')");
 
 /* redirect to the new type-edit */

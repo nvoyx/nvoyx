@@ -32,9 +32,9 @@ if($data["node"]["ttp"]==""){$data["node"]["ttp"]="NULL";}
 if($data["node"]["ttc"]==""){$data["node"]["ttc"]="NULL";}
 
 /* update the node */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$NVX_DB->DB_SET_FILTER("`page`.`id`={$nid}");
-$NVX_DB->DB_QUERY("INSERT","INTO `page` (`id`,`tid`,`title`,`heading`,`teaser`,`alias`,`description`,`body`,`importance`,`sttp`,`sttc`,`published`,`ttp`,`ttc`,`date`,`modified`,`by`) " .
+$NVX_DB->CLEAR(array("ALL"));
+$NVX_DB->SET_FILTER("`page`.`id`={$nid}");
+$NVX_DB->QUERY("INSERT","INTO `page` (`id`,`tid`,`title`,`heading`,`teaser`,`alias`,`description`,`body`,`importance`,`sttp`,`sttc`,`published`,`ttp`,`ttc`,`date`,`modified`,`by`) " .
 		"VALUES ({$nid},{$tid},'{$data["node"]["title"]}','{$data["node"]["heading"]}','{$data["node"]["teaser"]}','{$data["node"]["alias"]}',".
 		"'{$data["node"]["description"]}','{$data["node"]["body"]}',{$data["node"]["importance"]},{$data["node"]["sttp"]},{$data["node"]["sttc"]},".
 		"{$data["node"]["published"]},{$data["node"]["ttp"]},{$data["node"]["ttc"]},'{$data["node"]["date"]}','{$mod}',{$_SESSION["id"]})");
@@ -66,8 +66,8 @@ foreach($dtypes as $dt){
 		foreach($data[$dt] as $d){
 			
 			/* put the entry into the database */
-			$NVX_DB->DB_CLEAR(array("ALL"));
-			$NVX_DB->DB_QUERY("INSERT","INTO `{$dt}` (`id`,`nid`,`gid`,`vid`,`pid`,`fid`,`values`) " . 
+			$NVX_DB->CLEAR(array("ALL"));
+			$NVX_DB->QUERY("INSERT","INTO `{$dt}` (`id`,`nid`,`gid`,`vid`,`pid`,`fid`,`values`) " . 
 							"VALUES ({$d["id"]},{$d["nid"]},{$d["gid"]},{$d["vid"]},{$d["pid"]},{$d["fid"]},'{$d["values"]}')");
 							
 			switch ($dt):

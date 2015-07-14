@@ -192,9 +192,9 @@ class Variables{
 			if(is_array($v)){
 				
 				/* push changes into variables table */
-				self::$DB->DB_CLEAR(array("ALL"));
-				self::$DB->DB_SET_FILTER("`variables`.`id`={$vid}");
-				self::$DB->DB_QUERY("UPDATE","`variables` SET `variables`.`name`='{$v["name"]}',`variables`.`notes`='{$v["notes"]}',`variables`.`value`='{$v["value"]}'");
+				self::$DB->CLEAR(array("ALL"));
+				self::$DB->SET_FILTER("`variables`.`id`={$vid}");
+				self::$DB->QUERY("UPDATE","`variables` SET `variables`.`name`='{$v["name"]}',`variables`.`notes`='{$v["notes"]}',`variables`.`value`='{$v["value"]}'");
 			}
 		}
 	}

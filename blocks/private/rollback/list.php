@@ -46,8 +46,8 @@ if(is_array($files)){
 	}
 
 	/* grab all currently registered users */
-	$NVX_DB->DB_CLEAR(array("ALL"));
-	$users = $NVX_DB->DB_QUERY("SELECT","* FROM `user`");
+	$NVX_DB->CLEAR(array("ALL"));
+	$users = $NVX_DB->QUERY("SELECT","* FROM `user`");
 
 	/* create an empty user array */
 	$u = array();

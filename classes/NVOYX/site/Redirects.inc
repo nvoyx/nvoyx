@@ -75,9 +75,9 @@ class Redirects{
 	public function BUILD_ARRAY(){
 		
 		/* fetch the cms redirects */
-		self::$DB->DB_CLEAR(array("ALL"));
-		self::$DB->DB_SET_ORDER(array("`redirects`.`old`"=>"ASC"));
-		$redirects = self::$DB->DB_QUERY("SELECT","* FROM `redirects`");
+		self::$DB->CLEAR(array("ALL"));
+		self::$DB->SET_ORDER(array("`redirects`.`old`"=>"ASC"));
+		$redirects = self::$DB->QUERY("SELECT","* FROM `redirects`");
 		
 		/* create an array to hold the redirects */
 		$r=array();

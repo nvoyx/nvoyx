@@ -187,9 +187,9 @@ class Dept{
 					if(is_array($v)){
 				
 						/* push changes into redirects table */
-						self::$DB->DB_CLEAR(array("ALL"));
-						self::$DB->DB_SET_FILTER("`dept`.`id`={$rid}");
-						self::$DB->DB_QUERY("UPDATE","`dept` SET `dept`.`name`='{$v["name"]}',`dept`.`access`='{$v["access"]}'");
+						self::$DB->CLEAR(array("ALL"));
+						self::$DB->SET_FILTER("`dept`.`id`={$rid}");
+						self::$DB->QUERY("UPDATE","`dept` SET `dept`.`name`='{$v["name"]}',`dept`.`access`='{$v["access"]}'");
 					}
 					break;
 			endswitch;

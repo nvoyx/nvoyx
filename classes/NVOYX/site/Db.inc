@@ -32,17 +32,17 @@ class Db {
 	/* --- PUBLIC METHODS --- */
 
 	
-	/* DB_CONFIGURE()
+	/* CONFIGURE()
 	 * pass in the website setup array before creating an instance
 	 */
-	public static function DB_CONFIGURE( array $opt ) { self::$options = $opt; }
+	public static function CONFIGURE( array $opt ) { self::$options = $opt; }
 
 	
 	/*
-	 * DB_CONNECT()
+	 * CONNECT()
 	 * connect to this class
 	 */
-	public static function DB_CONNECT() {
+	public static function CONNECT() {
 		
 		/* is this the first time the class has been connected to */
 		if( !self::$instance ) {
@@ -64,38 +64,38 @@ class Db {
 	}
 
 	/*
-	 * DB_FETCH_DB()
+	 * FETCH_DB()
 	 * the mysqli object
 	 */
-	public static function DB_FETCH_DB(){
+	public static function FETCH_DB(){
 		return self::$db;
 	}
 	
 	/*
-	 * DB_IS_CACHED()
+	 * IS_CACHED()
 	 * has xcache been configured to cache user data
 	 *
 	 */
-	public function DB_IS_CACHED() { return self::$CACHED; }
+	public function IS_CACHED() { return self::$CACHED; }
 	
 	 
 	/*
-	 * DB_SET_CACHE()
+	 * SET_CACHE()
 	 * set a variable within xcache user data
 	 */
-	public function DB_SET_CACHE($key,$value) { return xcache_set($key,$value,self::$options["TTL"]); }
+	public function SET_CACHE($key,$value) { return xcache_set($key,$value,self::$options["TTL"]); }
 	
 	/*
-	 * DB_GET_CACHE()
+	 * GET_CACHE()
 	 * fetch a variable from xcache user data
 	 */
-	public function DB_GET_CACHE($key) { return xcache_get($key); }
+	public function GET_CACHE($key) { return xcache_get($key); }
 	
 	/*
-	 * DB_DELETE_CACHE()
+	 * DELETE_CACHE()
 	 * remove an entry from the xcache user  or file cache
 	 */
-	public function DB_DELETE_CACHE($key,$t="user") {
+	public function DELETE_CACHE($key,$t="user") {
 		
 		if($t=="user"){
 			
@@ -107,16 +107,16 @@ class Db {
 	}
 	
 	/*
-	 * DB_SET_FILTER()
+	 * SET_FILTER()
 	 * sets the filters to be used within a mysql statement
 	 */
-	public function DB_SET_FILTER($val){ self::$filter = "WHERE (" . $val . ") "; }
+	public function SET_FILTER($val){ self::$filter = "WHERE (" . $val . ") "; }
 	
 	
-	/* DB_SET_ORDER()
+	/* SET_ORDER()
 	 * takes an array of key(column name) value(DESC ASC) pairs to be used within a mysql statement 
 	 */
-	public function DB_SET_ORDER($orders){
+	public function SET_ORDER($orders){
 		
 		/* initial statement */
 		$x="ORDER BY ";
@@ -140,10 +140,10 @@ class Db {
 
 	
 	/* 
-	 * DB_SET_LIMIT()
+	 * SET_LIMIT()
 	 * set a limit range to be used within a mysql statement
 	 */
-	public function DB_SET_LIMIT($a,$b=false){
+	public function SET_LIMIT($a,$b=false){
 		
 		/* set the initial value and store */
 		self::$limit = "LIMIT {$a}";
@@ -154,10 +154,10 @@ class Db {
 	
 	
 	/*
-	 * DB_CLEAR()
+	 * CLEAR()
 	 * reset part or all of a previously configured mysql statement
 	 */
-	 public function DB_CLEAR($a){
+	 public function CLEAR($a){
 		if(in_array("ALL",$a)){$all = true;}
 		if(in_array("FILTER",$a) || isset($all)){self::$filter ="";}
 		if(in_array("ORDER",$a) || isset($all)){self::$order ="";} 
@@ -166,24 +166,24 @@ class Db {
 	 
 	 
 	/*
-	 * DB_CALLS()
+	 * CALLS()
 	 * records the number of calls made to the database during a single page load
 	 */
-	 public function DB_CALLS(){ return self::$calls; }
+	 public function CALLS(){ return self::$calls; }
 	 
 	 
 	/*
-	 * DB_DEBUG()
+	 * DEBUG()
 	 * returns the fully configured mysql query
 	 */
-	 public function DB_DEBUG(){ return self::$debug; }
+	 public function DEBUG(){ return self::$debug; }
 	 
 	 
 	 /*
-	  * DB_FETCH_OPTION()
+	  * FETCH_OPTION()
 	  * retrieve one of the initial settings passed at the launch of the program
 	  */
-	 public function DB_FETCH_OPTION($s){
+	 public function FETCH_OPTION($s){
 		 
 		 /* check the requested option exists */
 		 if(key_exists($s,self::$options)){
@@ -194,10 +194,10 @@ class Db {
 	 }
 	 
 	/*
-	 * DB_QUERY()
+	 * QUERY()
 	 * makes a call to the database and returns a nicely configured array of key/value pairs [row number][table.column]=value
 	 */
-	public function DB_QUERY($qtype,$query,$debug=false){
+	public function QUERY($qtype,$query,$debug=false){
 
 		/* what type of query are we looking to perform */
 		switch (strtoupper($qtype)):
@@ -494,6 +494,7 @@ class Db {
 	 */
 	private function __construct() {
 		
+		/* pass the mysqli config settings to mysqli at construction */
 		self::$db = new \mysqli(
 				self::$options["HOST"],
 				self::$options["USER"],
@@ -503,15 +504,6 @@ class Db {
 				self::$options["SOCKET"]
 				);
 		
-		/* pass the mysqli config settings to mysqli at construction */
-		/*
-		@parent::connect(self::$options["HOST"],
-								self::$options["USER"],
-								self::$options["PASS"],
-								self::$options["DBNAME"],
-								self::$options["PORT"],
-								self::$options["SOCKET"]);*/
-
 		/* has an xcache value been passed with the options - on install this is missing */
 		if(array_key_exists("XCACHE",self::$options)){
 		

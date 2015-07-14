@@ -9,8 +9,8 @@
  */
 
 /* add a blank department entry */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$pid = $NVX_DB->DB_QUERY("INSERT","INTO `dept` (`id`,`name`,`access`) VALUES (NULL,'{$NVX_BOOT->FETCH_ENTRY("timestamp")}','[]')");
+$NVX_DB->CLEAR(array("ALL"));
+$pid = $NVX_DB->QUERY("INSERT","INTO `dept` (`id`,`name`,`access`) VALUES (NULL,'{$NVX_BOOT->FETCH_ENTRY("timestamp")}','[]')");
 
 /* redirect to the new department-edit */
 $NVX_BOOT->HEADER(array("LOCATION"=>"/settings/dept/edit/{$pid}"));

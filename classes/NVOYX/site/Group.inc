@@ -70,9 +70,9 @@ class Group{
 		if(!$cache){
 						
 			/* fetch the group details from the database */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_ORDER(array("`group`.`position`"=>"ASC"));
-			$groups = self::$DB->DB_QUERY("SELECT","* FROM `group`");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_ORDER(array("`group`.`position`"=>"ASC"));
+			$groups = self::$DB->QUERY("SELECT","* FROM `group`");
 			
 			/* reset the stored group variable to empty */
 			self::$GROUP = array();

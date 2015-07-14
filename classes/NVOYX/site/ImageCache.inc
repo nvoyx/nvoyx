@@ -94,9 +94,9 @@ class ImageCache{
 		if(!$cache){
 			
 			/* fetch the imagecache details from the database */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_ORDER(array("`imagecache`.`name`"=>"ASC"));
-			$imagecaches = self::$DB->DB_QUERY("SELECT","* FROM `imagecache`");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_ORDER(array("`imagecache`.`name`"=>"ASC"));
+			$imagecaches = self::$DB->QUERY("SELECT","* FROM `imagecache`");
 			
 			/* if at least one imagecache has been found */
 			if(isset($imagecaches)){

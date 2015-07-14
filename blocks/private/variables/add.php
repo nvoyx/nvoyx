@@ -13,8 +13,8 @@
  */
 
 /* add a blank variable entry */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$pid = $NVX_DB->DB_QUERY("INSERT","INTO `variables` (`id`,`name`,`notes`,`value`) " . 
+$NVX_DB->CLEAR(array("ALL"));
+$pid = $NVX_DB->QUERY("INSERT","INTO `variables` (`id`,`name`,`notes`,`value`) " . 
 							"VALUES (NULL,'{$NVX_BOOT->FETCH_ENTRY("timestamp")}','','[\"\"]')");
 
 /* redirect to the new variable edit */

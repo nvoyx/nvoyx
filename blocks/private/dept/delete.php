@@ -13,9 +13,9 @@
  */
 
 /* delete a dept entry */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$NVX_DB->DB_SET_FILTER("`id`={$NVX_BOOT->FETCH_ENTRY("breadcrumb",3)}");
-$NVX_DB->DB_QUERY("DELETE","FROM `dept`");
+$NVX_DB->CLEAR(array("ALL"));
+$NVX_DB->SET_FILTER("`id`={$NVX_BOOT->FETCH_ENTRY("breadcrumb",3)}");
+$NVX_DB->QUERY("DELETE","FROM `dept`");
 
 /* TODO should really check against the current users and fallback to the default dept where appropriate */
 

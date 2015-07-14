@@ -22,8 +22,8 @@ if(array_key_exists("filter",$p) && array_key_exists("user",$p)){
 	if(is_numeric($p["filter"]) && is_numeric($p["user"])){
 		
 		/* push filter choice onto database */
-		$NVX_DB->DB_CLEAR(array("ALL"));
-		$NVX_DB->DB_SET_FILTER("`user`.`id`={$p["user"]}");
-		$NVX_DB->DB_QUERY("UPDATE","`user` SET `user`.`filter`={$p["filter"]}");
+		$NVX_DB->CLEAR(array("ALL"));
+		$NVX_DB->SET_FILTER("`user`.`id`={$p["user"]}");
+		$NVX_DB->QUERY("UPDATE","`user` SET `user`.`filter`={$p["filter"]}");
 	}
 }

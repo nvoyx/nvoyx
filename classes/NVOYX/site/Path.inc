@@ -75,9 +75,9 @@ class Path{
 	public function BUILD_ARRAY(){
 		
 		/* fetch the cms paths */
-		self::$DB->DB_CLEAR(array("ALL"));
-		self::$DB->DB_SET_ORDER(array("`path`.`url`"=>"ASC"));
-		$paths = self::$DB->DB_QUERY("SELECT","* FROM `path`");
+		self::$DB->CLEAR(array("ALL"));
+		self::$DB->SET_ORDER(array("`path`.`url`"=>"ASC"));
+		$paths = self::$DB->QUERY("SELECT","* FROM `path`");
 		
 		/* cycle through the paths */
 		foreach($paths as $path){

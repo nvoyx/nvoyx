@@ -11,8 +11,8 @@
  */
 
 /* add a blank redirect entry */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$pid = $NVX_DB->DB_QUERY("INSERT","INTO `redirects` (`id`,`old`,`new`) " . 
+$NVX_DB->CLEAR(array("ALL"));
+$pid = $NVX_DB->QUERY("INSERT","INTO `redirects` (`id`,`old`,`new`) " . 
 							"VALUES (NULL,'{$NVX_BOOT->FETCH_ENTRY("timestamp")}','{$NVX_BOOT->FETCH_ENTRY("timestamp")}')");
 
 /* redirect to the new redirects-edit */

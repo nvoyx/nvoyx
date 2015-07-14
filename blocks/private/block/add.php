@@ -13,8 +13,8 @@
  */
 
 /* add a blank block entry */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$pid = $NVX_DB->DB_QUERY("INSERT","INTO `block` (`id`,`name`,`tid`,`access`,`params`) " . 
+$NVX_DB->CLEAR(array("ALL"));
+$pid = $NVX_DB->QUERY("INSERT","INTO `block` (`id`,`name`,`tid`,`access`,`params`) " . 
 							"VALUES (NULL,'{$NVX_BOOT->FETCH_ENTRY("timestamp")}','[\"\"]','s','[\"\"]')");
 
 /* path to public blocks */

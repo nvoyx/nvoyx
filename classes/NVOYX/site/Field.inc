@@ -81,26 +81,26 @@ class Field{
 			if(in_array($page["tid"],$g["assoc"])){
 				
 				/* clear the db statement */
-				self::$DB->DB_CLEAR(array("ALL"));
+				self::$DB->CLEAR(array("ALL"));
 				
 				/* does the group limit the number of permissable variations */
 				if($g["variants"]!=0){
 					
 					/* set a database limit to only return this number (figure might've changed but cron not yet run to clean the database) */
-					self::$DB->DB_SET_LIMIT(0,$g["variants"]);
+					self::$DB->SET_LIMIT(0,$g["variants"]);
 				}
 				
 				/* cycle through the current group outline (fields) */
 				foreach($g["outline"] as $o){
 					
 					/* build a filter based on the field type table, group id, node id and field id */
-					self::$DB->DB_SET_FILTER("`{$o['type']}`.`gid`={$g['id']} AND `{$o['type']}`.`nid`={$nid} AND `{$o['type']}`.`fid`={$o['fid']}");
+					self::$DB->SET_FILTER("`{$o['type']}`.`gid`={$g['id']} AND `{$o['type']}`.`nid`={$nid} AND `{$o['type']}`.`fid`={$o['fid']}");
 					
 					/* order the results by their position id */
-					self::$DB->DB_SET_ORDER(array("{$o['type']}.pid"=>"ASC"));
+					self::$DB->SET_ORDER(array("{$o['type']}.pid"=>"ASC"));
 					
 					/* fetch the field results */
-					$rs = self::$DB->DB_QUERY("SELECT", "* FROM `{$o['type']}`");
+					$rs = self::$DB->QUERY("SELECT", "* FROM `{$o['type']}`");
 					
 					/* do we have results for this group */
 					if($rs){
@@ -283,7 +283,7 @@ class Field{
 					}
 					
 					/* clear the database statement */
-					self::$DB->DB_CLEAR(array("ALL"));
+					self::$DB->CLEAR(array("ALL"));
 				}
 			}
 		}

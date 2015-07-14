@@ -46,8 +46,8 @@ foreach($orphans as $orphan){
 	}
 
 	/* grab all the list items */
-	self::$DB->DB_CLEAR(array("ALL"));
-	$lists = self::$DB->DB_QUERY("SELECT","* FROM `{$orphan[1]}`");
+	self::$DB->CLEAR(array("ALL"));
+	$lists = self::$DB->QUERY("SELECT","* FROM `{$orphan[1]}`");
 
 	/* if we have some db entries */
 	if($lists){
@@ -97,10 +97,10 @@ foreach($orphans as $orphan){
 				$nfiles = self::$BOOT->JSON($nfiles,"encode");
 		
 				/* update the db listing for these files */
-				self::$DB->DB_CLEAR(array("ALL"));
-				self::$DB->DB_SET_LIMIT(1);
-				self::$DB->DB_SET_FILTER("`{$orphan[1]}`.`id`={$list["{$orphan[1]}.id"]}");
-				self::$DB->DB_QUERY("UPDATE","`{$orphan[1]}` SET `{$orphan[1]}`.`values`='{$nfiles}'");
+				self::$DB->CLEAR(array("ALL"));
+				self::$DB->SET_LIMIT(1);
+				self::$DB->SET_FILTER("`{$orphan[1]}`.`id`={$list["{$orphan[1]}.id"]}");
+				self::$DB->QUERY("UPDATE","`{$orphan[1]}` SET `{$orphan[1]}`.`values`='{$nfiles}'");
 			}
 		}
 	}
@@ -160,9 +160,9 @@ if(self::$VAR->FETCH_ENTRY("live")[0]==1){
 	$rs = file_get_contents(self::$BOOT->FETCH_ENTRY("sitemap"));
 	
 	/* grab all pages modified within the last  24 hours */
-	self::$DB->DB_CLEAR(array("ALL"));
-	self::$DB->DB_SET_FILTER("`page`.`modified` > DATE_SUB(NOW(), INTERVAL 1 DAY) AND `page`.published=1 AND `page`.`importance` !=0.0");
-	$rs  = self::$DB->DB_QUERY("SELECT","`page`.`id`,`page`.`title`,`page`.`tid`,`page`.`alias` FROM `page`");
+	self::$DB->CLEAR(array("ALL"));
+	self::$DB->SET_FILTER("`page`.`modified` > DATE_SUB(NOW(), INTERVAL 1 DAY) AND `page`.published=1 AND `page`.`importance` !=0.0");
+	$rs  = self::$DB->QUERY("SELECT","`page`.`id`,`page`.`title`,`page`.`tid`,`page`.`alias` FROM `page`");
 	
 	/* do we have any modified pages */
 	if($rs){

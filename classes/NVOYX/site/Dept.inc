@@ -111,9 +111,9 @@ class Dept{
 		if(!$cache){
 			
 			/* fetch the department details from the database */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_ORDER(array("`dept`.`name`"=>"ASC"));
-			$depts = self::$DB->DB_QUERY("SELECT","* FROM `dept`");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_ORDER(array("`dept`.`name`"=>"ASC"));
+			$depts = self::$DB->QUERY("SELECT","* FROM `dept`");
 			
 			/* cycle through the department types */
 			foreach($depts as $dept){

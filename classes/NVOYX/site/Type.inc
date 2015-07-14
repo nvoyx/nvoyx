@@ -111,9 +111,9 @@ class Type{
 			if(key_exists("NID",$a)){$nid = $a["NID"];} else {$nid = self::$FRONT;}
 			
 			/* grab page where id equals the node id */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_FILTER("`page`.`id`={$nid}");
-			$ptids = self::$DB->DB_QUERY("SELECT","`page`.`tid` FROM `page`");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_FILTER("`page`.`id`={$nid}");
+			$ptids = self::$DB->QUERY("SELECT","`page`.`tid` FROM `page`");
 			
 			/* do we have a type for the page */
 			if(isset($ptids)){
@@ -177,9 +177,9 @@ class Type{
 						$tag = explode("-",substr($prefix,strpos($prefix,'[ss:')+4,strpos($prefix,']') - (strpos($prefix,'[ss:')+4)   ));
 						
 						/* grab the  sselect value */
-						self::$DB->DB_CLEAR(array("ALL"));
-						self::$DB->DB_SET_FILTER("`sselect`.`nid`={$a['id']} AND `sselect`.`gid`={$tag[0]} AND `sselect`.`vid`={$tag[1]} AND `sselect`.`fid`={$tag[2]}");
-						$rtag = self::$DB->DB_QUERY("SELECT","`sselect`.`values` FROM `sselect`");
+						self::$DB->CLEAR(array("ALL"));
+						self::$DB->SET_FILTER("`sselect`.`nid`={$a['id']} AND `sselect`.`gid`={$tag[0]} AND `sselect`.`vid`={$tag[1]} AND `sselect`.`fid`={$tag[2]}");
+						$rtag = self::$DB->QUERY("SELECT","`sselect`.`values` FROM `sselect`");
 						
 						/* we have an sselect entry */
 						if($rtag){
@@ -195,9 +195,9 @@ class Type{
 						$tag = explode("-",substr($prefix,strpos($prefix,'[ms:')+4,strpos($prefix,']') - (strpos($prefix,'[ms:')+4)   ));
 						
 						/* grab the  mselect value */
-						self::$DB->DB_CLEAR(array("ALL"));
-						self::$DB->DB_SET_FILTER("`mselect`.`nid`={$a['id']} AND `mselect`.`gid`={$tag[0]} AND `mselect`.`vid`={$tag[1]} AND `mselect`.`fid`={$tag[2]}");
-						$rtag = self::$DB->DB_QUERY("SELECT","`mselect`.`values` FROM `mselect`");
+						self::$DB->CLEAR(array("ALL"));
+						self::$DB->SET_FILTER("`mselect`.`nid`={$a['id']} AND `mselect`.`gid`={$tag[0]} AND `mselect`.`vid`={$tag[1]} AND `mselect`.`fid`={$tag[2]}");
+						$rtag = self::$DB->QUERY("SELECT","`mselect`.`values` FROM `mselect`");
 						
 						/* we have an mselect entry */
 						if($rtag){
@@ -240,9 +240,9 @@ class Type{
 		if(!$cache){
 			
 			/* fetch the type details from the database */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_ORDER(array("`type`.`name`"=>"ASC"));
-			$types = self::$DB->DB_QUERY("SELECT","* FROM `type`");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_ORDER(array("`type`.`name`"=>"ASC"));
+			$types = self::$DB->QUERY("SELECT","* FROM `type`");
 			
 			/* cycle through the page types */
 			foreach($types as $type){

@@ -46,10 +46,10 @@ foreach($NVX_TYPE->FETCH_ARRAY() as $type){
 		}
 		
 		/* create a list of all pages for that content type */
-		$NVX_DB->DB_CLEAR(array("ALL"));
-		$NVX_DB->DB_SET_FILTER("`page`.`tid`={$type['id']}");
-		$NVX_DB->DB_SET_ORDER(array("`page`.`title`"=>"ASC"));
-		$pages[$a] = $NVX_DB->DB_QUERY("SELECT","* FROM `page`");
+		$NVX_DB->CLEAR(array("ALL"));
+		$NVX_DB->SET_FILTER("`page`.`tid`={$type['id']}");
+		$NVX_DB->SET_ORDER(array("`page`.`title`"=>"ASC"));
+		$pages[$a] = $NVX_DB->QUERY("SELECT","* FROM `page`");
 		
 		/* make a note of the type prefix */
 		$prefix[$a] = $type["prefix"];
@@ -60,9 +60,9 @@ foreach($NVX_TYPE->FETCH_ARRAY() as $type){
 }
 
 /* grab the "type filter variable" */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$NVX_DB->DB_SET_FILTER("`user`.`id`={$_SESSION['id']}");
-$type_filter = $NVX_DB->DB_QUERY("SELECT","* FROM `user`")[0]["user.filter"];
+$NVX_DB->CLEAR(array("ALL"));
+$NVX_DB->SET_FILTER("`user`.`id`={$_SESSION['id']}");
+$type_filter = $NVX_DB->QUERY("SELECT","* FROM `user`")[0]["user.filter"];
 
 ?>
 
@@ -181,10 +181,10 @@ if(is_array($options)){
 					$x = explode("-",$r);
 					
 					/* go grab the selected listing */
-					$NVX_DB->DB_CLEAR(array("ALL"));
-					$NVX_DB->DB_SET_FILTER("`sselect`.`nid`={$page["page.id"]} AND `sselect`.`gid`={$x[0]} AND `sselect`.`vid`={$x[1]} AND `sselect`.`fid`={$x[2]}");
-					$NVX_DB->DB_SET_LIMIT(1);
-					$sselected = $NVX_DB->DB_QUERY("SELECT","`sselect`.`values` FROM `sselect`")[0]['sselect.values'];
+					$NVX_DB->CLEAR(array("ALL"));
+					$NVX_DB->SET_FILTER("`sselect`.`nid`={$page["page.id"]} AND `sselect`.`gid`={$x[0]} AND `sselect`.`vid`={$x[1]} AND `sselect`.`fid`={$x[2]}");
+					$NVX_DB->SET_LIMIT(1);
+					$sselected = $NVX_DB->QUERY("SELECT","`sselect`.`values` FROM `sselect`")[0]['sselect.values'];
 					
 					/* grab an array group containing the sselect */
 					$gs = $NVX_GROUP->FETCH_ARRAY()["id-{$x[0]}"]["outline"];
@@ -227,10 +227,10 @@ if(is_array($options)){
 					$x = explode("-",$r);
 										
 					/* go grab the selected listing */
-					$NVX_DB->DB_CLEAR(array("ALL"));
-					$NVX_DB->DB_SET_FILTER("`mselect`.`nid`={$page["page.id"]} AND `mselect`.`gid`={$x[0]} AND `mselect`.`vid`={$x[1]} AND `mselect`.`fid`={$x[2]}");
-					$NVX_DB->DB_SET_LIMIT(1);
-					$mselected = $NVX_DB->DB_QUERY("SELECT","`mselect`.`values` FROM `mselect`")[0]['mselect.values'];
+					$NVX_DB->CLEAR(array("ALL"));
+					$NVX_DB->SET_FILTER("`mselect`.`nid`={$page["page.id"]} AND `mselect`.`gid`={$x[0]} AND `mselect`.`vid`={$x[1]} AND `mselect`.`fid`={$x[2]}");
+					$NVX_DB->SET_LIMIT(1);
+					$mselected = $NVX_DB->QUERY("SELECT","`mselect`.`values` FROM `mselect`")[0]['mselect.values'];
 										
 					/* grab an array group containing the mselect */
 					$gs = $NVX_GROUP->FETCH_ARRAY()["id-{$x[0]}"]["outline"];

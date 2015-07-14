@@ -45,10 +45,10 @@ echo"<?xml version='1.0' encoding='UTF-8'?>";
 	if(is_array($r)){
 				
 		/* grab any pages that have feeds and order by creation date */
-		self::$DB->DB_CLEAR(array("ALL"));
-		self::$DB->DB_SET_ORDER(array("`page`.`date`"=>"DESC"));
-		self::$DB->DB_SET_FILTER("(`page`.`tid`=".implode(" OR `page`.`tid`=",$r).") AND `page`.`published`=1");
-		$pages = self::$DB->DB_QUERY("SELECT","`page`.`id`,`page`.`tid`,`page`.`alias`,`page`.`heading`,`page`.`date`,`page`.`description`,`page`.`date` FROM `page`");
+		self::$DB->CLEAR(array("ALL"));
+		self::$DB->SET_ORDER(array("`page`.`date`"=>"DESC"));
+		self::$DB->SET_FILTER("(`page`.`tid`=".implode(" OR `page`.`tid`=",$r).") AND `page`.`published`=1");
+		$pages = self::$DB->QUERY("SELECT","`page`.`id`,`page`.`tid`,`page`.`alias`,`page`.`heading`,`page`.`date`,`page`.`description`,`page`.`date` FROM `page`");
 		
 		if($pages){
 			for($a=0;$a<count($pages);$a++){

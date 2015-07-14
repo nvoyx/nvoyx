@@ -640,9 +640,9 @@ foreach($GROUPS as $GROUP){
 								}
 								
 								/* grab the parent from this page type array and create the first single select */
-								$NVX_DB->DB_CLEAR(array("ALL"));
-								$NVX_DB->DB_SET_FILTER("`tid`={$TYPE["parent"]}");
-								$options = $NVX_DB->DB_QUERY("SELECT","`page`.`title`,`page`.`id` FROM `page`");
+								$NVX_DB->CLEAR(array("ALL"));
+								$NVX_DB->SET_FILTER("`tid`={$TYPE["parent"]}");
+								$options = $NVX_DB->QUERY("SELECT","`page`.`title`,`page`.`id` FROM `page`");
 								
 								/* do we have options */
 								if($options){
@@ -708,9 +708,9 @@ foreach($GROUPS as $GROUP){
 												/* grab the nid from the heirarchy responses where the previous nid is in the heirarchy array */
 												/* first run will be a bit rough ie, nid might be in the wrong heirarchy iteration, 10 might be returned when requesting 1 etc. */
 												/* shorten the list, then let php find valid entries */
-												$NVX_DB->DB_CLEAR(array("ALL"));
-												$NVX_DB->DB_SET_FILTER("`heirarchy`.`values` LIKE '%\"{$selecteds[$a-1]["NID"]}\"%' AND `heirarchy`.`nid`!={$PAGE["id"]}");
-												$possibles = $NVX_DB->DB_QUERY("SELECT","`heirarchy`.`values`,`heirarchy`.`nid` FROM `heirarchy`");
+												$NVX_DB->CLEAR(array("ALL"));
+												$NVX_DB->SET_FILTER("`heirarchy`.`values` LIKE '%\"{$selecteds[$a-1]["NID"]}\"%' AND `heirarchy`.`nid`!={$PAGE["id"]}");
+												$possibles = $NVX_DB->QUERY("SELECT","`heirarchy`.`values`,`heirarchy`.`nid` FROM `heirarchy`");
 												if($possibles==false){$possibles=true;}
 											} else {$possibles = false;}
 																				
@@ -735,17 +735,17 @@ foreach($GROUPS as $GROUP){
 															
 															if($heir[$a]!=-1){
 														
-																$NVX_DB->DB_CLEAR(array("ALL"));
-																$NVX_DB->DB_SET_FILTER("`page`.`id`={$heir[$a]} AND `page`.`id`!={$PAGE["id"]}");
-																$title = $NVX_DB->DB_QUERY("SELECT","`page`.`title` FROM `page`");
+																$NVX_DB->CLEAR(array("ALL"));
+																$NVX_DB->SET_FILTER("`page`.`id`={$heir[$a]} AND `page`.`id`!={$PAGE["id"]}");
+																$title = $NVX_DB->QUERY("SELECT","`page`.`title` FROM `page`");
 																if($title){
 																	$rs[$heir[$a]] = array("INTERNAL"=>$heir[$a],"EXTERNAL"=>$title[0]["page.title"]);
 																}
 															} else {
 														
-																$NVX_DB->DB_CLEAR(array("ALL"));
-																$NVX_DB->DB_SET_FILTER("`page`.`id`={$possible["heirarchy.nid"]} AND `page`.`id`!={$PAGE["id"]}");
-																$title = $NVX_DB->DB_QUERY("SELECT","`page`.`title` FROM `page`");
+																$NVX_DB->CLEAR(array("ALL"));
+																$NVX_DB->SET_FILTER("`page`.`id`={$possible["heirarchy.nid"]} AND `page`.`id`!={$PAGE["id"]}");
+																$title = $NVX_DB->QUERY("SELECT","`page`.`title` FROM `page`");
 																if($title){
 																	$rs[$possible["heirarchy.nid"]] = array("INTERNAL"=>$possible["heirarchy.nid"],"EXTERNAL"=>$title[0]["page.title"]);
 																}
@@ -1495,10 +1495,10 @@ if($comments){
 	<div class="blank row">
 		<?php
 		/* grab user who last modified this page */
-		$NVX_DB->DB_CLEAR(array("ALL"));
-		$NVX_DB->DB_SET_FILTER("`user`.`id`={$PAGE['by']}");
-		$NVX_DB->DB_SET_LIMIT(1);
-		$by = $NVX_BOOT->CYPHER(array("STRING"=>$NVX_DB->DB_QUERY("SELECT","`user`.`contact` FROM `user`")[0]["user.contact"],"TYPE"=>'decrypt'));
+		$NVX_DB->CLEAR(array("ALL"));
+		$NVX_DB->SET_FILTER("`user`.`id`={$PAGE['by']}");
+		$NVX_DB->SET_LIMIT(1);
+		$by = $NVX_BOOT->CYPHER(array("STRING"=>$NVX_DB->QUERY("SELECT","`user`.`contact` FROM `user`")[0]["user.contact"],"TYPE"=>'decrypt'));
 		?>
 		<label class="blank fl huge">Last modified <span class="tt"><?php echo date('d-m-Y H:i',strtotime($PAGE["modified"]));?></span> By <span class="tt"><?php echo $by;?></span></label>
 		<input type="hidden" name="page-by" id="page-by" value="<?php echo $PAGE["by"];?>">

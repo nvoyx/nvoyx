@@ -79,9 +79,9 @@ class Variables{
 			$r = self::$BOOT->JSON($r,"encode");
 			
 			/* update the variables table */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_FILTER("`variables`.`name`='$n'");
-			$vars = self::$DB->DB_QUERY("UPDATE","`variables` SET `variables`.`value`='{$r}'");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_FILTER("`variables`.`name`='$n'");
+			$vars = self::$DB->QUERY("UPDATE","`variables` SET `variables`.`value`='{$r}'");
 		}
 	}
 	
@@ -102,9 +102,9 @@ class Variables{
 			self::$VAR="";
 			
 			/* fetch the variables */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_ORDER(array("`variables`.`name`"=>"ASC"));
-			$vars = self::$DB->DB_QUERY("SELECT","* FROM `variables`");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_ORDER(array("`variables`.`name`"=>"ASC"));
+			$vars = self::$DB->QUERY("SELECT","* FROM `variables`");
 			
 			/* reset the stored group variable to empty */
 			self::$VAR = array();

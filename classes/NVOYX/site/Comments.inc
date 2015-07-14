@@ -63,10 +63,10 @@ class Comments{
 	public function FETCH_BY_NID($nid){
 		
 		/* fetch all top level comments  in descending date order ie no replies relating to the requested page */
-		self::$DB->DB_CLEAR(array("ALL"));
-		self::$DB->DB_SET_ORDER(array("`comments`.`date`"=>"ASC"));
-		self::$DB->DB_SET_FILTER("`comments`.`rid`=0 AND `comments`.`nid`={$nid} AND `comments`.`approved`=1");
-		$comments = self::$DB->DB_QUERY("SELECT","* FROM `comments`");
+		self::$DB->CLEAR(array("ALL"));
+		self::$DB->SET_ORDER(array("`comments`.`date`"=>"ASC"));
+		self::$DB->SET_FILTER("`comments`.`rid`=0 AND `comments`.`nid`={$nid} AND `comments`.`approved`=1");
+		$comments = self::$DB->QUERY("SELECT","* FROM `comments`");
 		
 		/* if we have no comments pass a false back */
 		if(!$comments){return false;}
@@ -78,10 +78,10 @@ class Comments{
 		foreach($comments as $comment){
 			
 			/* fetch all of the replies to the current comment in descending date order */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_ORDER(array("`comments`.`date`"=>"ASC"));
-			self::$DB->DB_SET_FILTER("`comments`.`rid`={$comment["comments.id"]} AND `comments`.`approved`=1");
-			$replies = self::$DB->DB_QUERY("SELECT","* FROM `comments`");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_ORDER(array("`comments`.`date`"=>"ASC"));
+			self::$DB->SET_FILTER("`comments`.`rid`={$comment["comments.id"]} AND `comments`.`approved`=1");
+			$replies = self::$DB->QUERY("SELECT","* FROM `comments`");
 			
 			/* create an empty reply array*/
 			$r=array();
@@ -96,10 +96,10 @@ class Comments{
 					foreach($replies as $reply){
 												
 						/* grab details regarding the member whom replied */
-						self::$DB->DB_CLEAR(array("ALL"));
-						self::$DB->DB_SET_LIMIT(1);
-						self::$DB->DB_SET_FILTER("`member`.`id`={$reply["comments.mid"]}");
-						$member = self::$DB->DB_QUERY("SELECT","* FROM `member`");
+						self::$DB->CLEAR(array("ALL"));
+						self::$DB->SET_LIMIT(1);
+						self::$DB->SET_FILTER("`member`.`id`={$reply["comments.mid"]}");
+						$member = self::$DB->QUERY("SELECT","* FROM `member`");
 						
 						/* populate the reply array */
 						$r[]=array("id"=>$reply["comments.id"],
@@ -129,10 +129,10 @@ class Comments{
 			}
 			
 			/* fetch the member details for the original member cornment */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_LIMIT(1);
-			self::$DB->DB_SET_FILTER("`member`.`id`={$comment["comments.mid"]}");
-			$member = self::$DB->DB_QUERY("SELECT","* FROM `member`");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_LIMIT(1);
+			self::$DB->SET_FILTER("`member`.`id`={$comment["comments.mid"]}");
+			$member = self::$DB->QUERY("SELECT","* FROM `member`");
 			
 			/* update the comment array with the original comment and replies */
 			$c[]=array("comment"=>array("id"=>$comment["comments.id"],

@@ -109,10 +109,10 @@ class Sselect{
 			$nfid = $fid+1;
 			
 			/* grab current details for this group */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_FILTER("`group`.`id`={$gid}");
-			self::$DB->DB_SET_LIMIT(1);
-			$group = self::$DB->DB_QUERY("SELECT","* FROM `group`");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_FILTER("`group`.`id`={$gid}");
+			self::$DB->SET_LIMIT(1);
+			$group = self::$DB->QUERY("SELECT","* FROM `group`");
 						
 			/* convert the outline from JSON to an array */
 			$outline = self::$BOOT->JSON($group[0]["group.outline"],"decode");
@@ -127,9 +127,9 @@ class Sselect{
 			$outline = self::$BOOT->JSON($outline,"encode");
 			
 			/* update the database with the new array and the iterated next-field-id */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_FILTER("`group`.`id`={$gid}");
-			self::$DB->DB_QUERY("UPDATE","`group` SET `group`.`outline`='{$outline}', `group`.`nfid`={$nfid}");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_FILTER("`group`.`id`={$gid}");
+			self::$DB->QUERY("UPDATE","`group` SET `group`.`outline`='{$outline}', `group`.`nfid`={$nfid}");
 			
 			/* goto the edit page for the new field */
 			self::$BOOT->HEADER(array("LOCATION"=>"/settings/sselect/edit/{$gid}/{$fid}"));
@@ -165,10 +165,10 @@ class Sselect{
 		if($_POST){
 			
 			/* grab the details for the current group */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_FILTER("`group`.`id`={$gid}");
-			self::$DB->DB_SET_LIMIT(1);
-			$group = self::$DB->DB_QUERY("SELECT","* FROM `group`");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_FILTER("`group`.`id`={$gid}");
+			self::$DB->SET_LIMIT(1);
+			$group = self::$DB->QUERY("SELECT","* FROM `group`");
 
 			/* convert the outline from JSON to an array */
 			$outline = self::$BOOT->JSON($group[0]["group.outline"],"decode");
@@ -241,9 +241,9 @@ class Sselect{
 			$outline = self::$BOOT->JSON($outline,"encode");
 			
 			/* update the database */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_FILTER("`group`.`id`={$gid}");
-			self::$DB->DB_QUERY("UPDATE","`group` SET `group`.`outline`='{$outline}'");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_FILTER("`group`.`id`={$gid}");
+			self::$DB->QUERY("UPDATE","`group` SET `group`.`outline`='{$outline}'");
 		}
 	}	
 }

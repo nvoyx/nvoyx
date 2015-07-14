@@ -172,9 +172,9 @@ class Content{
 			$tid = $_POST["page-tid"];
 			
 			/* grab the page type */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_FILTER("`id`={$tid}");
-			$TYPE = self::$DB->DB_QUERY("SELECT","* FROM `type`");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_FILTER("`id`={$tid}");
+			$TYPE = self::$DB->QUERY("SELECT","* FROM `type`");
 			
 			/* create an array of the page type tags */
 			$TAGS = self::$BOOT->JSON($TYPE[0]["type.tags"],"decode");
@@ -216,9 +216,9 @@ class Content{
 			}
 			
 			/* grab a list of all comments and replies associated with this node */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_FILTER("`comments`.`nid`={$nid}");
-			$COMMENTS = self::$DB->DB_QUERY("SELECT","`comments`.`id` FROM `comments`");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_FILTER("`comments`.`nid`={$nid}");
+			$COMMENTS = self::$DB->QUERY("SELECT","`comments`.`id` FROM `comments`");
 			
 			/* delete any comments that have been removed */
 			if($COMMENTS){
@@ -226,15 +226,15 @@ class Content{
 					if(array_key_exists($com["comments.id"],$c)){
 					
 						/* update comment/reply with contents of $c[$com["comments.id"] */
-						self::$DB->DB_CLEAR(array("ALL"));
-						self::$DB->DB_SET_FILTER("`comments`.`id`={$com['comments.id']}");
-						self::$DB->DB_QUERY("UPDATE","`comments` SET `comments`.`values`='{$c[$com["comments.id"]]}'");
+						self::$DB->CLEAR(array("ALL"));
+						self::$DB->SET_FILTER("`comments`.`id`={$com['comments.id']}");
+						self::$DB->QUERY("UPDATE","`comments` SET `comments`.`values`='{$c[$com["comments.id"]]}'");
 					
 					} else {
 						/* delete comment/reply */
-						self::$DB->DB_CLEAR(array("ALL"));
-						self::$DB->DB_SET_FILTER("`comments`.`id`={$com['comments.id']}");
-						self::$DB->DB_QUERY("DELETE","FROM `comments`");
+						self::$DB->CLEAR(array("ALL"));
+						self::$DB->SET_FILTER("`comments`.`id`={$com['comments.id']}");
+						self::$DB->QUERY("DELETE","FROM `comments`");
 			
 					}
 				}
@@ -307,9 +307,9 @@ class Content{
 				$p['alias'] = self::$BOOT->ALIAS($p['title']);
 				
 				/* push the standard page fields into the database */
-				self::$DB->DB_CLEAR(array("ALL"));
-				self::$DB->DB_SET_FILTER("`page`.`id`={$nid}");
-				self::$DB->DB_QUERY("UPDATE","`page` SET `page`.`title`='{$p['title']}'," . 
+				self::$DB->CLEAR(array("ALL"));
+				self::$DB->SET_FILTER("`page`.`id`={$nid}");
+				self::$DB->QUERY("UPDATE","`page` SET `page`.`title`='{$p['title']}'," . 
 															"`page`.`alias`='{$p['alias']}'," .
 															"`page`.`heading`='{$p['heading']}'," .
 															"`page`.`teaser`='{$p['teaser']}'," .
@@ -338,8 +338,8 @@ class Content{
 						$oldurl=self::$BOOT->ALIAS($p['prefix']).'/'.self::$BOOT->ALIAS($p['oldtitle']);
 						$newurl=self::$BOOT->ALIAS($p['prefix']).'/'.self::$BOOT->ALIAS($p['title']);
 
-						self::$DB->DB_CLEAR(array("ALL"));
-						$redirects = self::$DB->DB_QUERY("SELECT","* FROM `redirects`");
+						self::$DB->CLEAR(array("ALL"));
+						$redirects = self::$DB->QUERY("SELECT","* FROM `redirects`");
 
 						/* has this new url previously been a redirect */ 
 						foreach($redirects as $redirect){
@@ -350,14 +350,14 @@ class Content{
 
 						/* do we need to remove a redirect */
 						if($redid!=-1){
-							self::$DB->DB_CLEAR(array("ALL"));
-							self::$DB->DB_SET_FILTER("`id`={$redid}");
-							self::$DB->DB_QUERY("DELETE","FROM `redirects`");
+							self::$DB->CLEAR(array("ALL"));
+							self::$DB->SET_FILTER("`id`={$redid}");
+							self::$DB->QUERY("DELETE","FROM `redirects`");
 						}
 
 						/* add a redirect from the old url to the new */
-						self::$DB->DB_CLEAR(array("ALL"));
-						self::$DB->DB_QUERY("INSERT","INTO `redirects` (`id`,`old`,`new`) VALUES (NULL,'{$oldurl}','{$newurl}')");
+						self::$DB->CLEAR(array("ALL"));
+						self::$DB->QUERY("INSERT","INTO `redirects` (`id`,`old`,`new`) VALUES (NULL,'{$oldurl}','{$newurl}')");
 					}
 				}
 			}
@@ -448,9 +448,9 @@ class Content{
 							if($outline_field_flag == 0){
 	
 								/* delete from the database */
-								self::$DB->DB_CLEAR(array("ALL"));
-								self::$DB->DB_SET_FILTER("`{$OUTLINE["type"]}`.`nid`={$nid} AND `{$OUTLINE["type"]}`.`gid`={$GROUP["id"]}  AND `{$OUTLINE["type"]}`.`fid`={$OUTLINE["fid"]}");
-								self::$DB->DB_QUERY("DELETE","FROM `{$OUTLINE["type"]}`");
+								self::$DB->CLEAR(array("ALL"));
+								self::$DB->SET_FILTER("`{$OUTLINE["type"]}`.`nid`={$nid} AND `{$OUTLINE["type"]}`.`gid`={$GROUP["id"]}  AND `{$OUTLINE["type"]}`.`fid`={$OUTLINE["fid"]}");
+								self::$DB->QUERY("DELETE","FROM `{$OUTLINE["type"]}`");
 							}
 						}						
 					}
@@ -466,9 +466,9 @@ class Content{
 						$keys = explode("-",$key);
 						
 						/* fetch all entries from this group and this field for this node */
-						self::$DB->DB_CLEAR(array("ALL"));
-						self::$DB->DB_SET_FILTER("`nid`={$nid} AND `gid`={$keys[1]} AND `fid`={$keys[3]}");
-						$ENTRIES = self::$DB->DB_QUERY("SELECT","* FROM `{$keys[0]}`");
+						self::$DB->CLEAR(array("ALL"));
+						self::$DB->SET_FILTER("`nid`={$nid} AND `gid`={$keys[1]} AND `fid`={$keys[3]}");
+						$ENTRIES = self::$DB->QUERY("SELECT","* FROM `{$keys[0]}`");
 						
 						/* do we have any entries */
 						if($ENTRIES){
@@ -498,9 +498,9 @@ class Content{
 					
 					/* update the next vids for this page */
 					$nvid = self::$BOOT->JSON($nvid,"encode");
-					self::$DB->DB_CLEAR(array("ALL"));
-					self::$DB->DB_SET_FILTER("`page`.`id`={$nid}");
-					self::$DB->DB_QUERY("UPDATE","`page` SET `page`.`nvids`='{$nvid}'");
+					self::$DB->CLEAR(array("ALL"));
+					self::$DB->SET_FILTER("`page`.`id`={$nid}");
+					self::$DB->QUERY("UPDATE","`page` SET `page`.`nvids`='{$nvid}'");
 				}
 			}
 			
@@ -523,9 +523,9 @@ class Content{
 					if($state["post"]==0 && $state["db"]==1){
 						
 						/* delete from the database */
-						self::$DB->DB_CLEAR(array("ALL"));
-						self::$DB->DB_SET_FILTER("`{$key[0]}`.`nid`={$nid} AND `{$key[0]}`.`gid`={$key[1]} AND `{$key[0]}`.`vid`={$key[2]} AND `{$key[0]}`.`fid`={$key[3]}");
-						self::$DB->DB_QUERY("DELETE","FROM `$key[0]`");
+						self::$DB->CLEAR(array("ALL"));
+						self::$DB->SET_FILTER("`{$key[0]}`.`nid`={$nid} AND `{$key[0]}`.`gid`={$key[1]} AND `{$key[0]}`.`vid`={$key[2]} AND `{$key[0]}`.`fid`={$key[3]}");
+						self::$DB->QUERY("DELETE","FROM `$key[0]`");
 					
 						
 					} else {
@@ -601,9 +601,9 @@ class Content{
 								$tagpool = self::$BOOT->JSON($TAGS,"encode");
 								
 								/* write the pool of tags back to the page type database */
-								self::$DB->DB_CLEAR(array("ALL"));
-								self::$DB->DB_SET_FILTER("`id`={$tid}");
-								self::$DB->DB_QUERY("UPDATE","`type` SET `type`.`tags`='{$tagpool}'");
+								self::$DB->CLEAR(array("ALL"));
+								self::$DB->SET_FILTER("`id`={$tid}");
+								self::$DB->QUERY("UPDATE","`type` SET `type`.`tags`='{$tagpool}'");
 								
 								
 								/* convert the sanitised data back into a JSON array */
@@ -763,15 +763,15 @@ class Content{
 							if($state["post"]==1 && $state["db"]==0){
 								
 								/* must be a new entry, so create the record */
-								self::$DB->DB_CLEAR(array("ALL"));
-								self::$DB->DB_QUERY("INSERT","INTO `{$key[0]}` (`id`,`nid`,`gid`,`vid`,`pid`,`fid`,`values`) VALUES (NULL,{$nid},{$key[1]},{$key[2]},{$pid["{$key[1]}-{$key[3]}"]},{$key[3]},'{$v}')");
+								self::$DB->CLEAR(array("ALL"));
+								self::$DB->QUERY("INSERT","INTO `{$key[0]}` (`id`,`nid`,`gid`,`vid`,`pid`,`fid`,`values`) VALUES (NULL,{$nid},{$key[1]},{$key[2]},{$pid["{$key[1]}-{$key[3]}"]},{$key[3]},'{$v}')");
 							
 							} else {
 
 								/* if the posted data also exists in the database */
-								self::$DB->DB_CLEAR(array("ALL"));
-								self::$DB->DB_SET_FILTER("`{$key[0]}`.`nid`={$nid} AND `{$key[0]}`.`gid`={$key[1]} AND `{$key[0]}`.`vid`={$key[2]} AND `{$key[0]}`.`fid`={$key[3]}");
-								self::$DB->DB_QUERY("UPDATE","`{$key[0]}` SET `{$key[0]}`.`pid`={$pid["{$key[1]}-{$key[3]}"]}, `{$key[0]}`.`values`='{$v}'");
+								self::$DB->CLEAR(array("ALL"));
+								self::$DB->SET_FILTER("`{$key[0]}`.`nid`={$nid} AND `{$key[0]}`.`gid`={$key[1]} AND `{$key[0]}`.`vid`={$key[2]} AND `{$key[0]}`.`fid`={$key[3]}");
+								self::$DB->QUERY("UPDATE","`{$key[0]}` SET `{$key[0]}`.`pid`={$pid["{$key[1]}-{$key[3]}"]}, `{$key[0]}`.`values`='{$v}'");
 								
 							}
 						}
@@ -833,9 +833,9 @@ class Content{
 			foreach($dtypes as $dtype){
 					
 				/* grab all relevant fields form the database */
-				self::$DB->DB_CLEAR(array("ALL"));
-				self::$DB->DB_SET_FILTER("`nid`={$nid}");
-				$ds = self::$DB->DB_QUERY("SELECT","* FROM `{$dtype}`");
+				self::$DB->CLEAR(array("ALL"));
+				self::$DB->SET_FILTER("`nid`={$nid}");
+				$ds = self::$DB->QUERY("SELECT","* FROM `{$dtype}`");
 					
 				/* do we have a stored value */
 				if($ds){

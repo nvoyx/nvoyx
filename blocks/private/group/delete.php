@@ -16,9 +16,9 @@
 $gid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
 
 /* delete the group */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$NVX_DB->DB_SET_FILTER("`group`.`id`={$gid}");
-$NVX_DB->DB_QUERY("DELETE","FROM `group`");
+$NVX_DB->CLEAR(array("ALL"));
+$NVX_DB->SET_FILTER("`group`.`id`={$gid}");
+$NVX_DB->QUERY("DELETE","FROM `group`");
 
 /* create an array of field types */
 $fts = array("datebox","filelist","heirarchy","imagelist","mselect","sselect","textarea","textbox","heirarchy","tagbox");
@@ -27,9 +27,9 @@ $fts = array("datebox","filelist","heirarchy","imagelist","mselect","sselect","t
 foreach($fts as $ft){
 	
 	/* delete any data held for this field */
-	$NVX_DB->DB_CLEAR(array("ALL"));
-	$NVX_DB->DB_SET_FILTER("`{$ft}`.`gid`={$gid}");
-	$NVX_DB->DB_QUERY("DELETE","FROM `{$ft}`");
+	$NVX_DB->CLEAR(array("ALL"));
+	$NVX_DB->SET_FILTER("`{$ft}`.`gid`={$gid}");
+	$NVX_DB->QUERY("DELETE","FROM `{$ft}`");
 }
 
 /* redirect to the group listings */

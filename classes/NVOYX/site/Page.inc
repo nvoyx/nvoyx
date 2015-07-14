@@ -187,9 +187,9 @@ class Page{
 			
 			
 			/* go fetch the appropriate pages */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_FILTER($f);
-			$pages = self::$DB->DB_QUERY("SELECT","* FROM `page`");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_FILTER($f);
+			$pages = self::$DB->QUERY("SELECT","* FROM `page`");
 			
 			/* do we have any pages of the requested type */
 			if(isset($pages)){

@@ -103,10 +103,10 @@ class Imagecache{
 			$iid=self::$BOOT->FETCH_ENTRY("breadcrumb",3);
 			
 			/* fetch the imagecache to be deleted */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_FILTER("`imagecache`.`id`={$iid}");
-			self::$DB->DB_SET_LIMIT(1);
-			$imagecache = self::$DB->DB_QUERY("SELECT","* FROM `imagecache`");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_FILTER("`imagecache`.`id`={$iid}");
+			self::$DB->SET_LIMIT(1);
+			$imagecache = self::$DB->QUERY("SELECT","* FROM `imagecache`");
 			
 			/* cycle through the old imagecache folder */
 			foreach(array_diff(scandir(self::$BOOT->FETCH_ENTRY("images")."/{$imagecache[0]["imagecache.x"]}x{$imagecache[0]["imagecache.y"]}"),array('.','..')) as $f){
@@ -128,9 +128,9 @@ class Imagecache{
 			
 			
 			/* delete the imagecache */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_FILTER("`id`={$iid}");
-			self::$DB->DB_QUERY("DELETE","FROM `imagecache`");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_FILTER("`id`={$iid}");
+			self::$DB->QUERY("DELETE","FROM `imagecache`");
 
 			/* redirect to the _list */
 			self::$BOOT->HEADER(array("LOCATION"=>"/settings/imagecache/list"));
@@ -159,8 +159,8 @@ class Imagecache{
 			$t = self::$BOOT->FETCH_ENTRY("timestamp");
 			
 			/* insert an empty imagecache record */
-			self::$DB->DB_CLEAR(array("ALL"));
-			$iid = self::$DB->DB_QUERY("INSERT","INTO `imagecache` (`id`,`name`,`x`,`y`,`mime`) " . 
+			self::$DB->CLEAR(array("ALL"));
+			$iid = self::$DB->QUERY("INSERT","INTO `imagecache` (`id`,`name`,`x`,`y`,`mime`) " . 
 										"VALUES (NULL,'{$t}',999,999,'jpg')");
 										
 			/* create the required 999x999 cache directory */
@@ -199,10 +199,10 @@ class Imagecache{
 		if($_POST){
 			
 			/* grab the details for the current imagecache */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_FILTER("`imagecache`.`id`={$iid}");
-			self::$DB->DB_SET_LIMIT(1);
-			$imagecache = self::$DB->DB_QUERY("SELECT","* FROM `imagecache`");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_FILTER("`imagecache`.`id`={$iid}");
+			self::$DB->SET_LIMIT(1);
+			$imagecache = self::$DB->QUERY("SELECT","* FROM `imagecache`");
 			
 			/* iterate over the posted data */
 			foreach($_POST as $key=>$value ){
@@ -280,9 +280,9 @@ class Imagecache{
 			}
 
 			/* update the database */
-			self::$DB->DB_CLEAR(array("ALL"));
-			self::$DB->DB_SET_FILTER("`imagecache`.`id`={$iid}");
-			self::$DB->DB_QUERY("UPDATE","`imagecache` SET `imagecache`.`name`='{$v["name"]}',`imagecache`.`x`={$v["x"]},`imagecache`.`y`={$v["y"]}, `imagecache`.`mime`='{$v['mime']}', `imagecache`.`effects`='{$v["effects"]}'");
+			self::$DB->CLEAR(array("ALL"));
+			self::$DB->SET_FILTER("`imagecache`.`id`={$iid}");
+			self::$DB->QUERY("UPDATE","`imagecache` SET `imagecache`.`name`='{$v["name"]}',`imagecache`.`x`={$v["x"]},`imagecache`.`y`={$v["y"]}, `imagecache`.`mime`='{$v['mime']}', `imagecache`.`effects`='{$v["effects"]}'");
 		}
 	}
 }

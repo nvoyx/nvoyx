@@ -15,8 +15,8 @@ $rid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
 
 
 /* grab all current redirects */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$redirects = $NVX_DB->DB_QUERY("SELECT","* FROM `redirects`");
+$NVX_DB->CLEAR(array("ALL"));
+$redirects = $NVX_DB->QUERY("SELECT","* FROM `redirects`");
 
 /* lookup the redirects details */
 foreach($redirects as $redirect){if($redirect["redirects.id"]==$rid){break;}}

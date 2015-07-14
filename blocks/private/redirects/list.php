@@ -13,9 +13,9 @@
  */
 
 /* grab all currently assigned redirects */
-$NVX_DB->DB_CLEAR(array("ALL"));
-$NVX_DB->DB_SET_ORDER(array("`redirects`.`old`"=>"ASC"));
-$redirects = $NVX_DB->DB_QUERY("SELECT","* FROM `redirects`");
+$NVX_DB->CLEAR(array("ALL"));
+$NVX_DB->SET_ORDER(array("`redirects`.`old`"=>"ASC"));
+$redirects = $NVX_DB->QUERY("SELECT","* FROM `redirects`");
 
 ?>
 
