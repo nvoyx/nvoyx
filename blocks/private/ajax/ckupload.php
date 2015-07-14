@@ -62,7 +62,7 @@ if(key_exists("upload",$_FILES)){
 			if($move){
 				
 				/* connect to the media class */
-				$NVX_MEDIA = Media::CONNECT($NVX_BOOT);
+				$NVX_MEDIA = \NVOYX\site\Media::CONNECT($NVX_BOOT);
 				
 				/* convert the image to a png (if necessary) */
 				$img = $NVX_MEDIA->IMAGE(array("MIME"=>"png","FILE"=>$ckimage));
