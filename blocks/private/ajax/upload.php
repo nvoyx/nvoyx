@@ -50,7 +50,7 @@ if(array_key_exists("imagelist",$_FILES)){
 			if($move){
 				
 				/* create new media instance */
-				$NVX_MEDIA = Media::CONNECT($NVX_BOOT);
+				$NVX_MEDIA = \NVOYX\site\Media::CONNECT($NVX_BOOT);
 					
 				/* convert the image to a webp and compress */
 				$img = $NVX_MEDIA->CWEBP(array("MIME"=>'png',"FILE"=>$image));

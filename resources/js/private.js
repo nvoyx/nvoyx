@@ -674,8 +674,7 @@ function dropZone(obj){
 		maxfilesize: maxsize,
 		allowedfiletypes: allowed.split(","),
 		data: {
-			ftypes: allowed,
-			veffects: veffects
+			ftypes: allowed
 		},
 		dragOver: function () {
 			//$(this).css('background','blue');

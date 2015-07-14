@@ -28,8 +28,7 @@ $dtypes = array(
 	"sselect",
 	"tagbox",
 	"textarea",
-	"textbox",
-	"videolist"
+	"textbox"
 );
 
 /* grab the system data from the archive */
@@ -67,7 +66,7 @@ $NVX_DB->DB_QUERY("UPDATE","`page` SET "
 
 		
 /* connect to the zip archive */
-$zip = new ZipArchive;
+$zip = new \ZipArchive;
 $zip->open($NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid."/".$rid.".zip");
 
 /* cycle over the dtypes */
@@ -129,60 +128,7 @@ foreach($dtypes as $dt){
 							rename($NVX_BOOT->FETCH_ENTRY("images")."/record/cms/".$f["name"],$NVX_BOOT->FETCH_ENTRY("images")."/".$f["name"]);							
 						}
 					}
-					break;
-					
-				case "videolist":
-					
-					/* decode the entry */
-					$d["values"] = $NVX_BOOT->JSON(stripslashes($d["values"]),"decode");
-					
-					/* cycle through the entries to grab the file reference */
-					foreach($d["values"] as $f){
-							
-						/* check we have a valid file name */
-						if($f["name"]!=""){
-							
-							/* grab the mp4 video from the archive */
-							$zip->extractTo($NVX_BOOT->FETCH_ENTRY("videos")."/","record/videos/".$f["name"]);
-							
-							/* move the mp4 video to its proper location */
-							rename($NVX_BOOT->FETCH_ENTRY("videos")."/record/videos/".$f["name"],$NVX_BOOT->FETCH_ENTRY("videos")."/".$f["name"]);
-							
-							/* grab the webm video from the archive */
-							$zip->extractTo($NVX_BOOT->FETCH_ENTRY("videos")."/",   str_replace(".mp4".".webm","record/videos/".$f["name"]));
-							
-							/* move the webm video to its proper location */
-							rename($NVX_BOOT->FETCH_ENTRY("videos")."/record/videos/".str_replace(".mp4",".webm",$f["name"]), $NVX_BOOT->FETCH_ENTRY("videos")."/".str_replace(".mp4",".webm",$f["name"]));
-							
-							/* does the thumbnail folder not exist */
-							if(!file_exists($NVX_BOOT->FETCH_ENTRY("videos")."/".pathinfo($f["name"], PATHINFO_FILENAME))){
-								
-								/* make the thumbnail folder */
-								mkdir($NVX_BOOT->FETCH_ENTRY("videos")."/".pathinfo($f["name"], PATHINFO_FILENAME));
-								
-								/* cycle through the potential thumbnails */
-								for($i=0;$i<10;$i++){
-									
-									/* try and retrieve the thumbnail from the archive */
-									if($zip->extractTo($NVX_BOOT->FETCH_ENTRY("videos")."/".pathinfo($f["name"], PATHINFO_FILENAME), "record/videos/".pathinfo($f["name"], PATHINFO_FILENAME)."/".$i.".png")){
-										
-										/* move the thumbnail to its proper location */
-										rename($NVX_BOOT->FETCH_ENTRY("videos")."/".pathinfo($f["name"], PATHINFO_FILENAME)."/record/videos/".$i.".png",$NVX_BOOT->FETCH_ENTRY("videos")."/".pathinfo($f["name"], PATHINFO_FILENAME)."/".$i.".png");
-									}
-								}
-								
-								/* directory cleanup */
-								if(file_exists($NVX_BOOT->FETCH_ENTRY("videos")."/".pathinfo($f["name"], PATHINFO_FILENAME)."/record/videos")){
-									
-									/* delete the record folder */
-									$NVX_BOOT->DEL_TREE($NVX_BOOT->FETCH_ENTRY("videos")."/".pathinfo($f["name"], PATHINFO_FILENAME)."/record");
-								}
-								
-							}
-						}
-					}
-					break;
-					
+					break;					
 					
 			endswitch;
 		}

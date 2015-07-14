@@ -32,11 +32,16 @@ $_SERVER["REMOTE_ADDR"] = 	getenv('HTTP_CLIENT_IP')?:
  */
 spl_autoload_register(function ($class){
 	
-	if(!stristr($class,"_")){
-		include $_SERVER['DOCUMENT_ROOT']."/../classes/public/{$class}.inc";
+	if( substr($class,0,1) == '\\' ){$class=substr($class,1);}
+	$class=$_SERVER['DOCUMENT_ROOT'].'/../classes/'.str_replace('\\','/',$class);
+	if(file_exists($class.'.inc')){
+		include($class.'.inc');
+	} else if(file_exists($class.'.php')){
+		include($class.'.php');
+	} else if(file_exists($class.'.inc.php')){
+		include($class.'.inc.php');
 	} else {
-		$class = str_replace("_","",$class);
-		include $_SERVER['DOCUMENT_ROOT']."/../classes/private/{$class}.inc";
+		die();
 	}
 });
 
@@ -44,19 +49,20 @@ spl_autoload_register(function ($class){
  * @instance
  * Site configuration
  */
-$NVX_SETUP = Setup::CONNECT($_SERVER['DOCUMENT_ROOT']."/../configuration/config.json");
+//$NVX_SETUP = Setup::CONNECT($_SERVER['DOCUMENT_ROOT']."/../configuration/config.json");
+$NVX_SETUP = \NVOYX\site\Setup::CONNECT($_SERVER['DOCUMENT_ROOT']."/../configuration/config.json");
 
 /* fetch the site configuration options */
 $config = $NVX_SETUP->FETCH_OPTIONS();
 
 /* configure the website */
-Db::DB_CONFIGURE($config);
-	
+\NVOYX\site\Db::DB_CONFIGURE($config);
+
 /*
  * @instance
  * connect to the Db
  */
-$NVX_DB = Db::DB_CONNECT();
+$NVX_DB = \NVOYX\site\Db::DB_CONNECT();
 
 /* if db connection has failed */
 if (mysqli_connect_errno()) {
@@ -78,7 +84,7 @@ if (mysqli_connect_errno()) {
  * @instance
  * System Variables
  */
-$NVX_BOOT = Boot::CONNECT($NVX_DB);
+$NVX_BOOT = \NVOYX\site\Boot::CONNECT($NVX_DB);
 
 /* stop on database failure */
 if(!isset($NVX_BOOT)){die();}
@@ -90,13 +96,13 @@ $NVX_SETUP->TABLES($NVX_DB,$NVX_BOOT,$config);
  * @instance
  * CMS Variables
  */
-$NVX_VAR = Variables::CONNECT($NVX_DB,$NVX_BOOT);
+$NVX_VAR = \NVOYX\site\Variables::CONNECT($NVX_DB,$NVX_BOOT);
 
 /**
  * @instance
  * User information
  */
-$NVX_USER = User::CONNECT($NVX_DB,$NVX_BOOT,$NVX_VAR);
+$NVX_USER = \NVOYX\site\User::CONNECT($NVX_DB,$NVX_BOOT,$NVX_VAR);
 
 
 /* is the current user not an admin or above */
@@ -129,13 +135,13 @@ if("/" . implode("/",array_slice($NVX_BOOT->FETCH_ENTRY("breadcrumb"),0,2))=="/s
 	 * @instance
 	 * ImageCache
 	 */
-	$NVX_IC = ImageCache::CONNECT($NVX_DB,$NVX_BOOT);
+	$NVX_IC = \NVOYX\site\ImageCache::CONNECT($NVX_DB,$NVX_BOOT);
 	
 	/**
 	 * @instance
 	 * Resource information
 	 */
-	$NVX_RESOURCE = Resource::CONNECT($NVX_DB,$NVX_BOOT,$NVX_USER,$NVX_VAR,$NVX_IC);
+	$NVX_RESOURCE = \NVOYX\site\Resource::CONNECT($NVX_DB,$NVX_BOOT,$NVX_USER,$NVX_VAR,$NVX_IC);
 	
 	/* attempt to retrieve the requested resource */
 	$NVX_RESOURCE->FETCH();
@@ -151,7 +157,7 @@ if($NVX_USER->FETCH_ENTRY("type")=="!u" && $NVX_VAR->FETCH_ENTRY("honeyserver")[
 	 * @instance
 	 * Project Honeypot
 	 */
-	$HONEYPOT = new Honeypot($NVX_VAR->FETCH_ENTRY("honeykey")[0],array("root"=>$NVX_VAR->FETCH_ENTRY("honeyserver")[0]));
+	$HONEYPOT = new \NVOYX\site\Honeypot($NVX_VAR->FETCH_ENTRY("honeykey")[0],array("root"=>$NVX_VAR->FETCH_ENTRY("honeyserver")[0]));
 	
 	/* check IP address against Honeypot records */
 	$rs = $HONEYPOT->check($NVX_BOOT->FETCH_ENTRY("remote"));
@@ -169,7 +175,7 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 	 * @instance
 	 * Type information
 	 */ 
-	$NVX_TYPE = Type::CONNECT($NVX_DB,
+	$NVX_TYPE = \NVOYX\site\Type::CONNECT($NVX_DB,
 				$NVX_BOOT,
 				$NVX_VAR->FETCH_ENTRY("front")[0]);
 
@@ -177,19 +183,19 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 	 * @instance
 	 * Group information
 	 */ 
-	$NVX_GROUP = Group::CONNECT($NVX_DB,$NVX_BOOT);
+	$NVX_GROUP = \NVOYX\site\Group::CONNECT($NVX_DB,$NVX_BOOT);
 
 	/**
 	 * @instance
 	 * Field information
 	 */ 
-	$NVX_FIELD = Field::CONNECT($NVX_DB,$NVX_GROUP,$NVX_BOOT);
+	$NVX_FIELD = \NVOYX\site\Field::CONNECT($NVX_DB,$NVX_GROUP,$NVX_BOOT);
 
 	/**
 	 * @instance
 	 * Page information
 	 */
-	$NVX_PAGE = Page::CONNECT($NVX_DB,
+	$NVX_PAGE = \NVOYX\site\Page::CONNECT($NVX_DB,
 					$NVX_VAR->FETCH_ENTRY("front")[0],
 					$NVX_FIELD,
 					$NVX_BOOT);
@@ -418,7 +424,7 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 		if($TYPE["comments"]==1 && $PAGE["comments"]==1){
 						
 			/* set $COMMENTS */
-			$NVX_COMMENTS = Comments::CONNECT($NVX_DB,$NVX_BOOT);
+			$NVX_COMMENTS = \NVOYX\site\Comments::CONNECT($NVX_DB,$NVX_BOOT);
 			
 			
 		}
@@ -427,13 +433,13 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 		 * @instance
 		 * Dept information
 		 */ 
-		$NVX_DEPT = Dept::CONNECT($NVX_BOOT,$NVX_DB,$NVX_USER);
+		$NVX_DEPT = \NVOYX\site\Dept::CONNECT($NVX_BOOT,$NVX_DB,$NVX_USER);
 	
 		/**
 		 * @instance
 		 * Block information
 		 */
-		$NVX_BLOCK = Block::CONNECT($NVX_DB,
+		$NVX_BLOCK = \NVOYX\site\Block::CONNECT($NVX_DB,
 									$NVX_BOOT,
 									$NVX_PAGE,
 									$PAGE);
@@ -458,13 +464,13 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 			 * @instance
 			 * HTML5 helpers
 			 */
-			$NVX_HTML = Html5::CONNECT($NVX_BOOT,$NVX_VAR,$PAGE);
+			$NVX_HTML = \NVOYX\site\Html5::CONNECT($NVX_BOOT,$NVX_VAR,$PAGE);
 			
 			/**
 			 * @instance
 			 * ImageCache
 			 */
-			$NVX_IC = ImageCache::CONNECT($NVX_DB,$NVX_BOOT);
+			$NVX_IC = \NVOYX\site\ImageCache::CONNECT($NVX_DB,$NVX_BOOT);
 			
 			/* start the output buffer */
 			ob_start();
@@ -495,7 +501,7 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 		}
 	} else {
 		
-		$NVX_REDIRECTS = Redirects::CONNECT($NVX_DB);
+		$NVX_REDIRECTS = \NVOYX\site\Redirects::CONNECT($NVX_DB);
 		
 		//echo $NVX_BOOT->FETCH_ENTRY('uri');die();
 		$rs=$NVX_REDIRECTS->RESOLVE('/'.$NVX_BOOT->FETCH_ENTRY('uri'));
@@ -526,13 +532,13 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 				 * @instance
 				 * Dept information
 				 */ 
-				$NVX_DEPT = Dept::CONNECT($NVX_BOOT,$NVX_DB,$NVX_USER);
+				$NVX_DEPT = \NVOYX\site\Dept::CONNECT($NVX_BOOT,$NVX_DB,$NVX_USER);
 								
 				/**
 				 * @instance
 				 * Block information
 				 */
-				$NVX_BLOCK = Block::CONNECT($NVX_DB,
+				$NVX_BLOCK = \NVOYX\site\Block::CONNECT($NVX_DB,
 											$NVX_BOOT,
 											$NVX_PAGE,
 											$PAGE);
@@ -557,13 +563,13 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 					 * @instance
 					 * HTML5 helpers
 					 */
-					$NVX_HTML = Html5::CONNECT($NVX_BOOT,$NVX_VAR,$PAGE);
+					$NVX_HTML = \NVOYX\site\Html5::CONNECT($NVX_BOOT,$NVX_VAR,$PAGE);
 
 					/**
 					 * @instance
 					 * ImageCache
 					 */
-					$NVX_IC = ImageCache::CONNECT($NVX_DB,$NVX_BOOT);
+					$NVX_IC = \NVOYX\site\ImageCache::CONNECT($NVX_DB,$NVX_BOOT);
 
 					/* start the output buffer */
 					ob_start();
@@ -614,7 +620,7 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 	 * @instance
 	 * Path information
 	 */
-	$NVX_PATH = Path::CONNECT($NVX_DB);
+	$NVX_PATH = \NVOYX\site\Path::CONNECT($NVX_DB);
 	
 	/* are we looking at one of the standard cms pages */
 	$rs = $NVX_PATH->FETCH_ENTRY("/" . implode("/",array_slice($NVX_BOOT->FETCH_ENTRY("breadcrumb"),0,3)));
@@ -631,20 +637,20 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 				$NVX_BOOT->SET_PROTOCOL("https");
 			}
 			
-			/* breadcrumb one should specify the CMS class (defined by leading underscore and first character capital) */
-			$rs =  "_" . ucwords($NVX_BOOT->FETCH_ENTRY("breadcrumb",1));
+			/* breadcrumb one should specify the CMS class (so push the cms namespace onto it) */
+			$rs =  '\\NVOYX\\cms\\' . ucwords($NVX_BOOT->FETCH_ENTRY("breadcrumb",1));
 			
 			/**
 			 * @instance
 			 * Dept information
 			 */ 
-			$NVX_DEPT = Dept::CONNECT($NVX_BOOT,$NVX_DB,$NVX_USER);
+			$NVX_DEPT = \NVOYX\site\Dept::CONNECT($NVX_BOOT,$NVX_DB,$NVX_USER);
 			
 			/**
 			 * @instance
 			 * Group information
 			 */ 
-			$NVX_GROUP = Group::CONNECT($NVX_DB,$NVX_BOOT);
+			$NVX_GROUP = \NVOYX\site\Group::CONNECT($NVX_DB,$NVX_BOOT);
 			
 			/**
 			 * @instance
@@ -684,7 +690,7 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 				 * @instance
 				 * Type information
 				 */ 
-				$NVX_TYPE = Type::CONNECT($NVX_DB,
+				$NVX_TYPE = \NVOYX\site\Type::CONNECT($NVX_DB,
 							$NVX_BOOT,
 							$NVX_VAR->FETCH_ENTRY("front")[0]);
 				
@@ -692,19 +698,19 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 				 * @instance
 				 * Comment information
 				 */ 
-				$NVX_COMMENTS = Comments::CONNECT($NVX_DB,$NVX_BOOT);
+				$NVX_COMMENTS = \NVOYX\site\Comments::CONNECT($NVX_DB,$NVX_BOOT);
 
 				/**
 				 * @instance
 				 * Field information
 				 */ 
-				$NVX_FIELD = Field::CONNECT($NVX_DB,$NVX_GROUP,$NVX_BOOT);
+				$NVX_FIELD = \NVOYX\site\Field::CONNECT($NVX_DB,$NVX_GROUP,$NVX_BOOT);
 				
 				/**
 				 * @instance
 				 * Page information
 				 */
-				$NVX_PAGE = Page::CONNECT($NVX_DB,
+				$NVX_PAGE = \NVOYX\site\Page::CONNECT($NVX_DB,
 										$NVX_VAR->FETCH_ENTRY("front")[0],
 										$NVX_FIELD,
 										$NVX_BOOT);
@@ -713,7 +719,7 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 				 * @instance
 				 * Block information
 				 */
-				$NVX_BLOCK = Block::CONNECT($NVX_DB,
+				$NVX_BLOCK = \NVOYX\site\Block::CONNECT($NVX_DB,
 											$NVX_BOOT,
 											$NVX_PAGE,
 											false);
@@ -722,7 +728,7 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 				 * @instance
 				 * HTML5 helpers (WE COULD EXTEND NVX_HTML TO INCLUDE ALL OBJECTS IF NEEDED - MIGHT HELP WITH BLOCKS)
 				 */
-				$NVX_HTML = Html5::CONNECT($NVX_BOOT,$NVX_VAR,false);
+				$NVX_HTML = \NVOYX\site\Html5::CONNECT($NVX_BOOT,$NVX_VAR,false);
 								
 				/* start the output buffer */
 				ob_start();

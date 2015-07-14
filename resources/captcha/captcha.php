@@ -10,7 +10,7 @@
 
 
 /* create a simple captcha instance */
-$NVX_CAPTCHA = SimpleCaptcha::CONNECT(self::$BOOT);
+$NVX_CAPTCHA = \NVOYX\site\SimpleCaptcha::CONNECT(self::$BOOT);
 
 
 /* create a captcha image */
