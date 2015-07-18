@@ -8,6 +8,7 @@
  */
  ?>
 
+<?php if($NVX_BOOT->FETCH_ENTRY("current")!='unit'){ ?>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -27,9 +28,12 @@
 	<body>
 				
 		<div style="width:714px;margin:auto;">
+<?php } ?>
 			<?php include($NVX_CMS->FETCH_HTML()); ?>
+<?php if($NVX_BOOT->FETCH_ENTRY("current")!='unit'){ ?>
 		</div>
 		
 		<div style="display: none"><a href="/settings/resources/honeypot/<?= $NVX_VAR->FETCH_ENTRY("honeyfile")[0]; ?>">tendentious-parliamentary</a></div>
 	</body>
 </html>
+<?php } ?>

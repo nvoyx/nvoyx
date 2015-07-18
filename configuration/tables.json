@@ -1152,6 +1152,10 @@
 						"access":"'s'"
 					},
 					{
+						"url":"'/settings/debug/unit'",
+						"access":"'s'"
+					},
+					{
 						"url":"'/settings/redirects/list'",
 						"access":"'a'"
 					},
@@ -1649,7 +1653,7 @@
 					{
 						"name":"'version'",
 						"notes":"'<p>nvoyx version number</p>'",
-						"value":"'[\"2.0.0\"]'"
+						"value":"'[\"2.1.0\"]'"
 					},
 					{
 						"name":"'front'",
