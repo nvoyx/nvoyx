@@ -51,4 +51,9 @@
 		<a title="edit" target="_blank" href="<?php echo "/settings/debug/info";?>"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-edit.png"></a>
 	</div>
 	
+	<div class="blank row">
+		<label class="blank fl half">Unit Testing</label>
+		<a title="edit" target="_blank" href="<?php echo "/settings/debug/unit";?>"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-edit.png"></a>
+	</div>
+	
 </div>
