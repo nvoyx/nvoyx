@@ -150,4 +150,14 @@ class Debug{
 		/* return any output for storage */
 		return self::$BOOT->FETCH_ENTRY("blocks") ."/private/". self::$BOOT->FETCH_ENTRY("breadcrumb",1) . "/" . self::$BOOT->FETCH_ENTRY("breadcrumb",2) . ".php";
 	}
+	
+	/*
+	 * _unit()
+	 * grab any content associated with the debug / unit page
+	 */
+	private function _unit(){
+		
+		/* return any output for storage */
+		return self::$BOOT->FETCH_ENTRY("blocks") ."/private/". self::$BOOT->FETCH_ENTRY("breadcrumb",1) . "/" . self::$BOOT->FETCH_ENTRY("breadcrumb",2) . ".php";
+	}
 }
