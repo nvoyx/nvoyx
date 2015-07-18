@@ -1152,6 +1152,10 @@
 						"access":"'s'"
 					},
 					{
+						"url":"'/settings/debug/unit'",
+						"access":"'s'"
+					},
+					{
 						"url":"'/settings/redirects/list'",
 						"access":"'a'"
 					},
