@@ -25,11 +25,13 @@
 	<div class="blank header">
 		<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-login.png">
 		<h2 class="blank fl">LOGIN</h2>
-		<a id="login-button" class="fr"style="display:none;" onclick="$('#login-submit').click();">ENTER</a>
+		<?php if(stristr($_SERVER['HTTP_USER_AGENT'],'Chrome')){ ?>
+		<a id="login-button" class="fr" onclick="$('#login-submit').click();">ENTER</a>
+		<?php } ?>
 	</div>
 
-	
-	<form id="login" style="display:none;" method="post">
+	<?php if(stristr($_SERVER['HTTP_USER_AGENT'],'Chrome')){ ?>
+	<form id="login" method="post">
 	
 		<div class="blank row">
 			<label class="blank fl " for="username">Username</label>
@@ -52,18 +54,12 @@
 			</div>
 		</div>
 	</form>
+	<?php } else { ?>
 	
 	<div class="blank row" id="chrome-notice">
 		<label class="blank fl ">Website admin requires </label>
 		<label class="blank fl "><a href="http://www.google.co.uk/chrome">Chrome Browser</a></label>
 	</div>
-	
-	<script>
-		if (window.chrome || navigator.userAgent.indexOf("ifourDev") != -1) {
-			document.getElementById("login").style.display="block";
-			document.getElementById("login-button").style.display="block";
-			document.getElementById("chrome-notice").style.display="none";
-		}
-	</script>
+	<?php } ?>
 	
 </div>
