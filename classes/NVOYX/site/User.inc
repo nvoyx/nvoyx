@@ -106,21 +106,58 @@ class User{
 		/* start a session */
 		session_start();
 		
-		/* do we already have a session type */
-		if(isset($_SESSION['type'])){
+		/* have we received the nvx_unit cookie */
+		if (isset($_COOKIE['nvx_unit'])){
+
+			/* grab a copy of the session data assigned to the unit test */
+			$unit_session = $_SESSION;
 			
-			/* grab the session id */
-			self::$USER["id"] = $_SESSION['id'];
+			/* grab the session data from the passed reference - if genuine, this will be the superuser */
+			$sess=file_get_contents('../session/sess_'.$_COOKIE['nvx_unit']);
 			
-			/* grab the user access levels */
-			self::$USER["type"] =  $this->ACCESS($_SESSION['type']);
+			/* decode the alternate session data */
+			session_decode($sess);
 			
-			/* grab the user contact details */
-			self::$USER["contact"] = $_SESSION['contact'];
+			/* unset the cookie unit code - we only need to synchronise these once */
+			setcookie('nvx_unit', '',time()-3600,'/');
 			
-			/* grab the user dept reference */
-			self::$USER["dept"] = $_SESSION['dept'];
+			/* a captcha code cookie should also be present - compare this against the superuser */
+			if($_COOKIE['nvx_cc']!=$_SESSION['captcha']){
+				
+				/* it didn't match, so revert to the original unit session - possible break-in attempt */
+				$_SESSION=$unit_session;
+			}
+		}
+		
+		/* do we already have a session type and is the captcha check cookie present */
+		if(isset($_SESSION['type']) && isset($_COOKIE['nvx_cc'])){
 			
+			
+			/* compare the session captcha against the cookie captcha code */
+			if($_SESSION['captcha']!=$_COOKIE['nvx_cc']){
+				
+				/* NOTE - we dont reset the session data as a valid user may be using this session also */
+				
+				/* this is a break-in attempt, so push the most basic permissions */
+				self::$USER["type"] = "!u";
+				
+				/* unset the cookie captcha code */
+				setcookie('nvx_cc', '',time()-3600,'/');
+			
+			} else {
+			
+				/* grab the session id */
+				self::$USER["id"] = $_SESSION['id'];
+			
+				/* grab the user access levels */
+				self::$USER["type"] =  $this->ACCESS($_SESSION['type']);
+			
+				/* grab the user contact details */
+				self::$USER["contact"] = $_SESSION['contact'];
+			
+				/* grab the user dept reference */
+				self::$USER["dept"] = $_SESSION['dept'];
+			}
 		} else {
 			
 			/* don't know who this is, so give them the most basic permissions */
