@@ -116,13 +116,13 @@ env[TMPDIR] = /path/to/some.domain.com/tmp
 env[TEMP] = /path/to/some.domain.com/tmp
 
 ; host-specific php ini settings here
-php_admin_value[open_basedir] = /path/to/some.domain.com/:/usr/share/misc/:/usr/bin/cwebp:/usr/bin/dwebp
+php_admin_value[open_basedir] = /path/to/some.domain.com/:/usr/share/misc/:/usr/bin/cwebp:/usr/bin/dwebp:/path/to/certificates
 php_admin_value[post_max_size] = 1000M
 php_admin_value[memory_limit] = 256M
 php_admin_value[upload_tmp_dir] = /path/to/some.domain.com/tmp
 php_admin_value[session.save_path] = /path/to/some.domain.com/session
 php_admin_value[sendmail_from] = no-reply@some.domain.com
-
+php_admin_value[openssl.cafile] = /path/to/certificates/cert.crt
 
 
 EXAMPLE CRON FILE
