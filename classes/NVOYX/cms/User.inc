@@ -147,7 +147,7 @@ class User{
 	
 	/*
 	 * _login()
-	 *  process ad grab any content associated with the user / login page
+	 *  process and grab any content associated with the user / login page
 	 */
 	private function _login(){
 		
@@ -190,6 +190,9 @@ class User{
 					$_SESSION["contact"]=self::$BOOT->CYPHER(array("TYPE"=>"decrypt","STRING"=>$rs[0]["user.contact"]));
 					$_SESSION["dept"]=$rs[0]["user.dept"];
 					
+					/* push the captcha value into a separate cookie - we will use this as a lock for the session data */
+					setcookie('nvx_cc', $_SESSION['captcha'],0,'/');
+					
 					/* redirect to the content listings */
 					self::$BOOT->HEADER(array("LOCATION"=>"/settings/content/list"));
 				}
@@ -215,6 +218,9 @@ class User{
 		
 		/* destroy the session */
 		session_destroy();
+		
+		/* unset the cookie captcha code */
+		setcookie('nvx_cc', '',time()-3600,'/');
 		
 		/* redirect to the website homepage */
 		self::$BOOT->HEADER(array("LOCATION"=>"http://" . self::$BOOT->FETCH_ENTRY("domain") ."/"));
