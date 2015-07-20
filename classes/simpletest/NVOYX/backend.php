@@ -17,7 +17,6 @@ class Backend extends WebTestCase {
 	function setUp(){
 		$this->setCookie('nvx_unit',$this->o['session_id']);
 		$this->setCookie('nvx_cc',$this->o['captcha']);
-		$this->addHeader('User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36');
 	}
 		
 	function setOptions($opts) {
