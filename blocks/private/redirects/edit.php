@@ -52,7 +52,7 @@ if(isset($redirect)){ ?>
 				New URL<br>
 				<span class="current-length tt"><?php echo strlen($redirect["redirects.new"]);?></span><span class="tt"> of 2048</span>
 			</label>
-			<input class="blank textbox mini fr" name="new" id="old" type="text" maxlength="2048" value="<?php echo $redirect["redirects.new"];?>">
+			<input class="blank textbox mini fr" name="new" id="new" type="text" maxlength="2048" value="<?php echo $redirect["redirects.new"];?>">
 		</div>
 				
 		<div><input type="submit" class="hide" name="submit" id="submit" value="submit"></div>
