@@ -13,6 +13,10 @@ require_once($st.'web_tester.php');
 class Frontend extends WebTestCase {
 	
 	var $o;
+	
+	function setUp(){
+		$this->addHeader('User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36');
+	}
 		
 	function setOptions($opts) {
 		$this->o=$opts;
@@ -38,12 +42,13 @@ class Frontend extends WebTestCase {
 	}
 
 	function test_Login_Form_Not_Chrome() {
+		$this->restart();
+		$this->addHeader('User-Agent: NVOYX Unit Tester');
 		$this->get($this->o['http'].'/settings/user/login');
 		$this->assertText('Website');
 	}
 	
 	function test_Login_Form_Chrome() {
-		$this->addHeader('User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36');
 		$this->get($this->o['http'].'/settings/user/login');
 		$this->assertText('Password');
 	}
