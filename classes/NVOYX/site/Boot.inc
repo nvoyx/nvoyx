@@ -477,7 +477,7 @@ class Boot{
 			if($a["TYPE"]=="css"){
 				
 				/* create a new instance of the Scss compiler */
-				$NVX_SCSS = new \NVOYX\scss\Scss();
+				$NVX_SCSS = new \scss\Scss();
 			}
 			
 			/* cycle through the uncompressed files again */
