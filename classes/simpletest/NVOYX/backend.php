@@ -93,6 +93,7 @@ class Backend extends WebTestCase {
 	}
 
 	/* AJAX TESTS */
+	
 	function test_Ajax_List_Response() {
 		$this->get($this->o['https'].'/settings/ajaxmanager/list');
 		$this->assertResponse(200);
@@ -118,12 +119,12 @@ class Backend extends WebTestCase {
 		$this->get($this->o['https'].'/settings/ajaxmanager/add');
 		$this->assertText('Name');
 		$r=explode('/',$this->getUrl());
-		$this->o['variable_ajax']=$r[count($r)-1];
+		$this->o['ajax_id']=$r[count($r)-1];
 	}
 	
 	function test_Update_Ajax() {
-		if(is_numeric($this->o['variable_ajax'])){
-			$this->get($this->o['https'].'/settings/ajaxmanager/edit/'.$this->o['variable_ajax']);
+		if(is_numeric($this->o['ajax_id'])){
+			$this->get($this->o['https'].'/settings/ajaxmanager/edit/'.$this->o['ajax_id']);
 			$this->setFieldById('url', 'nvxunit');
 			$this->clickSubmitById('submit');
 			$this->assertField('url',true,'nvxunit');
@@ -132,16 +133,56 @@ class Backend extends WebTestCase {
 	}
 	
 	function test_Delete_Ajax() {
-		if(is_numeric($this->o['variable_ajax'])){
-			$this->get($this->o['https'].'/settings/ajaxmanager/delete/'.$this->o['variable_ajax']);
+		if(is_numeric($this->o['ajax_id'])){
+			$this->get($this->o['https'].'/settings/ajaxmanager/delete/'.$this->o['ajax_id']);
 			$this->assertText('AJAX');
 		}
 	}
+	
+	/* BLOCK TESTS */
 	
 	function test_Blocks_List_Response() {
 		$this->get($this->o['https'].'/settings/block/list');
 		$this->assertResponse(200);
 		$this->assertText('BLOCKS');
+	}
+	
+	function test_Blocks_System_Blocks_Exist() {
+		$this->get($this->o['https'].'/settings/block/list');
+		$this->assertText('404 Error');
+		$this->assertText('Admin Bar');
+		$this->assertText('Analytics');
+		$this->assertText('Comments');
+		$this->assertText('Contact Form');
+		$this->assertText('Helper');
+		$this->assertText('Twitter');
+	}
+	
+	function test_Blocks_Folder_Writeable_By_Server() {
+		$this->assertTrue(is_writable($this->o['core'].'/blocks/public'));
+	}
+	
+	function test_Add_Block() {
+		$this->get($this->o['https'].'/settings/block/add');
+		$this->assertText('Name');
+		$r=explode('/',$this->getUrl());
+		$this->o['block_id']=$r[count($r)-1];
+	}
+	
+	function test_Update_Block() {
+		if(is_numeric($this->o['block_id'])){
+			$this->get($this->o['https'].'/settings/block/edit/'.$this->o['block_id']);
+			$this->setFieldById('name', 'unit variable test');
+			$this->clickSubmitById('submit');
+			$this->assertField('name',true,'unit block test');
+		}
+	}
+	
+	function test_Delete_Block() {
+		if(is_numeric($this->o['block_id'])){
+			$this->get($this->o['https'].'/settings/block/delete/'.$this->o['block_id']);
+			$this->assertText('BLOCKS');
+		}
 	}
 	
 	/* DEBUG TESTS */
