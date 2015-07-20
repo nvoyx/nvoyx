@@ -83,10 +83,10 @@ class User{
 		/* switch by user level and return all levels that the user can access */
 		switch($id):
 			
-			case "s": return "!sacu"; break;
-			case "a": return "!acu"; break;
-			case "c": return "!cu"; break;
-			default: return "!u"; break;
+			case "s": return "!sacu";
+			case "a": return "!acu";
+			case "c": return "!cu";
+			default: return "!u";
 		endswitch;
 	}
 	
@@ -105,27 +105,33 @@ class User{
 		
 		/* start a session */
 		session_start();
-		
+				
 		/* have we received the nvx_unit cookie */
 		if (isset($_COOKIE['nvx_unit'])){
 
-			/* grab a copy of the session data assigned to the unit test */
-			$unit_session = $_SESSION;
+			if($_COOKIE['nvx_unit']!='deleted'){
 			
-			/* grab the session data from the passed reference - if genuine, this will be the superuser */
-			$sess=file_get_contents('../session/sess_'.$_COOKIE['nvx_unit']);
-			
-			/* decode the alternate session data */
-			session_decode($sess);
-			
-			/* unset the cookie unit code - we only need to synchronise these once */
-			setcookie('nvx_unit', '',time()-3600,'/');
-			
-			/* a captcha code cookie should also be present - compare this against the superuser */
-			if($_COOKIE['nvx_cc']!=$_SESSION['captcha']){
-				
-				/* it didn't match, so revert to the original unit session - possible break-in attempt */
-				$_SESSION=$unit_session;
+				/* grab a copy of the session data assigned to the unit test */
+				$unit_session = $_SESSION;
+
+				/* grab the session data from the passed reference - if genuine, this will be the superuser */
+				$sess=file_get_contents('../session/sess_'.$_COOKIE['nvx_unit']);
+
+				/* decode the alternate session data */
+				session_decode($sess);
+
+				/* unset the cookie unit code - we only need to synchronise these once */
+				setcookie('nvx_unit',null,-1,'/');
+				unset($_COOKIE['nvx_unit']);
+
+				/* a captcha code cookie should also be present - compare this against the superuser */
+				if($_COOKIE['nvx_cc']!=$_SESSION['captcha']){
+
+					/* it didn't match, so revert to the original unit session - possible break-in attempt */
+					$_SESSION=$unit_session;
+				}
+			} else {
+				unset($_COOKIE['nvx_unit']);
 			}
 		}
 		
@@ -142,7 +148,8 @@ class User{
 				self::$USER["type"] = "!u";
 				
 				/* unset the cookie captcha code */
-				setcookie('nvx_cc', '',time()-3600,'/');
+				setcookie('nvx_cc', null,-1,'/');
+				unset($_COOKIE['nvx_cc']);
 			
 			} else {
 			
