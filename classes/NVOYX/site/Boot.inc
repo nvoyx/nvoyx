@@ -447,7 +447,7 @@ class Boot{
 
 		/* set a modified timestamp flag */
 		$mfiles=0;
-
+		
 		/* check whether a compressed file  already exists for this file type */
 		if(file_exists(self::$SYS["files"]."/compress/public.{$a["TYPE"]}")){
 					
@@ -477,7 +477,7 @@ class Boot{
 			if($a["TYPE"]=="css"){
 				
 				/* create a new instance of the Scss compiler */
-				$NVX_SCSS = new Scss();
+				$NVX_SCSS = new \NVOYX\scss\Scss();
 			}
 			
 			/* cycle through the uncompressed files again */
