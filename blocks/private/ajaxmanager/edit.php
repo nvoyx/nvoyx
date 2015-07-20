@@ -49,7 +49,7 @@ if(isset($path)){ ?>
 					Name<br>
 					<span class="current-length tt"><?php echo strlen(str_replace("/settings/ajax/","",$path["url"]));?></span><span class="tt"> of 255</span>
 				</label>
-				<input class="blank textbox mini fr" name="url" id="name" type="text" maxlength="255" value="<?php echo str_replace("/settings/ajax/","",$path["url"]);?>">
+				<input class="blank textbox mini fr" name="url" id="url" type="text" maxlength="255" value="<?php echo str_replace("/settings/ajax/","",$path["url"]);?>">
 			</div>
 			
 			<div class="blank row">
