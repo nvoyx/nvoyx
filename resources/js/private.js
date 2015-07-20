@@ -12,7 +12,7 @@ function groupCompress(obj){
 }
 
 function select(obj,nme){
-	nme = nme.replace("[]","",nme);
+	nme = nme.replace("[]","");
 	var idx = $(obj).parent().children('a').index(obj);
 	if($(obj).parent().hasClass('mselect')){
 		if($(obj).hasClass('selected')){
@@ -899,11 +899,11 @@ function ckSortable(){
 
 function contentList(who){
 	$(".content-list-type").hide();
-	$("#content-list-type-" + $("#content-list-types").val()).show();
+	$("#content-list-type-" + $("#content-list-types option:selected").val()).show();
 	$.ajax({type: "POST",
 			url: "/settings/ajax/contentfilter",
 			cache: false,
-			data: {user: who,filter: $("#content-list-types").val()}
+			data: {user: who,filter: $("#content-list-types option:selected").val()}
 	});
 }
 

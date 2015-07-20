@@ -25,12 +25,9 @@
 	<div class="blank header">
 		<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-login.png">
 		<h2 class="blank fl">LOGIN</h2>
-		<?php if(stristr($_SERVER['HTTP_USER_AGENT'],'Chrome')){ ?>
 		<a id="login-button" class="fr" onclick="$('#login-submit').click();">ENTER</a>
-		<?php } ?>
 	</div>
 
-	<?php if(stristr($_SERVER['HTTP_USER_AGENT'],'Chrome')){ ?>
 	<form id="login" method="post">
 	
 		<div class="blank row">
@@ -54,12 +51,5 @@
 			</div>
 		</div>
 	</form>
-	<?php } else { ?>
-	
-	<div class="blank row" id="chrome-notice">
-		<label class="blank fl ">Website admin requires </label>
-		<label class="blank fl "><a href="http://www.google.co.uk/chrome">Chrome Browser</a></label>
-	</div>
-	<?php } ?>
 	
 </div>
