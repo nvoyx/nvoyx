@@ -220,7 +220,8 @@ class User{
 		session_destroy();
 		
 		/* unset the cookie captcha code */
-		setcookie('nvx_cc', '',time()-3600,'/');
+		setcookie('nvx_cc',null,-1,'/');
+		unset($_COOKIE['nvx_unit']);
 		
 		/* redirect to the website homepage */
 		self::$BOOT->HEADER(array("LOCATION"=>"http://" . self::$BOOT->FETCH_ENTRY("domain") ."/"));

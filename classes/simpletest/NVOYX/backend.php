@@ -15,7 +15,6 @@ class Backend extends WebTestCase {
 	var $o;
 	
 	function setUp(){
-		$this->restart();
 		$this->setCookie('nvx_unit',$this->o['session_id']);
 		$this->setCookie('nvx_cc',$this->o['captcha']);
 		$this->addHeader('User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36');
@@ -51,12 +50,20 @@ class Backend extends WebTestCase {
 		$this->get($this->o['https'].'/settings/block/list');
 		$this->assertResponse(200);
 		$this->assertText('BLOCKS');
-	}	
+	}
+	
+	/* DEBUG TESTS */
 
 	function test_Debug_List_Response() {
 		$this->get($this->o['https'].'/settings/debug/list');
 		$this->assertResponse(200);
 		$this->assertText('DEBUG');
+	}
+	
+	function test_Debug_Database_Response() {
+		$this->get($this->o['https'].'/settings/debug/database');
+		$this->assertResponse(200);
+		$this->assertText('Select a table to view');
 	}
 	
 	function test_Departments_List_Response() {
@@ -187,13 +194,70 @@ class Backend extends WebTestCase {
 		$this->assertLink('USERS');
 		$this->clickLink('USERS');
 		$this->assertText('USERS');
-	}	
+	}
+	
+	/* VARIABLES TESTS */
 
 	function test_Content_System_Link_Variables() {
 		$this->get($this->o['https'].'/settings/content/list');
 		$this->assertLink('VARIABLES');
 		$this->clickLink('VARIABLES');
 		$this->assertText('VARIABLES');
-	}	
+	}
+	
+	function test_Default_Variables_Exist() {
+		$this->get($this->o['https'].'/settings/variables/list');
+		$this->assertText('404');
+		$this->assertText('Ajax');
+		$this->assertText('Company');
+		$this->assertText('Css');
+		$this->assertText('Editors');
+		$this->assertText('Front');
+		$this->assertText('404');
+		$this->assertText('Holding');
+		$this->assertText('Honeyfile');
+		$this->assertText('Honeykey');
+		$this->assertText('Honeyserver');
+		$this->assertText('Js');
+		$this->assertText('Languages');
+		$this->assertText('Live');
+		$this->assertText('Maintenance Paths');
+		$this->assertText('Members');
+		$this->assertText('Php Resources');
+		$this->assertText('Spellchecker');
+		$this->assertText('Template');
+		$this->assertText('Timezone');
+		$this->assertText('Version');
+	}
+	
+	function test_Add_Variable() {
+		$this->get($this->o['https'].'/settings/variables/add');
+		$this->assertText('Name');
+		$r=explode('/',$this->getUrl());
+		$this->o['variable_id']=$r[count($r)-1];
+	}
+	
+	function test_Edit_Variable() {
+		if(is_numeric($this->o['variable_id'])){
+			$this->get($this->o['https'].'/settings/variables/edit/'.$this->o['variable_id']);
+			$this->assertText('Name');
+		}
+	}
+	
+	function test_Update_Variable() {
+		if(is_numeric($this->o['variable_id'])){
+			$this->get($this->o['https'].'/settings/variables/edit/'.$this->o['variable_id']);
+			$this->setFieldById('name', 'unit variable test');
+			$this->clickSubmitById('submit');
+			$this->assertField('name',true,'unit variable test');
+		}
+	}
+
+	function test_Delete_Variable() {
+		if(is_numeric($this->o['variable_id'])){
+			$this->get($this->o['https'].'/settings/variables/delete/'.$this->o['variable_id']);
+			$this->assertText('VARIABLES');
+		}
+	}
 
 }

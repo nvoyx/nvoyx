@@ -220,7 +220,7 @@ $rows = $NVX_DB->QUERY("SELECT","* FROM `{$t}`");
 		
 		<label>Select a table to view.</label>
 			
-		<select onchange="window.location = '?table=' + this.value;">
+		<select id='table' onchange="window.location = '?table=' + this.value;">
 			<?php foreach($tables as $table){
 				if($t==$table){$selected="selected ";}else{$selected="";}
 			?>

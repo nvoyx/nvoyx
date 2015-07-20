@@ -26,10 +26,12 @@
 		<a class="fr" href="/settings/content/list">UP</a>
 	</div>
 	
+	<?php if($NVX_DB->IS_CACHED()) { ?>
 	<div class="blank row">
 		<label class="blank fl half">XCache</label>
 		<a title="edit" target="_blank" href="<?php echo "/settings/debug/xcache";?>"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-edit.png"></a>
 	</div>
+	<?php } ?>
 
 	<div class="blank row">
 		<label class="blank fl half">Folders</label>
