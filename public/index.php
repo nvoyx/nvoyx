@@ -451,9 +451,9 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 				
 		/* using the TYPE template, test include file */
 		$rs = $NVX_BOOT->TEST_INCLUDE(array("TYPE"=>"template","VALUE"=>$TYPE["template"]));
-	
-		if($rs){
 			
+		if($rs){
+						
 			/* check and (if necessary) compress the css files */
 			$NVX_BOOT->COMPRESS(array("TYPE"=>"css","FILES"=>$NVX_VAR->FETCH_ENTRY("css")));
 			
