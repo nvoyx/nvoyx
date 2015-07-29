@@ -14,6 +14,7 @@ FOLDER/FILE SETUP
 
 create the following directories:
 	log
+	keys
 	resources/files/compress
 	resources/files/documents
 	resources/files/images/ckeditor
@@ -27,7 +28,10 @@ create the following directories:
 
 copy configuration/config.json.example to configuration/config.json and set to writeable by the server.
 
-
+LOAD BALANCERS
+if you need to sync file uploads between servers, add the alternative server(s) as an array under the SYNC option in config.json
+Set the authentication to wither password or key. If you are using key, then add the key to the keys folder. Set the owner of the key file to the domain
+user and set the permissions to 600. It is worth logging onto the box and testing the connection via the key, before testing through the website.
 
 NGINX EXAMPLE CONFIG
 
