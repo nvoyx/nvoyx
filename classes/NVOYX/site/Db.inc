@@ -27,6 +27,7 @@ class Db {
 	protected static $debug = "";
 	protected static $db;
 	static $CACHED;
+	static $SYNC;
 	
 	
 	/* --- PUBLIC METHODS --- */
@@ -70,6 +71,13 @@ class Db {
 	public static function FETCH_DB(){
 		return self::$db;
 	}
+	
+	/*
+	 * IS_SYNCED()
+	 * does this server sync with any other boxes
+	 *
+	 */
+	public function IS_SYNCED() { return self::$SYNC; }
 	
 	/*
 	 * IS_CACHED()
@@ -512,5 +520,13 @@ class Db {
 		
 		/* no such option in array so pass false */
 		} else {self::$CACHED=false;}
+				
+		/* check we have a least one sync entry (if not then the site is not behind a load balancer) */
+		if(count(self::$options["SYNC"])>0) {
+
+			/* store whether the cache is enabled in it's own variable (for ease of recall) */
+			self::$SYNC = (self::$options["SYNC"][0]!='') ? self::$options["SYNC"] : false;
+
+		} else {self::$SYNC =false;}		
 	}
 }
