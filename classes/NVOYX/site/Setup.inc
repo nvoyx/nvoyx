@@ -77,10 +77,12 @@ class Setup{
 								"\t\"DWEBP\":\"{$_POST['dwebp']}\",\n" .
 								"\t\"CWEBP\":\"{$_POST['cwebp']}\",\n" .
 								"\t\"XCACHE\":{$xcache},\n" .
+								"\t\"XPREFIX\":{$_POST['xprefix']},\n" .
 								"\t\"TTL\":{$_POST['ttl']},\n" .
 								"\t\"SUPERUSER\":\"{$_POST['superuser']}\",\n" .
 								"\t\"SUPERPASSWORD\":\"{$_POST['superpassword']}\",\n" .
-								"\t\"SUPERCONTACT\":\"{$_POST['supercontact']}\"\n" .
+								"\t\"SUPERCONTACT\":\"{$_POST['supercontact']}\",\n" .
+								"\t\"SYNC\":\"{$_POST['sync']}\"\n" .
 								"}";
 			
 				/* write the new config options back */
@@ -117,10 +119,12 @@ class Setup{
 		echo "<div><label for='socket'>socket</label><input type='textbox' value='{$o["SOCKET"]}' name='socket'></div>\n";
 		echo "<div><label for='dwebp'>dwebp</label><input type='textbox' value='{$o["DWEBP"]}' name='dwebp'></div>\n";
 		echo "<div><label for='cwebp'>cwebp</label><input type='textbox' value='{$o["CWEBP"]}' name='cwebp'></div>\n";
+		echo "<div><label for='xprefix'>xprefix</label><input type='textbox' value='{$o["XPREFIX"]}' name='xprefix'></div>\n";
 		echo "<div><label for='ttl'>ttl</label><input type='textbox' value='{$o["TTL"]}' name='ttl'></div>\n";
 		echo "<div><label for='superuser'>superuser</label><input type='textbox' value='{$o["SUPERUSER"]}' name='superuser'></div>\n";
 		echo "<div><label for='superpassword'>superpassword</label><input type='textbox' value='{$o["SUPERPASSWORD"]}' name='superpassword'></div>\n";
 		echo "<div><label for='supercontact'>supercontact</label><input type='textbox' value='{$o["SUPERCONTACT"]}' name='supercontact'></div>\n";
+		echo "<div><label for='sync'>sync</label><input type='textbox' value='{$o["SYNC"]}' name='sync'></div>\n";
 		echo "<div><input type='submit' value='submit' name='submit'></div>\n";
 		echo "</form></body></html>";
 		
