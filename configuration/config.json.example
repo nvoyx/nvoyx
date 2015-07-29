@@ -9,8 +9,38 @@
 	"DWEBP":"/usr/bin/dwebp",
 	"CWEBP":"/usr/bin/cwebp",
 	"XCACHE":1,
+	"XPREFIX":"domain.name"
 	"TTL":86400,
 	"SUPERUSER":"superuser",
 	"SUPERPASSWORD":"",
-	"SUPERCONTACT":"John Doe"
+	"SUPERCONTACT":"John Doe",
+	"SYNC":[]
 }
+
+/* examples of server sync (when running a load balancer) */
+
+	/* when ssh is via server key */
+	"SYNC":[
+		{
+			"IP":"44.444.44.444",
+			"AUTHENTICATION":"key",
+			"USER":"some_user",
+			"PASS":"/path/to/a/server/key",
+			"FILES":"/path/to/resources/files/folder/",
+			"UID":111,
+			"GID":222
+		}
+	]
+
+	"SYNC":[
+		{
+			"DOMAIN":"some-domain.co.uk",
+			"IP":"44.44.44.444",
+			"AUTHENTICATION":"password",
+			"USER":"some_user",
+			"PASS":"some_password",
+			"FILES":"/path/to/resources/files/folder/",
+			"UID":111,
+			"GID":222
+		}
+	]
