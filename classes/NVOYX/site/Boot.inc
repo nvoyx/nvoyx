@@ -217,8 +217,8 @@ class Boot{
 		/* is the cache enabled for this website */
 		if(self::$SYS["cached"]){
 			
-			/* check that the domain name is included in the variable key */
-			if(!stristr($key,self::$SYS["domain"])){$key = self::$SYS["domain"].$key;}
+			/* check that the prefix is included in the variable key */
+			if(!stristr($key,self::$SYS["xprefix"])){$key = self::$SYS["xprefix"].$key;}
 			
 			/* check the value to be cached is an array, then JSON encode */
 			if(is_array($value)){$value=$this->JSON($value,"encode");}
@@ -237,8 +237,8 @@ class Boot{
 		/* is the cache enabled for this website */
 		if(self::$SYS["cached"]){
 			
-			/* check that the domain name is included in the variable key */
-			if(!stristr($key, self::$SYS["domain"])){$key = self::$SYS["domain"].$key;}
+			/* check that the prefix is included in the variable key */
+			if(!stristr($key, self::$SYS["xprefix"])){$key = self::$SYS["xprefix"].$key;}
 			
 			/* try to fetch the cached data */
 			$cache = self::$DB->GET_CACHE($key);
@@ -293,7 +293,7 @@ class Boot{
 				foreach($rs as $key=>$array){
 				
 					/* does the cache entry relate to this page */
-					if(stristr($array["name"],self::$SYS["domain"])){
+					if(stristr($array["name"],self::$SYS["xprefix"])){
 						
 						/* grab the values associated with this entry */
 						$rs[$key]["value"] = xcache_get($array["name"]); 
@@ -341,13 +341,16 @@ class Boot{
 			if($t=="user"){
 				
 				/* remove any cache entries beginning with this domain name */
-				xcache_unset_by_prefix(self::$SYS["domain"]);
+				xcache_unset_by_prefix(self::$SYS["xprefix"]);
 			} else {
 				
 				/* remove all opcode entries */
 				xcache_clear_cache(XC_TYPE_PHP);
 			}
 		}
+		
+		/* even if xcache is not enabled on this server, it could be on a synced box (if one exists) */
+		$this->SYNC('clearcache.php','terminal');
 	}
 	
 	/*
@@ -806,6 +809,48 @@ class Boot{
 		if($difference != 1) {$periods[$j].= "s";}	
 		return "$difference $periods[$j] {$tense}";
 	}
+	
+	/*
+	 * SYNC()
+	 * if $t equals file, check to see if we need to syncronise the passed file (including path from resources/files) between servers
+	 * if $t equals cache, trigger the clearing of a cache
+	 * if so, login using wither user/pass or private key and complete the transfer
+	 * e.g. SYNC('images/public/synctest.png','file') note no leading slash
+	 * e.g. SYNC('clearcache.php','terminal') note terminal commands are referenced directly as they only serve from one folder
+	 */
+	public function SYNC($f,$t) {
+		if(self::$SYS["synced"]){
+			if(substr($f,0,1)=='/'){$f=substr($f,1);}
+			set_include_path(self::$SYS["core"].'/classes/phpseclib');
+			foreach(self::$SYS["synced"] as $server){
+				include('Net/SFTP.php');
+				$sftp = new \Net_SFTP($server['IP']);
+				if($server['AUTHENTICATION']=='password'){
+					$sftp->login($server['USER'], $server['PASS']);
+				} else {
+					include('Crypt/RSA.php');
+					$key = new \Crypt_RSA();
+					$key->loadKey(file_get_contents(self::$SYS["core"].'/keys/'.$server['PASS']));
+					$sftp->login($server['USER'], $key);
+				}
+				switch($t){
+					case 'file':
+						$file = array(
+							'local'=>self::$SYS["files"].'/'.$f,
+							'remote'=>$server['FILES'].$f
+						);
+						$sftp->put($file['remote'], $file['local'], NET_SFTP_LOCAL_FILE);
+						$sftp->chown($file['remote'], $server['UID']);
+						$sftp->chgrp($file['remote'], $server['GID']);
+						break;
+					case 'terminal':
+						$file = $server['FILES'].'../../terminal/'.$f;
+						$sftp->exec('php '.$file);
+						break;
+				}
+			}
+		}
+	}
 
 	
 	/* --- PRIVATE METHODS --- */
@@ -851,6 +896,8 @@ class Boot{
 		self::$SYS["documents"] = self::$SYS["files"] . "/documents";
 		self::$SYS["mysqlhostinfo"] =  mysqli_get_host_info(self::$DB->FETCH_DB());
 		self::$SYS["cached"] = self::$DB->IS_CACHED();
+		self::$SYS["synced"] = self::$DB->IS_SYNCED();
+		self::$SYS['xprefix'] = self::$DB->FETCH_OPTION("XPREFIX");
 		self::$SYS["salt"] = self::$DB->FETCH_OPTION("SALT");
 		self::$SYS["dwebp"] = self::$DB->FETCH_OPTION("DWEBP");
 		self::$SYS["cwebp"] = self::$DB->FETCH_OPTION("CWEBP");

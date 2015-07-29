@@ -65,10 +65,13 @@ if(key_exists("upload",$_FILES)){
 				$NVX_MEDIA = \NVOYX\site\Media::CONNECT($NVX_BOOT);
 				
 				/* convert the image to a png (if necessary) */
-				$img = $NVX_MEDIA->IMAGE(array("MIME"=>"png","FILE"=>$ckimage));
+				$img = $NVX_MEDIA->IMAGE(array("FILE"=>$ckimage));
 				
 				/* update the return image details */
 				$retimg = "/settings/resources/files/images/ckeditor/".$img;
+				
+				/* sync the file with other servers on the network */
+				$NVX_BOOT->SYNC('images/ckeditor/'.$img,'file');
 				
 				/* set the error message to blank */
 				$error="";

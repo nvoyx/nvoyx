@@ -53,10 +53,13 @@ if(array_key_exists("imagelist",$_FILES)){
 				$NVX_MEDIA = \NVOYX\site\Media::CONNECT($NVX_BOOT);
 					
 				/* convert the image to a webp and compress */
-				$img = $NVX_MEDIA->CWEBP(array("MIME"=>'png',"FILE"=>$image));
+				$img = $NVX_MEDIA->CWEBP(array("FILE"=>$image));
 				
 				/* create an URL to the new image */
 				$retimg = "/settings/resources/files/images/cms/".$img;
+				
+				/* sync the file with other servers on the network */
+				$NVX_BOOT->SYNC('images/cms/'.$img,'file');
 				
 				/* pass the details back to the calling javascript */
 				echo "*START*{$img}*{$retimg}*{$img}*END*";
@@ -105,6 +108,9 @@ if(array_key_exists("filelist",$_FILES)){
 			
 			/* if the move is successful */
 			if($move){
+				
+				/* sync the file with other servers on the network */
+				$NVX_BOOT->SYNC('documents/'.$now.'/'.$ext,'file');
 				
 				/* grab the filesize */
 				$fs = filesize($file);

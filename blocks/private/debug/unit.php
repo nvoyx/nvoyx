@@ -24,7 +24,8 @@ $to=array(
 	'http'=>'http://'.$_SERVER['SERVER_NAME'],
 	'https'=>'https://'.$_SERVER['SERVER_NAME'],
 	'session_id'=>session_id(),
-	'captcha'=>$_SESSION['captcha']
+	'captcha'=>$_SESSION['captcha'],
+	'core'=>$NVX_BOOT->FETCH_ENTRY('core')
 );
 
 /* grab a reporter and pass in some options */
