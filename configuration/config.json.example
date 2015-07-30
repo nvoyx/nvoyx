@@ -9,7 +9,7 @@
 	"DWEBP":"/usr/bin/dwebp",
 	"CWEBP":"/usr/bin/cwebp",
 	"XCACHE":1,
-	"XPREFIX":"domain.name"
+	"XPREFIX":"domain.name",
 	"TTL":86400,
 	"SUPERUSER":"superuser",
 	"SUPERPASSWORD":"",
