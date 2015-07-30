@@ -24,7 +24,6 @@ create the following directories:
 	tmp
 	rollback
 	recovery
-	blocks/private/ajax
 
 copy configuration/config.json.example to configuration/config.json and set to writeable by the server.
 
