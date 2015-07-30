@@ -25,7 +25,9 @@ create the following directories:
 	rollback
 	recovery
 
-copy configuration/config.json.example to configuration/config.json and set to writeable by the server.
+make the above folders plus blocks/private/ajax writeable by the server.
+
+copy configuration/config.json.example to configuration/config.json and set to writeable by the server. Read then delete the notes in config.json.
 
 LOAD BALANCERS
 if you need to sync file uploads between servers, add the alternative server(s) as an array under the SYNC option in config.json
@@ -158,7 +160,6 @@ useradd -g nginx some_user
 DATABASE
 
 create a user/database with the same name as defined in php-fpm config.
-useradd -g nginx some_user
 
 
 
