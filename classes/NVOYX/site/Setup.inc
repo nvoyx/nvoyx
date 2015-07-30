@@ -77,12 +77,12 @@ class Setup{
 								"\t\"DWEBP\":\"{$_POST['dwebp']}\",\n" .
 								"\t\"CWEBP\":\"{$_POST['cwebp']}\",\n" .
 								"\t\"XCACHE\":{$xcache},\n" .
-								"\t\"XPREFIX\":{$_POST['xprefix']},\n" .
+								"\t\"XPREFIX\":\"{$_POST['xprefix']}\",\n" .
 								"\t\"TTL\":{$_POST['ttl']},\n" .
 								"\t\"SUPERUSER\":\"{$_POST['superuser']}\",\n" .
 								"\t\"SUPERPASSWORD\":\"{$_POST['superpassword']}\",\n" .
 								"\t\"SUPERCONTACT\":\"{$_POST['supercontact']}\",\n" .
-								"\t\"SYNC\":\"{$_POST['sync']}\"\n" .
+								"\t\"SYNC\":{$_POST['sync']}\n" .
 								"}";
 			
 				/* write the new config options back */
@@ -107,6 +107,9 @@ class Setup{
 
 		/* grab the current options */
 		$o = self::$OPTIONS;
+		
+		/* encode the SYNC array */
+		$o['SYNC']=json_encode($o['SYNC']);
 		
 		/* build an html form to edit the options */
 		echo "<html><head><title>NVOYX Configuration</title></head><body><form method='post'>\n";
