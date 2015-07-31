@@ -851,7 +851,27 @@ class Boot{
 			}
 		}
 	}
+	
 
+	/*
+	 * RANDOM_STRING()
+	 * takes the required string length and returns a random set of characters
+	 */
+	public function RANDOM_STRING($len){
+		
+		$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+		$charlen = strlen($chars);
+		$special = '*/?!';
+		$speciallen = strlen($special);
+		
+		$random = '';
+		for ($i = 0; $i < $len-2; $i++) {
+			 $random .= $chars[mt_rand(0, $charlen - 1)];
+		}
+		$random.=$special[mt_rand(0, $speciallen - 1)];
+		
+		return random;
+	}
 	
 	/* --- PRIVATE METHODS --- */
 	
