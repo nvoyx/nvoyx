@@ -865,7 +865,7 @@ class Boot{
 		for ($i = 0; $i < $len-1; $i++) {
 			 $random .= $chars[mt_rand(0, $charlen - 1)];
 		}		
-		return random;
+		return $random;
 	}
 	
 	/* --- PRIVATE METHODS --- */
