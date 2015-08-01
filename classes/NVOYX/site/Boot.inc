@@ -861,15 +861,10 @@ class Boot{
 		
 		$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 		$charlen = strlen($chars);
-		$special = '*/?!';
-		$speciallen = strlen($special);
-		
 		$random = '';
-		for ($i = 0; $i < $len-2; $i++) {
+		for ($i = 0; $i < $len-1; $i++) {
 			 $random .= $chars[mt_rand(0, $charlen - 1)];
-		}
-		$random.=$special[mt_rand(0, $speciallen - 1)];
-		
+		}		
 		return random;
 	}
 	
