@@ -11,7 +11,7 @@
 /* automated tasks to be run every day */
 
 /*  grab the type class*/
-$TYPE = Type::CONNECT(self::$DB,
+$TYPE = \NVOYX\site\Type::CONNECT(self::$DB,
 					self::$BOOT,
 					self::$VAR->FETCH_ENTRY("front")[0]);
 
