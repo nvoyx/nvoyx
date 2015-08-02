@@ -10,6 +10,7 @@
 /* sync a hidden dropdown with its associated text field */
 function dropdownUpdate(obj){
 	$('#' +  $(obj).attr('id') + '-tb').val($(obj).children('option:selected').text());
+	$('#' +  $(obj).attr('id') + '-tb').focus();
 }
 
 /* multiple filter control (text and dropdown) for OR filtered pages */
