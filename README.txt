@@ -35,6 +35,11 @@ if you need to sync file uploads between servers, add the alternative server(s) 
 Set the authentication to wither password or key. If you are using key, then add the key to the keys folder. Set the owner of the key file to the domain
 user and set the permissions to 600. It is worth logging onto the box and testing the connection via the key, before testing through the website.
 
+NGINX.CONF
+
+add the following under http
+client_max_body_size            0;
+
 NGINX EXAMPLE CONFIG
 
 server {
