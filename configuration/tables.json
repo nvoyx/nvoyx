@@ -43,7 +43,7 @@
 						"name":"'Analytics'",
 						"tid":"'[\"1\",\"2\",\"3\"]'",
 						"access":"'u'",
-						"params":"'{\"reference\":\"\",\"domain\":\"\"}'"
+						"params":"'{\"reference\":\"\"}'"
 					},
 					{
 						"name":"'Twitter'",
@@ -55,7 +55,7 @@
 						"name":"'Contact Form'",
 						"tid":"'[\"2\"]'",
 						"access":"'u'",
-						"params":"'{\"from\":\"cms@domain.co.uk\",\"to\":\"you@domain.co.uk\",\"subject\":\"Website Contact Form Submission\",\"message\":\"The following information has been submitted\"}'"
+						"params":"'[\"\"]'"
 					},
 					{
 						"name":"'Comments'",
@@ -1729,6 +1729,11 @@
 						"name":"'maintenance paths'",
 						"notes":"'<p>paths which may be displayed when the site is is maintenance or holding</p>'",
 						"value":"'[\"/settings/user\",\"/settings/resources\"]'"
+					},
+					{
+						"name":"'mailer'",
+						"notes":"'<p>default settings for php mailer</p>'",
+						"value":"'{\"isMail\":\"1\",\"isSMTP\":\"0\",\"Host\":\"smtp.server.name\",\"SMTPAuth\":\"1\",\"SMTPSecure\":\"tls\",\"Port\":\"587\",\"Username\":\"email@address.com\",\"Password\":\"secret\"}'"
 					},
 					{
 						"name":"'company'",

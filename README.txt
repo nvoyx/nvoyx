@@ -12,7 +12,7 @@ php-fpm php-cli php-common php-mysql php-gd php-xml php-mbstring php-mcrypt php-
 
 FOLDER/FILE SETUP
 
-create the following directories:
+the following folders should be writable by php
 	log
 	keys
 	resources/files/compress
@@ -25,8 +25,7 @@ create the following directories:
 	tmp
 	rollback
 	recovery
-
-make the above folders plus blocks/private/ajax writeable by the server.
+	blocks/private/ajax
 
 copy configuration/config.json.example to configuration/config.json and set to writeable by the server. Read then delete the notes in config.json.
 
