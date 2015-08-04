@@ -10,8 +10,8 @@
 
 /*
  * @block 3 (analytics)
- * param reference (string holding the  analytics id), domain (string holding tld eg. nvoyx.org)
- * returns  analytics code
+ * param reference (string holding the analytics id)
+ * returns analytics code
  */
 
 /* current block id */
@@ -21,14 +21,14 @@ $bid = pathinfo(__FILE__, PATHINFO_FILENAME);
 $p = $NVX_BLOCK->FETCH_PARAMS($bid);
 
 /* has an analytics code been entered into the parameter called reference and the tld given in domain */
-if($p["reference"]!="" && $p["domain"]!="" && $PAGE["published"]==1){ ?>
+if($p["reference"]!="" && $PAGE["published"]==1){ ?>
 
 <script>
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-	ga('create', '<?php echo $p['reference']; ?>', '<?php echo $p['domain']; ?>');
+	ga('create', '<?php echo $p['reference']; ?>', 'auto');
 	ga('send', 'pageview');
 </script>
 
