@@ -503,7 +503,6 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 		
 		$NVX_REDIRECTS = \NVOYX\site\Redirects::CONNECT($NVX_DB);
 		
-		//echo $NVX_BOOT->FETCH_ENTRY('uri');die();
 		$rs=$NVX_REDIRECTS->RESOLVE('/'.$NVX_BOOT->FETCH_ENTRY('uri'));
 		
 		/* no redirect exists, so point at 404 page */
