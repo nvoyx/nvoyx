@@ -184,8 +184,6 @@ class Page{
 				}
 			}
 			
-			
-			
 			/* go fetch the appropriate pages */
 			self::$DB->CLEAR(array("ALL"));
 			self::$DB->SET_FILTER($f);
@@ -197,8 +195,11 @@ class Page{
 				/* cycle through the pages */
 				foreach($pages as $page){
 					
+					/* create a temporary array to hold the standard fields with formatted names and the associated fields */
+					$tpage=array();
+					
 					/* add the page into the page array */					
-					self::$PAGE["nid-{$page['page.id']}"] = array(
+					$tpage = array(
 						"id"=>$page["page.id"],
 						"tid"=>$page["page.tid"],
 						"nvids"=>self::$BOOT->JSON($page["page.nvids"],"decode"),
@@ -223,9 +224,12 @@ class Page{
 					/* should the page include fields */
 					if(self::$with_fields){
 						
-						/* go fetch the field data and add it into the array */
-						/* self::$PAGE = self::$FIELD->FETCH_FIELDS(self::$PAGE,$page['page.id']); */
-						self::$PAGE["nid-{$page['page.id']}"] = self::$FIELD->FETCH_FIELDS(self::$PAGE["nid-{$page['page.id']}"],$page['page.id']);
+						/* go fetch the field data, merge it with the temporary array and pass the whole lot into the PAGE array */
+						self::$PAGE["nid-{$tpage['id']}"] = array_merge($tpage,self::$FIELD->FETCH_FIELDS($tpage['id'],$tpage['tid']));
+					} else {
+						
+						/* push the temporary page array without any fields, onto the PAGE array */
+						self::$PAGE["nid-{$tpage['id']}"] = $tpage;
 					}
 				}
 			}
