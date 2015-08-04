@@ -27,20 +27,25 @@ $r = false;
 /* do we have posted data */
 if(array_key_exists("cf-button-submit",$_POST)){
 	
-	/* sanitise the form fields */
-	$post = $NVX_HTML->POSTED_FIELDS($_POST);
-		
-	/* check that the submitted email recipient is valid */
-	if($post["email"]["value"]!=""){
-						
-		/* send the email */
-		$r = $NVX_HTML->MAIL($p,$post);
-	}
+	$mail = $NVX_HTML->MAIL('mailer');
+
+	$mail->isHTML();
+	$mail->From = 'someone@address.com';
+	$mail->FromName = 'Some One';
+	$mail->addAddress($_POST['cf-reply-email'], $_POST['cf-text-name']);
+	$mail->addReplyTo('no-reply@address.com', 'No Reply');
+	$mail->Subject = 'All the fishes in the sea...';
+	$mail->Body = "<p>They don't bother me <b>today!</b></p>";
+	$mail->AltBody = "They don't bother me today!";
+
+	if(!$mail->send()){		
+		$r='<h3><strong>Oops</strong>, something went wrong</h3>';
+	} else {echo '<h3><strong>Thank you</strong>, for contacting us. We will be in touch.</h3>';}
 }
 
 ?>
 
-<?php if($r){ ?><h3><strong>Thank you for contacting <?php echo $NVX_VAR->FETCH_ENTRY("company")[0];?>, we will be touch.</strong></h3><?php } else { ?>
+<?php if($r){ echo $r;} ?>
 
 <div class="blank content">
 	<form name="cf" id="cf" method="post">
@@ -64,5 +69,3 @@ if(array_key_exists("cf-button-submit",$_POST)){
 		</div>
 	</form>
 </div>
-
-<?php }
