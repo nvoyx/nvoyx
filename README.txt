@@ -35,6 +35,11 @@ if you need to sync file uploads between servers, add the alternative server(s) 
 Set the authentication to wither password or key. If you are using key, then add the key to the keys folder. Set the owner of the key file to the domain
 user and set the permissions to 600. It is worth logging onto the box and testing the connection via the key, before testing through the website.
 
+NGINX.CONF
+
+add the following under http
+client_max_body_size            0;
+
 NGINX EXAMPLE CONFIG
 
 server {
@@ -125,6 +130,7 @@ env[TEMP] = /path/to/some.domain.com/tmp
 ; host-specific php ini settings here
 php_admin_value[open_basedir] = /path/to/some.domain.com/:/usr/share/misc/:/usr/bin/cwebp:/usr/bin/dwebp:/path/to/certificates
 php_admin_value[post_max_size] = 1000M
+php_admin_value[upload_max_filesize] = 1000M
 php_admin_value[memory_limit] = 256M
 php_admin_value[upload_tmp_dir] = /path/to/some.domain.com/tmp
 php_admin_value[session.save_path] = /path/to/some.domain.com/session
