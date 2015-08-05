@@ -217,8 +217,7 @@ class Page{
 						"ttc"=>$page["page.ttc"],
 						"date"=>$page["page.date"],
 						"modified"=>$page["page.modified"],
-						"by"=>$page["page.by"],
-						"comments"=>$page["page.comments"]
+						"by"=>$page["page.by"]
 					);
 					
 					/* should the page include fields */
