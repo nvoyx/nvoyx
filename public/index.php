@@ -49,7 +49,6 @@ spl_autoload_register(function ($class){
  * @instance
  * Site configuration
  */
-//$NVX_SETUP = Setup::CONNECT($_SERVER['DOCUMENT_ROOT']."/../configuration/config.json");
 $NVX_SETUP = \NVOYX\site\Setup::CONNECT($_SERVER['DOCUMENT_ROOT']."/../configuration/config.json");
 
 /* fetch the site configuration options */
