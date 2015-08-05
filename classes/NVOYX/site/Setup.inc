@@ -237,9 +237,7 @@ class Setup{
 						}
 						
 					}
-					
-					//echo $r["TABLE"]."<br>";
-					
+										
 					/* does this table have any entries to be added (rows) */
 					if(array_key_exists("ENTRIES",$r)){
 						
@@ -283,6 +281,10 @@ class Setup{
 					}
 				}
 			}
+			
+			/* we should reload the homepage at this point ie. tables have been added - this should cure the err_content_decoding_field issue on completion of setup */
+			self::$BOOT->HEADER(array("LOCATION"=>"/"));
+			die();
 		}
 	}
 }

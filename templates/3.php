@@ -49,10 +49,8 @@
 			</div>
 		</div>
 		
-		<?php /* 404 ERROR */ $rs = $NVX_BLOCK->LOADER($BLOCKS,7);if($rs){include($rs);} ?>
-				
-		<?php /* COMMENTS */ $rs = $NVX_BLOCK->LOADER($BLOCKS,6);if($rs){include($rs);} ?>
-				
+		<?php /* 404 ERROR */ $rs = $NVX_BLOCK->LOADER($BLOCKS,4);if($rs){include($rs);} ?>
+								
 		<?php if($NVX_VAR->FETCH_ENTRY("honeyfile")[0]!=""){ ?>
 			<div style="display: none"><a href="/settings/resources/honeypot/<?php echo $NVX_VAR->FETCH_ENTRY("honeyfile")[0]; ?>">tendentious-parliamentary</a></div>
 		<?php } ?>

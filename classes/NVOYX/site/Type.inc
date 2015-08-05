@@ -256,8 +256,6 @@ class Type{
 												"createdelete"=>$type["type.createdelete"],
 												"rss"=>$type["type.rss"],
 												"body"=>$type["type.body"],
-												"comments"=>$type["type.comments"],
-												"comeditor"=>$type["type.comeditor"],
 												"template"=>$type["type.template"],
 												"tags"=>self::$BOOT->JSON($type["type.tags"],"decode"));
 			}

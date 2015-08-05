@@ -49,7 +49,6 @@ spl_autoload_register(function ($class){
  * @instance
  * Site configuration
  */
-//$NVX_SETUP = Setup::CONNECT($_SERVER['DOCUMENT_ROOT']."/../configuration/config.json");
 $NVX_SETUP = \NVOYX\site\Setup::CONNECT($_SERVER['DOCUMENT_ROOT']."/../configuration/config.json");
 
 /* fetch the site configuration options */
@@ -66,6 +65,8 @@ $NVX_DB = \NVOYX\site\Db::CONNECT();
 
 /* if db connection has failed */
 if (mysqli_connect_errno()) {
+	
+	echo mysqli_connect_error();
 	
 	/* the system has failed to connect to the database, so return the website config page */
 	$NVX_SETUP->PAGE();
@@ -420,15 +421,6 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 			$NVX_BOOT->HEADER(array("LOCATION"=>"/"));	
 		}
 		
-		/* does this page-type and actual page have comments enabled */
-		if($TYPE["comments"]==1 && $PAGE["comments"]==1){
-						
-			/* set $COMMENTS */
-			$NVX_COMMENTS = \NVOYX\site\Comments::CONNECT($NVX_DB,$NVX_BOOT);
-			
-			
-		}
-		
 		/**
 		 * @instance
 		 * Dept information
@@ -692,12 +684,6 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 				$NVX_TYPE = \NVOYX\site\Type::CONNECT($NVX_DB,
 							$NVX_BOOT,
 							$NVX_VAR->FETCH_ENTRY("front")[0]);
-				
-				/**
-				 * @instance
-				 * Comment information
-				 */ 
-				$NVX_COMMENTS = \NVOYX\site\Comments::CONNECT($NVX_DB,$NVX_BOOT);
 
 				/**
 				 * @instance

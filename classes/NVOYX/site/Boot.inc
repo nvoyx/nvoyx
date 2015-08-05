@@ -905,7 +905,6 @@ class Boot{
 		self::$SYS["honeypot"] = self::$SYS["resources"] . "/honeypot";
 		self::$SYS["cache"] = self::$SYS["files"] . "/cache";
 		self::$SYS["images"] = self::$SYS["files"] . "/images/cms";
-		self::$SYS["twitter"] = self::$SYS["files"] . "/images/twitter";
 		self::$SYS["mimes"] = self::$SYS["files"] . "/images/mimes";
 		self::$SYS["ckimages"] = self::$SYS["files"] . "/images/ckeditor";
 		self::$SYS["documents"] = self::$SYS["files"] . "/documents";
