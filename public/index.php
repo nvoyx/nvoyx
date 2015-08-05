@@ -420,15 +420,6 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 			$NVX_BOOT->HEADER(array("LOCATION"=>"/"));	
 		}
 		
-		/* does this page-type and actual page have comments enabled */
-		if($TYPE["comments"]==1 && $PAGE["comments"]==1){
-						
-			/* set $COMMENTS */
-			$NVX_COMMENTS = \NVOYX\site\Comments::CONNECT($NVX_DB,$NVX_BOOT);
-			
-			
-		}
-		
 		/**
 		 * @instance
 		 * Dept information
@@ -692,12 +683,6 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 				$NVX_TYPE = \NVOYX\site\Type::CONNECT($NVX_DB,
 							$NVX_BOOT,
 							$NVX_VAR->FETCH_ENTRY("front")[0]);
-				
-				/**
-				 * @instance
-				 * Comment information
-				 */ 
-				$NVX_COMMENTS = \NVOYX\site\Comments::CONNECT($NVX_DB,$NVX_BOOT);
 
 				/**
 				 * @instance
