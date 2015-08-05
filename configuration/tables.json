@@ -583,20 +583,6 @@
 					},
 					{
 						"tid": "2",
-						"title":"'Contact'",
-						"heading":"'Contact'",
-						"alias":"'contact'",
-						"teaser":"'Contact Page'",
-						"body":"'<h2>If you have any questions or queries please get in touch.</h2>'",
-						"description":"''",
-						"importance":"0.0",
-						"published":"1",
-						"date":"'2014-01-01 09:00:00'",
-						"modified":"'2014-01-01 09:00:00'",
-						"by":"1"
-					},
-					{
-						"tid": "3",
 						"title":"'404'",
 						"heading":"'404 Not Found'",
 						"alias":"'404'",
