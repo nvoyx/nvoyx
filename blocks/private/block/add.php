@@ -40,5 +40,11 @@ if(!file_exists("{$pb}/{$pid}.php")){
 	}
 }
 
+/* issue a notification */
+$_SESSION['notify']=array(
+	'message'=>'Success: entry added',
+	'type'=>'success'
+);
+
 /* redirect to the new block edit page */
 $NVX_BOOT->HEADER(array("LOCATION"=>"/settings/block/edit/{$pid}"));
