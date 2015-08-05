@@ -171,5 +171,11 @@ if(count($files)==21){
 	unlink($NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid."/{$files[0]}.zip");
 }
 
+/* issue a notification */
+$_SESSION['notify']=array(
+	'message'=>'Success: entry rolled',
+	'type'=>'success'
+);
+
 /* redirect to the rolledback content-edit */
 $NVX_BOOT->HEADER(array("LOCATION"=>"/settings/content/edit/{$nid}"));
