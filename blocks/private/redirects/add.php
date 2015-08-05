@@ -15,5 +15,11 @@ $NVX_DB->CLEAR(array("ALL"));
 $pid = $NVX_DB->QUERY("INSERT","INTO `redirects` (`id`,`old`,`new`) " . 
 							"VALUES (NULL,'{$NVX_BOOT->FETCH_ENTRY("timestamp")}','{$NVX_BOOT->FETCH_ENTRY("timestamp")}')");
 
+/* issue a notification */
+$_SESSION['notify']=array(
+	'message'=>'Success: entry added',
+	'type'=>'success'
+);
+
 /* redirect to the new redirects-edit */
 $NVX_BOOT->HEADER(array("LOCATION"=>"/settings/redirects/edit/{$pid}"));
