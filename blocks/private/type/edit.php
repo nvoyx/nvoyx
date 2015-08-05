@@ -15,7 +15,6 @@
 /* type id */
 $tid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
 
-
 /* lookup the type details */
 foreach($NVX_TYPE->FETCH_ARRAY() as $type){if($type["id"]==$tid){break;}}
 

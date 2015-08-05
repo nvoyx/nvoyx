@@ -23,7 +23,7 @@ $NVX_DB->SET_FILTER("`tid`={$NVX_BOOT->FETCH_ENTRY("breadcrumb",3)}");
 $rs = $NVX_DB->QUERY("SELECT","`page`.`id` FROM `page`");
 
 /* create an array of field types */
-$fts = array("datebox","filelist","heirarchy","imagelist","mselect","sselect","textarea","textbox","videolist","heirarchy","tagbox");
+$fts = array("datebox","filelist","heirarchy","imagelist","mselect","sselect","textarea","textbox","heirarchy","tagbox");
 
 /* if we have any pages of this type */
 if($rs){
@@ -41,6 +41,12 @@ if($rs){
 		}
 	}	
 }
+
+/* issue a notification */
+$_SESSION['notify']=array(
+	'message'=>'Success: entry deleted',
+	'type'=>'warning'
+);
 
 
 /* redirect to the type list */
