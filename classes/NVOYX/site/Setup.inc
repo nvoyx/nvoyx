@@ -237,9 +237,7 @@ class Setup{
 						}
 						
 					}
-					
-					//echo $r["TABLE"]."<br>";
-					
+										
 					/* does this table have any entries to be added (rows) */
 					if(array_key_exists("ENTRIES",$r)){
 						
