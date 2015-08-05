@@ -227,26 +227,3 @@ if(self::$VAR->FETCH_ENTRY("live")[0]==1){
 		}
 	}	
 }
-
-/* check the times that files were last accessed in the images/twitter folder and remove anything older than two days */
-
-/* create an empty array */
-$r = array();
-
-/* create a file iterator for the twitter avatar folder */
-$i = new DirectoryIterator(self::$BOOT->FETCH_ENTRY("twitter"));
-
-/* cycle through the iterations */
-foreach ($i as $fileinfo) {
-	
-	/* if the file is not part of the OS navigation eg. not . or .. */
-	if (!$fileinfo->isDot() && !$fileinfo->isDir()) {
-		
-		/* has it been over 2 days since the image was last accessed */
-		if(fileatime(self::$BOOT->FETCH_ENTRY("twitter"). "/" . $fileinfo->getFilename())<self::$BOOT->FETCH_ENTRY("timestamp")-172800){
-			
-			/* delete the image */
-			unlink(self::$BOOT->FETCH_ENTRY("twitter"). "/" . $fileinfo->getFilename());
-		}
-	}
-}
