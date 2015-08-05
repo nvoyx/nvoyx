@@ -182,9 +182,6 @@ class Content{
 			/* reset the fields array as a string */
 			$FIELDS="";
 			
-			/* create an empty comments array */
-			$c = array();
-			
 			/* cycle through the posted data */
 			foreach($_POST as $key=>$value){
 				
@@ -199,43 +196,6 @@ class Content{
 						
 						/* pass a sanitised version of the page field value into an array */
 						$p[$pkey[1]] = self::$BOOT->TEXT($value);
-					}
-				}
-				
-				/* does the first part of the posted field name equal "comments" */
-				if($pkey[0]=="comments"){
-					
-					/* sanitise the posted comment/reply (plain textboxes need newlines converting to <br>, prior to storage)*/
-					if($pkey[3]=="html"){
-						$c[$pkey[1]] = self::$BOOT->TEXT($value);
-					} else {
-						$c[$pkey[1]] = self::$BOOT->TEXT($value,1);
-					}
-					
-				}
-			}
-			
-			/* grab a list of all comments and replies associated with this node */
-			self::$DB->CLEAR(array("ALL"));
-			self::$DB->SET_FILTER("`comments`.`nid`={$nid}");
-			$COMMENTS = self::$DB->QUERY("SELECT","`comments`.`id` FROM `comments`");
-			
-			/* delete any comments that have been removed */
-			if($COMMENTS){
-				foreach($COMMENTS as $com){
-					if(array_key_exists($com["comments.id"],$c)){
-					
-						/* update comment/reply with contents of $c[$com["comments.id"] */
-						self::$DB->CLEAR(array("ALL"));
-						self::$DB->SET_FILTER("`comments`.`id`={$com['comments.id']}");
-						self::$DB->QUERY("UPDATE","`comments` SET `comments`.`values`='{$c[$com["comments.id"]]}'");
-					
-					} else {
-						/* delete comment/reply */
-						self::$DB->CLEAR(array("ALL"));
-						self::$DB->SET_FILTER("`comments`.`id`={$com['comments.id']}");
-						self::$DB->QUERY("DELETE","FROM `comments`");
-			
 					}
 				}
 			}
@@ -314,7 +274,6 @@ class Content{
 															"`page`.`heading`='{$p['heading']}'," .
 															"`page`.`teaser`='{$p['teaser']}'," .
 															"`page`.`body`='{$p['body']}'," .
-															"`page`.`comments`={$p['comments']}," .
 															"`page`.`importance`={$p['importance']}," .
 															"`page`.`description`='{$p['description']}'," .
 															"`page`.`date`='{$p['date']}'," .
