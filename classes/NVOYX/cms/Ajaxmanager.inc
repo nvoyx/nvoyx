@@ -185,6 +185,12 @@ class Ajaxmanager{
 				self::$DB->SET_FILTER("`path`.`id`={$id}");
 				self::$DB->QUERY("UPDATE","`path` SET `path`.`url`='{$v["url"]}',`path`.`access`='{$v["access"]}'");
 				
+				/* issue a notification */
+				$_SESSION['notify']=array(
+					'message'=>'Success: entry updated',
+					'type'=>'success'
+				);
+				
 				/* has the file name changed */
 				if($v["url"] != $v["orig_url"]){
 					

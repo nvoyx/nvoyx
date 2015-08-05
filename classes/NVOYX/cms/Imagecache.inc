@@ -131,6 +131,12 @@ class Imagecache{
 			self::$DB->CLEAR(array("ALL"));
 			self::$DB->SET_FILTER("`id`={$iid}");
 			self::$DB->QUERY("DELETE","FROM `imagecache`");
+			
+			/* issue a notification */
+			$_SESSION['notify']=array(
+				'message'=>'Success: entry deleted',
+				'type'=>'warning'
+			);
 
 			/* redirect to the _list */
 			self::$BOOT->HEADER(array("LOCATION"=>"/settings/imagecache/list"));
@@ -165,6 +171,12 @@ class Imagecache{
 										
 			/* create the required 999x999 cache directory */
 			mkdir(self::$BOOT->FETCH_ENTRY("images")."/999x999",0755);
+			
+			/* issue a notification */
+			$_SESSION['notify']=array(
+				'message'=>'Success: entry added',
+				'type'=>'success'
+			);
 
 			/* redirect to the new imagecache-edit */
 			self::$BOOT->HEADER(array("LOCATION"=>"/settings/imagecache/edit/{$iid}"));
@@ -283,6 +295,12 @@ class Imagecache{
 			self::$DB->CLEAR(array("ALL"));
 			self::$DB->SET_FILTER("`imagecache`.`id`={$iid}");
 			self::$DB->QUERY("UPDATE","`imagecache` SET `imagecache`.`name`='{$v["name"]}',`imagecache`.`x`={$v["x"]},`imagecache`.`y`={$v["y"]}, `imagecache`.`mime`='{$v['mime']}', `imagecache`.`effects`='{$v["effects"]}'");
+			
+			/* issue a notification */
+			$_SESSION['notify']=array(
+				'message'=>'Success: entry updated',
+				'type'=>'success'
+			);
 		}
 	}
 }

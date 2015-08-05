@@ -181,6 +181,12 @@ class Path{
 				self::$DB->CLEAR(array("ALL"));
 				self::$DB->SET_FILTER("`path`.`id`={$pid}");
 				self::$DB->QUERY("UPDATE","`path` SET `path`.`url`='{$v["url"]}',`path`.`access`='{$v["access"]}'");
+				
+				/* issue a notification */
+				$_SESSION['notify']=array(
+					'message'=>'Success: entry updated',
+					'type'=>'success'
+				);
 			}
 		}
 	}

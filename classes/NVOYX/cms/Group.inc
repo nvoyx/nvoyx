@@ -119,6 +119,12 @@ class Group{
 		$gid = self::$DB->QUERY("INSERT","INTO `group` (`id`,`position`,`name`,`assoc`,`access`,`variants`,`nfid`,`outline`) " . 
 									"VALUES (NULL,999,'{$t}','[]','a',1,0,'[]')");
 									
+		/* issue a notification */
+		$_SESSION['notify']=array(
+			'message'=>'Success: entry added',
+			'type'=>'success'
+		);
+									
 		/* redirect to the new group-edit */
 		self::$BOOT->HEADER(array("LOCATION"=>"/settings/group/edit/{$gid}"));
 	}	
@@ -340,7 +346,13 @@ class Group{
 					self::$DB->SET_FILTER("`group`.`id`={$gid}");
 					self::$DB->QUERY("UPDATE","`group` SET `group`.`name`='{$v["name"]}',`group`.`assoc`='{$v["assoc"]}',`group`.`access`='{$v["access"]}',`group`.`outline`='{$v["outline"]}',`group`.`variants`='{$v["variants"]}'");
 					break;
-			endswitch;			
+			endswitch;
+			
+			/* issue a notification */
+			$_SESSION['notify']=array(
+				'message'=>'Success: entry updated',
+				'type'=>'success'
+			);
 		}
 	}
 }

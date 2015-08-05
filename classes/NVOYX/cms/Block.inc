@@ -210,6 +210,12 @@ class Block{
 				self::$DB->CLEAR(array("ALL"));
 				self::$DB->SET_FILTER("`block`.`id`={$bid}");
 				self::$DB->QUERY("UPDATE","`block` SET `block`.`name`='{$v["name"]}',`block`.`tid`='{$v["tid"]}',`block`.`access`='{$v["access"]}',`block`.`params`='{$v["params"]}'");
+				
+				/* issue a notification */
+				$_SESSION['notify']=array(
+					'message'=>'Success: entry updated',
+					'type'=>'success'
+				);
 			}
 		}
 	}
