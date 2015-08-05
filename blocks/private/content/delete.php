@@ -86,5 +86,11 @@ if(file_exists($NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid)){
 	$NVX_BOOT->DEL_TREE($NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid);
 }
 
+/* issue a notification */
+$_SESSION['notify']=array(
+	'message'=>'Success: entry deleted',
+	'type'=>'warning'
+);
+
 /* redirect to the content listing page */
 $NVX_BOOT->HEADER(array("LOCATION"=>"/settings/content/list"));
