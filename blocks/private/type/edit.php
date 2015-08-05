@@ -158,45 +158,6 @@ if(isset($type)){ ?>
 			</div>
 			
 			<div class="blank row">
-				<label class="blank fl">Comments</label>
-				<div class="blank select fr half">
-					<?php
-					if($type["comments"]=="0"){$flg = " selected";} else {$flg="";} ?>
-					<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'comments');return false;">Disabled</a>
-					<?php if($type["comments"]=="1"){$flg = " selected";} else {$flg="";} ?>
-					<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'comments');return false;">Plain</a>
-					<?php if($type["comments"]=="2"){$flg = " selected";} else {$flg="";} ?>
-					<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'comments');return false;">Html</a>
-				</div>
-				<select class="hide" name="comments" id="comments">
-					<?php if($type["comments"]=="0"){$flg = " selected";} else {$flg="";} ?>
-					<option<?php echo $flg; ?> value="0"></option>
-					<?php if($type["comments"]=="1"){$flg = " selected";} else {$flg="";} ?>
-					<option<?php echo $flg; ?> value="1"></option>
-					<?php if($type["comments"]=="2"){$flg = " selected";} else {$flg="";} ?>
-					<option<?php echo $flg; ?> value="2"></option>
-				</select>
-			</div>
-			
-			<div class="blank row">
-				<label class="blank fl">Comments HTML Editor</label>
-				<div class="blank select fr half">
-					<?php
-					$editors = $NVX_VAR->FETCH_ENTRY("editors");
-					foreach($editors as $e){
-						if($type["comeditor"]==$e){$flg = " selected";} else {$flg="";} ?>
-						<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'comeditor');return false;"><?php echo ucwords($e);?></a>
-					<?php } ?>
-				</div>
-				<select class="hide" name="comeditor" id="comeditor">
-					<?php foreach($editors as $e){
-						if($type["comeditor"]==$e){$flg = " selected";} else {$flg="";} ?>
-						<option<?php echo $flg; ?> value="<?php echo $e;?>"></option>
-					<?php } ?>
-				</select>
-			</div>
-			
-			<div class="blank row">
 				<label for="template" class="blank fl">Template</label>
 				<input class="blank textbox mini fr" name="template" id="template" type="number" value="<?php echo $type["template"];?>">
 			</div>
