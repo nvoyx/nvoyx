@@ -90,7 +90,6 @@ $type_filter = $NVX_DB->QUERY("SELECT","* FROM `user`")[0]["user.filter"];
 				array("link"=>"/settings/dept/list","txt"=>"DEPARTMENTS"),
 				array("link"=>"/settings/group/list","txt"=>"GROUPS"),
 				array("link"=>"/settings/imagecache/list","txt"=>"IMAGE CACHE"),
-				array("link"=>"/settings/member/list","txt"=>"MEMBERS"),
 				array("link"=>"/settings/path/list","txt"=>"PATHS"),
 				array("link"=>"/settings/recovery/list","txt"=>"RECOVERY"),
 				array("link"=>"/settings/type/list","txt"=>"TYPES"),
@@ -100,11 +99,9 @@ $type_filter = $NVX_DB->QUERY("SELECT","* FROM `user`")[0]["user.filter"];
 		?>
 		<div class="blank links fl big">
 			<?php foreach($rs as $r){
-				if($NVX_USER->GRANTED($NVX_PATH->FETCH_ENTRY($r["link"])["access"])){
-					if($r['txt']!='MEMBERS' || ($r['txt']=='MEMBERS' && $NVX_VAR->FETCH_ENTRY('members')[0]==1)){ ?>
+				if($NVX_USER->GRANTED($NVX_PATH->FETCH_ENTRY($r["link"])["access"])){ ?>
 				<a class="blank mini fl" href="<?php echo $r["link"]; ?>"><?php echo $r["txt"];?></a>
 				<?php }
-				}
 			} ?>
 		</div>
 	</div>
