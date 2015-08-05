@@ -218,7 +218,7 @@ class Db {
 				if($debug){self::$debug .= $q."<br/>";} else {
 				
 					/* execute the query and capture on failure */
-					if( !self::$db->real_query($q) ) { throw new \exception( $this->error, $this->errno ); }
+					if( !self::$db->real_query($q) ) { throw new \exception( self::$db->error, self::$db->errno ); }
 				
 					/* increment the mysql calls counter (just an interesting figure when looking for efficiencies) */
 					self::$calls++;
@@ -269,7 +269,7 @@ class Db {
 				if($debug){self::$debug .= $q."<br/>";}
 				
 				/* execute the query and capture on failure */
-				if( !self::$db->real_query($q) ) { throw new \exception( $this->error, $this->errno ); }
+				if( !self::$db->real_query($q) ) { throw new \exception( self::$db->error, self::$db->errno ); }
 				
 				/* increment the mysql calls counter (just an interesting figure when looking for efficiencies) */
 				self::$calls++;
@@ -286,7 +286,7 @@ class Db {
 				if($debug){self::$debug .= $q."<br/>";}
 				
 				/* execute the query and capture on failure */
-				if( !self::$db->real_query($q) ) { throw new \exception( $this->error, $this->errno ); }
+				if( !self::$db->real_query($q) ) { throw new \exception( self::$db->error, self::$db->errno ); }
 				
 				/* increment the mysql calls counter (just an interesting figure when looking for efficiencies) */
 				self::$calls++;
@@ -303,7 +303,7 @@ class Db {
 				if($debug){self::$debug .= $q."<br/>";}
 				
 				/* execute the query and capture on failure */
-				if( !self::$db->real_query($q) ) { throw new \exception( $this->error, $this->errno ); }
+				if( !self::$db->real_query($q) ) { throw new \exception( self::$db->error, self::$db->errno ); }
 				
 				/* increment the mysql calls counter (just an interesting figure when looking for efficiencies) */
 				self::$calls++;
@@ -321,7 +321,7 @@ class Db {
 				$q="SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA='{$r}';";
 				
 				/* execute the query and capture on failure */
-				if( !self::$db->real_query($q) ) { echo 'oops';throw new \exception( $this->error, $this->errno ); }
+				if( !self::$db->real_query($q) ) { echo 'oops';throw new \exception( self::$db->error, self::$db->errno ); }
 				
 				/* increment the mysql calls counter (just an interesting figure when looking for efficiencies) */
 				self::$calls++;
@@ -348,7 +348,7 @@ class Db {
 				$q = "SELECT `AUTO_INCREMENT` FROM `information_schema`.`TABLES` WHERE `TABLE_NAME`='{$query}' AND `TABLE_SCHEMA`='{$r}';";
 				
 				/* execute the query and capture on failure */
-				if( !self::$db->real_query($q) ) { throw new \exception( $this->error, $this->errno ); }
+				if( !self::$db->real_query($q) ) { throw new \exception( self::$db->error, self::$db->errno ); }
 				
 				/* increment the mysql calls counter (just an interesting figure when looking for efficiencies) */
 				self::$calls++;
@@ -369,7 +369,7 @@ class Db {
 				$q="SHOW TABLES FROM {$r};";
 				
 				/* execute the query and capture on failure */
-				if( !self::$db->real_query($q) ) { throw new \exception( $this->error, $this->errno ); }
+				if( !self::$db->real_query($q) ) { throw new \exception( self::$db->error, self::$db->errno ); }
 				
 				/* increment the mysql calls counter (just an interesting figure when looking for efficiencies) */
 				self::$calls++;
@@ -396,7 +396,7 @@ class Db {
 				$q="SELECT * FROM `{$query}`;";
 				
 				/* execute the query and capture on failure */
-				if( !self::$db->real_query($q) ) { throw new \exception( $this->error, $this->errno ); }
+				if( !self::$db->real_query($q) ) { throw new \exception( self::$db->error, self::$db->errno ); }
 				
 				/* increment the mysql calls counter (just an interesting figure when looking for efficiencies) */
 				self::$calls++;
@@ -456,7 +456,7 @@ class Db {
 				$q = $qtype . " " . $query;
 								
 				/* execute the query and capture on failure */
-				if( !self::$db->real_query($q) ) { throw new \exception( $this->error, $this->errno ); }
+				if( !self::$db->real_query($q) ) { throw new \exception( self::$db->error, self::$db->errno ); }
 				
 				/* increment the mysql calls counter (just an interesting figure when looking for efficiencies) */
 				self::$calls++;
@@ -470,7 +470,7 @@ class Db {
 				$q=$qtype." IF EXISTS ".$query;
 				
 				/* execute the query and capture on failure */
-				if( !self::$db->real_query($q) ) { throw new \exception( $this->error, $this->errno ); }
+				if( !self::$db->real_query($q) ) { throw new \exception( self::$db->error, self::$db->errno ); }
 				
 				/* increment the mysql calls counter (just an interesting figure when looking for efficiencies) */
 				self::$calls++;
@@ -483,7 +483,7 @@ class Db {
 				$q=$qtype." ".$query;
 								
 				/* execute the query and capture on failure */
-				if( !self::$db->real_query($q) ) { throw new \exception( $this->error, $this->errno ); }
+				if( !self::$db->real_query($q) ) { throw new \exception( self::$db->error, self::$db->errno ); }
 				
 				/* increment the mysql calls counter (just an interesting figure when looking for efficiencies) */
 				self::$calls++;
