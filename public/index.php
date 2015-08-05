@@ -66,6 +66,8 @@ $NVX_DB = \NVOYX\site\Db::CONNECT();
 /* if db connection has failed */
 if (mysqli_connect_errno()) {
 	
+	echo mysqli_connect_error();
+	
 	/* the system has failed to connect to the database, so return the website config page */
 	$NVX_SETUP->PAGE();
 	
