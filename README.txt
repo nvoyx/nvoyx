@@ -19,7 +19,6 @@ the following folders should be writable by php
 	resources/files/documents
 	resources/files/images/ckeditor
 	resources/files/images/cms
-	resources/files/images/twitter
 	session
 	socket
 	tmp
