@@ -922,6 +922,12 @@ class Content{
 			}
 				
 			$zip->close();
+			
+			/* issue a notification */
+			$_SESSION['notify']=array(
+				'message'=>'Success: entry updated',
+				'type'=>'success'
+			);
 		}
 	}
 }

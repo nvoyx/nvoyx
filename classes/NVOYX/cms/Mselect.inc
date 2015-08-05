@@ -131,6 +131,12 @@ class Mselect{
 			self::$DB->SET_FILTER("`group`.`id`={$gid}");
 			self::$DB->QUERY("UPDATE","`group` SET `group`.`outline`='{$outline}', `group`.`nfid`={$nfid}");
 			
+			/* issue a notification */
+			$_SESSION['notify']=array(
+				'message'=>'Success: entry added',
+				'type'=>'success'
+			);
+			
 			/* goto the edit page for the new field */
 			self::$BOOT->HEADER(array("LOCATION"=>"/settings/mselect/edit/{$gid}/{$fid}"));
 		}
@@ -244,6 +250,12 @@ class Mselect{
 			self::$DB->CLEAR(array("ALL"));
 			self::$DB->SET_FILTER("`group`.`id`={$gid}");
 			self::$DB->QUERY("UPDATE","`group` SET `group`.`outline`='{$outline}'");
+			
+			/* issue a notification */
+			$_SESSION['notify']=array(
+				'message'=>'Success: entry updated',
+				'type'=>'success'
+			);
 		}
 	}
 }

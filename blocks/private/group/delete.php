@@ -32,5 +32,11 @@ foreach($fts as $ft){
 	$NVX_DB->QUERY("DELETE","FROM `{$ft}`");
 }
 
+/* issue a notification */
+$_SESSION['notify']=array(
+	'message'=>'Success: entry deleted',
+	'type'=>'warning'
+);
+
 /* redirect to the group listings */
 $NVX_BOOT->HEADER(array("LOCATION"=>"/settings/group/list"));

@@ -210,6 +210,12 @@ class Type{
 				self::$DB->CLEAR(array("ALL"));
 				self::$DB->SET_FILTER("`type`.`id`={$tid}");
 				self::$DB->QUERY("UPDATE","`type` SET `type`.`name`='{$v["name"]}',`type`.`prefix`='{$v["prefix"]}',`type`.`parent`='{$v["parent"]}',`type`.`view`='{$v["view"]}',`type`.`createdelete`='{$v["createdelete"]}',`type`.`rss`='{$v["rss"]}',`type`.`body`='{$v["body"]}',`type`.`template`='{$v["template"]}',`type`.`tags`='{$v["tags"]}'");
+				
+				/* issue a notification */
+				$_SESSION['notify']=array(
+					'message'=>'Success: entry updated',
+					'type'=>'success'
+				);
 			}
 		}
 	}

@@ -15,22 +15,34 @@
 		<title>NVOYX - <?=$NVX_BOOT->FETCH_ENTRY("current");?></title>
 		<meta name="Generator" content="NVOYX Open Source CMS">
 		<link rel="icon" type="image/png" href="<?= $NVX_BOOT->FETCH_ENTRY("favicon"); ?>" />
-		<link rel="stylesheet" href="/settings/resources/css/private.css" type="text/css" />
 		<link rel="stylesheet" href="/settings/resources/css/jquery-ui-1.10.2.custom.min.css" type="text/css" />
+		<link rel="stylesheet" href="/settings/resources/css/notifIt.css" type="text/css" />
+		<link rel="stylesheet" href="/settings/resources/css/private.css" type="text/css" />
 		<script src="/settings/resources/js/jquery-2.1.1.min.js"></script>
 		<script src="/settings/resources/js/ckbase.js"></script>
 		<script src="/settings/resources/ckeditor/ckeditor.js"></script>
 		<script src="/settings/resources/ckeditor/adapters/jquery.js"></script>
 		<script src="/settings/resources/js/jquery.filedrop.js"></script>
 		<script src="/settings/resources/js/jquery-ui-1.10.2.custom.min.js"></script>
+		<script src="/settings/resources/js/notifIt.js"></script>
 		<script src="/settings/resources/js/private.js"></script>
 	</head>
 	<body>
+		
+		<?php if(array_key_exists('notify',$_SESSION)){ ?>
+		<script>
+		notif({
+			msg: "<?=$_SESSION['notify']['message'];?>",
+			type: "<?=$_SESSION['notify']['type'];?>",
+			position: "center"
+		});
+		</script>
+		<?php unset($_SESSION['notify']);} ?>
 				
 		<div style="width:714px;margin:auto;">
-<?php } ?>
-			<?php include($NVX_CMS->FETCH_HTML()); ?>
-<?php if($NVX_BOOT->FETCH_ENTRY("current")!='unit'){ ?>
+			<?php }
+			include($NVX_CMS->FETCH_HTML());
+			if($NVX_BOOT->FETCH_ENTRY("current")!='unit'){ ?>
 		</div>
 		
 		<div style="display: none"><a href="/settings/resources/honeypot/<?= $NVX_VAR->FETCH_ENTRY("honeyfile")[0]; ?>">tendentious-parliamentary</a></div>

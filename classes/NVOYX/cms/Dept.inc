@@ -193,6 +193,12 @@ class Dept{
 					}
 					break;
 			endswitch;
+			
+			/* issue a notification */
+			$_SESSION['notify']=array(
+				'message'=>'Success: entry updated',
+				'type'=>'success'
+			);
 		}
 	}
 }

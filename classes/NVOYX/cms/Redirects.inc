@@ -211,6 +211,12 @@ class Redirects{
 						self::$DB->CLEAR(array("ALL"));
 						self::$DB->SET_FILTER("`redirects`.`id`={$rid}");
 						self::$DB->QUERY("UPDATE","`redirects` SET `redirects`.`old`='{$v["old"]}',`redirects`.`new`='{$v["new"]}'");
+						
+						/* issue a notification */
+						$_SESSION['notify']=array(
+							'message'=>'Success: entry updated',
+							'type'=>'success'
+						);
 					}
 					break;
 			endswitch;

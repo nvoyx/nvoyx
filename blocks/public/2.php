@@ -19,3 +19,13 @@ $bid = pathinfo(__FILE__, PATHINFO_FILENAME);
 /* grab the params */
 $p = $NVX_BLOCK->FETCH_PARAMS($bid);
 
+/* notify code */
+if(array_key_exists('notify',$_SESSION)){ ?>
+<script>
+	notif({
+		msg: "<?=$_SESSION['notify']['message'];?>",
+		type: "<?=$_SESSION['notify']['type'];?>",
+		position: "center"
+	});
+</script>
+<?php unset($_SESSION['notify']);}

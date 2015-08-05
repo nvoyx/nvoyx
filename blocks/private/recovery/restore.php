@@ -134,5 +134,11 @@ if(!file_exists($NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid)){
 /* copy the rollback to a new archive */
 copy($NVX_BOOT->FETCH_ENTRY("recovery")."/".$tid."/".$nid.".zip",$NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid."/".$NVX_BOOT->FETCH_ENTRY("timestamp").".zip");
 
+/* issue a notification */
+$_SESSION['notify']=array(
+	'message'=>'Success: entry restored',
+	'type'=>'success'
+);
+
 /* redirect to the restored content-edit */
 $NVX_BOOT->HEADER(array("LOCATION"=>"/settings/content/edit/{$nid}"));

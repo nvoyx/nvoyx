@@ -17,5 +17,11 @@ $NVX_DB->CLEAR(array("ALL"));
 $NVX_DB->SET_FILTER("`id`={$NVX_BOOT->FETCH_ENTRY("breadcrumb",3)}");
 $NVX_DB->QUERY("DELETE","FROM `block`");
 
+/* issue a notification */
+$_SESSION['notify']=array(
+	'message'=>'Success: entry deleted',
+	'type'=>'warning'
+);
+
 /* redirect to block listings */
 $NVX_BOOT->HEADER(array("LOCATION"=>"/settings/block/list"));

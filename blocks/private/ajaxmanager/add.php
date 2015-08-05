@@ -20,5 +20,11 @@ $pid = $NVX_DB->QUERY("INSERT","INTO `path` (`id`,`url`,`access`) " .
 /* create the ajax file */
 touch($NVX_BOOT->FETCH_ENTRY("blocks")."/private/ajax/".$NVX_BOOT->FETCH_ENTRY("timestamp").".php");
 
+/* issue a notification */
+$_SESSION['notify']=array(
+	'message'=>'Success: entry added',
+	'type'=>'success'
+);
+
 /* redirect to the new ajaxmanager page */
 $NVX_BOOT->HEADER(array("LOCATION"=>"/settings/ajaxmanager/edit/{$pid}"));

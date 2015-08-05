@@ -19,5 +19,11 @@ $pid = $NVX_DB->QUERY("INSERT","INTO `user` (`id`,`username`,`password`,`type`,`
 							"VALUES (NULL,'{$NVX_BOOT->CYPHER(array("TYPE"=>"encrypt","STRING"=>$NVX_BOOT->FETCH_ENTRY("timestamp")))}',".
 											"'{$NVX_BOOT->CYPHER(array("TYPE"=>"encrypt","STRING"=>$NVX_BOOT->FETCH_ENTRY("timestamp")))}','a',0,1,'{$date}','0000-00-00 00:00:00')");
 
+/* issue a notification */
+$_SESSION['notify']=array(
+	'message'=>'Success: entry added',
+	'type'=>'success'
+);
+											
 /* redirect to the new user-edit */
 $NVX_BOOT->HEADER(array("LOCATION"=>"/settings/user/edit/{$pid}"));

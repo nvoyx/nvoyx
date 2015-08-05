@@ -52,5 +52,11 @@ if(is_numeric($nid)){
 		mkdir($NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid);
 	}
 	
+	/* issue a notification */
+	$_SESSION['notify']=array(
+		'message'=>'Success: entry added',
+		'type'=>'success'
+	);
+	
 	$NVX_BOOT->HEADER(array("LOCATION"=>"/settings/content/edit/".$nid));
 }

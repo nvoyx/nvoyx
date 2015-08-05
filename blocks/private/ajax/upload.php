@@ -9,7 +9,7 @@
  */
 
 /*
- * uploader for imagelist,filelist and videolist
+ * uploader for imagelist,filelist
  */
 
 /* is this an imagelist upload */

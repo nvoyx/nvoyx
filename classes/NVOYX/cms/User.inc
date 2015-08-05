@@ -193,10 +193,30 @@ class User{
 					/* push the captcha value into a separate cookie - we will use this as a lock for the session data */
 					setcookie('nvx_cc', $_SESSION['captcha'],0,'/');
 					
+					/* issue a notification */
+					$_SESSION['notify']=array(
+						'message'=>'Hi, '.$_SESSION["contact"],
+						'type'=>'success'
+					);
+					
 					/* redirect to the content listings */
 					self::$BOOT->HEADER(array("LOCATION"=>"/settings/content/list"));
+				} else {
+					
+					/* issue a notification */
+					$_SESSION['notify']=array(
+						'message'=>'Oops: no matching user',
+						'type'=>'warning'
+					);
 				}
-			}	
+			} else {
+				
+				/* issue a notification */
+				$_SESSION['notify']=array(
+					'message'=>'Oops: CAPTCHA incorrect',
+					'type'=>'warning'
+				);
+			}
 		}
 		
 		/* return any output for storage */
@@ -297,6 +317,12 @@ class User{
 						self::$DB->CLEAR(array("ALL"));
 						self::$DB->SET_FILTER("`user`.`id`={$uid}");
 						self::$DB->QUERY("UPDATE","`user` SET `user`.`username`='{$v["username"]}',`user`.`password`='{$v["password"]}',`user`.`contact`='{$v["contact"]}',`user`.`telephone`='{$v["telephone"]}',`user`.`email`='{$v["email"]}',`user`.`type`='{$v["type"]}',`user`.`filter`={$v["filter"]},`user`.`dept`={$v["dept"]}");
+						
+						/* issue a notification */
+						$_SESSION['notify']=array(
+							'message'=>'Success: entry updated',
+							'type'=>'success'
+						);
 					}
 					break;
 			endswitch;

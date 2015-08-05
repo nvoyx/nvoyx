@@ -195,6 +195,12 @@ class Variables{
 				self::$DB->CLEAR(array("ALL"));
 				self::$DB->SET_FILTER("`variables`.`id`={$vid}");
 				self::$DB->QUERY("UPDATE","`variables` SET `variables`.`name`='{$v["name"]}',`variables`.`notes`='{$v["notes"]}',`variables`.`value`='{$v["value"]}'");
+				
+				/* issue a notification */
+				$_SESSION['notify']=array(
+					'message'=>'Success: entry updated',
+					'type'=>'success'
+				);
 			}
 		}
 	}
