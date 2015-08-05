@@ -1421,7 +1421,7 @@
 					{
 						"name":"'version'",
 						"notes":"'<p>nvoyx version number</p>'",
-						"value":"'[\"2.1.4\"]'"
+						"value":"'[\"2.2.0\"]'"
 					},
 					{
 						"name":"'front'",
