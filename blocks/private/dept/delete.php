@@ -17,7 +17,11 @@ $NVX_DB->CLEAR(array("ALL"));
 $NVX_DB->SET_FILTER("`id`={$NVX_BOOT->FETCH_ENTRY("breadcrumb",3)}");
 $NVX_DB->QUERY("DELETE","FROM `dept`");
 
-/* TODO should really check against the current users and fallback to the default dept where appropriate */
+/* issue a notification */
+$_SESSION['notify']=array(
+	'message'=>'Success: entry deleted',
+	'type'=>'warning'
+);
 
 /* redirect to the dept listings */
 $NVX_BOOT->HEADER(array("LOCATION"=>"/settings/dept/list"));
