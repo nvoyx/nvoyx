@@ -46,68 +46,10 @@
 						"params":"'{\"reference\":\"\"}'"
 					},
 					{
-						"name":"'Twitter'",
-						"tid":"'[\"\"]'",
-						"access":"'u'",
-						"params":"'{\"pulled\":0,\"account\":\"\",\"widget\":0,\"maximum\":5,\"frequency\":900}'"
-					},
-					{
-						"name":"'Contact Form'",
-						"tid":"'[\"2\"]'",
-						"access":"'u'",
-						"params":"'[\"\"]'"
-					},
-					{
-						"name":"'Comments'",
-						"tid":"'[\"1\"]'",
-						"access":"'u'",
-						"params":"'[\"\"]'"
-					},
-					{
 						"name":"'404 Error'",
 						"tid":"'[\"3\"]'",
 						"access":"'u'",
 						"params":"'[\"\"]'"
-					}
-				]
-	},
-	{
-		"TABLE":"comments",
-		"CHARACTER SET":"utf8mb4",
-		"COLLATE":"utf8mb4_bin",
-		"ENGINE":"MyISAM",
-		"FIELDS":	[
-					{
-						"NAME":"mid",
-						"TYPE":"INT",
-						"LENGTH":"10",
-						"UNSIGNED":"1"
-					},
-					{
-						"NAME":"nid",
-						"TYPE":"INT",
-						"LENGTH":"10",
-						"UNSIGNED":"1"
-					},
-					{
-						"NAME":"rid",
-						"TYPE":"INT",
-						"LENGTH":"10",
-						"UNSIGNED":"1"
-					},
-					{
-						"NAME":"date",
-						"TYPE":"DATETIME"
-					},
-					{
-						"NAME":"approved",
-						"TYPE":"TINYINT",
-						"LENGTH":"3",
-						"UNSIGNED":"1"
-					},
-					{
-						"NAME":"values",
-						"TYPE":"TEXT"
 					}
 				]
 	},
@@ -448,115 +390,6 @@
 				]
 	},
 	{
-		"TABLE":"member",
-		"CHARACTER SET":"utf8mb4",
-		"COLLATE":"utf8mb4_bin",
-		"ENGINE":"MyISAM",
-		"FIELDS":	[
-					{
-						"NAME":"title",
-						"TYPE":"VARCHAR",
-						"LENGTH":"1024",
-						"NULL":"yes",
-						"DEFAULT":"NULL"
-					},
-					{
-						"NAME":"firstname",
-						"TYPE":"VARCHAR",
-						"LENGTH":"1024",
-						"NULL":"yes",
-						"DEFAULT":"NULL"
-					},
-					{
-						"NAME":"lastname",
-						"TYPE":"VARCHAR",
-						"LENGTH":"1024",
-						"NULL":"yes",
-						"DEFAULT":"NULL"
-					},
-					{
-						"NAME":"position",
-						"TYPE":"VARCHAR",
-						"LENGTH":"1024",
-						"NULL":"yes",
-						"DEFAULT":"NULL"
-					},
-					{
-						"NAME":"company",
-						"TYPE":"VARCHAR",
-						"LENGTH":"1024",
-						"NULL":"yes",
-						"DEFAULT":"NULL"
-					},
-					{
-						"NAME":"email",
-						"TYPE":"VARCHAR",
-						"LENGTH":"1024",
-						"NULL":"yes",
-						"DEFAULT":"NULL"
-					},
-					{
-						"NAME":"username",
-						"TYPE":"VARCHAR",
-						"LENGTH":"1024",
-						"NULL":"yes",
-						"DEFAULT":"NULL"
-					},
-					{
-						"NAME":"password",
-						"TYPE":"VARCHAR",
-						"LENGTH":"1024"
-					},
-					{
-						"NAME":"dob",
-						"TYPE":"DATE",
-						"NULL":"yes",
-						"DEFAULT":"NULL"
-					},
-					{
-						"NAME":"web",
-						"TYPE":"VARCHAR",
-						"LENGTH":"60",
-						"NULL":"yes",
-						"DEFAULT":"NULL"
-					},
-					{
-						"NAME":"sex",
-						"TYPE":"VARCHAR",
-						"LENGTH":"1",
-						"NULL":"yes",
-						"DEFAULT":"NULL"
-					},
-					{
-						"NAME":"avatar",
-						"TYPE":"VARCHAR",
-						"LENGTH":"124",
-						"NULL":"yes",
-						"DEFAULT":"NULL"
-					},
-					{
-						"NAME":"state",
-						"TYPE":"TINYINT",
-						"LENGTH":"3",
-						"UNSIGNED":"1",
-						"DEFAULT":"0"
-					},
-					{
-						"NAME":"joined",
-						"TYPE":"DATETIME",
-						"NULL":"yes",
-						"DEFAULT":"NULL"
-					},
-					{
-						"NAME":"comments",
-						"TYPE":"TINYINT",
-						"LENGTH":"3",
-						"UNSIGNED":"1",
-						"DEFAULT":"0"
-					}
-				]
-	},
-	{
 		"TABLE":"mselect",
 		"CHARACTER SET":"utf8mb4",
 		"COLLATE":"utf8mb4_bin",
@@ -731,13 +564,6 @@
 						"UNSIGNED":"1",
 						"NULL":"yes",
 						"DEFAULT":"NULL"
-					},
-					{
-						"NAME":"comments",
-						"TYPE":"TINYINT",
-						"LENGTH":"3",
-						"UNSIGNED":"1",
-						"DEFAULT":"0"
 					}
 				],
 		"ENTRIES":	[
@@ -1052,22 +878,6 @@
 						"access":"'s'"
 					},
 					{
-						"url":"'/settings/member/list'",
-						"access":"'a'"
-					},
-					{
-						"url":"'/settings/member/add'",
-						"access":"'a'"
-					},
-					{
-						"url":"'/settings/member/edit'",
-						"access":"'a'"
-					},
-					{
-						"url":"'/settings/member/delete'",
-						"access":"'a'"
-					},
-					{
 						"url":"'/settings/rollback/list'",
 						"access":"'a'"
 					},
@@ -1121,10 +931,6 @@
 					},
 					{
 						"url":"'/settings/ajax/contentfilter'",
-						"access":"'u'"
-					},
-					{
-						"url":"'/settings/ajax/comments'",
 						"access":"'u'"
 					},
 					{
@@ -1481,18 +1287,6 @@
 						"DEFAULT":"1"
 					},
 					{
-						"NAME":"comments",
-						"TYPE":"TINYINT",
-						"LENGTH":"3",
-						"UNSIGNED":"1",
-						"DEFAULT":"0"
-					},
-					{
-						"NAME":"comeditor",
-						"TYPE":"VARCHAR",
-						"LENGTH":"128"
-					},
-					{
 						"NAME":"template",
 						"TYPE":"TINYINT",
 						"LENGTH":"3",
@@ -1509,17 +1303,6 @@
 						"name":"'Home'",
 						"createdelete":"'s'",
 						"rss":"1",
-						"comeditor":"'ckPublic'",
-						"tags":"'[\"\"]'",
-						"template":"3"
-					},
-					{
-						"name":"'Contact'",
-						"prefix":"''",
-						"parent":"1",
-						"createdelete":"'s'",
-						"rss":"0",
-						"comeditor":"'ckPublic'",
 						"tags":"'[\"\"]'",
 						"template":"3"
 					},
@@ -1529,7 +1312,6 @@
 						"parent":"1",
 						"createdelete":"'s'",
 						"rss":"0",
-						"comeditor":"'ckPublic'",
 						"tags":"'[\"\"]'",
 						"template":"3"
 					}
@@ -1744,11 +1526,6 @@
 						"name":"'php resources'",
 						"notes":"'<p>local paths to php resource files</p>'",
 						"value":"'[\"/settings/resources/ckeditor/plugins/aspell/spellerpages/server-scripts/spellchecker.php\",\"/settings/resources/captcha/captcha.php\",\"/settings/resources/cron/hourly.php\",\"/settings/resources/cron/daily.php\",\"/settings/resources/cron/weekly.php\",\"/settings/resources/cron/monthly.php\",\"/settings/resources/sitemap/sitemap.php\",\"/settings/resources/rss/rss.php\",\"/settings/resources/browser/upgrade.php\"]'"
-					},
-					{
-						"name":"'members'",
-						"notes":"'<p>enable site membership</p>'",
-						"value":"'[\"0\"]'"
 					},
 					{
 						"name":"'404'",
