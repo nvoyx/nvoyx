@@ -47,7 +47,12 @@ server {
         error_log /dev/null crit;
         root /path/to/some.domain.com/public;
         index index.php;
-        location /favicon.png {log_not_found off;}
+        location /favicon.png {
+			expires 30d;
+			add_header Pragma public;
+			add_header Cache-Control "public";
+			log_not_found off;
+		}
         location /robots.txt {}
         location /nginx_protected_files {
                 internal;
@@ -73,7 +78,12 @@ server {
         error_log /dev/null crit;
         root /path/to/some.domain.com/public;
         index index.php;
-        location /favicon.png {log_not_found off;}
+        location /favicon.png {
+			expires 30d;
+			add_header Pragma public;
+			add_header Cache-Control "public";
+			log_not_found off;
+		}
         location /robots.txt {}
         location /nginx_protected_files {
                 internal;
