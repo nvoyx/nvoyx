@@ -75,7 +75,6 @@ class Boot{
 			/* standard headers, no cache */
 			header('HTTP/1.1 200 OK');
 			header("Host: ".self::$SYS["domain"]);
-			header("Vary: Accept-Encoding");
 			header("Content-Type: text/html; charset=UTF-8");
 			header("Connection: Keep-Alive",true);
 			header("Keep-Alive: timeout=10, max=100",true);
@@ -88,7 +87,6 @@ class Boot{
 			/* standard headers and new location */
 			header('HTTP/1.1 200 OK');
 			header("Host: ".self::$SYS["domain"]);
-			header("Vary: Accept-Encoding");
 			header("Content-Type: text/html");
 			header("Connection: Keep-Alive",true);
 			header("Keep-Alive: timeout=10, max=100",true);
@@ -116,7 +114,6 @@ class Boot{
 			/* standard headers, no cache */
 			header('HTTP/1.1 301 Moved Permanently');
 			header("Host: ".self::$SYS["domain"]);
-			header("Vary: Accept-Encoding");
 			header("Content-Type: text/html; charset=UTF-8");
 			header("Connection: Keep-Alive",true);
 			header("Keep-Alive: timeout=10, max=100",true);
@@ -146,7 +143,6 @@ class Boot{
 			header("Content-Type: text/html");
 			header("Connection: Keep-Alive",true);
 			header("Keep-Alive: timeout=10, max=100",true);
-			header("Vary: Accept-Encoding");
 			return;
 		}
 	
@@ -167,7 +163,6 @@ class Boot{
 			header("Pragma: cache",true);
 			header("Connection: Keep-Alive",true);
 			header("Keep-Alive: timeout=10, max=100",true);
-			header("Vary: Accept-Encoding",true);
 			/* return 0 flag stating that the actual resource should not be resent by the querying code */
 			return 0;
 		} else {
@@ -190,9 +185,6 @@ class Boot{
 				header("Cache-Control: max-age={$a["MAXAGE"]}");
 				header("Expires: ".gmdate('D, d M Y H:i:s', self::$SYS["timestamp"] + $a["MAXAGE"])." GMT");
 			}
-			
-			/* header vary needs to go after any cache control headers */
-			header("Vary: Accept-Encoding");
 			
 			/* return 1 flag confirming that rhe actual resource should be sent by the querying code */
 			return 1;
@@ -457,13 +449,18 @@ class Boot{
 		/* set a modified timestamp flag */
 		$mfiles=0;
 		
-		/* check whether a compressed file  already exists for this file type */
-		if(file_exists(self::$SYS["files"]."/compress/public.{$a["TYPE"]}")){
-					
-			/* grab the modified date of the compressed file */
-			$mcompress = filemtime(self::$SYS["files"]."/compress/public.{$a["TYPE"]}");
+		/* look to see if we already have a compressed file of the required type */
+		$file = glob(self::$SYS["files"]."/compress/*.".$a['TYPE']);
 		
-			
+		/* check whether we have an array */
+		if(is_array($file)){
+		
+			/* the grab the filename without the path and without the extension */
+			$mcompress=pathinfo($file[0], PATHINFO_FILENAME);
+		
+			/* if either no file existed, or the name was not numeric, set the modified value to zero to ensure compression */
+			if(!is_numeric($mcompress)){$mcompress=0;}
+		
 		} else {$mcompress=0;}
 				
 		/* loop through the uncompressed files */
@@ -516,8 +513,13 @@ class Boot{
 			/* remove any carriage returns or whitespace */
 			$r = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $r);
 			
-			/* create / update the compressed file */
-			file_put_contents(self::$SYS["files"]."/compress/public.{$a["TYPE"]}",$r);
+			/* create a new compressed file */
+			file_put_contents(self::$SYS["files"]."/compress/{$mfiles}.{$a["TYPE"]}",$r);
+			
+			/* delete the old compressed file (if one existed) */
+			if(is_array($file)){
+				unlink($file[0]);
+			}
 			
 			/* update the modified date system variable for this content type */
 			self::$SYS["mod".$a["TYPE"]] = $mfiles;
@@ -526,16 +528,6 @@ class Boot{
 			/* update the modified date system variable for this content type */
 			self::$SYS["mod".$a["TYPE"]] = $mcompress;
 		}
-	}
-	
-	/*
-	 * utf8Encoder()
-	 * checks whether a string requires utf 8 encoding, performing encoding where necessary
-	 */
-	public function utf8Encoder($s){
-		$enc = mb_detect_encoding($s);
-		if($enc == "UTF-8" && mb_check_encoding($s,"UTF-8")){return $s;}
-			else {return utf8_encode($s);}
 	}
 	
 	/*
