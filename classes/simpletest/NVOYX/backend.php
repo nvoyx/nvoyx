@@ -104,7 +104,6 @@ class Backend extends WebTestCase {
 		$this->get($this->o['https'].'/settings/ajaxmanager/list');
 		$this->assertText('ckbrowse.php');
 		$this->assertText('ckupload.php');
-		$this->assertText('comments.php');
 		$this->assertText('contentfilter.php');
 		$this->assertText('heirarchy.php');
 		$this->assertText('tagbox.php');
@@ -152,10 +151,7 @@ class Backend extends WebTestCase {
 		$this->assertText('404 Error');
 		$this->assertText('Admin Bar');
 		$this->assertText('Analytics');
-		$this->assertText('Comments');
-		$this->assertText('Contact Form');
 		$this->assertText('Helper');
-		$this->assertText('Twitter');
 	}
 	
 	function test_Blocks_Folder_Writeable_By_Server() {
@@ -346,7 +342,6 @@ class Backend extends WebTestCase {
 		$this->assertText('Css');
 		$this->assertText('Editors');
 		$this->assertText('Front');
-		$this->assertText('404');
 		$this->assertText('Holding');
 		$this->assertText('Honeyfile');
 		$this->assertText('Honeykey');
@@ -354,8 +349,8 @@ class Backend extends WebTestCase {
 		$this->assertText('Js');
 		$this->assertText('Languages');
 		$this->assertText('Live');
+		$this->assertText('Mailer');
 		$this->assertText('Maintenance Paths');
-		$this->assertText('Members');
 		$this->assertText('Php Resources');
 		$this->assertText('Spellchecker');
 		$this->assertText('Template');
