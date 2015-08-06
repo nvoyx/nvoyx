@@ -50,15 +50,18 @@ if(file_exists($NVX_BOOT->FETCH_ENTRY("log")."/error.log")){
 		/* cycle through the error log array */
 		foreach($rs as $r){
 			
-			/* is the first character a square brace */
-			if($r[0]=="["){
-								
-				$entries[$x]["date"] = date("jS F Y H:i:s",strtotime(substr($r,1,strpos($r,"]")-1)));
-				$entries[$x]["type"] = str_replace("PHP ","",substr($r,strpos($r,"]")+2,strpos($r,": ")-strpos($r,"]")-2));
-				$entries[$x]["str"] = substr($r,strpos($r,": ")+2);
-				$x++;
-			} else {
-				$entries[$x-1]["str"].= "<br>".$r;
+			if(strlen($r)>0){
+			
+				/* is the first character a square brace */
+				if($r[0]=="["){
+
+					$entries[$x]["date"] = date("jS F Y H:i:s",strtotime(substr($r,1,strpos($r,"]")-1)));
+					$entries[$x]["type"] = str_replace("PHP ","",substr($r,strpos($r,"]")+2,strpos($r,": ")-strpos($r,"]")-2));
+					$entries[$x]["str"] = substr($r,strpos($r,": ")+2);
+					$x++;
+				} else {
+					$entries[$x-1]["str"].= "<br>".$r;
+				}
 			}
 		}
 		
