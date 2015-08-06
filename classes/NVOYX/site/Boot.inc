@@ -75,6 +75,7 @@ class Boot{
 			/* standard headers, no cache */
 			header('HTTP/1.1 200 OK');
 			header("Host: ".self::$SYS["domain"]);
+			header("Vary: Accept-Encoding");
 			header("Content-Type: text/html; charset=UTF-8");
 			header("Connection: Keep-Alive",true);
 			header("Keep-Alive: timeout=10, max=100",true);
@@ -87,6 +88,7 @@ class Boot{
 			/* standard headers and new location */
 			header('HTTP/1.1 200 OK');
 			header("Host: ".self::$SYS["domain"]);
+			header("Vary: Accept-Encoding");
 			header("Content-Type: text/html");
 			header("Connection: Keep-Alive",true);
 			header("Keep-Alive: timeout=10, max=100",true);
@@ -114,6 +116,7 @@ class Boot{
 			/* standard headers, no cache */
 			header('HTTP/1.1 301 Moved Permanently');
 			header("Host: ".self::$SYS["domain"]);
+			header("Vary: Accept-Encoding");
 			header("Content-Type: text/html; charset=UTF-8");
 			header("Connection: Keep-Alive",true);
 			header("Keep-Alive: timeout=10, max=100",true);
@@ -143,6 +146,7 @@ class Boot{
 			header("Content-Type: text/html");
 			header("Connection: Keep-Alive",true);
 			header("Keep-Alive: timeout=10, max=100",true);
+			header("Vary: Accept-Encoding");
 			return;
 		}
 	
@@ -157,14 +161,13 @@ class Boot{
 			header('HTTP/1.1 304 Not Modified',true);
 			header("Host: ".self::$SYS["domain"],true);
 			header("Content-Type: {$a["CTYPE"]}",true);
-			header("Content-Encoding: gzip",true);
 			header("Cache-Control: public",true);
 			header('Last-Modified: '.gmdate('D, d M Y H:i:s', $a["LASTMOD"]).' GMT', true);
 			header("ETag: {$etag}",true);
 			header("Pragma: cache",true);
 			header("Connection: Keep-Alive",true);
 			header("Keep-Alive: timeout=10, max=100",true);
-			
+			header("Vary: Accept-Encoding",true);
 			/* return 0 flag stating that the actual resource should not be resent by the querying code */
 			return 0;
 		} else {
@@ -187,6 +190,9 @@ class Boot{
 				header("Cache-Control: max-age={$a["MAXAGE"]}");
 				header("Expires: ".gmdate('D, d M Y H:i:s', self::$SYS["timestamp"] + $a["MAXAGE"])." GMT");
 			}
+			
+			/* header vary needs to go after any cache control headers */
+			header("Vary: Accept-Encoding");
 			
 			/* return 1 flag confirming that rhe actual resource should be sent by the querying code */
 			return 1;
@@ -866,6 +872,33 @@ class Boot{
 			 $random .= $chars[mt_rand(0, $charlen - 1)];
 		}		
 		return $random;
+	}
+	
+	/*
+	 * TAIL()
+	 * pass it a file and how many lines you would like
+	 */
+	function TAIL($filepath, $lines = 50, $adaptive = true) {
+		$f = @fopen($filepath, "rb");
+		if ($f === false) return false;
+		if (!$adaptive) $buffer = 4096;
+		else $buffer = ($lines < 2 ? 64 : ($lines < 10 ? 512 : 4096));
+		fseek($f, -1, SEEK_END);
+		if (fread($f, 1) != "\n") $lines -= 1;
+		$output = '';
+		$chunk = '';
+		while (ftell($f) > 0 && $lines >= 0) {
+			$seek = min(ftell($f), $buffer);
+			fseek($f, -$seek, SEEK_CUR);
+			$output = ($chunk = fread($f, $seek)) . $output;
+			fseek($f, -mb_strlen($chunk, '8bit'), SEEK_CUR);
+			$lines -= substr_count($chunk, "\n");
+		}
+		while ($lines++ < 0) {
+			$output = substr($output, strpos($output, "\n") + 1);
+		}
+		fclose($f);
+		return trim($output);
 	}
 	
 	/* --- PRIVATE METHODS --- */
