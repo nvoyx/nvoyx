@@ -93,9 +93,6 @@ class Resource{
 			/* do we have a valid mime */
 			if($ftype!=""){
 				
-				/* grab the length of the file */
-				$flength = filesize($rs);
-				
 				/* has a text file been requested */
 				if(stristr($ftype,"text/")){
 					
@@ -161,8 +158,8 @@ class Resource{
 					}
 				}
 				
-				/* gzip the output */
-				ob_start("ob_gzhandler");
+				/* grab the output */
+				ob_start();
 				
 				/* set the file headers */
 				if($maxage==0){
@@ -247,8 +244,8 @@ class Resource{
 						/* set the cache control max-age to one year */
 						$maxage=31536000;
 						
-						/* gzip the output */
-						ob_start("ob_gzhandler");
+						/* grab the output */
+						ob_start();
 										
 						/* set the file headers */
 						$r = self::$BOOT->HEADER(array("CTYPE"=>$ftype,"LASTMOD"=>filemtime($rs),"MAXAGE"=>$maxage));

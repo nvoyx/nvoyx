@@ -45,9 +45,7 @@ class scss_parser {
 		$this->rootParser = $rootParser;
 
 		if (empty(self::$operatorStr)) {
-			echo 'hello';
 			self::$operatorStr = $this->makeOperatorStr(self::$operators);
-			echo 'again';
 			$commentSingle = $this->preg_quote(self::$commentSingle);
 			$commentMultiLeft = $this->preg_quote(self::$commentMultiLeft);
 			$commentMultiRight = $this->preg_quote(self::$commentMultiRight);

@@ -157,14 +157,12 @@ class Boot{
 			header('HTTP/1.1 304 Not Modified',true);
 			header("Host: ".self::$SYS["domain"],true);
 			header("Content-Type: {$a["CTYPE"]}",true);
-			header("Content-Encoding: gzip",true);
 			header("Cache-Control: public",true);
 			header('Last-Modified: '.gmdate('D, d M Y H:i:s', $a["LASTMOD"]).' GMT', true);
 			header("ETag: {$etag}",true);
 			header("Pragma: cache",true);
 			header("Connection: Keep-Alive",true);
 			header("Keep-Alive: timeout=10, max=100",true);
-			
 			/* return 0 flag stating that the actual resource should not be resent by the querying code */
 			return 0;
 		} else {
@@ -451,13 +449,18 @@ class Boot{
 		/* set a modified timestamp flag */
 		$mfiles=0;
 		
-		/* check whether a compressed file  already exists for this file type */
-		if(file_exists(self::$SYS["files"]."/compress/public.{$a["TYPE"]}")){
-					
-			/* grab the modified date of the compressed file */
-			$mcompress = filemtime(self::$SYS["files"]."/compress/public.{$a["TYPE"]}");
+		/* look to see if we already have a compressed file of the required type */
+		$file = glob(self::$SYS["files"]."/compress/*.".$a['TYPE']);
 		
-			
+		/* check whether we have an array */
+		if(is_array($file)){
+		
+			/* the grab the filename without the path and without the extension */
+			$mcompress=pathinfo($file[0], PATHINFO_FILENAME);
+		
+			/* if either no file existed, or the name was not numeric, set the modified value to zero to ensure compression */
+			if(!is_numeric($mcompress)){$mcompress=0;}
+		
 		} else {$mcompress=0;}
 				
 		/* loop through the uncompressed files */
@@ -510,8 +513,13 @@ class Boot{
 			/* remove any carriage returns or whitespace */
 			$r = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $r);
 			
-			/* create / update the compressed file */
-			file_put_contents(self::$SYS["files"]."/compress/public.{$a["TYPE"]}",$r);
+			/* create a new compressed file */
+			file_put_contents(self::$SYS["files"]."/compress/{$mfiles}.{$a["TYPE"]}",$r);
+			
+			/* delete the old compressed file (if one existed) */
+			if(is_array($file)){
+				unlink($file[0]);
+			}
 			
 			/* update the modified date system variable for this content type */
 			self::$SYS["mod".$a["TYPE"]] = $mfiles;
@@ -520,16 +528,6 @@ class Boot{
 			/* update the modified date system variable for this content type */
 			self::$SYS["mod".$a["TYPE"]] = $mcompress;
 		}
-	}
-	
-	/*
-	 * utf8Encoder()
-	 * checks whether a string requires utf 8 encoding, performing encoding where necessary
-	 */
-	public function utf8Encoder($s){
-		$enc = mb_detect_encoding($s);
-		if($enc == "UTF-8" && mb_check_encoding($s,"UTF-8")){return $s;}
-			else {return utf8_encode($s);}
 	}
 	
 	/*
@@ -866,6 +864,33 @@ class Boot{
 			 $random .= $chars[mt_rand(0, $charlen - 1)];
 		}		
 		return $random;
+	}
+	
+	/*
+	 * TAIL()
+	 * pass it a file and how many lines you would like
+	 */
+	function TAIL($filepath, $lines = 50, $adaptive = true) {
+		$f = @fopen($filepath, "rb");
+		if ($f === false) return false;
+		if (!$adaptive) $buffer = 4096;
+		else $buffer = ($lines < 2 ? 64 : ($lines < 10 ? 512 : 4096));
+		fseek($f, -1, SEEK_END);
+		if (fread($f, 1) != "\n") $lines -= 1;
+		$output = '';
+		$chunk = '';
+		while (ftell($f) > 0 && $lines >= 0) {
+			$seek = min(ftell($f), $buffer);
+			fseek($f, -$seek, SEEK_CUR);
+			$output = ($chunk = fread($f, $seek)) . $output;
+			fseek($f, -mb_strlen($chunk, '8bit'), SEEK_CUR);
+			$lines -= substr_count($chunk, "\n");
+		}
+		while ($lines++ < 0) {
+			$output = substr($output, strpos($output, "\n") + 1);
+		}
+		fclose($f);
+		return trim($output);
 	}
 	
 	/* --- PRIVATE METHODS --- */

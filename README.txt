@@ -25,6 +25,7 @@ the following folders should be writable by php
 	rollback
 	recovery
 	blocks/private/ajax
+	blocks/public
 
 copy configuration/config.json.example to configuration/config.json and set to writeable by the server. Read then delete the notes in config.json.
 
@@ -37,6 +38,13 @@ NGINX.CONF
 
 add the following under http
 client_max_body_size            0;
+gzip  on;
+gzip_vary on;
+gzip_proxied any;
+gzip_comp_level 6;
+gzip_buffers 16 8k;
+gzip_http_version 1.1;
+gzip_types text/plain text/css application/json application/x-javascript application/javascript text/xml application/xml application/xml+rss text/javascript;
 
 NGINX EXAMPLE CONFIG
 
@@ -47,7 +55,12 @@ server {
         error_log /dev/null crit;
         root /path/to/some.domain.com/public;
         index index.php;
-        location /favicon.png {log_not_found off;}
+        location /favicon.png {
+			expires 30d;
+			add_header Pragma public;
+			add_header Cache-Control "public";
+			log_not_found off;
+		}
         location /robots.txt {}
         location /nginx_protected_files {
                 internal;
@@ -73,7 +86,12 @@ server {
         error_log /dev/null crit;
         root /path/to/some.domain.com/public;
         index index.php;
-        location /favicon.png {log_not_found off;}
+        location /favicon.png {
+			expires 30d;
+			add_header Pragma public;
+			add_header Cache-Control "public";
+			log_not_found off;
+		}
         location /robots.txt {}
         location /nginx_protected_files {
                 internal;

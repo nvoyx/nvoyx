@@ -479,8 +479,8 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 			/* replace any format tags */
 			$rs = str_replace(array("[format:newline]","[format:tab]"),array("\n","\t"),$rs);
 								
-			/* start an gzip output buffer */
-			ob_start("ob_gzhandler");
+			/* start output buffer */
+			ob_start();
 			
 				/* we've found what we were looking for */
 				$NVX_BOOT->HEADER(array("OK"=>true));
@@ -577,8 +577,8 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 					/* replace any format tags */
 					$rs = str_replace(array("[format:newline]","[format:tab]"),array("\n","\t"),$rs);
 
-					/* start an gzip output buffer */
-					ob_start("ob_gzhandler");
+					/* start output buffer */
+					ob_start();
 
 						/* send the 404 headers */
 						$NVX_BOOT->HEADER(array("404"=>true));
@@ -730,8 +730,8 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 				/* replace any format tags */
 				$rs = str_replace(array("[format:newline]","[format:tab]"),array("\n","\t"),$rs);
 								
-				/* start an gzip output buffer */
-				ob_start("ob_gzhandler");
+				/* start an output buffer */
+				ob_start();
 					
 					/* we've found what we were looking for */
 					$NVX_BOOT->HEADER(array("OK"=>true));
