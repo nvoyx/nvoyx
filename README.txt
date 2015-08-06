@@ -25,6 +25,7 @@ the following folders should be writable by php
 	rollback
 	recovery
 	blocks/private/ajax
+	blocks/public
 
 copy configuration/config.json.example to configuration/config.json and set to writeable by the server. Read then delete the notes in config.json.
 
