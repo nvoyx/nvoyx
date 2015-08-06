@@ -93,9 +93,6 @@ class Resource{
 			/* do we have a valid mime */
 			if($ftype!=""){
 				
-				/* grab the length of the file */
-				$flength = filesize($rs);
-				
 				/* has a text file been requested */
 				if(stristr($ftype,"text/")){
 					
