@@ -39,7 +39,8 @@ if(file_exists($NVX_BOOT->FETCH_ENTRY("log")."/error.log")){
 	if(is_readable($NVX_BOOT->FETCH_ENTRY("log")."/error.log")){
 		
 		/* grab the contents of the file into an array */
-		$rs= file($NVX_BOOT->FETCH_ENTRY("log")."/error.log", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+		$rs=$NVX_BOOT->TAIL($NVX_BOOT->FETCH_ENTRY("log").'/error.log',100,true);
+		$rs=explode("\n",$rs);
 		
 		/* create an array to hold the formatted log entries array */
 		$entries = array();
