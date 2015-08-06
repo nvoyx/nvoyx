@@ -52,10 +52,10 @@
 	
 	/* font sizes */
 	@for $i from 1 to 100 {
-		.fs-#{$i} {
+		.fs#{$i} {
 			font-size:($FS-RATIO*$i + em);
 		}
-		.lh-#{$i} {
+		.lh#{$i} {
 			line-height:($FS-RATIO*$i + em);
 		}
 	}
@@ -156,11 +156,11 @@
 
 	#admin {position:fixed;left:25%;z-index:999;width:50%;margin:20px auto;padding:10px;background:#fff;color:#425770;border:#dedede 1px solid;opacity:0.9;}
 
-	#admin div {padding:10px;background-color:#f8f8f8;font-size:16px;color:#425770;line-height:24px;font-variant:small-caps;text-align:right;border:#dedede 1px solid;}
+	#admin-nav {padding:10px;background-color:#f8f8f8;font-size:16px;color:#425770;line-height:24px;font-variant:small-caps;text-align:right;border:#dedede 1px solid;}
 
-	#admin img {cursor:move;}
+	#admin-nav img {cursor:move;}
 
-	#admin a {font-size:16px;color:#425770;line-height:24px;font-variant:small-caps;font-weight:normal;font-family:($FF-ADMIN);}
+	#admin-nav a {font-size:16px;color:#425770;line-height:24px;font-variant:small-caps;font-weight:normal;font-family:($FF-ADMIN);}
 	
 	:focus, a:focus, input:focus {outline:none;}
 	
