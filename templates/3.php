@@ -29,17 +29,15 @@
 			function isTouchDevice(){return true == ("ontouchstart" in window || (window.DocumentTouch && document instanceof DocumentTouch) || navigator.msMaxTouchPoints);}
 			if(isTouchDevice()){document.documentElement.className += " touch";} else {document.documentElement.className += " no-touch";}
 		</script>
+		<link rel="stylesheet" href="/settings/resources/files/compress/public.css?v=<?php echo $NVX_BOOT->FETCH_ENTRY("modcss"); ?>">
 		<?php if($NVX_USER->GRANTED("s")){ 
 			foreach($NVX_VAR->FETCH_ENTRY('js') as $r){ ?>
 				<script src="/settings/resources/js/<?=$r;?>?uid=<?php echo $NVX_BOOT->FETCH_ENTRY('timestamp');?>" defer></script>
 		<?php }} else { ?>
  			<script src="/settings/resources/files/compress/public.js?v=<?php echo $NVX_BOOT->FETCH_ENTRY("modjs"); ?>" defer></script>
  		<?php } ?>
-		<link rel="stylesheet" href="/settings/resources/files/compress/public.css?v=<?php echo $NVX_BOOT->FETCH_ENTRY("modcss"); ?>">
 	</head>
 	<body>
-
-		<?php /* ADMIN BAR */ $rs = $NVX_BLOCK->LOADER($BLOCKS,1);if($rs){include($rs);} ?>
 
 		<?php /* HELPER */ $rs = $NVX_BLOCK->LOADER($BLOCKS,2);if($rs){include($rs);} ?>
 
@@ -56,5 +54,7 @@
 		<?php } ?>
 		
 		<?php /* GOOGLE ANALYTICS */ $rs = $NVX_BLOCK->LOADER($BLOCKS,3);if($rs){include($rs);} ?>
+			
+		<?php /* ADMIN BAR */ $rs = $NVX_BLOCK->LOADER($BLOCKS,1);if($rs){include($rs);} ?>
 	</body>
 </html>
