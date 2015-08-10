@@ -93,24 +93,6 @@ if(isset($group)){
 					</div>
 					
 					<div class="blank row">
-						<label class="blank fl"> Language</label>
-						<div class="blank select fr half">
-							<?php
-							$languages = $NVX_VAR->FETCH_ENTRY("languages");
-							foreach($languages as $l){
-								if($g["spellchecker"]==$l){$flg = " selected";} else {$flg="";} ?>
-								<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'spellchecker');return false;"><?php echo ucwords($l);?></a>
-							<?php } ?>
-						</div>
-						<select class="hide" name="spellchecker" id="spellchecker">
-							<?php foreach($languages as $l){
-								if($g["spellchecker"]==$l){$flg = " selected";} else {$flg="";} ?>
-								<option<?php echo $flg; ?> value="<?php echo $l;?>"></option>
-							<?php } ?>
-						</select>
-					</div>
-					
-					<div class="blank row">
 						<label for="maxlength" class="blank fl">Maximum Length</label>
 						<input class="blank textbox mini fr" name="maxlength" id="maxlength" type="number" value="<?php echo $g["maxlength"];?>">
 					</div>

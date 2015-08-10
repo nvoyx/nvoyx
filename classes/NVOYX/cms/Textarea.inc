@@ -124,7 +124,6 @@ class Textarea{
 							"name"=>self::$BOOT->FETCH_ENTRY("timestamp"),
 							"plain"=>1,
 							"editor"=>"",
-							"spellchecker"=>"",
 							"maxlength"=>16777215
 							);
 			
@@ -197,7 +196,6 @@ class Textarea{
 					case "name":
 					case "plain":
 					case "editor":
-					case "spellchecker":
 					case "maxlength":
 						
 						/* add the sanitised field value into the group outline array */

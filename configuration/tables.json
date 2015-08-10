@@ -1449,11 +1449,6 @@
 						"value":"'[\"ckPrivate\",\"ckPublic\"]'"
 					},
 					{
-						"name":"'languages'",
-						"notes":"'<p>list of aspell languages installed on this server</p>'",
-						"value":"'[\"de\",\"en_GB\",\"es\",\"fr\",\"it\",\"pl\"]'"
-					},
-					{
 						"name":"'honeykey'",
 						"notes":"'<p>key for project honeypot account</p>'",
 						"value":"'[\"\"]'"

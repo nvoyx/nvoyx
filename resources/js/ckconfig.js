@@ -49,11 +49,10 @@ CKEDITOR.on('instanceReady', function (e) {
 });
 
 CKEDITOR.editorConfig = function( config ) {
-	config.skin = 'nvoyx';
+	config.skin = 'moono';
 	config.resize_enabled = true;
-	/* TODO CAN THE FIELD BELOW BE IMPORTED VIA GET */
-	config.wsc_lang = "en_GB";
-	/*config.resize_dir = 'vertical';*/
+	config.wsc_lang = 'en_GB';
+	config.resize_dir = 'vertical';
 	config.toolbarCanCollapse = false;
 	config.filebrowserBrowseUrl='/settings/ajax/ckbrowse';
 	config.filebrowserUploadUrl='/settings/ajax/ckupload';
@@ -66,21 +65,18 @@ CKEDITOR.editorConfig = function( config ) {
 	config.toolbar = 'Private';
 	config.toolbar_Private = [
 		['Source'],
-		['SpellCheck'],
+		['Scayt'],
 		['PasteText','PasteFromWord'],
 		['Bold','Italic','Underline','Subscript','Superscript','TextColor'],
 		['BulletedList','NumberedList'],
 		['Link','Unlink','Table','SpecialChar'],
 		['Image'],
-		['Format'],
-		['bigger'],
-		['smaller']
+		['Format']
 	];
 	
 	config.toolbar = 'Public';
 	config.toolbar_Public = [
-		['SpellCheck'],
-		['bigger'],
-		['smaller']
+		['Source'],
+		['Scayt']
 	];
 };
