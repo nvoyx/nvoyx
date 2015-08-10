@@ -59,9 +59,7 @@ if(isset($variable)){ ?>
 		
 		<div class="blank row">
 			<label for="notes" class="blank fl">
-				Notes<br>
-				<span class="current-length tt"><?php echo strlen($variable["notes"]); ?></span><span class="tt"> of 1024</span><br>
-				<span id="notes-language" class="tt"><?php echo $NVX_VAR->FETCH_ENTRY("spellchecker")[0];?></span>
+				Notes
 			</label>
 			<div class="blank fl huge"><textarea class="blank textarea ckPublic" name="notes" id="notes" maxlength="1024"><?php echo $variable["notes"]; ?></textarea></div>
 		</div>

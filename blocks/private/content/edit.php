@@ -216,12 +216,9 @@ $r = $NVX_HTML->URL(array("NID"=>$PAGE["id"],
 	<div class="<?php if($TYPE['body']!=1) {echo 'hide';} ?>">
 		<div class="blank row">
 			<label for="page-body" class="blank fl">
-				Body<br>				
-				<span class="current-length tt"><?php echo strlen($PAGE["body"]); ?></span><span class="tt"> of 16777215</span><br>
-				<span id="page-body-language" class="tt"><?php echo $NVX_VAR->FETCH_ENTRY("spellchecker")[0];?></span>
-				
+				Body				
 			</label>
-			<div class="blank fl huge"><textarea class="blank textarea ckPrivate" name="page-body" id="page-body" maxlength="16777215" ><?php echo $PAGE["body"]; ?></textarea></div>
+			<div class="blank fl huge"><textarea class="blank textarea ckPrivate" name="page-body" id="page-body" maxlength="16777215"><?=$PAGE["body"];?></textarea></div>
 		</div>
 	</div>
 	
@@ -452,9 +449,10 @@ foreach($GROUPS as $GROUP){
 															
 							?>
 							<label for="<?php echo "textarea-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text{$r}";?>" class="blank fl">
-								<?php echo ucwords($OUTLINE['name']);?><br>				
+								<?php echo ucwords($OUTLINE['name']);?><br>
+								<?php if($OUTLINE['plain']==1){ ?>
 								<span class="current-length tt"><?php echo strlen($v); ?></span><span class="tt"> of <?php echo $OUTLINE["maxlength"];?></span><br>
-								<span id="<?php echo "textarea-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text{$r}";?>-language" class="tt"><?php echo $OUTLINE["spellchecker"];?></span>
+								<?php } ?>
 							</label>
 							<div class="blank fl huge"><textarea data-editor="<?php echo $OUTLINE["editor"];?>" class="blank textarea huge <?php echo $OUTLINE["editor"] . " " .$r; ?>" name="<?php echo "textarea-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text{$r}";?>" id="<?php echo "textarea-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text{$r}";?>" maxlength="<?php echo $OUTLINE["maxlength"];?>" ><?php echo $v; ?></textarea></div>
 							<?php
@@ -1010,7 +1008,8 @@ foreach($GROUPS as $GROUP){
 
 										?>
 										<label for="<?php echo "imagelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text{$r}";?>" class="blank fl">
-											<?php echo ucwords($OUTLINE['extra-name']);?> <span class="current-length tt"><?php echo strlen($v); ?></span><span class="tt"> of 100000</span> <span id="<?php echo "imagelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text{$r}";?>-language" class="tt"><?php echo $OUTLINE["extra-spellchecker"];?></span>
+											<?php echo ucwords($OUTLINE['extra-name']);?> 
+											<?php if($OUTLINE['extra-type']=='plain'){ ?><span class="current-length tt"><?php echo strlen($v); ?></span><span class="tt"> of 100000</span> <?php } ?>
 										</label>
 										<div class="blank fl huge"><textarea data-editor="<?php echo $OUTLINE["extra-editor"];?>" class="blank textarea huge <?php echo $OUTLINE["extra-editor"] . " " .$r; ?>" name="<?php echo "imagelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text{$r}";?>" id="<?php echo "imagelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text{$r}";?>" maxlength="100000" ><?php echo $v; ?></textarea></div>
 										<div class='blank cb ten-space-vert'></div>

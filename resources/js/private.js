@@ -289,15 +289,14 @@ function deleteVariant(obj){
 		if(vcnt==2){
 			
 			/* remove the option to delete the remaining two variations */
-			$(obj).parent().parent().parent().children("li").children(".group").children(".delete-variant").addClass("hide");
+			$(obj).parent().parent().parent().find(".delete-variant").addClass("hide");
+		} else {
+			
+			/* we must have at least 3 variations (though one is about to be deleted). So delete variation should be visible */
+			$(obj).parent().parent().parent().parent().find(".add-variation").removeClass("hide");
 		}
 		
-		$(obj).parent().parent().children("div.row").children("div.huge").children("textarea.html").each(function(){
-			var id=$(this).attr("id");
-			CKEDITOR.instances[id].destroy(); 
-		});
-		
-		$(obj).parent().parent().children("div.row").children("ul.sortable").children("li").children("div.huge").children("textarea.html").each(function(){
+		$(obj).parent().parent().find("textarea.html").each(function(){
 			var id=$(this).attr("id");
 			CKEDITOR.instances[id].destroy(); 
 		});
@@ -391,29 +390,9 @@ function addVariant(lnk,gid,mvid){
 			$(obj).children("div").children(".heirarchy-wrapper").children(".select").children("a:first").addClass("selected");
 			$(obj).children("div").children(".heirarchy-wrapper").children("select option:eq(0)").attr("selected","selected");
 		}
-	
-		/* iterate over each input within the li */
-		$(obj).children("div").children("input").each(function(i,itm){
-			
-			/* split the input name by hyphens */
-			var nme = $(itm).attr("name").split("-");
-			
-			/* update the variant id */
-			nme[2] = nvid;
-			
-			/* join the array back together */
-			nme = nme.join("-");
-			
-			/* update the item name and id */
-			$(itm).attr("name",nme);
-			$(itm).attr("id",nme);
-			
-			/* reset any stored values */
-			$(itm).val("");
-		});
 		
-		/* iterate over any inputs within lists within the li */
-		$(obj).children("div").children("ul").children("li").children("input").each(function(i,itm){
+		/* find the inputs */
+		$(obj).children("div").find("input").each(function(i,itm){
 			
 			/* split the input name by hyphens */
 			var nme = $(itm).attr("name").split("-");
@@ -433,7 +412,7 @@ function addVariant(lnk,gid,mvid){
 		});
 		
 		/* iterate over each label within the li */
-		$(obj).children("div").children("label").each(function(i,itm){
+		$(obj).find("label").each(function(i,itm){
 			
 			/* if the label has a for */
 			if($(itm).attr("for")!="" && $(itm).attr("for")!=undefined){
@@ -457,30 +436,6 @@ function addVariant(lnk,gid,mvid){
 			}
 		});
 		
-		/* iterate over each label within lists within the li */
-		$(obj).children("div").children("ul").children("li").children("label").each(function(i,itm){
-			
-			/* if the label has a for */
-			if($(itm).attr("for")!="" && $(itm).attr("for")!=undefined){
-				
-				/* check if the for contains any hyphens */
-				if($(itm).attr("for").indexOf("-")>0){
-					
-					/* split the label for by hyphens */
-					var nme = $(itm).attr("for").split("-");
-			
-					/* update the variant id */
-					nme[2] = nvid;
-			
-					/* join the array back together */
-					nme = nme.join("-");
-			
-					/* update the item for */
-					$(itm).attr("for",nme);
-				
-				}
-			}
-		});
 		
 		/* iterate over each select within the li */
 		$(obj).children("div").children("select").each(function(i,itm){
@@ -557,21 +512,7 @@ function addVariant(lnk,gid,mvid){
 		});
 		
 		/* iterate over each textarea within the li */
-		$(obj).children("div").children("div").children("textarea").each(function(i,itm){
-			var nme= $(itm).attr("name");
-			if($(itm).parent().children("#cke_" + nme).length>0){
-					$(itm).parent().children("#cke_" + nme).remove();
-			}
-			nme=nme.split("-");
-			nme[2]=nvid;
-			nme=nme.join("-");
-			$(itm).attr("name",nme);
-			$(itm).attr("id",nme);
-			$(itm).html("");
-		});
-		
-		/* iterate over each textarea within a list within the li */
-		$(obj).children("div").children("ul").children("li").children("div").children("textarea").each(function(i,itm){
+		$(obj).children("div").find("textarea").each(function(i,itm){
 			var nme= $(itm).attr("name");
 			if($(itm).parent().children("#cke_" + nme).length>0){
 					$(itm).parent().children("#cke_" + nme).remove();
@@ -735,7 +676,8 @@ function dropZone(obj){
 						li += "</div>\n";
 						li += "<div class='blank cb ten-space-vert'></div>\n";
 					} else {
-						li += "<label for='" + r + "texthtml' class='blank fl'>" + elabel.replace(/\b./g, function(m){ return m.toUpperCase(); }) + " <span class='current-length tt'>0</span><span class='tt'> of 100000 </span><span id='" + r + "texthtml-language' class='tt'>" + elanguage + "</span></label>\n";
+						li += "<label for='" + r + "texthtml' class='blank fl'>" + elabel.replace(/\b./g, function(m){ return m.toUpperCase(); }) + ' ';
+						li += "<span id='" + r + "texthtml-language' class='tt'>" + elanguage + "</span></label>\n";
 						li += "<div class='blank fl huge'>\n";
 						li += "<textarea data-editor='" + eeditor + "' class='blank textarea huge html " + eeditor + "' name='" + r + "texthtml' id='" + r + "texthtml' maxlength='100000'></textarea>\n";
 						li += "</div>\n";
@@ -776,121 +718,80 @@ function countTextbox(obj){
 	});	
 }
 
-function launchCK(obj){
-	
-	switch(obj) {
-		case ".ckPrivate":
-			
-			$(obj).ckeditor({
+function launchCK(obj){	
+	if(obj.indexOf('.ckPrivate')>-1){
+		$(obj).each(function(idx,ele){
+			$(ele).ckeditor({
 				customConfig:'/settings/resources/js/ckconfig.js',
 				toolbar:'Private',
 				language:'en-gb',
 				height:200,
 				width:'100%',
-				extraPlugins:'aspell,onchange,bigger,smaller',
-				removePlugins:'about,adobeair,a11yhelp,bidi,blockquote,button,dialogadvtab,div,find,flash,font,forms,horizontalrule,iframe,indent,justify,maximise,newpage,pagebreak,preview,print,removeformat,resize,save,scayt,smiley,showblocks,showborders,stylescombo,tab,templates,wsc',
+				extraPlugins:'wordcount,notification',
+				wordcount:{
+					showCharCount: true,
+					maxCharCount: $(this).prop('maxlength'),
+					countSpacesAsChars: true,
+					showWordCount: false,
+					showParagraphs: false,
+					countHTML: true
+				},
 				format_tags:'p;h1;h2;h3'
 			});
-			break;
-		case ".ckPublic":
-			
-			$(obj).ckeditor({
-				customConfig:'/settings/resources/js/ckconfig.js',
+		});
+	} else if(obj.indexOf('.ckPublic')>-1){
+		$(obj).each(function(idx,ele){
+			$(ele).ckeditor({
+				customConfig:'/settings/resources/js/ckconfig.js?wsc=fr_FR',
 				toolbar:'Public',
 				language:'en-gb',
 				height:200,
 				width:'100%',
-				extraPlugins:'aspell,onchange,bigger,smaller',
-				removePlugins:'about,adobeair,a11yhelp,bidi,blockquote,button,colorbutton,colordialog,dialogadvtab,div,filebrowser,find,flash,font,forms,horizontalrule,iframe,image,indent,justify,maximise,newpage,pagebreak,preview,print,removeformat,resize,save,scayt,smiley,showblocks,showborders,stylescombo,specialchar,tab,templates,wsc',
+				extraPlugins:'wordcount,notification',
+				wordcount:{
+					showCharCount: true,
+					maxCharCount: $(this).prop('maxlength'),
+					countSpacesAsChars: true,
+					showWordCount: false,
+					showParagraphs: false,
+					countHTML: true
+				},
 				format_tags:'p;h1;h2;h3'
 			});
-			break;
-	}
-	countCK();
-}
-
-function countCK(){
-    for(var i in CKEDITOR.instances) {
-		
-		CKEDITOR.instances[i].on("instanceReady", function(e){
-			var ck = CKEDITOR.instances[e.editor.name];
-			ck.on("change",function(evt){;
-				var mlen = $('textarea[name="' + ck.name + '"]').attr('maxlength');
-				var nlen = ck.getData().length;
-				if(!isNaN(parseInt(mlen)) && parseFloat(mlen) <= parseInt(mlen)){
-					if((mlen-nlen)<0){ck.execCommand('undo');nlen = ck.getData().length;}
-				}
-				var ta = $('textarea[name="' + ck.name + '"]').attr("id");
-				$("label[for='" + ta + "']").children('.current-length').html(nlen);
-				ck.fire('saveSnapshot');
-			});
 		});
+		
 	}
 }
 
 function ckSortable(){
-		
+			
 	$( ".sortable" ).sortable({
 		cursor: 'move',
 		opacity:0.8,
+		cancel: '.cke_resizer',
 		start:function (event,ui) {
 	
-			$($(ui.item).children('div').children('textarea')).each(function(){
+			$($(ui.item).find('textarea')).each(function(){
 				var id = $(this).attr('id');
 				if(CKEDITOR.instances[id]){
-					CKEDITOR.instances[id].forceNextSelectionCheck();
-					ckStore[id] = CKEDITOR.instances[id].getData();
+					var ck = CKEDITOR.instances[id];
+					ckStore[id] = ck.getData();
+					ck.destroy(true);
 				}
 			});
-			$($(ui.item).children('div').children('div').children('textarea')).each(function(){
-				var id = $(this).attr('id');
-				if(CKEDITOR.instances[id]){
-					CKEDITOR.instances[id].forceNextSelectionCheck();
-					ckStore[id] = CKEDITOR.instances[id].getData();
-				}
-			});
-			
-			$($(ui.item).children('div').children('ul').children('li').children('div').children('textarea')).each(function(){
-				var id = $(this).attr('id');
-				if(CKEDITOR.instances[id]){
-					CKEDITOR.instances[id].forceNextSelectionCheck();
-					ckStore[id] = CKEDITOR.instances[id].getData();
-				}
-			});
-			$($(ui.item).children('div').children('ul').children('li').children('div').children('div').children('textarea')).each(function(){
-				var id = $(this).attr('id');
-				if(CKEDITOR.instances[id]){
-					CKEDITOR.instances[id].forceNextSelectionCheck();
-					ckStore[id] = CKEDITOR.instances[id].getData();
-				}
-			});
-			
 		},
 		stop: function(event, ui) {
 			
-			$($(ui.item).children('div').children('textarea')).each(function(){
+			$($(ui.item).find('textarea')).each(function(){
 				var id = $(this).attr('id');
-				if(CKEDITOR.instances[id]){
-					CKEDITOR.instances[id].setData(ckStore[id]);
-				}
-			});
-			$($(ui.item).children('div').children('div').children('textarea')).each(function(){
-				var id = $(this).attr('id');
-				if(CKEDITOR.instances[id]){
-					CKEDITOR.instances[id].setData(ckStore[id]);
-				}
-			});
-						
-			$($(ui.item).children('div').children('ul').children('li').children('div').children('textarea')).each(function(){
-				var id = $(this).attr('id');
-				if(CKEDITOR.instances[id]){
-					CKEDITOR.instances[id].setData(ckStore[id]);
-				}
-			});
-			$($(ui.item).children('div').children('ul').children('li').children('div').children('div').children('textarea')).each(function(){
-				var id = $(this).attr('id');
-				if(CKEDITOR.instances[id]){
-					CKEDITOR.instances[id].setData(ckStore[id]);
+				var cla = '';
+				if($(this).hasClass('ckPrivate')){cla='.ckPrivate';}
+				if($(this).hasClass('ckPublic')){cla='.ckPublic';}
+				if(cla!==''){
+					if(typeof CKEDITOR.instances[id]==="undefined"){
+						launchCK('#' + id + cla);
+						CKEDITOR.instances[id].setData(ckStore[id]);
+					}
 				}
 			});
 		}
@@ -917,19 +818,15 @@ $(document).ready(function(){
 		$("#content-list-types").change(function(){
 			$(".content-list-type").hide();
 			$("#content-list-type-" + $("#content-list-types").val()).show();
-			//$(".content-list-type").fadeOut(100);
-			//$("#content-list-type-" + $("#content-list-types").val()).fadeIn(100);
 		});
 	}
 	
 	/* launch ckEditor by class */
 	if($('.ckPrivate').length > 0){launchCK('.ckPrivate');}
 	if($('.ckPublic').length > 0){launchCK('.ckPublic');}
-	
-	/* enable character counting on ckEditor */
-	countCK();
+
    
-   /* enable character counting on plain textareas and textboxes */
+	/* enable character counting on plain textareas and textboxes */
 	countTextbox('.textbox,.textarea.plain');
 	
 	/* make certain ul objects sortable with fixes for ckeditor */
@@ -937,20 +834,6 @@ $(document).ready(function(){
 	
 	/* configure drop zones for files and images */
 	$('.drop').each( function(){dropZone(this);});
-	
-	/* jquery ui alert box */
-	$( "#dialog" ).dialog({
-		modal: true,
-		resizable: false,
-		draggable: false,
-		position: { my: "left+10 top", at: "right top", of: $('#sselect-page-tid') },
-		width: 600,
-		height: 200,
-		hide: 'puff',
-		show: 'puff',
-		closeOnEscape: true,
-		autoOpen: false
-	});	
 });
 
 
