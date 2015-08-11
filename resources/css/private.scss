@@ -1,0 +1,297 @@
+/** 
+ * 
+ * @author Wayne Ashley <nvoyxmail@gmail.com> 
+ * @copyright 2012 Wayne Ashley
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License, version 3 (GPL-3.0)
+ *
+ */
+
+/* *** FONTS (FIXED) *** */
+
+	/* admin panel font */
+	@font-face {
+		font-family: 'Ubuntu';
+		src: url('/settings/resources/fonts/Ubuntu/Ubuntu-webfont.eot');
+		src: url('/settings/resources/fonts/Ubuntu/Ubuntu-webfont.eot?#iefix') format('embedded-opentype'),
+			 url('/settings/resources/fonts/Ubuntu/Ubuntu-webfont.woff') format('woff'),
+			 url('/settings/resources/fonts/Ubuntu/Ubuntu-webfont.ttf') format('truetype'),
+			 url('/settings/resources/fonts/Ubuntu/Ubuntu-webfont.svg#Ubuntu') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	
+	
+/* *** FONTS (EDITABLE) *** */
+
+
+/* *** CONSTANTS (EDITABLE) *** */
+
+	/* basic font size */
+	$FS-PX:16;
+	
+	
+/* *** CONSTANTS (FIXED) *** */
+
+	/* root - round is used to fix netbeans warning*/
+	$FS-ROOT:round(1)/16;
+
+	/* font size (html/body ratio) */
+	$FS-BASE:$FS-ROOT*$FS-PX;
+
+	/* font size (page ratio) */
+	$FS-RATIO:(1/$FS-PX);
+	
+	/* font family (admin) */
+	$FF-ADMIN: 'Ubuntu';
+	
+	
+/* *** VARIABLES (FIXED) *** */
+
+	/* font size (same as default constant at 1:1) */
+	$fs-default: 1;
+	
+	/* font sizes */
+	@for $i from 1 to 100 {
+		.fs#{$i} {
+			font-size:($FS-RATIO*$i + em);
+		}
+		.lh#{$i} {
+			line-height:($FS-RATIO*$i + em);
+		}
+	}
+	
+/* *** VARIABLES (EDITABLE) *** */
+
+	/* maximum page (width) */
+	$bdy-max: 1600px;
+		
+	/* font size (72px at 1:1) */
+	$fs-biggest: $FS-RATIO*72;
+	
+	/* font size (24px at 1:1) */
+	$fs-bigger: $FS-RATIO*24;
+
+	/* font size (20px at 1:1) */
+	$fs-big: $FS-RATIO*20;
+	
+	/* font size (12px at 1:1) */
+	$fs-small: $FS-RATIO*12;
+	
+	/* font family (default) */
+	$ff-default: 'Ubuntu';
+	
+	/* foreground (default) */
+	$fg-default: #425770;
+	
+	/* background (default) */
+	$bg-default: #fff;
+	
+	
+/* *** MIXINS (FIXED) *** */
+
+	/* handy for divs */
+	@mixin box {min-height:1px;box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
+
+
+/* *** MIXINS (EDITABLE) *** */
+
+	
+/* *** GRID (FIXED) *** */
+
+	/* row */
+	.row {@include box;overflow:hidden;clear:both;}
+
+	/* column */
+	.col {@include box;float:left;}
+
+	/* column widths across a(all) screen sizes */
+	@for $i from 1 through 100 {
+		.all#{$i} {
+			@if $i==33 {$i:$i + 0.333;}
+			@if $i==66 {$i:$i + 0.666;}
+			width: percentage((1/100)*$i);
+		}
+	}
+	
+	/* heights (0px - 800px) */
+	@for $i from 0 through 800 {.hgt#{$i} {height: 0px + $i;}}
+	
+	/* auto left right margin */
+	.mar-auto {margin:auto;}
+	
+	/* padding and margin (0px - 100px increments of 5px) */
+	@for $i from 0 to 20 {
+		
+		.pad#{$i*5} {padding:0px + $i*5;}
+
+		.mar#{$i*5} {margin:0px + $i*5;}
+
+		.pad-t#{$i*5} {padding-top:0px + $i*5;}
+
+		.mar-t#{$i*5} {margin-top:0px + $i*5;}
+
+		.pad-r#{$i*5} {padding-right:0px + $i*5;}
+
+		.mar-r#{$i*5} {margin-right:0px + $i*5;}
+
+		.pad-b#{$i*5} {padding-bottom:0px + $i*5;}
+
+		.mar-b#{$i*5} {margin-bottom:0px + $i*5;}
+
+		.pad-l#{$i*5} {padding-left:0px + $i*5;}
+
+		.mar-l#{$i*5} {margin-left:0px + $i*5;}
+
+		.pad-tb#{$i*5} {padding-top:0px + $i*5;padding-bottom:0px + $i*5;}
+
+		.mar-tb#{$i*5} {margin-top:0px + $i*5;margin-bottom:0px + $i*5;}
+
+		.pad-lr#{$i*5} {padding-left:0px + $i*5;padding-right:0px + $i*5;}
+
+		.mar-lr#{$i*5} {margin-left:0px + $i*5;margin-right:0px + $i*5;}
+	}
+
+	
+/* *** SHARED CSS (FIXED) *** */
+	
+	:focus, a:focus, input:focus {outline:none;}
+	
+	.fl {float:left;}
+	
+	.fr {float:right;}
+	
+	.fn {float:none;}
+	
+	.cb {clear:both;}
+	
+	.hide {display:none!important;}
+	
+	.tal {text-align:left;}
+	
+	.tar {text-align:right;}
+	
+	.tac {text-align:center;}
+	
+	.rel {position:relative;}
+	
+	.abs {position:absolute;}
+	
+	.fxd {position:fixed;}
+	
+	.abs-center {
+		margin: auto;
+		position: absolute;
+		top: 0; left: 0; bottom: 0; right: 0;
+	}
+
+	.on-sml, .on-med, .on-lge, .on-sml-inline, .on-med-inline, .on-lge-inline {display:none;}
+
+/* *** SHARED CSS  (EDITABLE) *** */
+
+	html, body {width:100%;overflow-x: hidden;}
+
+	body {@include box;margin:auto;max-width:($bdy-max);padding:0;background-color: ($bg-default);color:($fg-default);font-family:($ff-default);font-size:($FS-BASE + em);line-height:1.2em;}
+		
+	h1,h2,h3 {font-weight:normal;line-height:1em;margin:0;padding:0;}
+	
+	h1 {color:($fg-default);font-size:($fs-biggest + em);padding-bottom:30px;}
+	
+	h2 {color:($fg-default);font-size:($fs-bigger + em);line-height:1.2em;padding-bottom:20px;}
+	
+	h3 {color:($fg-default);font-size:($fs-big + em);line-height:1.15em;padding-bottom:20px;}
+	
+	img {vertical-align:top;}
+	
+	a {
+		text-decoration:none;
+		&:hover {cursor:pointer;}
+	}
+	
+	a .on {display:none;}
+	.no-touch a:hover .off {display:none;}
+	.no-touch a:hover .on {display:block;}
+	
+	p {font-size:($fs-default + em);margin:0;padding:0 0 10px 0;}
+
+	:-moz-placeholder,
+	::-moz-placeholder,
+	:-ms-input-placeholder,
+	::-webkit-input-placeholder {color:($fg-default);}
+	
+	.op10 {opacity:0.1;}
+	.op60 {opacity:0.6;}
+	.op80 {opacity:0.8;}
+	a:hover .hvr-op100 {opacity:1.0;}
+	
+/* *** MEDIA QUERIES *** */
+
+	/* small screen size 0 - 640 */
+	@media all and (max-width: 640px) {
+
+		/* scale all fonts to 80% of their original size */
+		html {font-size:80%;}
+		
+		/* show containers with apply only to small screen sizes */
+		.on-sml {display:block;}
+		
+		/* show inline objects which apply only to small screen sizes */
+		.on-sml-inline {display:inline;}
+		
+		/* hide containers which only apply to medium and large screen sizes */
+		.med, .lge {display:none;}
+
+		/* column widths across small screen sizes */
+		@for $i from 1 through 100 {
+			.sml#{$i} {
+				@if $i==33 {$i:$i + 0.333;}
+				@if $i==66 {$i:$i + 0.666;}
+				width: percentage((1/100)*$i);
+			}
+		}
+	}
+	
+			
+	/* medium screen size 641- 1245 */
+	@media all and (min-width : 641px) and (max-width : 1245px) {
+		
+		/* scale all fonts to 90% of their original size */
+		html {font-size:90%;}
+
+		/* show containers which apply only to medium screen sizes */
+		.on-med {display:block;}
+		
+		/* show inline objects which apply only to medium screen sizes */
+		.on-med-inline {display:inline;}
+		
+		/* hide containers which only apply to large screen sizes */
+		.lge {display:none;}
+		
+		/* column widths across medium screen sizes */
+		@for $i from 1 through 100 {
+			.med#{$i} {
+				@if $i==33 {$i:$i + 0.333;}
+				@if $i==66 {$i:$i + 0.666;}
+				width: percentage((1/100)*$i);
+			}
+		}
+	}
+	
+			
+	/* large screen size 1246 upwards */
+	@media all and (min-width : 1246px) {
+
+		/* show containers with apply only to large screen sizes */
+		.on-lge {display:block;}
+		
+		/* show inline objects which apply only to large screen sizes */
+		.on-lge-inline {display:inline;}
+		
+		/* column widths across large screen sizes */
+		@for $i from 1 through 100 {
+			.lge#{$i} {
+				@if $i==33 {$i:$i + 0.333;}
+				@if $i==66 {$i:$i + 0.666;}
+				width: percentage((1/100)*$i);
+			}
+		}
+	}
