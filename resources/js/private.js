@@ -5,7 +5,7 @@
  * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License, version 3 (GPL-3.0)
  *
  */
- 
+
 function groupCompress(obj){
 	var group = $(obj).parent();
 	$(group).toggleClass("header-only");
@@ -618,13 +618,10 @@ function dropZone(obj){
 			ftypes: allowed
 		},
 		dragOver: function () {
-			//$(this).css('background','blue');
 		},
 		dragLeave: function () {
-			//$(this).css('background','gray');
 		},
 		drop: function () {
-			//$(this).css('background','gray');
 		},
 		globalProgressUpdated: function (progress) {
 			$(did + ' .progressbar').width(progress+"%");
