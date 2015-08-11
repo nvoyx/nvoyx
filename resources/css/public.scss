@@ -220,18 +220,6 @@
 	.no-touch a:hover .on {display:block;}
 	
 	p {font-size:($fs-default + em);margin:0;padding:0 0 10px 0;}
-	
-	.mob-nav-button .row .even {background-color:($fg-default);}
-	nav.mob {
-		@include box;position:absolute;left:0;z-index:999;width:100%;margin:5px 0 0 0;padding:20px 0;background-color:($fg-default);opacity:0.8;box-shadow: 5px 5px 5px ($fg-default);
-		a {
-			display:block;
-			line-height:2em;
-			padding:0 5%;
-			color:#fff;
-			&:hover {color:($fg-default);background-color:#fff;}
-		}
-	}
 
 	:-moz-placeholder,
 	::-moz-placeholder,
