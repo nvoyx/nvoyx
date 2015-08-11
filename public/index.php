@@ -447,10 +447,10 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 		if($rs){
 						
 			/* check and (if necessary) compress the css files */
-			$NVX_BOOT->COMPRESS(array("TYPE"=>"css","FILES"=>$NVX_VAR->FETCH_ENTRY("css")));
+			$NVX_BOOT->COMPRESS(array("TYPE"=>"css","FILES"=>$NVX_VAR->FETCH_ENTRY("csspublic"),"FOR"=>"public"));
 			
 			/* check and (if necessary) compress the javascript files */
-			$NVX_BOOT->COMPRESS(array("TYPE"=>"js","FILES"=>$NVX_VAR->FETCH_ENTRY("js")));
+			$NVX_BOOT->COMPRESS(array("TYPE"=>"js","FILES"=>$NVX_VAR->FETCH_ENTRY("jspublic"),"FOR"=>"public"));
 		
 			/**
 			 * @instance
@@ -545,10 +545,10 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 				if($rs){
 
 					/* check and (if necessary) compress the css files */
-					$NVX_BOOT->COMPRESS(array("TYPE"=>"css","FILES"=>$NVX_VAR->FETCH_ENTRY("css")));
+					$NVX_BOOT->COMPRESS(array("TYPE"=>"css","FILES"=>$NVX_VAR->FETCH_ENTRY("csspublic"),"FOR"=>"public"));
 
 					/* check and (if necessary) compress the javascript files */
-					$NVX_BOOT->COMPRESS(array("TYPE"=>"js","FILES"=>$NVX_VAR->FETCH_ENTRY("js")));
+					$NVX_BOOT->COMPRESS(array("TYPE"=>"js","FILES"=>$NVX_VAR->FETCH_ENTRY("jspublic"),"FOR"=>"public"));
 
 					/**
 					 * @instance
@@ -649,7 +649,7 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 			*/
 			$NVX_CMS = $rs::CONNECT($NVX_BOOT,$NVX_DB,$NVX_USER,$NVX_GROUP,$NVX_DEPT);
 			
-			/* is this an ajax call  or a debug xcache / info call */
+			/* is this an ajax call or a debug xcache / info call */
 			if($NVX_BOOT->FETCH_ENTRY("breadcrumb",1)=="ajax" || ($NVX_BOOT->FETCH_ENTRY("breadcrumb",1)=="debug" && (
 					$NVX_BOOT->FETCH_ENTRY("breadcrumb",2)=="xcache" || 
 					$NVX_BOOT->FETCH_ENTRY("breadcrumb",2)=="info" ||
@@ -660,6 +660,12 @@ if($NVX_BOOT->FETCH_ENTRY("breadcrumb",0) != "settings"){
 				$rs = $NVX_BOOT->TEST_INCLUDE(array("TYPE"=>"template","VALUE"=>$NVX_VAR->FETCH_ENTRY("ajax")[0]));
 				
 			} else {
+				
+				/* check and (if necessary) compress the css files  */
+				$NVX_BOOT->COMPRESS(array("TYPE"=>"css","FILES"=>$NVX_VAR->FETCH_ENTRY("cssprivate"),"FOR"=>"private"));
+				
+				/* check and (if necessary) compress the javascript files */
+				$NVX_BOOT->COMPRESS(array("TYPE"=>"js","FILES"=>$NVX_VAR->FETCH_ENTRY("jsprivate"),"FOR"=>"private"));
 			
 				/* test the include file using the template variable */
 				$rs = $NVX_BOOT->TEST_INCLUDE(array("TYPE"=>"template","VALUE"=>$NVX_VAR->FETCH_ENTRY("template")[0]));
