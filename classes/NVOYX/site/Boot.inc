@@ -441,6 +441,55 @@ class Boot{
 	}
 	
 	/*
+	 * JS_MINIFIER()
+	 * very fast method of minifying a javascript file
+	 */
+	function JS_MINIFIER($buffer) {
+		$replace = array(
+			'#\'([^\n\']*?)/\*([^\n\']*)\'#'	=> "'\1/'+\'\'+'*\2'",	// remove comments from ' strings
+			'#\"([^\n\"]*?)/\*([^\n\"]*)\"#'	=> '"\1/"+\'\'+"*\2"',	// remove comments from " strings
+			'#/\*.*?\*/#s'						=> "",					// strip C style comments
+			'#[\r\n]+#'							=> "\n",				// remove blank lines and \r's
+			'#\n([ \t]*//.*?\n)*#s'				=> "\n",				// strip line comments (whole line only)
+			'#([^\\])//([^\'"\n]*)\n#s'			=> "\\1\n",				// strip line comments
+																		// (that aren't possibly in strings or regex's)
+			'#\n\s+#'							=> "\n",				// strip excess whitespace
+			'#\s+\n#'							=> "\n",				// strip excess whitespace
+			'#(//[^\n]*\n)#s'					=> "\\1\n",				// extra line feed after any comments left
+																		// (important given later replacements)
+			'#/([\'"])\+\'\'\+([\'"])\*#'		=> "/*"					// restore comments in strings
+		);
+
+		$search = array_keys( $replace );
+		$script = preg_replace( $search, $replace, $buffer );
+
+		$replace = array(
+			"&&\n" => "&&",
+			"||\n" => "||",
+			"(\n"  => "(",
+			")\n"  => ")",
+			"[\n"  => "[",
+			"]\n"  => "]",
+			"+\n"  => "+ ", //the space is important on this one
+			",\n"  => ",",
+			"?\n"  => "?",
+			":\n"  => ":",
+			";\n"  => ";",
+			"{\n"  => "{",
+			"}\n"  => "}",
+			"\n]"  => "]",
+			"\n)"  => ")",
+			"\n}"  => "}",
+			"\n\n" => "\n"
+		);
+
+		$search = array_keys( $replace );
+		$script = str_replace( $search, $replace, $script );
+
+		return trim( $script );
+	}
+	
+	/*
 	 * COMPRESS()
 	 * join and compress the public css and js files for this website
 	 */
@@ -450,10 +499,10 @@ class Boot{
 		$mfiles=0;
 		
 		/* look to see if we already have a compressed file of the required type */
-		$file = glob(self::$SYS["files"]."/compress/*.".$a['TYPE']);
+		$file = glob(self::$SYS["files"]."/compress/".$a['FOR']."/*.".$a['TYPE']);
 		
 		/* check whether we have an array */
-		if(is_array($file)){
+		if(count($file)>0){
 		
 			/* the grab the filename without the path and without the extension */
 			$mcompress=pathinfo($file[0], PATHINFO_FILENAME);
@@ -476,15 +525,14 @@ class Boot{
 		/* if is the flag date younger (greater) than that of the compressed file */
 		if($mfiles>$mcompress){
 			
-			/*  results variable*/
-			$r="";
-			
 			/* is the requested file of type css */
 			if($a["TYPE"]=="css"){
 				
 				/* create a new instance of the Scss compiler */
 				$NVX_SCSS = new \scss\Scss();
 			}
+			
+			$r='';
 			
 			/* cycle through the uncompressed files again */
 			foreach($a["FILES"] as $f){
@@ -502,31 +550,36 @@ class Boot{
 						$t=$NVX_SCSS->compile($t);
 					}
 				}
-				
-				/* join the files together */	
-				$r .= $t;
+				$r.=$t;
 			}
 			
-			/* remove any comments */
-			$r = preg_replace('#/\*.*?\*/#s', '', $r);
-			
-			/* remove any carriage returns or whitespace */
-			$r = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $r);
+			if($a['TYPE']=='css'){
+				
+				/* remove any comments (from css only) */
+				$r = preg_replace('#/\*.*?\*/#s', '', $r);
+				
+				/* remove any carriage returns or whitespace */
+				$r = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $r);
+			} else {
+				
+				/* compressing javascript is a little more complicated */
+				$r = $this->JS_MINIFIER($r);
+			}
 			
 			/* create a new compressed file */
-			file_put_contents(self::$SYS["files"]."/compress/{$mfiles}.{$a["TYPE"]}",$r);
+			file_put_contents(self::$SYS["files"]."/compress/{$a["FOR"]}/{$mfiles}.{$a["TYPE"]}",$r);
 			
 			/* delete the old compressed file (if one existed) */
-			if(is_array($file)){
+			if(count($file)>0){
 				unlink($file[0]);
 			}
 			
 			/* update the modified date system variable for this content type */
-			self::$SYS["mod".$a["TYPE"]] = $mfiles;
+			self::$SYS["mod".$a["TYPE"].$a["FOR"]] = $mfiles;
 		} else {
 			
 			/* update the modified date system variable for this content type */
-			self::$SYS["mod".$a["TYPE"]] = $mcompress;
+			self::$SYS["mod".$a["TYPE"].$a["FOR"]] = $mcompress;
 		}
 	}
 	
@@ -940,7 +993,9 @@ class Boot{
 		self::$SYS["salt"] = self::$DB->FETCH_OPTION("SALT");
 		self::$SYS["dwebp"] = self::$DB->FETCH_OPTION("DWEBP");
 		self::$SYS["cwebp"] = self::$DB->FETCH_OPTION("CWEBP");
-		self::$SYS["modcss"] = 0;
-		self::$SYS["modjs"] = 0;
+		self::$SYS["modcsspublic"] = 0;
+		self::$SYS["modjspublic"] = 0;
+		self::$SYS["modcssprivate"] = 0;
+		self::$SYS["modjsprivate"] = 0;
 	}
 }

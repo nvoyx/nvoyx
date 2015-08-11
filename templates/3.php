@@ -29,12 +29,12 @@
 			function isTouchDevice(){return true == ("ontouchstart" in window || (window.DocumentTouch && document instanceof DocumentTouch) || navigator.msMaxTouchPoints);}
 			if(isTouchDevice()){document.documentElement.className += " touch";} else {document.documentElement.className += " no-touch";}
 		</script>
-		<link rel="stylesheet" href="/settings/resources/files/compress/<?=$NVX_BOOT->FETCH_ENTRY("modcss");?>.css">
+		<link rel="stylesheet" href="/settings/resources/files/compress/public/<?=$NVX_BOOT->FETCH_ENTRY("modcsspublic");?>.css">
 		<?php if($NVX_USER->GRANTED("s")){ 
-			foreach($NVX_VAR->FETCH_ENTRY('js') as $r){ ?>
+			foreach($NVX_VAR->FETCH_ENTRY('jspublic') as $r){ ?>
 				<script src="/settings/resources/js/<?=$r;?>?uid=<?=$NVX_BOOT->FETCH_ENTRY('timestamp');?>" defer></script>
 		<?php }} else { ?>
- 			<script src="/settings/resources/files/compress/<?=$NVX_BOOT->FETCH_ENTRY("modjs");?>.js" defer></script>
+ 			<script src="/settings/resources/files/compress/public/<?=$NVX_BOOT->FETCH_ENTRY("modjspublic");?>.js" defer></script>
  		<?php } ?>
 	</head>
 	<body>
