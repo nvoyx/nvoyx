@@ -17,12 +17,14 @@ function validEmail(email){
 $(document).ready(function(){
 	
 	/* set the admin bar to draggable and hide/reveal on backtick key */
-	if($('#admin').length>0){
-		$('#admin').draggable().css("position","fixed");
+	if($('#admin-button').length>0){
 		$(document).keypress(function(e){
 			if(e.which == 96){
 				$('#admin').toggleClass("hide");
 			}
+		});
+		$('#admin-button').click(function(){
+			$('#admin').toggleClass('hide');
 		});
 	}
 	
