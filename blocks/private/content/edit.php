@@ -129,1115 +129,377 @@ $r = $NVX_HTML->URL(array("NID"=>$PAGE["id"],
 
 ?>
 
-<img class="blank" src="/settings/resources/files/images/private/header-top.png" width="714" height="26">
-<div class="blank box" id="header">
-	<img class="blank fl" src="/settings/resources/files/images/public/header-client.png" height="24">
-	<a class="fr" href="/settings/user/logout">LOGOUT</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/settings/content/list">ADMIN</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/">FRONT</a>
-</div>
-
-<form method="POST">
-
-<div class="blank box">
-	
-	<div class="blank header">
-		<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-content.png">
-		<h2 class="blank fl">CONTENT</h2>
-		<a class="fr" href="https://<?php echo $r['URL'];?>">VIEW</a>
-		<span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-		<a class="fr" onclick="$('#submit').click();">SAVE</a>
-		<span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-		<a class="fr" href="/settings/rollback/list/<?php echo $PAGE["id"];?>">ROLLBACK</a>
-		<?php if($create==""){?>
-		<span class="fr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-		<a class="fr" href="/settings/content/delete/<?php echo $PAGE["id"];?>">DELETE</a>
-		<?php } ?>
-		<span class="fr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-		<a class="fr" href="/settings/content/list">UP</a>
-		<?php if($create==""){?>
-		<span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-		<a class="fr" href="/settings/content/add/<?php echo $PAGE["tid"] ;?>">NEW</a>
-		<?php } ?>
-	</div>
-	
-	<div class="blank row">
-		<label for="page-id" class="blank fl">Node Id</label>
-		<input class="blank textbox mini fr" name="page-id" id="page-id" type="text" readonly value="<?php echo $PAGE["id"];?>">
-	</div>
-	
-	<div class="blank row">
-		<label for="page-tid" class="blank fl">Type Id</label>
-		<input class="blank textbox mini fr" name="page-tid" id="page-tid" type="text" readonly value="<?php echo $TYPE["id"];?>">
-	</div>
-	
-	<div class="blank row">
-		<label for="page-tref" class="blank fl">Type Reference</label>
-		<input class="blank textbox mini fr" name="page-tref" id="page-tref" type="text" readonly value="<?php echo $TYPE["name"];?>">
-	</div>
-	
-</div>
-
-<?php
-/* -------------------------- BASIC --------------------------- */
-?>
-	
-<div class="blank box">
-	
-	<div class="blank header">
-		<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-content.png">
-		<h2 class="blank fl">NODE</h2>
-		<input name="page-oldtitle" id="page-oldtitle" type="hidden" maxlength="255" value="<?php echo $PAGE["title"];?>">
-		<input name="page-prefix" id="page-oldprefix" type="hidden" maxlength="2048" value="<?php echo substr($r['URL'],strpos($r['URL'],'/'),strrpos($r['URL'],'/')-strpos($r['URL'],'/'));?>">
-	</div>
-	
-	<div class="blank row<?=$create;?>">
-		<label for="page-title" class="blank fl">
-			Title &amp; Url<br>
-			<span class="current-length tt"><?php echo strlen($PAGE["title"]);?></span><span class="tt"> of 255</span>
-		</label>
-		<input class="blank textbox mini fr" name="page-title" id="page-title" type="text" maxlength="255" value="<?php echo $PAGE["title"];?>">
-	</div>
-	
-	<div class="blank row">
-		<label for="page-heading" class="blank fl">
-			Heading<br>
-			<span class="current-length tt"><?php echo strlen($PAGE["heading"]);?></span><span class="tt"> of 2048</span>
-		</label>
-		<input class="blank textbox mini fr" name="page-heading" id="page-heading" type="text" maxlength="2048" value="<?php echo $PAGE["heading"];?>">
-	</div>
-	
-	<div class="blank row">
-		<label for="page-teaser" class="blank fl">
-			Teaser<br>
-			<span class="current-length tt"><?php echo strlen($PAGE["teaser"]);?></span><span class="tt"> of 2048</span>
-		</label>
-		<input class="blank textbox mini fr" name="page-teaser" id="page-teaser" type="text" maxlength="2048" value="<?php echo $PAGE["teaser"];?>">
-	</div>
-	
-	<div class="<?php if($TYPE['body']!=1) {echo 'hide';} ?>">
-		<div class="blank row">
-			<label for="page-body" class="blank fl">
-				Body				
-			</label>
-			<div class="blank fl huge"><textarea class="blank textarea ckPrivate" name="page-body" id="page-body" maxlength="16777215"><?=$PAGE["body"];?></textarea></div>
+<!-- MAIN MENU -->
+<section class='col all100'>
+	<div class='col sml5 med10 lge15'></div>
+	<div class='col box sml90 med80 lge70'>
+		<div class='col all40'>
+			<img height='24' src="/settings/resources/files/images/private/nvoy.svg">
+		</div>
+		<div class='col all60 tar fs14 pad-t5'>
+			<a href='/settings/content/list' class='pad-r5 c-blue pad-b0'>Admin</a>
+			<a href='/' class='pad-lr5 c-blue pad-b0'>Front</a>
+			<a href='/settings/user/logout' class='pad-l5 c-blue pad-b0'>Logout</a>
 		</div>
 	</div>
-	
-</div>
+	<div class='col sml5 med10 lge15'></div>
+</section>
 
-<?php
+<form method="post">
 
-
-/* -------------------------- DYNAMIC DATA CHECK --------------------------- */
-
-/* cycle through all the groups */
-foreach($GROUPS as $GROUP){
-	
-	/* reset a count of variations found for this group */
-	$VARICNT=0;
-	
-	/* is this group associated with this page */
-	if(in_array($PAGE["tid"],$GROUP["assoc"])){
-		
-		/* does this page currently NOT have this group within its $PAGE nvids reference */
-		if(!key_exists($GROUP["id"],$NVIDS)){
-			
-			/* create an initial reference */
-			$NVIDS[$GROUP["id"]] = "0";
-			
-		}
-	
-		/* do field entries NOT exist for this page */
-		if(!key_exists("gid-".$GROUP["id"],$PAGE)){
-				
-			/* update the next variant reference */
-			$NVIDS[$GROUP["id"]] = $NVIDS[$GROUP["id"]];
-						
-			/* cycle through the group fields */
-			foreach($GROUP["outline"] as $FIELD){
-				
-					/* add empty field references for the group variation */
-					$PAGE["gid-".$GROUP["id"]]["vid-".$NVIDS[$GROUP["id"]]]["fid-".$FIELD["fid"]][0]=array();
-			}
-		}	
-		
-		
-		/* clear the variation html holder */
-		$vhtml = "";
-		
-		/* one variation should always be available, so set a variable to hide the variation delete option */
-		if(count($PAGE["gid-".$GROUP["id"]])==1){$vdel=" hide";}else{$vdel="";}
-		
-		
-		/* does the current user have sufficient privileges to view / edit this group */
-		if(stristr($NVX_USER->FETCH_ENTRY("type"),$GROUP["access"])){
-			$access = "";
-		} else {$access = " hide";}
-		
-		/* START BUILDING THE GROUP HTML HERE */
-		?>
-	
-		<div class="blank header-only box<?=$access;?>">
-	
-			<a onclick="groupCompress(this);" class="blank header">
-				<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-group.png">
-				<h2 class="blank fl"><?php echo strtoupper($GROUP["name"]); ?></h2>
-			</a>
-	
-			<ul class='sortable' id="group-<?php echo $GROUP["id"];?>">
-		
-		<?php
-		
-		
-		/* cycle through each of the group variations (already in position order) */
-		foreach($PAGE["gid-".$GROUP["id"]] as $VARI=>$FIELD){
-			
-			/* grab the numeric variation reference */
-			$VARI = str_replace("vid-","",$VARI);
-			
-			/* increment the variations found for this group */
-			$VARICNT++;
-										
-			/* START THE VARIATION DEFINITIONS HERE */
-										
-			?>				
-			<li class="blank variation" data-vid="<?php echo $VARI; ?>">
-				<div class="blank variation-header row">
-					<label class="blank fl">Variant</label>
-					<a title="delete" class="delete-variant<?php echo $vdel;?>" onclick='deleteVariant(this);'><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-delete.png"></a>
-					<a class="hand" title="drag and drop"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-grip.png"></a>
+	<!-- CONTENT -->
+	<section class='col all100'>
+		<div class='col sml5 med10 lge15'></div>
+		<div class='col box sml90 med80 lge70'>
+			<div class='row pad-b20'>
+				<div class='col all20 sml100 pad-r20 sml-pad-b10'>
+					<h1 class='pad0 fs20 c-blue'>Content</h1>
 				</div>
-			<?php							
-			/* cycle through the group outlines */
-			foreach($GROUP["outline"] as $OUTLINE){
-								
-				/* if we don"t have field information for this field within the page/group/variation array */
-				if(!key_exists("fid-".$OUTLINE["fid"],$PAGE["gid-".$GROUP["id"]]["vid-".$VARI])){
-					
-					/* add an empty array */
-					$FIELD["fid-".$OUTLINE["fid"]][0]=array();
-				}
-				
-				/* which type of field comes next in this group */
-				switch ($OUTLINE["type"]):
-					
-					
-					case "datebox":
-						
-						/* start the field html */
-						?><div class="blank row"><?php
-						
-						/* cycle through the values stored for this field */
-						foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
-							
-							/* do we have a start date */
-							if(key_exists("start",$VALUES)){$v=$VALUES["start"];}else{$v="";}
-							
-							?>
-							<label class='blank fl'><?php echo ucwords($OUTLINE["name"]);?></label>
-							<input class="blank textbox mini fr" name="<?php echo "datebox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-start";?>" id="<?php echo "datebox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-start";?>" type="date" value="<?php echo $v;?>">
-							<?php
-							
-							/* does the field outline contain a finish date */
-							if($OUTLINE["finish"]==1){
-								
-								/* does the page have a finish date stored */
-								if(key_exists("finish",$VALUES)){$v = $VALUES["finish"];} else {$v = "";}
+				<div class='col all80 sml100 tar sml-tal fs14 lh30'>
+					<a href='/settings/content/add/<?=$PAGE['tid'];?>' class='pad-r5 c-blue pad-b0'>New</a>
+					<a href='/settings/content/list' class='pad-lr5 c-blue pad-b0'>Up</a>
+					<a href='/settings/content/delete/<?=$PAGE['id'];?>' class='pad-lr5 c-blue pad-b0'>Delete</a>
+					<a href='/settings/rollback/list/<?=$PAGE['id'];?>' class='pad-lr5 c-blue pad-b0'>Rollback</a>
+					<a onclick="$('#submit').click();" class='pad-lr5 c-blue pad-b0'>Save</a>
+					<a href='//<?=$r['URL'];?>' class='pad-l5 c-blue pad-b0'>View</a>
+				</div>
+			</div>
+			
+			<?php if(stristr($NVX_USER->FETCH_ENTRY("type"),'s')){$visibility="";}else{$visibility=" hide";} ?>
 
-								?>
-								<div class='blank cb ten-space-vert'></div>
-								<input class="blank textbox mini fr" name="<?php echo "datebox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-finish";?>" id="<?php echo "datebox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-finish";?>" type="date" value="<?php echo $v;?>">
-								<?php
-							}
-						}
-						
-						/* end the field html */
-						?></div><?php
-						break;
-						
-						
-					case "tagbox":
-						
-						/* start the field html */
-						?>
-						<div class="blank row">
-						<label class='blank fl'><?php echo ucwords($OUTLINE["name"]);?></label>	
-						<?php
-						
-						/* create two arrays, one to hold the html tags and one to hold the json tags */
-						$v=array();
-						$jsonv = array();
-						
-						/* cycle through the values stored for this field */
-						foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
-														
-							/* do we have a tag */
-							if(key_exists("tag",$VALUES)){
-									
-									/* wrap each of the tags in a-tags */ 
-									$v[] = "<span class='tag'><a onclick=\"deleteTag(this,'#tagbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-tags','{$VALUES["tag"]}')\">{$VALUES["tag"]}</a></span>";
-									$jsonv[] = $VALUES["tag"];
-							}
-						}
-						
-						/* we have found no tags */
-						if(count($v)==0){
-							
-							/* set the two arrays to empty */
-							$v=array("");
-							$jsonv = "[\"\"]";
-						} else {
-							
-							/* encode the json array */
-							$jsonv = $NVX_BOOT->JSON($jsonv,"encode");
-						}
-							
-						?>
-						<input class="blank textbox tags mini fr" name="<?php echo "tagbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-tags";?>" id="<?php echo "tagbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-tags";?>" type="hidden" value='<?php echo $jsonv;?>'>
-						<input onkeyup='fetchTags(this,<?php echo $TYPE['id'];?>,<?php echo "\"#tagbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-addtags\""; ?>);' class="blank textbox mini fr tag-box" name="<?php echo "ignore-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-tags";?>" id="<?php echo "ignore-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-tags";?>" type="text" value="">
-						<div class='blank cb ten-space-vert'></div>
-						<label class='blank fl'>Current Tags</label>
-						<div id="<?php echo "tagbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-deletetags";?>" class='links fl big current-tags'><?php echo implode("",$v); ?></div>
-						<div class='blank cb ten-space-vert'></div>
-						<label class='blank fl'>Available Tags</label>
-						<div id="<?php echo "tagbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-addtags";?>" class='links fl big available-tags'></div>
-						</div><?php
-						break;
-						
-						
-					case "textbox":
-						
-						/* start the field html */
-						?><div class="blank row"><?php
-						
-						/* cycle through the values stored for this field */
-						foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
-							
-							/* do we have some text */
-							if(key_exists("text",$VALUES)){$v=$VALUES["text"];}else{$v="";}
-							
-							?>
-							<label for='<?php echo "textbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text";?>' class='blank fl'>
-								<?php echo ucwords($OUTLINE["name"]);?><br>
-								<span class="current-length tt"><?php echo strlen($v);?></span><span class="tt"> of <?php echo $OUTLINE["maxlength"];?></span>
-							</label>
-							<input class="blank textbox mini fr" name="<?php echo "textbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text";?>" id="<?php echo "textbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text";?>" type="text" maxlength="<?php echo $OUTLINE["maxlength"] ?>" value="<?php echo $v;?>">
-							<?php
-						}
-						
-						/* end the field html */
-						?></div><?php
-						
-						break;
-						
-						
-					case "textarea":
-						
-						/* start the field html */
-						?><div class="blank row"><?php
-						
-						/* cycle through the values stored for this field */
-						foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
-							
-							/* should this textarea contain plain or html text (disable ckeditor if plain) */
-							if($OUTLINE["plain"]==1){$r="plain";$OUTLINE["editor"]="";}else{$r="html";}
-							
-							/* if a maxlength of zero has been specified then return max size allowable by mysql field */
-							if($OUTLINE["maxlength"]==0){$OUTLINE["maxlength"]="16777215";}
-							
-							/* do we have some text */
-							if(key_exists("text",$VALUES)){$v=$VALUES["text"];}else{$v="";}
-															
-							?>
-							<label for="<?php echo "textarea-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text{$r}";?>" class="blank fl">
-								<?php echo ucwords($OUTLINE['name']);?><br>
-								<?php if($OUTLINE['plain']==1){ ?>
-								<span class="current-length tt"><?php echo strlen($v); ?></span><span class="tt"> of <?php echo $OUTLINE["maxlength"];?></span><br>
-								<?php } ?>
-							</label>
-							<div class="blank fl huge"><textarea data-editor="<?php echo $OUTLINE["editor"];?>" class="blank textarea huge <?php echo $OUTLINE["editor"] . " " .$r; ?>" name="<?php echo "textarea-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text{$r}";?>" id="<?php echo "textarea-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text{$r}";?>" maxlength="<?php echo $OUTLINE["maxlength"];?>" ><?php echo $v; ?></textarea></div>
-							<?php
-						}
-						
-						/* end the field html */
-						?></div><?php
-						
-						break;
-						
-						
-					case "sselect":
-						
-						/* start the field html */
-						?>
-						<div class="blank row">
-							<label for="<?php echo "sselect-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-option";?>" class="blank fl">
-								<?php echo ucwords($OUTLINE['name']);?>
-							</label>
-						<?php
-						
-						/* cycle through the values stored for this field */
-						foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
-							
-							/* do we have a selected value */
-							if(key_exists("selected",$VALUES)){$v=$VALUES["selected"];}else{$v="[none]";}
-							
-							/* reset the results variable */
-							$rs="";
-							
-							/* add a "no response" option to the select options */
-							$rs[] = array("INTERNAL"=>"[none]","EXTERNAL"=>"[none]");
-								
-							/* cycle through any select options associated with this field */
-							foreach($OUTLINE["content"] as $key => $value){
-								
-								/* add the two values to the results array */
-								$rs[] = array("INTERNAL"=>$value,"EXTERNAL"=>$key);
-							}
-							
-							?>
-							<div class="blank select fr half">
-								<?php
-								foreach ($rs as $r){
-								if($v==$r["INTERNAL"]){$flg = " selected";} else {$flg="";} ?>
-								<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'<?php echo "sselect-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-option";?>');return false;"><?php echo $r["EXTERNAL"]; ?></a>
-								<?php } ?>
-							</div>
-							<select class="hide" name="<?php echo "sselect-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-option";?>" id="<?php echo "sselect-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-option";?>">
-								<?php 
-								foreach ($rs as $r){
-								if($v==$r["INTERNAL"]){$flg = " selected";} else {$flg="";} ?>
-								<option<?php echo $flg; ?> value="<?php echo $r["INTERNAL"];?>"></option>
-								<?php } ?>
-							</select>
-							<?php
-						}
-						
-						/* end the field html */
-						?></div><?php
-						
-						break;
-						
-						
-					case "mselect":
-						
-						/* start the field html */
-						?>
-						<div class="blank row">
-							<label for="<?php echo "mselect-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-options";?>" class="blank fl">
-								<?php echo ucwords($OUTLINE['name']);?>
-							</label>
-						<?php
-						
-						/* holder for any select options to be selected for this page */
-						$v="";
-						
-						/* cycle through the available select options (one in each array entry) */
-						foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
-							
-							/* if we have a selected entry */
-							if(key_exists("selected",$VALUES)){
-								
-								/* add the selected item to an array */
-								$v[]=$VALUES["selected"];
-							}
-						}
-						
-						/* if we have no selected items, set to the default response */
-						if($v==""){$v[]="[none]";}	
-						
-						/* reset the results variable */
-						$rs="";
-						
-						/* add a "no response" option to the select options */
-						$rs[] = array("INTERNAL"=>"[none]","EXTERNAL"=>"[none]");
-						
-						foreach($OUTLINE["content"] as $key => $value){
-							
-							/* cycle through any select options associated with this field */
-							$rs[] = array("INTERNAL"=>$value,"EXTERNAL"=>$key);
-						}
-						
-						?>
-						<div class="blank mselect fr half">
-							<?php
-							foreach ($rs as $r){
-							if(in_array($r["INTERNAL"],$v)){$flg = " selected";} else {$flg="";} ?>
-							<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'<?php echo "mselect-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-options";?>');return false;"><?php echo $r["EXTERNAL"]; ?></a>
-							<?php } ?>
-						</div>
-						<select multiple class="hide" name="<?php echo "mselect-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-options[]";?>" id="<?php echo "mselect-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-options";?>">
-							<?php 
-							foreach ($rs as $r){
-							if(in_array($r["INTERNAL"],$v)){$flg = " selected";} else {$flg="";} ?>
-							<option<?php echo $flg; ?> value="<?php echo $r["INTERNAL"];?>"><?php echo $r["EXTERNAL"]; ?></option>
-							<?php } ?>
-						</select>
-						<?php
-						
-						/* end the field html */
-						?></div><?php
-						
-						break;
-						
-						
-					case "heirarchy":
-						
-						/* start the field html */
-						?>
-						<div class="blank row">
-						<?php
-						
-						/* if we have a zero max value (unlimited), set this to 999 */
-						if($OUTLINE["max"]==0){$OUTLINE["max"]=999;}
-						
-						/* create a counter to make sure we don't return more than the maximum number of heirarchies */
-						$x=0;
-						
-						/* cycle through the available heirarchy options */
-						foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
-							
-							?>
-							<label for="<?php echo "heirarchy-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-0";?>" class="blank fl">
-								<?php echo ucwords($OUTLINE['name']);?>
-							</label>
-							<div class='blank heirarchy-wrapper'>
-							<?php
-							
-							/* iterate the heirarchy counter */
-							$x++;
-							
-							/* reset the selecteds array */
-							$selecteds = false;
-							
-							/* have we examined no more than the max permissible heirarchies */
-							if($x<=$OUTLINE["max"]){
-								
-								/* if we do not have any values */
-								if(!array_key_exists("parent",$VALUES)){
-									
-									/* make a single blank entry */
-									$VALUES["parent"][0] = -1;
-								}
-																							
-								/* cycle through the levels */
-								foreach($VALUES["parent"] as $parent){
-																											
-									/* which content type does the current parent nid belong to */
-									$ptid = $NVX_TYPE->FETCH_MATCHES(array("NID"=>$parent,
-																			"USER"=>$NVX_USER->FETCH_ENTRY("type")));
-									
-									if($ptid){
-									
-										/* update the selecteds array */
-										$selecteds[] = array("NID"=>$parent,"TID"=>$ptid[0]);
-										
-									} else {
-										
-										/* terminate the selecteds array */
-										$selecteds[] = array("NID"=>-1,"TID"=>-1);
-									}
-								}
-								
-								/* grab the parent from this page type array and create the first single select */
-								$NVX_DB->CLEAR(array("ALL"));
-								$NVX_DB->SET_FILTER("`tid`={$TYPE["parent"]}");
-								$options = $NVX_DB->QUERY("SELECT","`page`.`title`,`page`.`id` FROM `page`");
-								
-								/* do we have options */
-								if($options){
-																		
-									/* add a default option to the results array */
-									$rs = false;
-									
-									$rs[] = array("INTERNAL"=>"-1","EXTERNAL"=>"[none]");
-									
-									/* cycle through the options for this first level */
-									foreach($options as $option){
-										
-										/* add the option to the results array */
-										$rs[] = array("INTERNAL"=>$option["page.id"],"EXTERNAL"=>$option["page.title"]);
-									}
-									?>
-									<div class="blank select huge">
-										<?php
-										
-										/* cycle through the options */
-										foreach($rs as $r){
-																						
-											$flg="";
-											if($selecteds[0]["NID"] == $r["INTERNAL"]){$flg=" selected";}
-											?>
-											<a class='blank huge<?php echo $flg; ?><?php echo " heirarchy-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-0";?>' onclick="select(this,'<?php echo "heirarchy-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-0";?>');return false;"><?php echo $r["EXTERNAL"]; ?></a>
-											<?php
-										}
-									?>
-									</div>
-									
-								
-									<select class="hide" onchange='<?php echo "heirarchyChange({$PAGE["id"]},this,0,{$OUTLINE["max"]});"; ?>' name="<?php echo "heirarchy-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-0";?>" id="<?php echo "heirarchy-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-0";?>">
-										<?php 
-										
-										/* cycle through the options */
-										foreach($rs as $r){
-											
-											$flg="";
-											if($selecteds[0]["NID"] == $r["INTERNAL"]){$flg=" selected";}
-											?>	
-											<option<?php echo $flg; ?> value="<?php echo $r["INTERNAL"];?>"><?php echo $r["EXTERNAL"]; ?></option>
-											<?php
-										}
-										?>
-									</select>
-									<?php
-									
-									/* only cycle through if the the first select doesn't equal -1 */
-									if($selecteds[0]["NID"]!=-1){
+			<!-- NODE ID -->
+			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 pad-b20<?=$visibility;?>'>
+				<label class='col all100 fs13 c-blue pad-b5'>Node Id</label>
+				<input class='col all100 fs14 tb' name='page-id' id='page-id' type='text' maxlength='255' value='<?=$PAGE['id'];?>' placeholder='Node Id' readonly tabindex='-1'>
+			</div>
 
-																										
-										/* cycle through 9 times to give a maximum heirarchy depth of 10 */
-										for($a=1;$a<9;$a++){
-										
-											/* reset the results array */
-											$rs = false;
-											
-											if(array_key_exists($a,$selecteds)){
-																						
-												/* based upon the first answer, what options are available for the next level */
-										
-												/* grab the nid from the heirarchy responses where the previous nid is in the heirarchy array */
-												/* first run will be a bit rough ie, nid might be in the wrong heirarchy iteration, 10 might be returned when requesting 1 etc. */
-												/* shorten the list, then let php find valid entries */
-												$NVX_DB->CLEAR(array("ALL"));
-												$NVX_DB->SET_FILTER("`heirarchy`.`values` LIKE '%\"{$selecteds[$a-1]["NID"]}\"%' AND `heirarchy`.`nid`!={$PAGE["id"]}");
-												$possibles = $NVX_DB->QUERY("SELECT","`heirarchy`.`values`,`heirarchy`.`nid` FROM `heirarchy`");
-												if($possibles==false){$possibles=true;}
-											} else {$possibles = false;}
-																				
-											/* do we have any possibles */
-											if($possibles){
-																		
-												if(!is_array($possibles)){$possibles = array();}
-												
-												/* add the default option to the results array */
-												$rs = false;
-												$rs[] = array("INTERNAL"=>"-1","EXTERNAL"=>"[none]");
-									
-												/* cycle through the possibles */
-												foreach($possibles as $possible){
-													
-													/* NEW SHIT */
-													$heirs=false;
-													$heirs = $NVX_BOOT->JSON($possible["heirarchy.values"],"decode");
-													foreach($heirs as $heir){
-														
-														if(in_array($selecteds[$a-1]["NID"],$heir)){
-															
-															if($heir[$a]!=-1){
-														
-																$NVX_DB->CLEAR(array("ALL"));
-																$NVX_DB->SET_FILTER("`page`.`id`={$heir[$a]} AND `page`.`id`!={$PAGE["id"]}");
-																$title = $NVX_DB->QUERY("SELECT","`page`.`title` FROM `page`");
-																if($title){
-																	$rs[$heir[$a]] = array("INTERNAL"=>$heir[$a],"EXTERNAL"=>$title[0]["page.title"]);
-																}
-															} else {
-														
-																$NVX_DB->CLEAR(array("ALL"));
-																$NVX_DB->SET_FILTER("`page`.`id`={$possible["heirarchy.nid"]} AND `page`.`id`!={$PAGE["id"]}");
-																$title = $NVX_DB->QUERY("SELECT","`page`.`title` FROM `page`");
-																if($title){
-																	$rs[$possible["heirarchy.nid"]] = array("INTERNAL"=>$possible["heirarchy.nid"],"EXTERNAL"=>$title[0]["page.title"]);
-																}
-															}
-														}
-													}
-												}
-																							
-												/* set a flag to check whether the chosen nid actually exists within the heirarchy level */
-												$flag=0;
-												
-												/* run through the heirarchy levels */
-												foreach($rs as $chk){
-												
-													/* does the chosen nid exist in this option */
-													if(array_key_exists($a,$selecteds)){
-																												
-														if($chk["INTERNAL"]==$selecteds[$a]["NID"]){
-															
-															/* switch the flag and exit the loop */
-															$flag = 1;break;
-														}
-													}
-												}
-																							
-												/* if the flag has not been switched, then the nested nid isn't available at this level of the heirarchy, so switch to default */
-												if($flag==0){$selecteds[$a]["NID"]=-1;}
-												
-												if(count($rs)>0){ ?>
-												<div class="blank select huge ten-top">
-													<?php
-													foreach ($rs as $r){
-													if($selecteds[$a]["NID"]==$r["INTERNAL"]){$flg = " selected";} else {$flg="";} ?>
-													<a class='blank huge<?php echo $flg; ?><?php echo " heirarchy-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-{$a}";?>' onclick="select(this,'<?php echo "heirarchy-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-{$a}";?>');return false;"><?php echo $r["EXTERNAL"]; ?></a>
-													<?php } ?>
-												</div>
-												<select class="hide" onchange='<?php echo "heirarchyChange({$PAGE["id"]},this,{$a},{$OUTLINE["max"]});"; ?>' name="<?php echo "heirarchy-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-{$a}";?>" id="<?php echo "heirarchy-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-{$a}";?>">
-													<?php 
-													foreach ($rs as $r){
-													if($selecteds[$a]["NID"]==$r["INTERNAL"]){$flg = " selected";} else {$flg="";} ?>
-													<option<?php echo $flg; ?> value="<?php echo $r["INTERNAL"];?>"></option>
-													<?php } ?>
-												</select>
-												<!--<div class='blank cb ten-space-vert'></div>-->
-												<?php } else {
-													?><!--<div class='blank cb ten-space-vert'></div>--><?php
-												}
-											
-											}
-										
-											/* if the current node reference is -1, then we are done */
-											if($selecteds[$a]["NID"]==-1){break;}
-										}
-									}									
-								}
-							}
-							
-							?></div><?php
-						}
-						
-						
-						
-						/* end the field html */
-						?></div><?php
+			<!-- TYPE ID -->
+			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 pad-b20<?=$visibility;?>'>
+				<label class='col all100 fs13 c-blue pad-b5'>Type Id</label>
+				<input class='col all100 fs14 tb' name='page-tid' id='page-tid' type='text' maxlength='255' value='<?=$TYPE['id'];?>' placeholder='Type Id' readonly tabindex='-1'>
+			</div>
 
-						break;
-					
-					
-					case "filelist":
-						
-						/* start the field html */
-						?>
-						<div class="blank row">
-						<?php
-						
-						/* clear file entries */
-						$f="";
-						
-						/* reset the file count to zero */
-						$fcount = 0;
-						
-						?>
-						<ul class='blank sortable huge fr' id='<?php echo "filelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-list"; ?>'>
-						<?php
-						
-						/* if a maximum number of files wasn't stipulated, fix this at 100 */
-						if($OUTLINE["total"]==0){$OUTLINE["total"]=100;}
-						
-						/* cycle through the values stored */
-						foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
-							
-							/* reset the results variable */
-							$rs="";
-							
-							/* do this iteration have a "name" entry in its array */
-							if(key_exists("name",$VALUES)){
-								
-								/* increment the file count by one */
-								$fcount++;
-								
-								/* have we added fewer than the maximum allowed files */
-								if($fcount<=$OUTLINE["total"]){
-								
-								?><li><?php
-								
-								/* grab the file name */
-								$v = $VALUES["name"];
-								
-								?>
-								<input type='hidden' name='<?php echo "filelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-name";?>' id='<?php echo "filelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-name";?>' value='<?php echo $v;?>' >
-								<?php
-								
-								/* grab the file size */
-								if(key_exists("size",$VALUES)){$v=$VALUES["size"];}else{$v="";}
-															
-								?>
-								<input type='hidden' name='<?php echo "filelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-size";?>' id='<?php echo "filelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-size";?>' value='<?php echo $v;?>' >
-								<?php
-								
-								/* grab the file type */
-								if(key_exists("type",$VALUES)){$v=$VALUES["type"];}else{$v="";}
-								
-								?>
-								<input type='hidden' name='<?php echo "filelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-type";?>' id='<?php echo "filelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-type";?>' value='<?php echo $v;?>' >
-								<?php
-								
-								/* grab the file description */
-								if(key_exists("desc",$VALUES)){$v=$VALUES["desc"];}else{$v="";}
+			<!-- TYPE REF -->
+			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 lge-pad-r0 pad-b20<?=$visibility;?>'>
+				<label class='col all100 fs13 c-blue pad-b5'>Type Reference</label>
+				<input class='col all100 fs14 tb' name='page-tref' id='page-tref' type='text' maxlength='255' value='<?=$TYPE['name'];?>' placeholder='Type Name' readonly tabindex='-1'>
+			</div>
+		</div>
+		<div class='col sml5 med10 lge15'></div>
+	</section>
 
-								?>
-								<label for='<?php echo "filelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-desc";?>' class='blank whopper ten-bottom'>
-									Description <span class="current-length tt"><?php echo strlen($v);?></span><span class="tt"> of 1024</span>
-									<a title="delete" onclick="deleteListItem(this);"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-delete.png"></a>
-									<a class="download" title="download" target='_blank' href='<?php echo "/settings/resources/files/documents/".$VALUES['name'];?>'><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-download.png"></a>
-									<a class="hand" title="drag and drop"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-grip.png"></a>
-								</label>
-								<input class="blank textbox large fr" name="<?php echo "filelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-desc";?>" id="<?php echo "filelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-desc";?>" type="text" maxlength="1024" value="<?php echo $v;?>">
-								<div class='blank cb ten-space-vert'></div>
-								</li>
-								<?php
-								}
-							}
-						}
-						
-						?>
-						</ul>	
-							
-						<label for="" class="blank fl">
-						<?php echo ucwords($OUTLINE['name']);?><br>
-						<span class="current-length tt"><?php echo $fcount;?></span><span class="tt"> of <?php echo $OUTLINE["total"];?></span>
-						</label>
-						<?php
-						
-						/* based on maximum number files allowed, hide or show the drop zone */
-						if($fcount>=$OUTLINE["total"]){$r="drop hide half";}else{$r="drop half";}
-						
-						/* create a list of mime types to be used by the label title */
-						$tooltip = "";
-						foreach($OUTLINE["filetypes"] as $ft){$tooltip .= ".".substr($ft,strpos($ft,"/")+1)." ";}
-						?>
-						<div class='cb'>
-							<label title='<?php echo round($OUTLINE["size"]/1024);?> Mb ( <?php echo $tooltip;?>)'>Files <span class='tt'>(drag and drop)</span></label>
-							<div class='blank half fr'>
-								<div class="<?php echo $r;?>" id="<?php echo "filelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-drop";?>" data-type="filelist" data-allowed="<?php echo implode(",",$OUTLINE["filetypes"]);?>" data-maxsize="<?php echo round($OUTLINE["size"]/1024);?>" data-maxfiles="<?php echo $OUTLINE["total"];?>" data-nuid="<?php echo $fcount;?>">
-									<div class="blank progressbar-container">
-										<div class="blank progressbar"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<?php
-												
-						/* end the field html */
-						?></div><?php
-						
-						break;
-						
-						
-					case "imagelist":
-						
-						/* start the field html */
-						?>
-						<div class="blank row">
-						<?php
-						
-						/* clear the image entries */
-						$i = "";
-						
-						/* reset the image count */
-						$icount = 0;
-						
-						?>
-						<ul class='blank sortable huge fr' id='<?php echo "imagelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-list"; ?>'>
-						<?php
-						
-						/* if a maximum number of images wasn't stipulated, fix this at 100 */
-						if($OUTLINE["total"]==0){$OUTLINE["total"]=100;}
-						
-						/* cycle through the values stored */
-						foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
-							
-							/* reset the results variable */
-							$rs="";
-							
-							/* do this iteration have a "name" entry in its array */
-							if(key_exists("name",$VALUES)){
-								
-								/* increment the image counter by one */
-								$icount++;
-								
-								/* have we added fewer than the maximum allowed files */
-								if($icount<=$OUTLINE["total"]){
-									
-									?><li><?php
+	<!-- NODE CONTENT -->
+	<section class='col all100'>
+		<div class='col sml5 med10 lge15'></div>
+		<div class='col box sml90 med80 lge70'>
+			<div class='row pad-b20'>
+				<div class='col all100'>
+					<h1 class='pad0 fs20 c-blue'>Node</h1>
+				</div>
+			</div>
 
-									/* grab the image name (convert .png to .webp) */
-									$v = str_replace(".png",".webp",$VALUES["name"]);
-									
-									?>
-									<input type='hidden' name='<?php echo "imagelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-name";?>' id='<?php echo "imagelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-name";?>' value='<?php echo $v;?>' >
-									<?php
+			<!-- PAGE TITLE -->
+			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 pad-b20'>
+				<label class='col all100 fs13 c-blue pad-b5'>Node Id</label>
+				<input name="page-oldtitle" id="page-oldtitle" type="hidden" maxlength="255" value="<?=$PAGE["title"];?>">
+				<input name="page-prefix" id="page-oldprefix" type="hidden" maxlength="2048" value="<?=substr($r['URL'],strpos($r['URL'],'/'),strrpos($r['URL'],'/')-strpos($r['URL'],'/'));?>">
+				<input class='col all100 fs14 tb' name='page-title' id='page-title' type='text' maxlength='255' value='<?=$PAGE['title'];?>' placeholder='Page Title' autofocus>
+			</div>
 
-									/* grab the image description */
-									if(key_exists("desc",$VALUES)){$v=$VALUES["desc"];}else{$v="";}
-									
-									?>
-									<label for='<?php echo "imagelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-desc";?>' class='blank whopper ten-bottom'>
-										Description <span class="current-length tt"><?php echo strlen($v);?></span><span class="tt"> of 1024</span>
-										<a title="delete" onclick="deleteListItem(this);"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-delete.png"></a>
-										<a class="hand" title="drag and drop"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-grip.png"></a>
-										<a class="download" title="download" target='_blank' href='<?php echo "/settings/resources/files/images/cms/".$VALUES['name'].".webp";?>'>
-											<img class="blank fr tiny-thumb" src="<?= "/settings/resources/files/images/cms/".$VALUES['name'].".webp";?>">
-										</a>
-									</label>
-									<input class="blank textbox large fr" name="<?php echo "imagelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-desc";?>" id="<?php echo "imagelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-desc";?>" type="text" maxlength="1024" value="<?php echo $v;?>">
-									<div class='blank cb ten-space-vert'></div>
-									<?php
+			<!-- PAGE HEADING -->
+			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 pad-b20'>
+				<label class='col all100 fs13 c-blue pad-b5'>Heading</label>
+				<input class='col all100 fs14 tb' name='page-heading' id='page-heading' type='text' maxlength='2048' value='<?=$PAGE['heading'];?>' placeholder='Page Heading'>
+			</div>
 
-									/* does this imagelist have the link field enabled */
-									if($OUTLINE["link"]==1){
+			<!-- PAGE TEASER -->
+			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 lge-pad-r0 pad-b20'>
+				<label class='col all100 fs13 c-blue pad-b5'>Teaser</label>
+				<input class='col all100 fs14 tb' name='page-teaser' id='page-teaser' type='text' maxlength='2048' value='<?=$PAGE['teaser'];?>' placeholder='Page Teaser'>
+			</div>
 
-										/* grab the image link */
-										if(key_exists("link",$VALUES)){$v=$VALUES["link"];}else{$v="";}
-										
-										?>
-										<label for='<?php echo "imagelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-link";?>' class='blank fl'>
-											Link <span class="current-length tt"><?php echo strlen($v);?></span><span class="tt"> of 255</span>
-										</label>
-										<input class="blank textbox mini fr" name="<?php echo "imagelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-link";?>" id="<?php echo "imagelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-link";?>" type="text" maxlength="255" value="<?php echo $v;?>">
-										<div class='blank cb ten-space-vert'></div>
-										<?php
-									}
+			<!-- NOTES -->
+			<div class='col all100 pad-b20'>
+				<label class='col all100 fs13 c-blue pad-b5'>Body</label>
+				<div class='col all100'>
+					<textarea class='col all100 fs14 ta ckPrivate' name='page-body' id='page-body' maxlength='16777215'><?=$PAGE["body"];?></textarea>
+				</div>
+			</div>
 
-									/* does this imagelist have an additional field associated with it */
-									if($OUTLINE["extra-type"]!="none"){
+		</div>
+		<div class='col sml5 med10 lge15'></div>
+	</section>
 
-										/* is the additional textarea for plain or html text */
-										if($OUTLINE["extra-type"]=="plain"){$r="plain";$OUTLINE["extra-editor"]="";}else{$r="html";}
+	<?php
+	
+	/* some of the field types require maximum screen width */
+	$full_width_types=array(
+		'datebox',
+		'heirarchy',
+		'imagelist',
+		'filelist',
+		'tagbox'
+	);
 
-										/* grab the extra text */
-										if(key_exists("text",$VALUES)){$v=$VALUES["text"];}else{$v="";}
+	/* cycle through all the groups */
+	foreach($GROUPS as $GROUP){
 
-										?>
-										<label for="<?php echo "imagelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text{$r}";?>" class="blank fl">
-											<?php echo ucwords($OUTLINE['extra-name']);?> 
-											<?php if($OUTLINE['extra-type']=='plain'){ ?><span class="current-length tt"><?php echo strlen($v); ?></span><span class="tt"> of 100000</span> <?php } ?>
-										</label>
-										<div class="blank fl huge"><textarea data-editor="<?php echo $OUTLINE["extra-editor"];?>" class="blank textarea huge <?php echo $OUTLINE["extra-editor"] . " " .$r; ?>" name="<?php echo "imagelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text{$r}";?>" id="<?php echo "imagelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text{$r}";?>" maxlength="100000" ><?php echo $v; ?></textarea></div>
-										<div class='blank cb ten-space-vert'></div>
-										<?php
-										
-									}
-									?></li><?php
-								}
-							}
-						}
-						
-						?>
-						</ul>	
-							
-						<label for="" class="blank fl">
-						<?php echo ucwords($OUTLINE['name']);?><br>
-						<span class="current-length tt"><?php echo $icount;?></span><span class="tt"> of <?php echo $OUTLINE["total"];?></span>
-						</label>
-						<?php
-						
-						/* based on maximum number files allowed, hide or show the drop zone */
-						if($icount>=$OUTLINE["total"]){$r="drop hide half";}else{$r="drop half";}
-						
-						/* create a list of mime types to be used by the label title */
-						$tooltip = ".jpeg .png .gif ";
-						?>
-						<div class='cb'>
-							<label title='<?php echo round($OUTLINE["size"]/1024);?> Mb ( <?php echo $tooltip;?>)'>Images <span class='tt'>(drag and drop)</span></label>
-							<div class='blank half fr'>
-								<div class="<?php echo $r;?>" id="<?php echo "imagelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-drop";?>" data-eeditor="<?php echo $OUTLINE["extra-editor"];?>" data-link="<?php echo $OUTLINE["link"];?>" data-type="imagelist" data-elabel="<?php echo $OUTLINE["extra-name"];?>" data-elanguage="<?php echo $OUTLINE["extra-spellchecker"];?>" data-etype="<?php echo $OUTLINE["extra-type"];?>" data-allowed="image/jpeg,image/png,image/gif" data-maxsize="<?php echo round($OUTLINE["size"]/1024);?>" data-maxfiles="<?php echo $OUTLINE["total"];?>" data-nuid="<?php echo $icount;?>">
-									<div class="blank progressbar-container">
-										<div class="blank progressbar"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<?php
-												
-						/* end the field html */
-						?></div><?php
-						
-						break;						
-				endswitch;
+		/* reset a count of variations found for this group */
+		$VARICNT=0;
+
+		/* is this group associated with this page */
+		if(in_array($PAGE["tid"],$GROUP["assoc"])){
+
+			/* does this page currently NOT have this group within its $PAGE nvids reference */
+			if(!key_exists($GROUP["id"],$NVIDS)){
+
+				/* create an initial reference */
+				$NVIDS[$GROUP["id"]] = "0";
+
 			}
-			
-			
-			/* END VARIATION HTML */
-			
-			?></li><?php
-		}
-		?>
-		
-			</ul>
-			<input type="hidden" class="hide" name="nvid-<?php echo $GROUP["id"];?>" id="nvid-<?php echo $GROUP["id"];?>" value="<?php echo $NVIDS[$GROUP["id"]] ;?>">
-			
-			<?php
-				/* check how many variations are allowed for this group */
-				if($GROUP["variants"] == $VARICNT){$r = " hide";} else {$r = "";}
+
+			/* do field entries NOT exist for this page */
+			if(!key_exists("gid-".$GROUP["id"],$PAGE)){
+
+				/* update the next variant reference */
+				$NVIDS[$GROUP["id"]] = $NVIDS[$GROUP["id"]];
+
+				/* cycle through the group fields */
+				foreach($GROUP["outline"] as $FIELD){
+
+						/* add empty field references for the group variation */
+						$PAGE["gid-".$GROUP["id"]]["vid-".$NVIDS[$GROUP["id"]]]["fid-".$FIELD["fid"]][0]=array();
+				}
+			}	
+
+
+			/* clear the variation html holder */
+			$vhtml = "";
+
+			/* one variation should always be available, so set a variable to hide the variation delete option */
+			if(count($PAGE["gid-".$GROUP["id"]])==1){$vdel=" hide";}else{$vdel="";}
+
+
+			/* does the current user have sufficient privileges to view / edit this group */
+			if(stristr($NVX_USER->FETCH_ENTRY("type"),$GROUP["access"])){
+				$access = "";
+			} else {$access = " hide";}
+
+			/* START BUILDING THE GROUP HTML HERE */
 			?>
-			
-			<a class="add-variation<?=$r;?>" onclick="addVariant(this,<?php echo $GROUP["id"];?>,<?php echo $GROUP["variants"];?>);">NEW VARIATION</a>
-			
-		</div>
-		
-		<?php
+
+			<!-- <?=strtoupper($GROUP['name']);?> CONTENT -->
+			<section class='col all100<?=$access;?>'>
+				<div class='col sml5 med10 lge15'></div>
+				<div class='col box sml90 med80 lge70'>
+					<div class='row pad-b20'>
+						<div class='col all100'>
+							<a onclick='groupCompress(this);' class='pad0 fs20 c-blue'><?=$GROUP['name'];?></a>
+						</div>
+					</div>
+
+					<ul id='group-<?=$GROUP['id'];?>' class='sortable col all100 compressed'>
+						
+						<?php
+						
+						$lc=0;
+						
+						/* cycle through each of the group variations (already in position order) */
+						foreach($PAGE["gid-".$GROUP["id"]] as $VARI=>$FIELD){
+							
+							/* switch the background color */
+							$bc=($lc%2==0)?'b-lblue':'b-vlblue';
+
+							/* grab the numeric variation reference */
+							$VARI = str_replace("vid-","",$VARI);
+
+							/* increment the variations found for this group */
+							$VARICNT++;
+
+							/* START THE VARIATION DEFINITIONS HERE */
+							?>
+							<li class="col all100 variation pad20 <?=$bc;?>" data-vid="<?php echo $VARI; ?>">
+								<div class='col all100 pad-tb10 mar-b25'>
+									<div class='col all70 fs14 pad-r20'>
+										<p class='pad0 grip bw c-white'>&#8597;&nbsp;&nbsp;Drag To Arrange</p>
+									</div>
+									<div class='col all30 fs14 tar'>
+										<a onclick='deleteVariant(this);' class='pad-b0 delete-variant<?=$vdel;?> c-white'>Delete</a>
+									</div>
+								</div>
+								<div class='col all100'>
+									<?php
+
+									/* cycle through the group outlines */
+									foreach($GROUP["outline"] as $OUTLINE){
+										
+										if(in_array($OUTLINE['type'],$full_width_types)){ ?>
+										<div class='col all100'>
+										<?php }
+
+										/* if we don"t have field information for this field within the page/group/variation array */
+										if(!key_exists("fid-".$OUTLINE["fid"],$PAGE["gid-".$GROUP["id"]]["vid-".$VARI])){
+
+											/* add an empty array */
+											$FIELD["fid-".$OUTLINE["fid"]][0]=array();
+										}
+
+										/* include the field type */
+										include($OUTLINE["type"].'.php');	
+										
+										if(in_array($OUTLINE['type'],$full_width_types)){ ?>
+										</div>
+										<?php }
+									}
+
+									?>
+								</div>
+							</li>	
+							<?php
+							$lc++;
+						}
+						?>
+
+					</ul>
+					<input type="hidden" class="hide" name="nvid-<?php echo $GROUP["id"];?>" id="nvid-<?php echo $GROUP["id"];?>" value="<?php echo $NVIDS[$GROUP["id"]] ;?>">
+
+					<?php /* check how many variations are allowed for this group */
+					if($GROUP["variants"] == $VARICNT){$r = " hide";} else {$r = "";} ?>
+
+					<a class="add-variation<?=$r;?> compressed" onclick="addVariant(<?=$PAGE['id'];?>,<?=$PAGE['tid'];?>,this,<?php echo $GROUP["id"];?>,<?php echo $GROUP["variants"];?>);">New Variation</a>
+				</div>
+				<div class='col sml5 med10 lge15'></div>
+			</section>
+			<?php
+		}
 	}
-}
 
-/* -------------------------- SEO --------------------------- */
+	/* -------------------------- SEO --------------------------- */
 
-?>
+	?>
 
-<div class="blank box">
-	<div class="blank header">
-		<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-content.png">
-		<h2 class="blank fl">SEO</h2>
-	</div>
-	
-	<div class="blank row">
-		<label class="blank fl">Search Engine Importance</label>
-		<div class="blank select fr half">
-		<?php
-			if($PAGE["importance"]==0.0){$flg = " selected";} else {$flg="";} ?>
-			<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'page-importance');return false;">0.0 (Not Important)</a>
-			<?php if($PAGE["importance"]==0.1){$flg = " selected";} else {$flg="";} ?>
-			<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'page-importance');return false;">0.1</a>
-			<?php if($PAGE["importance"]==0.2){$flg = " selected";} else {$flg="";} ?>
-			<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'page-importance');return false;">0.2</a>
-			<?php if($PAGE["importance"]==0.3){$flg = " selected";} else {$flg="";} ?>
-			<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'page-importance');return false;">0.3</a>
-			<?php if($PAGE["importance"]==0.4){$flg = " selected";} else {$flg="";} ?>
-			<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'page-importance');return false;">0.4</a>
-			<?php if($PAGE["importance"]==0.5){$flg = " selected";} else {$flg="";} ?>
-			<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'page-importance');return false;">0.5</a>
-			<?php if($PAGE["importance"]==0.6){$flg = " selected";} else {$flg="";} ?>
-			<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'page-importance');return false;">0.6</a>
-			<?php if($PAGE["importance"]==0.7){$flg = " selected";} else {$flg="";} ?>
-			<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'page-importance');return false;">0.7</a>
-			<?php if($PAGE["importance"]==0.8){$flg = " selected";} else {$flg="";} ?>
-			<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'page-importance');return false;">0.8</a>
-			<?php if($PAGE["importance"]==0.9){$flg = " selected";} else {$flg="";} ?>
-			<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'page-importance');return false;">0.9</a>
-			<?php if($PAGE["importance"]==1.0){$flg = " selected";} else {$flg="";} ?>
-			<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'page-importance');return false;">1.0 (Very Important)</a>
+	<!-- SEO CONTENT -->
+	<section class='col all100'>
+		<div class='col sml5 med10 lge15'></div>
+		<div class='col box sml90 med80 lge70'>
+			<div class='row pad-b20'>
+				<div class='col all100'>
+					<h1 class='pad0 fs20 c-blue'>SEO</h1>
+				</div>
+			</div>
+
+			<!-- PAGE IMPORTANCE -->
+			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 pad-b20'>
+				<label class='col all100 fs13 c-blue pad-b5'>Page Importance</label>
+				<select class='col all100 fs14 ss' name='page-importance' id='page-importance' placeholder="Please Select">
+					<option<?php if($PAGE['importance']==0.0){echo ' selected';}?> value='0.0'>0.0 ( Not Important )</option>
+					<option<?php if($PAGE['importance']==0.1){echo ' selected';}?> value='0.1'>0.1</option>
+					<option<?php if($PAGE['importance']==0.2){echo ' selected';}?> value='0.2'>0.2</option>
+					<option<?php if($PAGE['importance']==0.3){echo ' selected';}?> value='0.3'>0.3</option>
+					<option<?php if($PAGE['importance']==0.4){echo ' selected';}?> value='0.4'>0.4</option>
+					<option<?php if($PAGE['importance']==0.5){echo ' selected';}?> value='0.5'>0.5</option>
+					<option<?php if($PAGE['importance']==0.6){echo ' selected';}?> value='0.6'>0.6</option>
+					<option<?php if($PAGE['importance']==0.7){echo ' selected';}?> value='0.7'>0.7</option>
+					<option<?php if($PAGE['importance']==0.8){echo ' selected';}?> value='0.8'>0.8</option>
+					<option<?php if($PAGE['importance']==0.9){echo ' selected';}?> value='0.9'>0.9</option>
+					<option<?php if($PAGE['importance']==1.0){echo ' selected';}?> value='1.0'>1.0 ( Very Important )</option>
+				</select>
+			</div>
+
+			<!-- META DESCRIPTION -->
+			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 pad-b20'>
+				<label class='col all100 fs13 c-blue pad-b5'>Meta Description</label>
+				<input class='col all100 fs14 tb' name="page-description" id="page-description" type="text" maxlength="255" value="<?=$PAGE["description"];?>" placeholder='Short Description'>
+			</div>
 		</div>
-		<select class="hide" name="page-importance" id="page-importance">
-			<?php if($PAGE["importance"]==0.0){$flg = " selected";} else {$flg="";} ?>
-			<option<?php echo $flg; ?> value="0.0"></option>
-			<?php if($PAGE["importance"]==0.1){$flg = " selected";} else {$flg="";} ?>
-			<option<?php echo $flg; ?> value="0.1"></option>
-			<?php if($PAGE["importance"]==0.2){$flg = " selected";} else {$flg="";} ?>
-			<option<?php echo $flg; ?> value="0.2"></option>
-			<?php if($PAGE["importance"]==0.3){$flg = " selected";} else {$flg="";} ?>
-			<option<?php echo $flg; ?> value="0.3"></option>
-			<?php if($PAGE["importance"]==0.4){$flg = " selected";} else {$flg="";} ?>
-			<option<?php echo $flg; ?> value="0.4"></option>
-			<?php if($PAGE["importance"]==0.5){$flg = " selected";} else {$flg="";} ?>
-			<option<?php echo $flg; ?> value="0.5"></option>
-			<?php if($PAGE["importance"]==0.6){$flg = " selected";} else {$flg="";} ?>
-			<option<?php echo $flg; ?> value="0.6"></option>
-			<?php if($PAGE["importance"]==0.7){$flg = " selected";} else {$flg="";} ?>
-			<option<?php echo $flg; ?> value="0.7"></option>
-			<?php if($PAGE["importance"]==0.8){$flg = " selected";} else {$flg="";} ?>
-			<option<?php echo $flg; ?> value="0.8"></option>
-			<?php if($PAGE["importance"]==0.9){$flg = " selected";} else {$flg="";} ?>
-			<option<?php echo $flg; ?> value="0.9"></option>
-			<?php if($PAGE["importance"]==1.0){$flg = " selected";} else {$flg="";} ?>
-			<option<?php echo $flg; ?> value="1.0"></option>
-		</select>
-	</div>
-	
-	<div class="blank row">
-		<label for="page-description" class="blank fl">
-			Search Engine Description<br>
-			<span class="current-length tt"><?php echo strlen($PAGE["description"]);?></span><span class="tt"> of 255</span>
-		</label>
-		<input class="blank textbox mini fr" name="page-description" id="page-description" type="text" maxlength="255" value="<?php echo $PAGE["description"];?>">
-	</div>
-	
-</div>
+		<div class='col sml5 med10 lge15'></div>
+	</section>
 
-<?php
+	<?php
 
-/* -------------------------- PUBLISHING --------------------------- */
+	/* -------------------------- PUBLISHING --------------------------- */
 
-?>
+	?>
 
-<div class="blank box">
-	<div class="blank header">
-		<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-content.png">
-		<h2 class="blank fl">PUBLISHING</h2>
-	</div>
-	
-	<div class='blank row'>
-		<label class='blank fl'>Created</label>
-		<input class="blank textbox mini fr" name="page-date" id="page-date" type="datetime-local" value="<?php echo str_replace(" ","T",$PAGE["date"]) . ".00";?>">
-	</div>
-	
-	<div class='blank row<?=$create;?>'>
-		<label class="blank fl">Auto Publish</label>
-		<div class="blank select fr half">
-		<?php
-			if($PAGE["sttp"]==0){$flg = " selected";} else {$flg="";} ?>
-			<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'page-sttp');return false;">No</a>
-			<?php if($PAGE["sttp"]==1){$flg = " selected";} else {$flg="";} ?>
-			<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'page-sttp');return false;">Yes</a>
+	<!-- PUBLISHING -->
+	<section class='col all100'>
+		<div class='col sml5 med10 lge15'></div>
+		<div class='col box sml90 med80 lge70'>
+			<div class='row pad-b20'>
+				<div class='col all100'>
+					<h1 class='pad0 fs20 c-blue pad-b10'>Publishing</h1>
+						<!-- INFORMATION -->
+						<?php
+						/* grab user who last modified this page */
+						$NVX_DB->CLEAR(array("ALL"));
+						$NVX_DB->SET_FILTER("`user`.`id`={$PAGE['by']}");
+						$NVX_DB->SET_LIMIT(1);
+						$by = $NVX_BOOT->CYPHER(array("STRING"=>$NVX_DB->QUERY("SELECT","`user`.`contact` FROM `user`")[0]["user.contact"],"TYPE"=>'decrypt'));
+						?>
+						<div class='col all100'>
+							<label class='col all100 fs13 c-blue pad-b5'>Last modified <?=date('d-m-Y H:i',strtotime($PAGE["modified"]));?> by <?=$by;?></label>
+						</div>
+				</div>
+			</div>
+
+			<!-- AUTO PUBLISH -->
+			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 pad-b20<?=$create;?>'>
+				<label class='col all100 fs13 c-blue pad-b5'>Auto Publish</label>
+				<select class='col all100 fs14 ss' name='page-sttp' id='page-sttp' placeholder="Please Select" onchange="$('#page-ttp-wrapper').toggleClass('hide');">
+					<option<?php if($PAGE['sttp']==0){echo ' selected';}?> value='0'>No</option>
+					<option<?php if($PAGE['sttp']==1){echo ' selected';}?> value='1'>Yes</option>
+				</select>
+			</div>
+
+			<!-- PUBLISH DATE -->
+			<?php if($PAGE["sttp"]==0){$visibility=" hide";}else{$visibility="";} ?>
+			<div id='page-ttp-wrapper' class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 pad-b20<?=$create;?><?=$visibility;?>'>
+				<label class='col all100 fs13 c-blue pad-b5'>Publish Date</label>
+				<input class='col all100 fs14 tb' name="page-ttp" id="page-ttp" type="datetime-local" value="<?=str_replace(" ","T",$PAGE["ttp"]) . ".00";?>">
+			</div>
+
+			<div class='col all100'></div>
+
+			<!-- AUTO CLOSE -->
+			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 pad-b20<?=$create;?>'>
+				<label class='col all100 fs13 c-blue pad-b5'>Auto Close</label>
+				<select class='col all100 fs14 ss' name='page-sttc' id='page-sttc' placeholder="Please Select" onchange="$('#page-ttc-wrapper').toggleClass('hide');">
+					<option<?php if($PAGE['sttc']==0){echo ' selected';}?> value='0'>No</option>
+					<option<?php if($PAGE['sttc']==1){echo ' selected';}?> value='1'>Yes</option>
+				</select>
+			</div>
+
+			<!-- CLOSE DATE -->
+			<?php if($PAGE["sttc"]==0){$visibility=" hide";}else{$visibility="";} ?>
+			<div id='page-ttc-wrapper' class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 pad-b20<?=$create;?><?=$visibility;?>'>
+				<label class='col all100 fs13 c-blue pad-b5'>Close Date</label>
+				<input class='col all100 fs14 tb' name="page-ttc" id="page-ttc" type="datetime-local" value="<?=str_replace(" ","T",$PAGE["ttc"]) . ".00";?>">
+			</div>
+
+			<div class='col all100'></div>
+			
+			<!-- CREATED DATE -->
+			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 pad-b20'>
+				<label class='col all100 fs13 c-blue pad-b5'>Created</label>
+				<input class='col all100 fs14 tb' name="page-date" id="page-date" type="datetime-local" value="<?=str_replace(" ","T",$PAGE["date"]) . ".00";?>">
+			</div>
+
+
+			<!-- PUBLISH -->
+			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 pad-b20<?=$create;?>'>
+				<label class='col all100 fs13 c-blue pad-b5'>Publish</label>
+				<select class='col all100 fs14 ss' name='page-published' id='page-published' placeholder="Please Select">
+					<option<?php if($PAGE['published']==0){echo ' selected';}?> value='0'>No</option>
+					<option<?php if($PAGE['published']==1){echo ' selected';}?> value='1'>Yes</option>
+				</select>
+			</div>
+
+			<!-- SAVE -->
+			<div class='col all100 hide'>
+				<input type='submit' name='submit' id='submit' value="submit">
+			</div>
+
 		</div>
-		<select class="hide" name="page-sttp" id="page-sttp" onchange="$('#page-ttp').toggle();">
-			<?php if($PAGE["sttp"]==0){$flg = " selected";} else {$flg="";} ?>
-			<option<?php echo $flg; ?> value="0"></option>
-			<?php if($PAGE["sttp"]==1){$flg = " selected";} else {$flg="";} ?>
-			<option<?php echo $flg; ?> value="1"></option>
-		</select>
-	
-		<?php if($PAGE["sttp"]==0){$visibility=" hide";}else{$visibility="";} ?>
-		<div class='blank cb ten-space-vert'></div>
-		<input class="blank textbox mini fr<?php echo $visibility;?>" name="page-ttp" id="page-ttp" type="datetime-local" value="<?php echo str_replace(" ","T",$PAGE["ttp"]) . ".00";?>">
-	</div>
-	
-	<div class='blank row<?=$create;?>'>
-		<label class="blank fl">Auto Close</label>
-		<div class="blank select fr half">
-		<?php
-			if($PAGE["sttc"]==0){$flg = " selected";} else {$flg="";} ?>
-			<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'page-sttc');return false;">No</a>
-			<?php if($PAGE["sttc"]==1){$flg = " selected";} else {$flg="";} ?>
-			<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'page-sttc');return false;">Yes</a>
-		</div>
-		<select class="hide" name="page-sttc" id="page-sttc" onchange="$('#page-ttc').toggle();">
-			<?php if($PAGE["sttc"]==0){$flg = " selected";} else {$flg="";} ?>
-			<option<?php echo $flg; ?> value="0"></option>
-			<?php if($PAGE["sttc"]==1){$flg = " selected";} else {$flg="";} ?>
-			<option<?php echo $flg; ?> value="1"></option>
-		</select>
-	
-		<?php if($PAGE["sttc"]==0){$visibility=" hide";}else{$visibility="";} ?>
-		<div class='blank cb ten-space-vert'></div>
-		<input class="blank textbox mini fr<?php echo $visibility;?>" name="page-ttc" id="page-ttc" type="datetime-local" value="<?php echo str_replace(" ","T",$PAGE["ttc"]) . ".00";?>">
-	</div>
-
-	<div class='blank row<?=$create;?>'>
-		<label class="blank fl">Publish</label>
-		<div class="blank select fr half">
-		<?php
-			if($PAGE["published"]==0){$flg = " selected";} else {$flg="";} ?>
-			<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'page-published');return false;">No</a>
-			<?php if($PAGE["published"]==1){$flg = " selected";} else {$flg="";} ?>
-			<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'page-published');return false;">Yes</a>
-		</div>
-		<select class="hide" name="page-published" id="page-published">
-			<?php if($PAGE["published"]==0){$flg = " selected";} else {$flg="";} ?>
-			<option<?php echo $flg; ?> value="0"></option>
-			<?php if($PAGE["published"]==1){$flg = " selected";} else {$flg="";} ?>
-			<option<?php echo $flg; ?> value="1"></option>
-		</select>
-	</div>
-	
-	<div class="blank row">
-		<?php
-		/* grab user who last modified this page */
-		$NVX_DB->CLEAR(array("ALL"));
-		$NVX_DB->SET_FILTER("`user`.`id`={$PAGE['by']}");
-		$NVX_DB->SET_LIMIT(1);
-		$by = $NVX_BOOT->CYPHER(array("STRING"=>$NVX_DB->QUERY("SELECT","`user`.`contact` FROM `user`")[0]["user.contact"],"TYPE"=>'decrypt'));
-		?>
-		<label class="blank fl huge">Last modified <span class="tt"><?php echo date('d-m-Y H:i',strtotime($PAGE["modified"]));?></span> By <span class="tt"><?php echo $by;?></span></label>
-		<input type="hidden" name="page-by" id="page-by" value="<?php echo $PAGE["by"];?>">
-	</div>
-	<div><input type="submit" class="hide" name="submit" id="submit" value="submit"></div>
-</div>
+		<div class='col sml5 med10 lge15'></div>
+	</section>
 </form>

@@ -12,8 +12,7 @@
  * returns site content listing
  */
 
-/* set type array counter */
-$a=-1;
+$opts=array();
 
 /* cycle through the content types */
 foreach($NVX_TYPE->FETCH_ARRAY() as $type){
@@ -21,265 +20,138 @@ foreach($NVX_TYPE->FETCH_ARRAY() as $type){
 	/* check permissions to see the current page type */
 	if(stristr($NVX_USER->FETCH_ENTRY("type"),$type["view"])){
 		
-		/* increment the type counter */
-		$a++;
-		
-		/* add to the page-type dropdown */
-		$options[$a]=array("INTERNAL"=>$a,"EXTERNAL"=>$type["name"]);
-		
-		/* if current user type is allowed to create delete this page */
-		if(stristr($NVX_USER->FETCH_ENTRY("type"),$type["createdelete"])){
-			
-			/* flag true in create array */
-			$create[$a]=1;
-		} else {
-			
-			/* flag false in create array */
-			$create[$a]=0;
-		}
-		
-		/* test whether the current user is a member of a dept allowed to edit these pages */
-		if($NVX_DEPT->GRANTED($NVX_USER->FETCH_ARRAY()['dept'],$type['id'])){
-			$dept[$a]=1;
-		} else {
-			$dept[$a]=0;
-		}
-		
-		/* create a list of all pages for that content type */
 		$NVX_DB->CLEAR(array("ALL"));
 		$NVX_DB->SET_FILTER("`page`.`tid`={$type['id']}");
 		$NVX_DB->SET_ORDER(array("`page`.`title`"=>"ASC"));
-		$pages[$a] = $NVX_DB->QUERY("SELECT","* FROM `page`");
+		$pages = $NVX_DB->QUERY("SELECT","`page`.`id`,`page`.`title`,`page`.`alias`,`page`.`modified` FROM `page`");
 		
-		/* make a note of the type prefix */
-		$prefix[$a] = $type["prefix"];
+		$pages = $NVX_BOOT->SORT_BY_KEYS(array(
+			'ARRAY'=>$pages,
+			'SORT'=>array(
+				array('KEYS'=>array('page.title'),'DIRECTION'=>'SORT_ASC')
+			))
+		);
 		
-		/* make a note of the tid */
-		$tid[$a] = $type['id'];
+		$opts[$type['id']]=array(
+			'name'=>$type['name'],
+			'create'=>stristr($NVX_USER->FETCH_ENTRY("type"),$type["createdelete"])?1:0,
+			'dept'=>$NVX_DEPT->GRANTED($NVX_USER->FETCH_ARRAY()['dept'],$type['id'])?1:0,
+			'prefix'=>$type['prefix'],
+			'tid'=>$type['id'],
+			'pages'=>$pages
+		);
 	}
 }
 
 /* grab the "type filter variable" */
 $NVX_DB->CLEAR(array("ALL"));
 $NVX_DB->SET_FILTER("`user`.`id`={$_SESSION['id']}");
-$type_filter = $NVX_DB->QUERY("SELECT","* FROM `user`")[0]["user.filter"];
+$type_filter = $NVX_DB->QUERY("SELECT","`user`.`filter` FROM `user`")[0]["user.filter"];
+
+/* current cms links */
+$links = array(
+	array("link"=>"/settings/redirects/list","txt"=>"301 Redirects"),
+	array("link"=>"/settings/ajaxmanager/list","txt"=>"Ajax"),
+	array("link"=>"/settings/block/list","txt"=>"Blocks"),
+	array("link"=>"/settings/debug/list","txt"=>"Debug"),
+	array("link"=>"/settings/dept/list","txt"=>"Departments"),
+	array("link"=>"/settings/group/list","txt"=>"Groups"),
+	array("link"=>"/settings/imagecache/list","txt"=>"Image Cache"),
+	array("link"=>"/settings/path/list","txt"=>"Paths"),
+	array("link"=>"/settings/recovery/list","txt"=>"Recovery"),
+	array("link"=>"/settings/type/list","txt"=>"Types"),
+	array("link"=>"/settings/user/list","txt"=>"Users"),
+	array("link"=>"/settings/variables/list","txt"=>"Variables")
+);
 
 ?>
 
-<img class="blank" src="/settings/resources/files/images/private/header-top.png" width="714" height="26">
-<div class="blank box" id="header">
-	<img class="blank fl" src="/settings/resources/files/images/public/header-client.png" height="24">
-	<a class="fr" href="/settings/user/logout">LOGOUT</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/">FRONT</a>
-</div>
-
-<?php if($NVX_DEPT->GRANTED($NVX_USER->FETCH_ENTRY('dept'))){ ?>
-<div class="blank box">	
-	<div class="blank header">
-		<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-system.png">
-		<h2 class="blank fl">SYSTEM</h2>
-	</div>
-	
-	<div class="blank row">
-		<label class="blank fl">Options</label>
-		<?php
-			$rs = array(
-				array("link"=>"/settings/redirects/list","txt"=>"301 REDIRECTS"),
-				array("link"=>"/settings/ajaxmanager/list","txt"=>"AJAX"),
-				array("link"=>"/settings/block/list","txt"=>"BLOCKS"),
-				array("link"=>"/settings/debug/list","txt"=>"DEBUG"),
-				array("link"=>"/settings/dept/list","txt"=>"DEPARTMENTS"),
-				array("link"=>"/settings/group/list","txt"=>"GROUPS"),
-				array("link"=>"/settings/imagecache/list","txt"=>"IMAGE CACHE"),
-				array("link"=>"/settings/path/list","txt"=>"PATHS"),
-				array("link"=>"/settings/recovery/list","txt"=>"RECOVERY"),
-				array("link"=>"/settings/type/list","txt"=>"TYPES"),
-				array("link"=>"/settings/user/list","txt"=>"USERS"),
-				array("link"=>"/settings/variables/list","txt"=>"VARIABLES")
-				);
-		?>
-		<div class="blank links fl big">
-			<?php foreach($rs as $r){
-				if($NVX_USER->GRANTED($NVX_PATH->FETCH_ENTRY($r["link"])["access"])){ ?>
-				<a class="blank mini fl" href="<?php echo $r["link"]; ?>"><?php echo $r["txt"];?></a>
-				<?php }
-			} ?>
+<!-- MAIN MENU -->
+<section class='col all100'>
+	<div class='col sml5 med10 lge15'></div>
+	<div class='col box sml90 med80 lge70'>
+		<div class='col all40'>
+			<img height='24' src="/settings/resources/files/images/private/nvoy.svg">
+		</div>
+		<div class='col all60 tar fs14 pad-t5'>
+			<a href='/' class='pad-r5 c-blue pad-b0'>Front</a>
+			<a href='/settings/user/logout' class='pad-l5 c-blue pad-b0'>Logout</a>
 		</div>
 	</div>
-</div>
+	<div class='col sml5 med10 lge15'></div>
+</section>
+
+<!-- SYSTEM -->
+<?php if($NVX_DEPT->GRANTED($NVX_USER->FETCH_ENTRY('dept'))){ ?>
+<section class='col all100'>
+	<div class='col sml5 med10 lge15'></div>
+	<div class='col box sml90 med80 lge70'>
+		<div class='row pad-b20'>
+			<div class='col all100'>
+				<h1 class='pad0 fs20 c-blue'>System</h1>
+			</div>
+		</div>
+		
+		<?php $x=0;foreach($links as $r){
+			if($NVX_USER->GRANTED($NVX_PATH->FETCH_ENTRY($r["link"])["access"])){
+			$r['bc']=($x%2==0)?'b-lblue':'b-vlblue';?>
+			<div class='col all100 med50 lge33 pad10 c-white <?=$r['bc'];?>'>
+				<div class='col all70 fs14 pad-r20'>
+					<p class='pad0 bw'><?=$r['txt'];?></p>
+				</div>
+				<div class='col all30 fs14 tar'>
+					<a href='<?=$r['link'];?>' class='pad-r5 pad-b0 hvr-white'>View</a>
+				</div>
+			</div>
+		<?php $x++;}} ?>
+	</div>
+	<div class='col sml5 med10 lge15'></div>
+</section>
 <?php } ?>
 
-<div class="blank box">
-	<div class="blank header">
-		<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-type.png">
-		<h2 class="blank fl">TYPES</h2>
-	</div>
-	
-	<div class="blank row">
-		<label class="blank fl">Options</label>
-		<div class="blank select fr small">
-			<?php 
-			$a=0;
-			foreach($options as $o){ 
-			?>
-			<a class='blank mini content-list-item<?php if($type_filter==$a){echo " selected";}?>' onclick="select(this,'content-list-types');contentList('<?= $_SESSION["id"];?>');return false;"><?php echo $o["EXTERNAL"];?></a>
-			<?php $a++;} ?>
+<!-- CONTENT -->
+<section class='col all100'>
+	<div class='col sml5 med10 lge15'></div>
+	<div class='col box sml90 med80 lge70'>
+		<div class='row pad-b20'>
+			<div class='col all100'>
+				<h1 class='pad0 fs20 c-blue'>Content</h1>
+			</div>
 		</div>
-		<select class="hide" name="content-list-types" id="content-list-types">
-			<?php
-			$a=0;
-			foreach($options as $o){
-			?>
-			<option value="<?php echo $o["INTERNAL"];?>"<?php if($type_filter==$a){echo " selected";}?>></option>
-			<?php $a++;} ?>
-		</select>
-	</div>
-</div>
-
-<?php
-
-/* output variable */
-$html = "";
-
-/* do we have some page types */
-if(is_array($options)){	
-	
-	for($b=0;$b<=$a-1;$b++){
 		
-		?>
-		<div class="blank box content-list-type" id="content-list-type-<?php echo $b;?>" <?php if($b!=$type_filter){echo " style='display:none'";}?>>
-			<div class="blank header">
-				<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-content.png">
-				<h2 class="blank fl">CONTENT</h2>
-		<?php
+		<!-- PAGE TYPES -->
+		<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 pad-b20'>
+			<label class='col all100 fs13 c-blue pad-b5'>Page Type</label>
+			<select class='col all100 fs14 ss' name='tid' id='tid' placeholder="Please Select" onchange='dropfilter(this,<?= $_SESSION["id"];?>);'>
+				<?php $x=0;foreach($opts as $k=>$v){ ?>
+				<option<?php if($k==$type_filter){echo " selected";}?> value='<?=$k;?>'><?=$v['name'];?></option>
+				<?php } ?>
+			</select>
+		</div>
 		
-		/* is this user allowed to create/delete pages of this type AND are they a member of a dept with access to these pages */
-		if($create[$b]==1 && $dept[$b]==1){
-			
-			?><a class="fr" href="/settings/content/add/<?php echo $tid[$b];?>">ADD</a><?php
-			
-		} ?></div><?php
-		
-		if($pages[$b]!=false){
-			foreach($pages[$b] as $page){
-				
-				/* create a default sselected variable */
-				$sselected = "";
-				
-				/* does the current prefix contain an sselect tag */
-				if(stristr($prefix[$b],"[ss:")){
-										
-					/* grab everything after the start of the sselect tag definition */
-					$r = substr($prefix[$b],strpos($prefix[$b],"[ss:")+4);
-				
-					/* grab everything until the closing of the tag */
-					$r = substr($r,0,strpos($r,"]"));
-					
-					/* convert the gid-vid-fid to an array */
-					$x = explode("-",$r);
-					
-					/* go grab the selected listing */
-					$NVX_DB->CLEAR(array("ALL"));
-					$NVX_DB->SET_FILTER("`sselect`.`nid`={$page["page.id"]} AND `sselect`.`gid`={$x[0]} AND `sselect`.`vid`={$x[1]} AND `sselect`.`fid`={$x[2]}");
-					$NVX_DB->SET_LIMIT(1);
-					$sselected = $NVX_DB->QUERY("SELECT","`sselect`.`values` FROM `sselect`")[0]['sselect.values'];
-					
-					/* grab an array group containing the sselect */
-					$gs = $NVX_GROUP->FETCH_ARRAY()["id-{$x[0]}"]["outline"];
-					
-					/* cycle through the group */
-					foreach ($gs as $g){
-						
-						/* have we found the right group */
-						if($g["fid"]==$x[2]){
-							
-							/* cycle through the options */
-							foreach($g["content"] as $option){
-								
-								/* if this option holds the same internal value as the current page */
-								if($sselected == $option){
+		<?php foreach($opts as $k=>$v){
+			$hide=($k==$type_filter)?'':' hide';
+			$x=0;
+			if($v['pages']){
+				foreach($v['pages'] as $r){
+					$r['bc']=($x%2==0)?'b-lblue':'b-vlblue';
+					?>
 
-									/* grab the external reference */
-									$sselected = $option;break;
-								}
-								
-							}
-						}
-					}
-					
+					<div class='dropfilter filter-<?=$k;?> row pad10 c-white <?=$r['bc'];?><?=$hide;?>'>
+						<div class='col all70 pad-r20'>
+							<p class='pad0 fs14 bw'><?=$r['page.title'];?></p>
+							<p class='pad0 fs12 bw'><?=$r['page.modified'];?></p>
+						</div>
+						<div class='col all30 fs14 tar'>
+							<a href='/settings/content/edit/<?=$r['page.id'];?>' class='pad-r5 pad-b0 hvr-white'>Edit</a>
+							<a href='/settings/content/delete/<?=$r['page.id'];?>' class='pad-l5 pad-b0 hvr-white'>Delete</a>
+						</div>
+					</div>
+					<?php $x++;
 				}
-				
-				/* create a default mselected variable */
-				$mselected = "";
-				
-				/* does the current prefix contain an mselect tag */
-				if(stristr($prefix[$b],"[ms:")){
-										
-					/* grab everything after the start of the mselect tag definition */
-					$r = substr($prefix[$b],strpos($prefix[$b],"[ms:")+4);
-				
-					/* grab everything until the closing of the tag */
-					$r = substr($r,0,strpos($r,"]"));
-					
-					/* convert the gid-vid-fid to an array */
-					$x = explode("-",$r);
-										
-					/* go grab the selected listing */
-					$NVX_DB->CLEAR(array("ALL"));
-					$NVX_DB->SET_FILTER("`mselect`.`nid`={$page["page.id"]} AND `mselect`.`gid`={$x[0]} AND `mselect`.`vid`={$x[1]} AND `mselect`.`fid`={$x[2]}");
-					$NVX_DB->SET_LIMIT(1);
-					$mselected = $NVX_DB->QUERY("SELECT","`mselect`.`values` FROM `mselect`")[0]['mselect.values'];
-										
-					/* grab an array group containing the mselect */
-					$gs = $NVX_GROUP->FETCH_ARRAY()["id-{$x[0]}"]["outline"];
-					
-					/* cycle through the group */
-					foreach ($gs as $g){
-						
-						/* have we found the right group */
-						if($g["fid"]==$x[2]){
-							
-							/* cycle through the options */
-							foreach($g["content"] as $option){
-								
-								/* cycle through the selected mselect options */
-								foreach($NVX_BOOT->JSON($mselected,"decode") as $mselect){
-									
-									/* if this option holds the same internal value as the current page */
-									if($mselect == $option){
-
-										/* grab the external reference (this will always return the first selected mselect option) */
-										$mselected = $option;break;										
-									}
-								}								
-							}
-						}
-					}
-				}
-								
-				/* build the URL including any TYPE prefix and TAG substitution and converting front page to empty alias */
-				$r = $NVX_HTML->URL_BY_NID(array("NID"=>$page["page.id"],
-												"PREFIX"=>$prefix[$b],
-												"ALIAS"=>$page["page.alias"],
-												"TITLE"=>$page["page.title"],
-												"HEADING"=>$page["page.heading"],
-												"TAGS"=>array("CREATED"=>$page["page.date"],
-																"NODE"=>$page["page.id"],
-																"SSELECT"=>$sselected,
-																"MSELECT"=>$mselected)
-												));
-				?>
-			
-				<div class="blank row">
-					<label class="blank fl half"><a href="https://<?php echo $r["URL"];?>"><?php echo ucwords($r["TITLE"]);?></a></label>
-					<?php if($dept[$b]==1){ ?>
-					<a title="edit" href="<?php echo "/settings/content/edit/".$page["page.id"];?>"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-edit.png"></a>
-					<?php if($create[$b]==1){ ?>
-					<a title="delete" href="<?php echo "/settings/content/delete/".$page["page.id"];?>"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-delete.png"></a>
-					<?php }} ?>
-				</div>
-			
-				<?php
 			}
-		}?></div><?php					
-	}
-}
+		}
+		?>
+	</div>
+	<div class='col sml5 med10 lge15'></div>
+</section>
