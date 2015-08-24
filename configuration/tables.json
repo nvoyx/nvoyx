@@ -1492,7 +1492,7 @@
 					{
 						"name":"'jsprivate'",
 						"notes":"'<p>references to any javascript files used on the public pages</p>'",
-						"value":"'[\"jquery-2.1.1.min.js\",\"jquery-ui-1.10.2.custom.min.js\",\"jquery.ui.touch-punch.min.js\",\"ckbase.js\",\"../ckeditor/ckeditor.js\",\"../ckeditor/adapters/jquery.js\",\"jquery.filedrop.js\",\"notifIt.js\",\"jquery.multiple.select.js\",\"public.js\"]'"
+						"value":"'[\"jquery-2.1.1.min.js\",\"jquery-ui-1.10.2.custom.min.js\",\"jquery.ui.touch-punch.min.js\",\"ckbase.js\",\"../ckeditor/ckeditor.js\",\"../ckeditor/adapters/jquery.js\",\"jquery.filedrop.js\",\"notifIt.js\",\"jquery.multiple.select.js\",\"private.js\"]'"
 					},
 					{
 						"name":"'live'",
