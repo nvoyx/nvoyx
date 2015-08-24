@@ -20,6 +20,7 @@ $rid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",4);
 
 /* array of tables */
 $dtypes = array(
+	"ajaxbox",
 	"datebox",
 	"filelist",
 	"heirarchy",
