@@ -45,6 +45,7 @@ $zip->open($NVX_BOOT->FETCH_ENTRY("recovery")."/".$tid."/".$nid.".zip");
 
 /* array of tables */
 $dtypes = array(
+	"ajaxbox",
 	"datebox",
 	"filelist",
 	"heirarchy",
