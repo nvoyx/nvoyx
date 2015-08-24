@@ -35,6 +35,7 @@ $VARI = $post['vid'];
 
 /* some of the field types require maximum screen width */
 $full_width_types=array(
+	'ajaxbox',
 	'datebox',
 	'heirarchy',
 	'imagelist',
