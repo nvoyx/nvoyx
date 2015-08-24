@@ -497,28 +497,10 @@ function ckSortable(){
 	});
 }
 
-function contentList(who){
-	$(".content-list-type").hide();
-	$("#content-list-type-" + $("#content-list-types option:selected").val()).show();
-	$.ajax({type: "POST",
-			url: "/settings/ajax/contentfilter",
-			cache: false,
-			data: {user: who,filter: $("#content-list-types option:selected").val()}
-	});
-}
-
 /* we need to cache references to the individual ckeditors */
 var ckStore = {};
 
 $(document).ready(function(){
-	
-	/* content list page-type dropdown */
-	if($('#content-list-types').length > 0) {
-		$("#content-list-types").change(function(){
-			$(".content-list-type").hide();
-			$("#content-list-type-" + $("#content-list-types").val()).show();
-		});
-	}
 
 	/* launch ckEditor by class */
 	if($('.ckPrivate').length > 0){
