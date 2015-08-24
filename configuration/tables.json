@@ -1374,7 +1374,7 @@
 						"TYPE":"INT",
 						"LENGTH":"10",
 						"NULL":"no",
-						"DEFAULT":"0"
+						"DEFAULT":"1"
 					},
 					{
 						"NAME":"date",
