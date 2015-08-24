@@ -55,7 +55,7 @@ $NVX_GROUP->BUILD_ARRAY(false);
 					</div>
 					<div class='col all30 fs14 tar'>
 						<a href='/settings/group/edit/<?=$r['id'];?>' class='pad-r5 pad-b0 hvr-white'>Edit</a>
-						<a href='/settings/group/delete/<?=$r['id'];?>' class='pad-l5 pad-b0 hvr-white'>Delete</a>
+						<a onclick='deleteCheck("/settings/group/delete/<?=$r['id'];?>");' class='pad-l5 pad-b0 hvr-white'>Delete</a>
 						<input type="hidden" name="group-<?=$r["id"];?>" value="<?=$r["position"];?>">
 					</div>
 				</li>

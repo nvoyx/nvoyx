@@ -6,6 +6,19 @@
  *
  */
 
+function deleteGo(url){
+	window.location.href = url;
+}
+
+function deleteCheck(url){
+	notif({
+		msg: "Are you sure?&nbsp;&nbsp;<a onclick='deleteGo(\""+url+"\")' class='c-white'>yes</a>&nbsp;&nbsp;<a class='c-white' onclick='return false;'>no</a>",
+		type: "info",
+		position: "center",
+		autohide: 0
+	});
+}
+
 // NEW dropdown filter
 function dropfilter(obj,who){
 	var filter = $(obj).val();

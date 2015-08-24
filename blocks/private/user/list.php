@@ -55,7 +55,7 @@ $users = $NVX_DB->QUERY("SELECT","* FROM `user`");
 				<div class='col all30 fs14 tar'>
 					<?php if($r['user.type']!='s' || $NVX_USER->GRANTED('s')){ ?>
 					<a href='/settings/user/edit/<?=$r['user.id'];?>' class='pad-r5 pad-b0 hvr-white'>Edit</a>
-					<a href='/settings/user/delete/<?=$r['user.id'];?>' class='pad-l5 pad-b0 hvr-white'>Delete</a>
+					<a onclick='deleteCheck("/settings/user/delete/<?=$r['user.id'];?>");' class='pad-l5 pad-b0 hvr-white'>Delete</a>
 					<?php } ?>
 				</div>
 			</div>

@@ -144,7 +144,7 @@ $links = array(
 						</div>
 						<div class='col all30 fs14 tar'>
 							<a href='/settings/content/edit/<?=$r['page.id'];?>' class='pad-r5 pad-b0 hvr-white'>Edit</a>
-							<a href='/settings/content/delete/<?=$r['page.id'];?>' class='pad-l5 pad-b0 hvr-white'>Delete</a>
+							<a onclick='deleteCheck("/settings/content/delete/<?=$r['page.id'];?>");' class='pad-l5 pad-b0 hvr-white'>Delete</a>
 						</div>
 					</div>
 					<?php $x++;

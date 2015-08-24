@@ -153,7 +153,7 @@ $r = $NVX_HTML->URL(array("NID"=>$PAGE["id"],
 				<div class='col all80 sml100 tar sml-tal fs14 lh30'>
 					<a href='/settings/content/add/<?=$PAGE['tid'];?>' class='pad-r5 c-blue pad-b0'>New</a>
 					<a href='/settings/content/list' class='pad-lr5 c-blue pad-b0'>Up</a>
-					<a href='/settings/content/delete/<?=$PAGE['id'];?>' class='pad-lr5 c-blue pad-b0'>Delete</a>
+					<a onclick="deleteCheck('/settings/content/delete/<?=$PAGE['id'];?>');" class='pad-lr5 c-blue pad-b0'>Delete</a>
 					<a href='/settings/rollback/list/<?=$PAGE['id'];?>' class='pad-lr5 c-blue pad-b0'>Rollback</a>
 					<a onclick="$('#submit').click();" class='pad-lr5 c-blue pad-b0'>Save</a>
 					<a href='//<?=$r['URL'];?>' class='pad-l5 c-blue pad-b0'>View</a>
