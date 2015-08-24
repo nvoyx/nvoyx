@@ -13,25 +13,46 @@
  */
 ?>
 
-<img class="blank" src="/settings/resources/files/images/private/header-top.png" width="714" height="26">
-<div class="blank box" id="header">
-	<img class="blank fl" src="/settings/resources/files/images/public/header-client.png" height="24">
-	<a class="fr" href="/settings/user/logout">LOGOUT</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/settings/content/list">ADMIN</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/">FRONT</a>
-</div>
+<!-- MAIN MENU -->
+<section class='col all100'>
+	<div class='col sml5 med10 lge15'></div>
+	<div class='col box sml90 med80 lge70'>
+		<div class='col all40'>
+			<img height='24' src="/settings/resources/files/images/private/nvoy.svg">
+		</div>
+		<div class='col all60 tar fs14 pad-t5'>
+			<a href='/settings/content/list' class='pad-r5 c-blue pad-b0'>Admin</a>
+			<a href='/' class='pad-lr5 c-blue pad-b0'>Front</a>
+			<a href='/settings/user/logout' class='pad-l5 c-blue pad-b0'>Logout</a>
+		</div>
+	</div>
+	<div class='col sml5 med10 lge15'></div>
+</section>
 
-<div class="blank box">
-	<div class="blank header">
-		<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-variables.png">
-		<h2 class="blank fl">VARIABLES</h2>
-		<a class="fr" href="/settings/variables/add">ADD</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/settings/content/list">UP</a>
+<!-- VARIABLE LISTINGS -->
+<section class='col all100'>
+	<div class='col sml5 med10 lge15'></div>
+	<div class='col box sml90 med80 lge70'>
+		<div class='row pad-b20'>
+			<div class='col all70 pad-r20'>
+				<h1 class='pad0 fs20 c-blue'>Variables</h1>
+			</div>
+			<div class='col all30 tar fs14 lh30'>
+				<a href='/settings/variables/add' class='c-blue pad-b0'>Add</a>
+			</div>
+		</div>
+		<?php $x=0;foreach($NVX_VAR->FETCH_ARRAY() as $r){
+			$r['bc']=($x%2==0)?'b-lblue':'b-vlblue';?>
+			<div class='row pad10 c-white <?=$r['bc'];?>'>
+				<div class='col all70 fs14 pad-r20'>
+					<p class='pad0 bw'><?=$r['name'];?></p>
+				</div>
+				<div class='col all30 fs14 tar'>
+					<a href='/settings/variables/edit/<?=$r['id'];?>' class='pad-r5 pad-b0 hvr-white'>Edit</a>
+					<a href='/settings/variables/delete/<?=$r['id'];?>' class='pad-l5 pad-b0 hvr-white'>Delete</a>
+				</div>
+			</div>
+		<?php $x++;} ?>
 	</div>
-	
-	<?php /* cycle through the variables*/ foreach($NVX_VAR->FETCH_ARRAY() as $variable){ ?>
-	<div class="blank row">
-		<label class="blank fl half"><?php echo ucwords($variable["name"]);?></label>
-		<a title="edit" href="<?php echo "/settings/variables/edit/".$variable["id"];?>"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-edit.png"></a>
-		<a title="delete" href="<?php echo "/settings/variables/delete/".$variable["id"];?>"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-delete.png"></a>
-	</div>
-	<?php } ?>
-	
-</div>
+	<div class='col sml5 med10 lge15'></div>
+</section>

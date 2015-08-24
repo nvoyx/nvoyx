@@ -133,7 +133,7 @@ if(is_array($files)){
 
 <img class="blank" src="/settings/resources/files/images/private/header-top.png" width="714" height="26">
 <div class="blank box" id="header">
-	<img class="blank fl" src="/settings/resources/files/images/public/header-client.png" height="24">
+	<img height='24' src="/settings/resources/files/images/private/nvoy.svg">
 	<a class="fr" href="/settings/user/logout">LOGOUT</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/settings/content/list">ADMIN</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/">FRONT</a>
 </div>
 

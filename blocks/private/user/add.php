@@ -17,7 +17,7 @@ $NVX_DB->CLEAR(array("ALL"));
 $date = date('Y-m-d',$NVX_BOOT->FETCH_ENTRY("timestamp"));
 $pid = $NVX_DB->QUERY("INSERT","INTO `user` (`id`,`username`,`password`,`type`,`filter`,`dept`,`date`,`last`) " . 
 							"VALUES (NULL,'{$NVX_BOOT->CYPHER(array("TYPE"=>"encrypt","STRING"=>$NVX_BOOT->FETCH_ENTRY("timestamp")))}',".
-											"'{$NVX_BOOT->CYPHER(array("TYPE"=>"encrypt","STRING"=>$NVX_BOOT->FETCH_ENTRY("timestamp")))}','a',0,1,'{$date}','0000-00-00 00:00:00')");
+											"'{$NVX_BOOT->CYPHER(array("TYPE"=>"encrypt","STRING"=>$NVX_BOOT->FETCH_ENTRY("timestamp")))}','a',1,1,'{$date}','0000-00-00 00:00:00')");
 
 /* issue a notification */
 $_SESSION['notify']=array(
