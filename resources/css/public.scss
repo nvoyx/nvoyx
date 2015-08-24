@@ -154,14 +154,15 @@
 	
 /* *** SHARED CSS (FIXED) *** */
 
-	#admin {position:fixed;top:0;left:25%;z-index:999;width:50%;margin:20px auto;padding:10px;background:#fff;color:#425770;border:#dedede 1px solid;opacity:0.9;}
+	#admin {position:fixed;top:0;left:0;z-index:998;width:100%;padding:10px;background:#fff;color:#425770;border-bottom:#dedede 1px solid;}
 
-	#admin-nav {padding:10px;background-color:#f8f8f8;font-size:16px;color:#425770;line-height:24px;text-align:right;border:#dedede 1px solid;}
+	#admin-nav {background-color:#f8f8f8;color:#425770;border:#dedede 1px solid;}
 
-	#admin-nav img {cursor:move;}
-
-	#admin-nav a {font-size:16px;color:#425770;line-height:24px;font-weight:normal;font-family:($FF-ADMIN);}
+	#admin-nav a {color:#425770;font-family:($FF-ADMIN);}
 	
+	#admin-button {
+		position:fixed;bottom:20px;right:20px;width:30px;z-index:999;
+	}	
 	
 	:focus, a:focus, input:focus {outline:none;}
 	

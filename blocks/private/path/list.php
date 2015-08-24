@@ -49,7 +49,7 @@
 			</div>
 			<div class='col all30 fs14 tar'>
 				<a href='/settings/path/edit/<?=$r['id'];?>' class='pad-r5 pad-b0 hvr-white'>Edit</a>
-				<a href='/settings/path/delete/<?=$r['id'];?>' class='pad-l5 pad-b0 hvr-white'>Delete</a>
+				<a onclick='deleteCheck("/settings/path/delete/<?=$r['id'];?>");' class='pad-l5 pad-b0 hvr-white'>Delete</a>
 			</div>
 		</div>
 		<?php $x++;} ?>

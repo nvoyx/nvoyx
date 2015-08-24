@@ -54,7 +54,7 @@ $imagecaches = $NVX_DB->QUERY("SELECT","* FROM `imagecache`");
 			</div>
 			<div class='col all30 fs14 tar'>
 				<a href='/settings/imagecache/edit/<?=$r['imagecache.id'];?>' class='pad-r5 pad-b0 hvr-white'>Edit</a>
-				<a href='/settings/imagcache/delete/<?=$r['imagecache.id'];?>' class='pad-l5 pad-b0 hvr-white'>Delete</a>
+				<a onclick='deleteCheck("/settings/imagcache/delete/<?=$r['imagecache.id'];?>");' class='pad-l5 pad-b0 hvr-white'>Delete</a>
 			</div>
 		</div>
 		<?php $x++;}} ?>

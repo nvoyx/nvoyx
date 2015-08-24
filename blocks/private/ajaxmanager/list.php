@@ -63,7 +63,7 @@ foreach ($files as $file) {
 			</div>
 			<div class='col all30 fs14 tar'>
 				<a href='/settings/ajaxmanager/edit/<?=$r['id'];?>' class='pad-r5 pad-b0 hvr-white'>Edit</a>
-				<a href='/settings/ajaxmanager/delete/<?=$r['id'];?>' class='pad-l5 pad-b0 hvr-white'>Delete</a>
+				<a onclick='deleteCheck("/settings/ajaxmanager/delete/<?=$r['id'];?>");' class='pad-l5 pad-b0 hvr-white'>Delete</a>
 			</div>
 		</div>
 		<?php } ?>

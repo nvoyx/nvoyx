@@ -51,7 +51,7 @@ $departments = $NVX_DB->QUERY("SELECT","* FROM `dept`");
 			<div class='col all30 fs14 tar'>
 				<?php if($x>0){ ?>
 				<a href='/settings/dept/edit/<?=$r['dept.id'];?>' class='pad-r5 pad-b0 hvr-white'>Edit</a>
-				<a href='/settings/dept/delete/<?=$r['dept.id'];?>' class='pad-l5 pad-b0 hvr-white'>Delete</a>
+				<a onclick='deleteCheck("/settings/dept/delete/<?=$r['dept.id'];?>");' class='pad-l5 pad-b0 hvr-white'>Delete</a>
 				<?php } ?>
 			</div>
 		</div>
