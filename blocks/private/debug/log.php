@@ -74,7 +74,7 @@ if(file_exists($NVX_BOOT->FETCH_ENTRY("log")."/error.log")){
 			<div class='col sml5 med10 lge15'></div>
 			<div class='col box sml90 med80 lge70'>
 				<div class='col all40'>
-					<img height='24' src="/settings/resources/files/images/public/header-client.png">
+					<img height='24' src="/settings/resources/files/images/private/nvoy.svg">
 				</div>
 				<div class='col all60 tar fs14 pad-t5'>
 					<a href='/settings/content/list' class='pad-r5 c-blue pad-b0'>Admin</a>
