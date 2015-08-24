@@ -26,7 +26,7 @@ if(array_key_exists("parents",$_POST)){
 	
 	/* decode the json array of nids */
 	$nids = $NVX_BOOT->JSON($_POST["parents"],"decode");
-	
+		
 	/* was this a valid json array */
 	if(is_array($nids)){
 	

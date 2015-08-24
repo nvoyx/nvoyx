@@ -101,71 +101,78 @@ foreach($type as $t){
 
 ?>
 
-
-<img class="blank" src="/settings/resources/files/images/private/header-top.png" width="714" height="26">
-<div class="blank box" id="header">
-	<img class="blank fl" src="/settings/resources/files/images/public/header-client.png" height="24">
-	<a class="fr" href="/settings/user/logout">LOGOUT</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/settings/content/list">ADMIN</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/">FRONT</a>
-</div>
-
-<div class="blank box">
-	<div class="blank header">
-		<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-recovery.png">
-		<h2 class="blank fl">RECOVERY</h2>
-		<a class="fr" href="/settings/content/list">UP</a>
-	</div>
-</div>
-
-<div class="blank box">
-	<div class="blank header">
-		<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-type.png">
-		<h2 class="blank fl">TYPES</h2>
-	</div>
-	
-	<div class="blank row">
-		<label class="blank fl">Options</label>
-		<div class="blank select fr small">
-			<?php foreach($type as $tkey=>$tval){ ?>
-			<a class='blank mini content-list-item<?php if($tval==$tfilter){echo " selected";}?>' onclick="select(this,'content-list-types');return false;"><?=$tkey;?></a>
-			<?php } ?>
+<!-- MAIN MENU -->
+<section class='col all100'>
+	<div class='col sml5 med10 lge15'></div>
+	<div class='col box sml90 med80 lge70'>
+		<div class='col all40'>
+			<img height='24' src="/settings/resources/files/images/private/nvoy.svg">
 		</div>
-		<select class="hide" name="content-list-types" id="content-list-types">
-			<?php foreach($type as $tval){ ?>
-			<option value="<?=$tval;?>"<?php if($tval==$tfilter){echo " selected";}?>></option>
-			<?php } ?>
-		</select>
+		<div class='col all60 tar fs14 pad-t5'>
+			<a href='/settings/content/list' class='pad-r5 c-blue pad-b0'>Admin</a>
+			<a href='/' class='pad-lr5 c-blue pad-b0'>Front</a>
+			<a href='/settings/user/logout' class='pad-l5 c-blue pad-b0'>Logout</a>
+		</div>
 	</div>
-</div>
+	<div class='col sml5 med10 lge15'></div>
+</section>
 
-<?php $b=0;foreach($type as $t){  ?>
-
-<div class="blank box content-list-type" id="content-list-type-<?=$t;?>" <?php if($t!=$tfilter){ echo "style='display:none'";} ?>>
-	<div class="blank header">
-		<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-content.png">
-		<h2 class="blank fl">DELETED PAGES</h2>
-	</div>
-	
-	<?php
+<!-- RECOVERY TYPES -->
+<section class='col all100'>
+	<div class='col sml5 med10 lge15'></div>
+	<div class='col box sml90 med80 lge70'>
+		<div class='row pad-b20'>
+			<div class='col all100'>
+				<h1 class='pad0 fs20 c-blue'>Recovery</h1>
+			</div>
+		</div>
 		
-	/* do we have a page type reference */
-	if(array_key_exists($t,$pages)){
-			
-		/* do we have at least one page */
-		if(count($pages[$t]) > 0){
-				
-			/* cycle over the deleted pages for this file type */
-			foreach($pages[$t] as $c){ ?>
-					
-				<div class="blank row">
-					<label class="blank fl half"><?=ucwords($c["title"]);?><br><span class="tt"><?=$c["modified"];?> - <?=$c["by"];?></span></label>
-					<a title="restore" href="<?php echo "/settings/recovery/restore/".$t."/".$c["id"];?>"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-edit.png"></a>
-				</div>
+		<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 pad-b20'>
+			<label class='col all100 fs13 c-blue pad-b5'>Page Type</label>
+			<select class='col all100 fs14 ss' name='tid' id='tid' placeholder="Please Select" onchange='dropfilter(this,-1);'>
+				<?php $x=0;foreach($type as $k=>$v){ ?>
+				<option<?php if($v==$tfilter){echo " selected";}?> value='<?=$v;?>'><?=$k;?></option>
+				<?php } ?>
+			</select>
+		</div>
+	</div>
+	<div class='col sml5 med10 lge15'></div>
+</section>
 
-			<?php }
+<!-- DELETED PAGES -->
+<section class='col all100'>
+	<div class='col sml5 med10 lge15'></div>
+	<div class='col box sml90 med80 lge70'>
+		<div class='row pad-b20'>
+			<div class='col all100'>
+				<h1 class='pad0 fs20 c-blue'>Deleted Pages</h1>
+			</div>
+		</div>
+		
+		<?php foreach($type as $k=>$v){
+			$hide=($v==$tfilter)?'':' hide';
+			$x=0;
+			if(array_key_exists($v,$pages)){
+				if(count($pages[$v]) > 0){
+					foreach($pages[$v] as $c){
+						$c['bc']=($x%2==0)?'b-lblue':'b-vlblue';
+						?>
+						
+						<div class='dropfilter filter-<?=$v;?> row pad10 c-white <?=$c['bc'];?><?=$hide;?>'>
+							<div class='col all70 pad-r20'>
+								<p class='pad0 fs14 bw'><?=$c['title'];?></p>
+								<p class='pad0 fs12 bw'><?=$c['modified'];?><br><?=$c['by'];?></p>
+							</div>
+							<div class='col all30 fs14 tar'>
+								<a href='/settings/recovery/restore/<?=$v;?>/<?=$c['id'];?>' class='pad-r5 pad-b0 hvr-white'>Restore</a>
+							</div>
+						</div>
+						<?php $x++;
+					}
+				}
+			}
 		}
-	}
-	?>
-</div>
-
-
-<?php $b++;} ?>
+		?>
+	</div>
+	<div class='col sml5 med10 lge15'></div>
+</section>

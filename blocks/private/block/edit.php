@@ -13,94 +13,94 @@
  */
 
 /* block id */
-$bid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
+$bid = $NVX_BOOT->FETCH_ENTRY('breadcrumb',3);
 
 /* prepare a list of available page types to pass into tid select */
+$opts=array();
 foreach($NVX_TYPE->FETCH_ARRAY() as $type){
-	$o[]=array("INTERNAL"=>$type["id"],"EXTERNAL"=>$type["name"]);
+	$opts[$type['id']]=$type['name'];
 }
 
 /* lookup the block details */
-foreach($NVX_BLOCK->FETCH_ARRAY() as $block){if($block["id"]==$bid){break;}}
+foreach($NVX_BLOCK->FETCH_ARRAY() as $r){
+	if($r['id']==$bid){
+		break;
+	}
+}
 
 /* have we found the block */
-if(isset($block)){ ?>
+if(isset($r)){ ?>
 
-<img class="blank" src="/settings/resources/files/images/private/header-top.png" width="714" height="26">
-<div class="blank box" id="header">
-	<img class="blank fl" src="/settings/resources/files/images/public/header-client.png" height="24">
-	<a class="fr" href="/settings/user/logout">LOGOUT</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/settings/content/list">ADMIN</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/">FRONT</a>
-</div>
-
-<div class="blank box">
-	
-	<div class="blank header">
-		<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-block.png">
-		<h2 class="blank fl">BLOCK</h2>
-		<a class="fr" onclick="$('#submit').click();">SAVE</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/settings/block/list">UP</a>
-	</div>
-	
-	<form method="POST">
-		<div class="blank row">
-			<label for="name" class="blank fl">
-				Name<br>
-				<span class="current-length tt"><?php echo strlen($block["name"]);?></span><span class="tt"> of 255</span>
-			</label>
-			<input class="blank textbox mini fr" name="name" id="name" type="text" maxlength="255" value="<?php echo $block["name"];?>">
-		</div>
-		
-		<div class="blank row">
-			<label class="blank fl">Associations</label>
-			<div class="blank mselect fr small">
-				<?php
-				$rs = $block["tid"];
-				foreach($o as $option){
-					if(in_array($option["INTERNAL"],$rs)){$flg = " selected";} else {$flg="";} ?>
-					<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'tid');return false;"><?php echo $option["EXTERNAL"];?></a>
-				<?php } ?>
+	<!-- MAIN MENU -->
+	<section class='col all100'>
+		<div class='col sml5 med10 lge15'></div>
+		<div class='col box sml90 med80 lge70'>
+			<div class='col all40'>
+				<img height='24' src="/settings/resources/files/images/private/nvoy.svg">
 			</div>
-			<select  class="hide" name="tid[]" id="tid" multiple>
-				<?php
-				foreach($o as $option){
-					if(in_array($option["INTERNAL"],$rs)){$flg = " selected";} else {$flg="";} ?>
-					<option value="<?php echo $option["INTERNAL"];?>"<?php echo $flg; ?> ></option>
-				<?php } ?>
-			</select>
-		</div>
-	
-		<div class="blank row">
-			<label class="blank fl">Access</label>
-			<div class="blank select fr small">
-				<?php
-				if($block["access"]=="u"){$flg = " selected";} else {$flg="";} ?>
-				<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'access');return false;">User</a>
-				<?php if($block["access"]=="a"){$flg = " selected";} else {$flg="";} ?>
-				<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'access');return false;">Admin</a>
-				<?php if($block["access"]=="s"){$flg = " selected";} else {$flg="";} ?>
-				<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'access');return false;">Superuser</a>
+			<div class='col all60 tar fs14 pad-t5'>
+				<a href='/settings/content/list' class='pad-r5 c-blue pad-b0'>Admin</a>
+				<a href='/' class='pad-lr5 c-blue pad-b0'>Front</a>
+				<a href='/settings/user/logout' class='pad-l5 c-blue pad-b0'>Logout</a>
 			</div>
-			<select class="hide" name="access" id="access">
-				<?php
-				if($block["access"]=="u"){$flg = " selected";} else {$flg="";} ?>
-				<option<?php echo $flg; ?> value="u"></option>
-				<?php if($block["access"]=="a"){$flg = " selected";} else {$flg="";} ?>
-				<option<?php echo $flg; ?> value="a"></option>
-				<?php if($block["access"]=="s"){$flg = " selected";} else {$flg="";} ?>
-				<option<?php echo $flg; ?> value="s"></option>
-			</select>
 		</div>
+		<div class='col sml5 med10 lge15'></div>
+	</section>
 	
-		<div class="blank row">
-			<label for="params" class="blank fl">
-				Params<br>
-				<span class="current-length tt"><?php echo strlen($NVX_BOOT->JSON($block["params"],"encode")); ?></span><span class="tt"> of 16777215</span>
-			</label>
-			<textarea class="blank textarea plain big fl" name="params" id="params" maxlength="16777215" ><?php echo $NVX_BOOT->JSON($block["params"],"encode"); ?></textarea>
+	<!-- BLOCK EDIT -->
+	<section class='col all100'>
+		<div class='col sml5 med10 lge15'></div>
+		<div class='col box sml90 med80 lge70'>
+			<div class='row pad-b20'>
+				<div class='col all70 pad-r20'>
+					<h1 class='pad0 fs20 c-blue'>Block</h1>
+				</div>
+				<div class='col all30 tar fs14 lh30'>
+					<a href='/settings/block/list' class='pad-r5 c-blue pad-b0'>Up</a>
+					<a onclick="$('#submit').click();" class='pad-l5 c-blue pad-b0'>Save</a>
+				</div>
+			</div>
+			<form method="post">
+				
+				<!-- NAME -->
+				<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 pad-b20'>
+					<label class='col all100 fs13 c-blue pad-b5'>Name</label>
+					<input class='col all100 fs14 tb' name='name' id='name' type='text' maxlength='255' value='<?=$r['name'];?>' placeholder='Name' autofocus>
+				</div>
+				
+				<!-- ASSOCIATIONS -->
+				<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 pad-b20'>
+					<label class='col all100 fs13 c-blue pad-b5'>Associations</label>
+					<select class='col all100 fs14 ms' name='tid[]' id='tid' multiple placeholder="Please Select">
+						<?php foreach($opts as $k=>$v){
+							if(in_array($k,$r['tid'])){$flg = ' selected';} else {$flg='';} ?>
+							<option<?=$flg;?> value='<?=$k;?>'><?=$v;?></option>
+						<?php } ?>
+					</select>
+				</div>
+				
+				<!-- ACCESS -->
+				<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 lge-pad-r0 pad-b20'>
+					<label class='col all100 fs13 c-blue pad-b5'>Access</label>
+					<select class='col all100 fs14 ss' name='access' id='access' placeholder="Please Select">
+						<option<?php if($r["access"]=="u"){echo " selected";}?> value='u'>User</option>
+						<option<?php if($r["access"]=="a"){echo " selected";}?> value='a'>Admin</option>
+						<option<?php if($r["access"]=="s"){echo " selected";}?> value='s'>Superuser</option>
+					</select>
+				</div>
+				
+				<!-- PARAMETERS -->
+				<div class='col all100 pad-b20'>
+					<label class='col all100 fs13 c-blue pad-b5'>Params</label>
+					<textarea class='col all100 fs14 ta' name='params' id='params' maxlength='16777215' placeholder='Parameters'><?=$NVX_BOOT->JSON($r["params"],"encode");?></textarea>
+				</div>
+				
+				<!-- SAVE -->
+				<div class='col all100 hide'>
+					<input type='submit' name='submit' id='submit' value="submit">
+				</div>
+			</form>
 		</div>
-	
-		<div><input type="submit" class="hide" name="submit" id="submit" value="submit"></div>
-	</form>
-		
-</div>
-
+		<div class='col sml5 med10 lge15'></div>
+	</section>
 <?php }

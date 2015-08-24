@@ -126,7 +126,6 @@ class Imagelist{
 							"link"=>0,
 							"extra-type"=>"none",
 							"extra-editor"=>"",
-							"extra-spellchecker"=>"",
 							"extra-name"=>""
 							);
 			
@@ -201,7 +200,6 @@ class Imagelist{
 					case "link":
 					case "extra-type":
 					case "extra-editor":
-					case "extra-spellchecker":
 					case "extra-name":
 						
 						/* add the sanitised field value into the group outline array */

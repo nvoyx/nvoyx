@@ -334,6 +334,21 @@
 						"TYPE":"TEXT"
 					}
 				]
+		,
+		"ENTRIES":	[
+					{
+						"name":"'CMS thumbnails'",
+						"x":"0",
+						"y":"30",
+						"effects":"'[\"\"]'"
+					},
+					{
+						"name":"'Original'",
+						"x":"0",
+						"y":"0",
+						"effects":"'[\"\"]'"
+					}
+				]
 	},
 	{
 		"TABLE":"imagelist",
@@ -940,10 +955,6 @@
 						"access":"'s'"
 					},
 					{
-						"url":"'/settings/debug/folders'",
-						"access":"'s'"
-					},
-					{
 						"url":"'/settings/debug/unit'",
 						"access":"'s'"
 					},
@@ -1439,11 +1450,6 @@
 						"value":"'[\"2\"]'"
 					},
 					{
-						"name":"'spellchecker'",
-						"notes":"'<p>specify the default spellchecker language</p>'",
-						"value":"'[\"en_GB\"]'"
-					},
-					{
 						"name":"'editors'",
 						"notes":"'<p>available editor configurations</p>'",
 						"value":"'[\"ckPrivate\",\"ckPublic\"]'"
@@ -1481,12 +1487,12 @@
 					{
 						"name":"'cssprivate'",
 						"notes":"'<p>references to any css or scss files being used by public pages</p>'",
-						"value":"'[\"normalize.css\",\"jquery-ui-1.10.2.custom.min.css\",\"notifIt.css\",\"private.scss\"]'"
+						"value":"'[\"normalize.css\",\"jquery-ui-1.10.2.custom.min.css\",\"notifIt.css\",\"multiple-select.css\",\"private.scss\"]'"
 					},
 					{
 						"name":"'jsprivate'",
 						"notes":"'<p>references to any javascript files used on the public pages</p>'",
-						"value":"'[\"jquery-2.1.1.min.js\",\"jquery-ui-1.10.2.custom.min.js\",\"ckbase.js\",\"../ckeditor/ckeditor.js\",\"../ckeditor/adapters/jquery.js\",\"jquery.filedrop.js\",\"notifIt.js\",\"public.js\"]'"
+						"value":"'[\"jquery-2.1.1.min.js\",\"jquery-ui-1.10.2.custom.min.js\",\"jquery.ui.touch-punch.min.js\",\"ckbase.js\",\"../ckeditor/ckeditor.js\",\"../ckeditor/adapters/jquery.js\",\"jquery.filedrop.js\",\"notifIt.js\",\"jquery.multiple.select.js\",\"public.js\"]'"
 					},
 					{
 						"name":"'live'",
@@ -1516,7 +1522,7 @@
 					{
 						"name":"'php resources'",
 						"notes":"'<p>local paths to php resource files</p>'",
-						"value":"'[\"/settings/resources/ckeditor/plugins/aspell/spellerpages/server-scripts/spellchecker.php\",\"/settings/resources/captcha/captcha.php\",\"/settings/resources/cron/hourly.php\",\"/settings/resources/cron/daily.php\",\"/settings/resources/cron/weekly.php\",\"/settings/resources/cron/monthly.php\",\"/settings/resources/sitemap/sitemap.php\",\"/settings/resources/rss/rss.php\",\"/settings/resources/browser/upgrade.php\"]'"
+						"value":"'[\"/settings/resources/captcha/captcha.php\",\"/settings/resources/cron/hourly.php\",\"/settings/resources/cron/daily.php\",\"/settings/resources/cron/weekly.php\",\"/settings/resources/cron/monthly.php\",\"/settings/resources/sitemap/sitemap.php\",\"/settings/resources/rss/rss.php\",\"/settings/resources/browser/upgrade.php\"]'"
 					},
 					{
 						"name":"'404'",

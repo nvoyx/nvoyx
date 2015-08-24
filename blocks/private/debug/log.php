@@ -68,33 +68,53 @@ if(file_exists($NVX_BOOT->FETCH_ENTRY("log")."/error.log")){
 		$entries = array_reverse($entries);
 		
 		?>
-		<label style="color:#425770;">PHP Log Entries<br></label>
-		<br><a href="?clear=1">Clear the log</a>&nbsp&nbsp|&nbsp&nbsp<a href="">Refresh the log</a><br><br>
-		<?php
-		foreach($entries as $entry){
-						
-			switch ($entry["type"]):
-				
-				case "Notice":
-					$entry["type"] = "<span style='color:#008413'>Notice</span>";
-					break;
-				case "Warning":
-					$entry["type"] = "<span style='color:#ff9900'>Warning</span>";
-					break;
-				case "Fatal error":
-					$entry["type"] = "<span style='color:#b51010'>Fatal Error</span>";
-					break;
-				case "Parse error":
-					$entry["type"] = "<span style='color:#b51010'>Parse Error</span>";
-					break;
-			endswitch;
-			
-			?>
-			<div style="background-color:#fff;padding:10px;margin:0 0 10px 0;border:1px #425770 solid;">
-				<h2><?=$entry["type"];?> <?=$entry["date"];?></h2>
-				<p style="word-wrap:break-word;"><?=$entry["str"];?><br><br></p>
+
+		<!-- MAIN MENU -->
+		<section class='col all100'>
+			<div class='col sml5 med10 lge15'></div>
+			<div class='col box sml90 med80 lge70'>
+				<div class='col all40'>
+					<img height='24' src="/settings/resources/files/images/public/header-client.png">
+				</div>
+				<div class='col all60 tar fs14 pad-t5'>
+					<a href='/settings/content/list' class='pad-r5 c-blue pad-b0'>Admin</a>
+					<a href='/' class='pad-lr5 c-blue pad-b0'>Front</a>
+					<a href='/settings/user/logout' class='pad-l5 c-blue pad-b0'>Logout</a>
+				</div>
 			</div>
-			<?php
-		}
-	}
+			<div class='col sml5 med10 lge15'></div>
+		</section>
+
+		<!-- ERROR LOG LISTINGS -->
+		<section class='col all100'>
+			<div class='col sml5 med10 lge15'></div>
+			<div class='col box sml90 med80 lge70'>
+				<div class='row pad-b20'>
+					<div class='col all50 pad-r20'>
+						<h1 class='pad0 fs20 c-blue'>Error Log</h1>
+					</div>
+					<div class='col all50 tar fs14 lh30'>
+						<a href='/settings/debug/list' class='c-blue pad-r5 pad-b0'>Up</a>
+						<a href='?clear=1' class='c-blue pad-lr5 pad-b0'>Clear</a>
+						<a href='' class='c-blue pad-l5 pad-b0'>Refresh</a>
+					</div>
+				</div>
+				<?php 
+				$x=0;foreach($entries as $entry){ 
+				$bc=($x%2==0)?'b-lblue':'b-vlblue';
+				?>
+
+				<div class='row pad10 <?=$bc;?>'>
+					<p class='fs14 pad10 c-white bw'>
+						<span class='fs20'><?=$entry['type'];?> <?=$entry["date"];?></span><br><br>
+						<?=$entry["str"];?>
+					</p>
+				</div>
+
+				<?php $x++;} ?>
+
+			</div>
+			<div class='col sml5 med10 lge15'></div>
+		</section>
+	<?php }
 } 

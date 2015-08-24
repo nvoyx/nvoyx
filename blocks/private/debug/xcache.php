@@ -83,15 +83,16 @@ if($r=="user"){
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>NVOYX - <?=$NVX_BOOT->FETCH_ENTRY("current");?></title>
+		<title>NVOY - <?=$NVX_BOOT->FETCH_ENTRY("current");?></title>
 		<meta name="Generator" content="NVOYX Open Source CMS">
-		<link rel="icon" type="image/png" href="/favicon.png" />
-		<link rel="stylesheet" href="/settings/resources/css/private.css" type="text/css" />
+		<link rel="icon" type="image/png" href="/favicon.png">
+		<link href='//fonts.googleapis.com/css?family=Lato:300normal,400normal&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 		<style>
+			body {font-family:"Lato";}
 			table {margin:0 0 20px 0;background-color:#fff;padding:0 10px 10px 10px;border:1px #425770 solid; width:100%;}
-			th {background-color:#425770;color:#fff;font-weight:normal;font-size:1.0em;line-height:1.4em;font-family:"Ubuntu";padding:15px;text-align:left;border-top:10px #fff solid;}
-			tr {background-color:#fff;}
-			td {color:#425770;font-size:1.0em;line-height:1.4em;font-family:"Ubuntu";padding:15px;border-bottom:1px #425770 solid;vertical-align:top;}
+			th {background-color:#425770;color:#fff;font-weight:normal;font-size:1.0em;line-height:1.4em;font-family:"Lato";padding:15px;text-align:left;border-top:10px #fff solid;word-wrap:break-word;}
+			tr {background-color:#fff;font-size:12px;}
+			td {color:#425770;font-size:1.0em;line-height:1.4em;font-family:"Lato";padding:15px;border-bottom:1px #425770 solid;vertical-align:top;word-wrap:break-word;}
 			pre {margin:0 0;padding:0;}
 			pre p {margin:0;padding:0 0 10px 0;}
 			label {display:block;color:#423770;padding:20px 0 10px 0;width:100%;}
@@ -99,7 +100,7 @@ if($r=="user"){
 		</style>
 	</head>
 	<body>
-		
+		<div class='width:80%;overflow:hidden;margin:auto;display:table;'>
 		<label>XCache global <?= strtoupper($r);?> usage</label>
 		<table>
 			<thead>
@@ -176,6 +177,6 @@ if($r=="user"){
 				<?php }} ?>
 			</tbody>
 		</table>
-			
+		</div>
 	</body>
 </html>

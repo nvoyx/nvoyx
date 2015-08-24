@@ -204,7 +204,7 @@ class Type{
 							
 							$rtag = self::$BOOT->JSON($rtag[0]['mselect.values'],"decode");
 							
-							/* we will only submit the first tag (others would be discarded anyway by google)*/
+							/* we will only submit the first tag (others would be discarded anyway by google) */
 							$prefix = str_replace("[ms:".implode("-",$tag)."]",self::$BOOT->ALIAS($rtag[0]),$prefix);
 						} 
 					}

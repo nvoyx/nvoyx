@@ -154,7 +154,7 @@ class Ajaxmanager{
 		
 		/* do we have posted data */
 		if($_POST){
-			
+						
 			/* iterate over the posted data and update the relevant fields in the temporary outline array */
 			foreach($_POST as $key=>$value ){
 							

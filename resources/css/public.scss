@@ -5,10 +5,12 @@
  * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License, version 3 (GPL-3.0)
  *
  */
+	
+/* *** FONTS (EDITABLE) *** */
 
-/* *** FONTS (FIXED) *** */
 
-	/* admin panel font */
+	/* example fontface call */
+	/*
 	@font-face {
 		font-family: 'Ubuntu';
 		src: url('/settings/resources/fonts/Ubuntu/Ubuntu-webfont.eot');
@@ -19,10 +21,8 @@
 		font-weight: normal;
 		font-style: normal;
 	}
+	*/
 	
-	
-/* *** FONTS (EDITABLE) *** */
-
 
 /* *** CONSTANTS (EDITABLE) *** */
 
@@ -42,7 +42,7 @@
 	$FS-RATIO:(1/$FS-PX);
 	
 	/* font family (admin) */
-	$FF-ADMIN: 'Ubuntu';
+	$FF-ADMIN: 'Lato';
 	
 	
 /* *** VARIABLES (FIXED) *** */
@@ -78,7 +78,7 @@
 	$fs-small: $FS-RATIO*12;
 	
 	/* font family (default) */
-	$ff-default: 'Ubuntu';
+	$ff-default: 'Lato';
 	
 	/* foreground (default) */
 	$fg-default: #425770;
@@ -156,11 +156,12 @@
 
 	#admin {position:fixed;top:0;left:25%;z-index:999;width:50%;margin:20px auto;padding:10px;background:#fff;color:#425770;border:#dedede 1px solid;opacity:0.9;}
 
-	#admin-nav {padding:10px;background-color:#f8f8f8;font-size:16px;color:#425770;line-height:24px;font-variant:small-caps;text-align:right;border:#dedede 1px solid;}
+	#admin-nav {padding:10px;background-color:#f8f8f8;font-size:16px;color:#425770;line-height:24px;text-align:right;border:#dedede 1px solid;}
 
 	#admin-nav img {cursor:move;}
 
-	#admin-nav a {font-size:16px;color:#425770;line-height:24px;font-variant:small-caps;font-weight:normal;font-family:($FF-ADMIN);}
+	#admin-nav a {font-size:16px;color:#425770;line-height:24px;font-weight:normal;font-family:($FF-ADMIN);}
+	
 	
 	:focus, a:focus, input:focus {outline:none;}
 	

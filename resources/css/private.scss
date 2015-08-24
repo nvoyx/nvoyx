@@ -6,24 +6,6 @@
  *
  */
 
-/* *** FONTS (FIXED) *** */
-
-	/* admin panel font */
-	@font-face {
-		font-family: 'Ubuntu';
-		src: url('/settings/resources/fonts/Ubuntu/Ubuntu-webfont.eot');
-		src: url('/settings/resources/fonts/Ubuntu/Ubuntu-webfont.eot?#iefix') format('embedded-opentype'),
-			 url('/settings/resources/fonts/Ubuntu/Ubuntu-webfont.woff') format('woff'),
-			 url('/settings/resources/fonts/Ubuntu/Ubuntu-webfont.ttf') format('truetype'),
-			 url('/settings/resources/fonts/Ubuntu/Ubuntu-webfont.svg#Ubuntu') format('svg');
-		font-weight: normal;
-		font-style: normal;
-	}
-	
-	
-/* *** FONTS (EDITABLE) *** */
-
-
 /* *** CONSTANTS (EDITABLE) *** */
 
 	/* basic font size */
@@ -42,7 +24,7 @@
 	$FS-RATIO:(1/$FS-PX);
 	
 	/* font family (admin) */
-	$FF-ADMIN: 'Ubuntu';
+	$FF-ADMIN: 'Lato';
 	
 	
 /* *** VARIABLES (FIXED) *** */
@@ -78,13 +60,20 @@
 	$fs-small: $FS-RATIO*12;
 	
 	/* font family (default) */
-	$ff-default: 'Ubuntu';
+	$ff-default: 'Lato';
 	
-	/* foreground (default) */
-	$fg-default: #425770;
-	
-	/* background (default) */
+	/* colours */
+	$fg-default: #333;
 	$bg-default: #fff;
+	$c-white: #fff;
+	$c-lgrey: #eee;
+	$c-grey: #ddd;
+	$c-dgrey: #aaa;
+	$c-vdgrey: #888;
+	$c-orange: #ec6527;
+	$c-blue: #425770;
+	$c-lblue: #637d9d;
+	$c-vlblue: #8199b5;
 	
 	
 /* *** MIXINS (FIXED) *** */
@@ -99,7 +88,7 @@
 /* *** GRID (FIXED) *** */
 
 	/* row */
-	.row {@include box;overflow:hidden;clear:both;}
+	.row {@include box;overflow-x:hidden;clear:both;}
 
 	/* column */
 	.col {@include box;float:left;}
@@ -164,6 +153,7 @@
 	
 	.cb {clear:both;}
 	
+	.compressed,
 	.hide {display:none!important;}
 	
 	.tal {text-align:left;}
@@ -178,6 +168,8 @@
 	
 	.fxd {position:fixed;}
 	
+	.bw {word-wrap:break-word;}
+	
 	.abs-center {
 		margin: auto;
 		position: absolute;
@@ -190,7 +182,7 @@
 
 	html, body {width:100%;overflow-x: hidden;}
 
-	body {@include box;margin:auto;max-width:($bdy-max);padding:0;background-color: ($bg-default);color:($fg-default);font-family:($ff-default);font-size:($FS-BASE + em);line-height:1.2em;}
+	body {@include box;margin:auto;max-width:($bdy-max);padding:40px 0 100px 0;background-color: ($c-lgrey);color:($fg-default);font-family:($ff-default);font-size:($FS-BASE + em);line-height:1.2em;}
 		
 	h1,h2,h3 {font-weight:normal;line-height:1em;margin:0;padding:0;}
 	
@@ -203,8 +195,9 @@
 	img {vertical-align:top;}
 	
 	a {
+		color:($fg-default);
 		text-decoration:none;
-		&:hover {cursor:pointer;}
+		&:hover {cursor:pointer;color:($fg-default);}
 	}
 	
 	a .on {display:none;}
@@ -212,16 +205,112 @@
 	.no-touch a:hover .on {display:block;}
 	
 	p {font-size:($fs-default + em);margin:0;padding:0 0 10px 0;}
+	
+	textarea,
+	input[type=date],
+	input[type=datetime-local],
+	input[type=password],
+	input[type=number],
+	input[type=text],
+	input[type=email],
+	input[type=tel],
+	input[type=url],
+	input[type=search] {
+		display:inline-block;
+		appearance: none;
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		border-radius: 0;
+		-moz-border-radius: 0;
+		-webkit-border-radius: 0;
+	}
+	
+	textarea {resize:vertical;}
 
-	:-moz-placeholder,
-	::-moz-placeholder,
-	:-ms-input-placeholder,
-	::-webkit-input-placeholder {color:($fg-default);}
+	:-moz-placeholder {color:($c-white);}
+	::-moz-placeholder {color:($c-white);}
+	:-ms-input-placeholder {color:($c-white);}
+	::-webkit-input-placeholder {color:($c-white);}
 	
 	.op10 {opacity:0.1;}
 	.op60 {opacity:0.6;}
 	.op80 {opacity:0.8;}
 	a:hover .hvr-op100 {opacity:1.0;}
+	
+	.c-white {color:($c-white);}
+	.c-orange {color:($c-orange);}
+	.c-blue {color:($c-blue);}
+	.c-grey {color:($c-grey);}
+	.c-dgrey {color:($c-dgrey);}
+	.c-vdgrey {color:($c-vdgrey);}
+	.c-lblue {color:($c-lblue);}
+	.c-vlblue {color:($c-vlblue);}
+	
+	a.hvr-white:hover{color:($c-white);}
+	
+	.b-blue {background-color:($c-blue);}
+	.b-lblue {background-color:($c-lblue);}
+	.b-vlblue {background-color:($c-vlblue);}
+	.b-lgrey {background-color:($c-lgrey);}
+	
+	.brd-blue {border:($c-blue) 1px solid;}
+	
+	.grip {cursor:pointer;}
+	
+	.box {
+		background-color:($c-white);
+		padding:20px;
+		border: ($c-white) 2px solid;
+		border-radius: 5px;
+		box-shadow: 0px 2px 2px #ccc;
+		margin-bottom:30px;
+	}
+	
+	.ta,
+	.tb {
+		height:30px;line-height:30px;padding:0 20px;
+		border:($c-lblue) 1px solid;
+			background-color:($c-vlblue);
+			color:($c-white);
+		&:focus{
+			border:($c-blue) 1px solid;
+			background-color:($c-lblue);
+			color:($c-white);
+		}
+	}
+	
+	.sortable .tb {
+		background-color:($c-blue);
+		color:($c-white);
+	}
+	
+	.ta {height:200px;line-height:20px;padding:10px 20px;}
+	
+	.sortable {
+		padding:0;
+		list-style-type: none;
+		.b-lblue {
+			.ta,.tb,.ms-choice,.progressbar-container {
+				border:($c-blue) 1px solid;
+				background-color:($c-vlblue);
+				color:($c-white);
+			}
+		}
+		.b-vlblue {
+			.ta,.tb,.ms-choice,.progressbar-container {
+				border:($c-blue) 1px solid;
+				background-color:($c-lblue);
+				color:($c-white);
+			}
+		}
+		.ms-choice {
+			border:($c-blue) 1px solid;
+		}
+		.ms-drop {
+			color:($c-blue);
+			background-color:($c-lgrey);
+		}
+	}
 	
 /* *** MEDIA QUERIES *** */
 
@@ -248,6 +337,11 @@
 				width: percentage((1/100)*$i);
 			}
 		}
+		
+		.sml-pad-r0 {padding-right:0;}
+		.sml-pad-l0 {padding-left:0;}
+		.sml-pad-b10 {padding-bottom:10px;}
+		.sml-tal {text-align:left;}
 	}
 	
 			
@@ -274,6 +368,8 @@
 				width: percentage((1/100)*$i);
 			}
 		}
+		
+		.med-pad-r0 {padding-right:0;}
 	}
 	
 			
@@ -294,4 +390,6 @@
 				width: percentage((1/100)*$i);
 			}
 		}
+		
+		.lge-pad-r0 {padding-right:0;}
 	}
