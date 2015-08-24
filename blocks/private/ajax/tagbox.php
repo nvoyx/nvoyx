@@ -16,13 +16,15 @@
 /* add a marker */
 //echo "!nvx_marker";
 
+$post = $NVX_BOOT->TEXT($_POST);
+
 /* we always return the search string (assuming it isn't blank)*/
-if($_POST["lookup"]!=""){	
-	echo "<span class='tag'><a onclick=\"addTag('{$_POST["link"]}','{$_POST["lookup"]}')\">{$_POST["lookup"]}</a></span>";
-}
+if($post["lookup"]!=""){ ?>
+	<span class='tag'><a class='fs14 c-white pad-r10' onclick="addTag('<?=$post["link"];?>','<?=$post["lookup"];?>')"><?=$post["lookup"];?></a></span>
+<?php }
 
 /* go fetch data on the current page type */
-$type = $NVX_TYPE->FETCH_BY_TID($_POST["typeid"]);
+$type = $NVX_TYPE->FETCH_BY_TID($post["typeid"]);
 
 /* check we have an array */
 if(is_array($type["tags"])){
@@ -31,15 +33,14 @@ if(is_array($type["tags"])){
 	foreach($type["tags"] as $tag){
 		
 		/* is the search string within the current tag (push everything to lowercase for comparison) */
-		if(stristr(strtolower($tag),strtolower($_POST["lookup"]))){
+		if(stristr(strtolower($tag),strtolower($post["lookup"]))){
 			
 			/* we have already added an extact match for the passed search string, so make sure we don't add it again */
-			if(strtolower($tag)!=strtolower($_POST["lookup"])){
-			
-				/* echo the tag link */			
-				echo "<span class='tag'><a onclick=\"addTag('{$_POST["link"]}','{$tag}')\">{$tag}</a></span>";
+			if(strtolower($tag)!=strtolower($post["lookup"])){ ?>
+
+				<span class='tag'><a class='fs14 c-white pad-r10' onclick="addTag('<?=$post["link"];?>','<?=$tag;?>')"><?=$tag;?></a></span>
 		
-			}
+			<?php }
 		}
 	}
 }
