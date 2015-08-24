@@ -18,67 +18,78 @@ $iid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
 /* grab the imagecache */
 $NVX_DB->CLEAR(array("ALL"));
 $NVX_DB->SET_FILTER("`imagecache`.`id`={$iid}");
-$imagecache = $NVX_DB->QUERY("SELECT","* FROM `imagecache`");
+$r = $NVX_DB->QUERY("SELECT","* FROM `imagecache`");
 ?>
 
-<img class="blank" src="/settings/resources/files/images/private/header-top.png" width="714" height="26">
-<div class="blank box" id="header">
-	<img class="blank fl" src="/settings/resources/files/images/public/header-client.png" height="24">
-	<a class="fr" href="/settings/user/logout">LOGOUT</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/settings/content/list">ADMIN</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/">FRONT</a>
-</div>
-
-<div class="blank box">
-	
-	<div class="blank header">
-		<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-image.png">
-		<h2 class="blank fl">IMAGE CACHE</h2>
-		<a class="fr" onclick="$('#submit').click();">SAVE</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/settings/imagecache/list">UP</a>
+<!-- MAIN MENU -->
+<section class='col all100'>
+	<div class='col sml5 med10 lge15'></div>
+	<div class='col box sml90 med80 lge70'>
+		<div class='col all40'>
+			<img height='24' src="/settings/resources/files/images/private/nvoy.svg">
+		</div>
+		<div class='col all60 tar fs14 pad-t5'>
+			<a href='/settings/content/list' class='pad-r5 c-blue pad-b0'>Admin</a>
+			<a href='/' class='pad-lr5 c-blue pad-b0'>Front</a>
+			<a href='/settings/user/logout' class='pad-l5 c-blue pad-b0'>Logout</a>
+		</div>
 	</div>
-	
-	<form method="POST">
-		<div class="blank row">
-			<label for="name" class="blank fl">
-				Name<br>
-				<span class="current-length tt"><?php echo strlen($imagecache[0]["imagecache.name"]);?></span><span class="tt"> of 50</span>
-			</label>
-			<input class="blank textbox mini fr" name="name" id="name" type="text" maxlength="50" value="<?php echo $imagecache[0]["imagecache.name"];?>">
-		</div>
-		
-		<div class="blank row">
-			<label for="x" class="blank fl">Horizontal (pixels)</label>
-			<input class="blank textbox mini fr" name="x" id="x" type="number" value="<?php echo $imagecache[0]["imagecache.x"];?>">
-		</div>
-		
-		<div class="blank row">
-			<label for="y" class="blank fl">Vertical (pixels)</label>
-			<input class="blank textbox mini fr" name="y" id="y" type="number" value="<?php echo $imagecache[0]["imagecache.y"];?>">
-		</div>
-		
-		<div class="blank row">
-			<label class="blank fl">Mime</label>
-			<div class="blank select fr half">
-				<?php
-				if($imagecache[0]["imagecache.mime"]=="jpg"){$flg = " selected";} else {$flg="";} ?>
-				<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'mime');return false;">jpg</a>
-				<?php if($imagecache[0]["imagecache.mime"]=="png"){$flg = " selected";} else {$flg="";} ?>
-				<a class='blank mini<?php echo $flg; ?>' onclick="select(this,'mime');return false;">png</a>
+	<div class='col sml5 med10 lge15'></div>
+</section>
+
+<!-- BLOCK EDIT -->
+<section class='col all100'>
+	<div class='col sml5 med10 lge15'></div>
+	<div class='col box sml90 med80 lge70'>
+		<div class='row pad-b20'>
+			<div class='col all70 pad-r20'>
+				<h1 class='pad0 fs20 c-blue'>Image Cache</h1>
 			</div>
-			<select class="hide" name="mime" id="mime">
-				<?php if($imagecache[0]["imagecache.mime"]=="jpg"){$flg = " selected";} else {$flg="";} ?>
-				<option<?php echo $flg; ?> value="jpg"></option>
-				<?php if($imagecache[0]["imagecache.mime"]=="png"){$flg = " selected";} else {$flg="";} ?>
-				<option<?php echo $flg; ?> value="png"></option>
-			</select>
+			<div class='col all30 tar fs14 lh30'>
+				<a href='/settings/imagecache/list' class='pad-r5 c-blue pad-b0'>Up</a>
+				<a onclick="$('#submit').click();" class='pad-l5 c-blue pad-b0'>Save</a>
+			</div>
 		</div>
-		
-		<div class="blank row">
-			<label for="value" class="blank fl">
-				Effects<br>
-				<span class="current-length tt"><?php echo strlen($imagecache[0]["imagecache.effects"]); ?></span><span class="tt"> of 1677215</span>
-			</label>
-			<textarea class="blank textarea plain big fl" name="effects" id="effects" maxlength="1677215"><?php echo $imagecache[0]["imagecache.effects"]; ?></textarea>
-		</div>
-		
-		<div><input type="submit" class="hide" name="submit" id="submit" value="submit"></div>
-	</form>
-</div>
+		<form method="post">
+
+			<!-- NAME -->
+			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 pad-b20'>
+				<label class='col all100 fs13 c-blue pad-b5'>Name</label>
+				<input class='col all100 fs14 tb' name='name' id='name' type='text' maxlength='255' value='<?=$r[0]['imagecache.name'];?>' placeholder='Name' autofocus>
+			</div>
+			
+			<!-- X -->
+			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 pad-b20'>
+				<label class='col all100 fs13 c-blue pad-b5'>Horizontal (pixels)</label>
+				<input class='col all100 fs14 tb' name='x' id='x' type='number' value='<?=$r[0]['imagecache.x'];?>' placeholder='Horizontal'>
+			</div>
+			
+			<!-- Y -->
+			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 lge-pad-r0 pad-b20'>
+				<label class='col all100 fs13 c-blue pad-b5'>Vertical (pixels)</label>
+				<input class='col all100 fs14 tb' name='y' id='y' type='number' value='<?=$r[0]['imagecache.y'];?>' placeholder='Vertical'>
+			</div>
+
+			<!-- MIME -->
+			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 pad-b20'>
+				<label class='col all100 fs13 c-blue pad-b5'>Mime</label>
+				<select class='col all100 fs14 ss' name='mime' id='mime' placeholder="Please Select">
+					<option<?php if($r[0]["imagecache.mime"]=="jpg"){echo " selected";}?> value='jpg'>Jpg</option>
+					<option<?php if($r[0]["imagecache.mime"]=="png"){echo " selected";}?> value='png'>Png</option>
+				</select>
+			</div>
+
+			<!-- EFFECTS -->
+			<div class='col all100 pad-b20'>
+				<label class='col all100 fs13 c-blue pad-b5'>Effects</label>
+				<textarea class='col all100 fs14 ta' name='effects' id='effects' placeholder='Effects'><?=$r[0]['imagecache.effects'];?></textarea>
+			</div>
+
+			<!-- SAVE -->
+			<div class='col all100 hide'>
+				<input type='submit' name='submit' id='submit' value="submit">
+			</div>
+		</form>
+	</div>
+	<div class='col sml5 med10 lge15'></div>
+</section>

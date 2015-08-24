@@ -31,45 +31,59 @@ if(isset($group)){
 	foreach($group["outline"] as $g){
 		
 		/* have we found the correct field */
-		if($g["fid"] == $fid){ 
-			
-			/* convert the source array into a pipe separated string */
-			$g["source"] = implode("|",$g["source"]);
-			?>
+		if($g["fid"] == $fid){ ?>
 
-			<img class="blank" src="/settings/resources/files/images/private/header-top.png" width="714" height="26">
-			<div class="blank box" id="header">
-				<img class="blank fl" src="/settings/resources/files/images/public/header-client.png" height="24">
-				<a class="fr" href="/settings/user/logout">LOGOUT</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/settings/content/list">ADMIN</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/">FRONT</a>
-			</div>
-
-			<form method="POST">
-
-				<div class="blank box">
-
-					<div class="blank header">
-						<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-field.png">
-						<h2 class="blank fl">HEIRARCHY</h2>
-						<a class="fr" onclick="$('#submit').click();">SAVE</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="<?php echo "/settings/group/edit/{$gid}"; ?>">UP</a>
+			<!-- MAIN MENU -->
+			<section class='col all100'>
+				<div class='col sml5 med10 lge15'></div>
+				<div class='col box sml90 med80 lge70'>
+					<div class='col all40'>
+						<img height='24' src="/settings/resources/files/images/private/nvoy.svg">
 					</div>
-
-					<div class="blank row">
-						<label for="name" class="blank fl">
-							Name<br>
-							<span class="current-length tt"><?php echo strlen($g["name"]);?></span><span class="tt"> of 50</span>
-						</label>
-						<input class="blank textbox mini fr" name="name" id="name" type="text" value="<?php echo $g["name"];?>">
+					<div class='col all60 tar fs14 pad-t5'>
+						<a href='/settings/content/list' class='pad-r5 c-blue pad-b0'>Admin</a>
+						<a href='/' class='pad-lr5 c-blue pad-b0'>Front</a>
+						<a href='/settings/user/logout' class='pad-l5 c-blue pad-b0'>Logout</a>
 					</div>
-					
-					<div class="blank row">
-						<label for="max" class="blank fl">Maximum</label>
-						<input class="blank textbox mini fr" name="max" id="max" type="number" value="<?php echo $g["max"];?>">
-					</div>
-					
-					<div><input type="submit" class="hide" name="submit" id="submit" value="submit"></div>
 				</div>
-			</form>
+				<div class='col sml5 med10 lge15'></div>
+			</section>
+			
+			<!-- HEIRARCHY EDIT -->
+			<section class='col all100'>
+				<div class='col sml5 med10 lge15'></div>
+				<div class='col box sml90 med80 lge70'>
+					<div class='row pad-b20'>
+						<div class='col all70 pad-r20'>
+							<h1 class='pad0 fs20 c-blue'>Heirarchy</h1>
+						</div>
+						<div class='col all30 tar fs14 lh30'>
+							<a href='/settings/group/edit/<?=$gid;?>' class='pad-r5 c-blue pad-b0'>Up</a>
+							<a onclick="$('#submit').click();" class='pad-l5 c-blue pad-b0'>Save</a>
+						</div>
+					</div>
+					<form method="post">
 
+						<!-- NAME -->
+						<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 pad-b20'>
+							<label class='col all100 fs13 c-blue pad-b5'>Name</label>
+							<input class='col all100 fs14 tb' name='name' id='name' type='text' maxlength='255' value='<?=$g['name'];?>' placeholder='Name' autofocus>
+						</div>
+						
+						<!-- MAX -->
+						<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 pad-b20'>
+							<label class='col all100 fs13 c-blue pad-b5'>Maximum Paths</label>
+							<input class='col all100 fs14 tb' name='max' id='max' type='number' value='<?=$g['max'];?>' placeholder='Maximum Paths'>
+						</div>
+
+						<!-- SAVE -->
+						<div class='col all100 hide'>
+							<input type='submit' name='submit' id='submit' value="submit">
+						</div>
+					</form>
+				</div>
+				<div class='col sml5 med10 lge15'></div>
+			</section>
 			<?php break;
 		}
 	}
