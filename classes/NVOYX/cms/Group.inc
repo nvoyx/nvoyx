@@ -171,7 +171,7 @@ class Group{
 		
 		/* do we have posted data */
 		if($_POST){
-			
+						
 			/* which page has sent us this form data */
 			switch($form):
 				case "list":
