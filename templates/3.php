@@ -20,6 +20,7 @@
 		<title><?=$PAGE["title"];?> | <?=$NVX_VAR->FETCH_ENTRY("company")[0];?></title>
 		<link rel="icon" type="image/png" href="<?=$NVX_BOOT->FETCH_ENTRY("favicon"); ?>">
 		<link rel="alternate" type="application/rss+xml" title="<?=$NVX_VAR->FETCH_ENTRY("company")[0];?> RSS" href="/settings/resources/rss/rss.php">
+		<link href='//fonts.googleapis.com/css?family=Lato:300normal,400normal&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 		<script>
 			/* is the screen of high pixel density */
 			window.devicePixelRatio = window.devicePixelRatio || window.screen.deviceXDPI / window.screen.logicalXDPI;
