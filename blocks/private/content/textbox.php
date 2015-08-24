@@ -17,7 +17,7 @@ foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
 	<!-- TEXTBOX -->
 	<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 pad-b40'>
 		<label class='col all100 fs13 c-white pad-b5'><?=ucwords($OUTLINE['name']);?></label>
-		<input class='col all100 fs14 tb' name='<?="textbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text";?>' id='<?="textbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text";?>' type='text' maxlength='128' maxlength='<?=$OUTLINE["maxlength"];?>' value='<?=$v;?>'>
+		<input class='col all100 fs14 tb' name='<?="textbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text";?>' id='<?="textbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-text";?>' type='text' maxlength='<?=$OUTLINE["maxlength"];?>' value='<?=$v;?>'>
 	</div>
 	<?php
 }
