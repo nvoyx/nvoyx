@@ -42,11 +42,6 @@ if(!isset($PAGE["id"])){
 	die();
 }
 
-/* available spellchecker language array */
-foreach($NVX_VAR->FETCH_ENTRY("languages") as $r){
-	$LANG[]=array("INTERNAL"=>$r,"EXTERNAL"=>$r);
-}
-
 /* fetch a list of all content types */
 $TYPES = $NVX_TYPE->FETCH_ARRAY();
 
