@@ -28,7 +28,6 @@ if($NVX_USER->GRANTED("s")){
 
 <div id="admin" class="hide">
 	<div id='admin-nav'>
-		<img class='fl'src='/settings/resources/files/images/public/header-client.png' height='24' >
 		<a href="/settings/content/list">Admin</a> | 
 		<?php if($NVX_DEPT->GRANTED($NVX_USER->FETCH_ARRAY()['dept'],$PAGE['tid'])){ ?>
 		<a href="/settings/content/edit/<?php echo $PAGE["id"]; ?>">Edit</a> | 
