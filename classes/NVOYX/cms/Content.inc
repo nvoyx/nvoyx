@@ -497,6 +497,26 @@ class Content{
 						/* switch based on the field type */
 						switch ($key[0]):
 							
+							case "ajaxbox":
+							
+								/* set the field iteration to zero */
+								$i=0;
+								
+								/* go with a default if ajaxbox is empty */
+								if($_POST["{$key[0]}-{$key[1]}-{$key[2]}-{$key[3]}-{$i}-results"]==''){
+									$_POST["{$key[0]}-{$key[1]}-{$key[2]}-{$key[3]}-{$i}-results"]='[{"ok":"0"}]';
+								}
+								
+								/* convert the posted field from a JSON string to a php array */
+								$v = self::$BOOT->JSON($_POST["{$key[0]}-{$key[1]}-{$key[2]}-{$key[3]}-{$i}-results"],"decode");
+								
+								/* sanitise the posted data */
+								$v = self::$BOOT->TEXT($v);
+								
+								/* convert the sanitised array back to a json string */
+								$v = self::$BOOT->JSON($v,"encode");
+								break;
+							
 							case "datebox":
 								
 								/* set the field iteration to zero */
@@ -774,6 +794,7 @@ class Content{
 				
 			/* array of tables */
 			$dtypes = array(
+				"ajaxbox",
 				"datebox",
 				"filelist",
 				"heirarchy",

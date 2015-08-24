@@ -107,7 +107,17 @@ class Field{
 
 					/* what type of field are we looking at */
 					switch($o["type"]):
+						
+						case "ajaxbox":
+							
+							/* convert any stored results to an array (stored as JSON encoded string) */
+							$ajax = self::$BOOT->JSON($r["ajaxbox.values"]);
+								
+							/* add the field values to the the page array */
+							$page["gid-{$g['id']}"]["vid-{$r['ajaxbox.vid']}"]["fid-{$o['fid']}"][0]["results"] = $ajax;
+							break;
 
+						
 						case "imagelist":
 
 							/* convert any stored image details to an array (stored as JSON encoded string) */

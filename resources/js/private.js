@@ -6,6 +6,19 @@
  *
  */
 
+function ajaxbox(obj,url){
+	
+	var results_id='#' + $(obj).attr('id').replace('lookup','results');
+	var lookup=$(obj).val();
+	$.ajax({type: "POST",
+			url: "/settings/ajax/" + url,
+			cache: false,
+			data: {lookup: lookup}
+	}).done(function(results){
+		$(results_id).val(results);
+	});
+}
+
 function deleteGo(url){
 	window.location.href = url;
 }

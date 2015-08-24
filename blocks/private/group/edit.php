@@ -19,6 +19,7 @@ $NVX_GROUP->BUILD_ARRAY(false);
 $gid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
 
 $fs=array(
+	'ajaxbox',
 	'datebox',
 	'filelist',
 	'heirarchy',

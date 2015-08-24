@@ -1,5 +1,59 @@
 [
 	{
+		"TABLE":"ajaxbox",
+		"CHARACTER SET":"utf8mb4",
+		"COLLATE":"utf8mb4_bin",
+		"ENGINE":"MyISAM",
+		"FIELDS":	[
+					{
+						"NAME":"nid",
+						"TYPE":"INT",
+						"LENGTH":"10",
+						"UNSIGNED":"1",
+						"NULL":"yes",
+						"DEFAULT":"NULL"
+					},
+					{
+						"NAME":"gid",
+						"TYPE":"INT",
+						"LENGTH":"10",
+						"UNSIGNED":"1",
+						"NULL":"yes",
+						"DEFAULT":"NULL"
+					},
+					{
+						"NAME":"vid",
+						"TYPE":"INT",
+						"LENGTH":"10",
+						"UNSIGNED":"1",
+						"NULL":"yes",
+						"DEFAULT":"NULL"
+					},
+					{
+						"NAME":"pid",
+						"TYPE":"INT",
+						"LENGTH":"10",
+						"UNSIGNED":"1",
+						"NULL":"yes",
+						"DEFAULT":"NULL"
+					},
+					{
+						"NAME":"fid",
+						"TYPE":"INT",
+						"LENGTH":"10",
+						"UNSIGNED":"1",
+						"NULL":"yes",
+						"DEFAULT":"NULL"
+					},
+					{
+						"NAME":"values",
+						"TYPE":"TEXT",
+						"NULL":"yes",
+						"DEFAULT":"NULL"
+					}
+				]
+	},
+	{
 		"TABLE":"block",
 		"CHARACTER SET":"utf8mb4",
 		"COLLATE":"utf8mb4_bin",
@@ -107,7 +161,7 @@
 					}
 				]
 	},
-{
+	{
 		"TABLE":"dept",
 		"CHARACTER SET":"utf8mb4",
 		"COLLATE":"utf8mb4_bin",
@@ -739,6 +793,18 @@
 						"access":"'s'"
 					},
 					{
+						"url":"'/settings/ajaxbox/add'",
+						"access":"'s'"
+					},
+					{
+						"url":"'/settings/ajaxbox/edit'",
+						"access":"'s'"
+					},
+					{
+						"url":"'/settings/ajaxbox/delete'",
+						"access":"'s'"
+					},
+					{
 						"url":"'/settings/datebox/add'",
 						"access":"'s'"
 					},
@@ -933,6 +999,14 @@
 					{
 						"url":"'/settings/ajax/contentfilter'",
 						"access":"'u'"
+					},
+					{
+						"url":"'/settings/ajax/addresslookup'",
+						"access":"'a'"
+					},
+					{
+						"url":"'/settings/ajax/variation'",
+						"access":"'a'"
 					},
 					{
 						"url":"'/settings/debug/list'",
