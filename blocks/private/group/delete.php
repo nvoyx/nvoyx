@@ -21,7 +21,7 @@ $NVX_DB->SET_FILTER("`group`.`id`={$gid}");
 $NVX_DB->QUERY("DELETE","FROM `group`");
 
 /* create an array of field types */
-$fts = array("datebox","filelist","heirarchy","imagelist","mselect","sselect","textarea","textbox","heirarchy","tagbox");
+$fts = array("ajaxbox","datebox","filelist","heirarchy","imagelist","mselect","sselect","textarea","textbox","heirarchy","tagbox");
 
 /* cycle through the field types */
 foreach($fts as $ft){
