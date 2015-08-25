@@ -198,6 +198,12 @@ class Page{
 					/* create a temporary array to hold the standard fields with formatted names and the associated fields */
 					$tpage=array();
 					
+					/* the database holds fractions of seconds, these need stripping out */
+					$page['page.modified']=date('d-m-Y H:i',strtotime($page['page.modified']));
+					$page['page.date']=date('d-m-Y H:i',strtotime($page['page.date']));
+					$page['page.ttp']=date('d-m-Y H:i',strtotime($page['page.ttp']));
+					$page['page.ttc']=date('d-m-Y H:i',strtotime($page['page.ttc']));
+					
 					/* add the page into the page array */					
 					$tpage = array(
 						"id"=>$page["page.id"],
