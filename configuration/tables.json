@@ -1556,17 +1556,17 @@
 					{
 						"name":"'jspublic'",
 						"notes":"'<p>references to any javascript files used on the public pages</p>'",
-						"value":"'[\"jquery-2.1.1.min.js\",\"jquery-ui-1.10.2.custom.min.js\",\"nvx.pagi.1.0.0.js\",\"notifIt.js\",\"public.js\"]'"
+						"value":"'[\"jquery-2.1.4.min.js\",\"nvx.pagi.1.0.0.js\",\"notifIt.js\",\"public.js\"]'"
 					},
 					{
 						"name":"'cssprivate'",
 						"notes":"'<p>references to any css or scss files being used by public pages</p>'",
-						"value":"'[\"normalize.css\",\"jquery-ui-1.10.2.custom.min.css\",\"notifIt.css\",\"multiple-select.css\",\"private.scss\"]'"
+						"value":"'[\"normalize.css\",\"jquery-ui.css\",\"notifIt.css\",\"multiple-select.css\",\"private.scss\"]'"
 					},
 					{
 						"name":"'jsprivate'",
 						"notes":"'<p>references to any javascript files used on the public pages</p>'",
-						"value":"'[\"jquery-2.1.1.min.js\",\"jquery-ui-1.10.2.custom.min.js\",\"jquery.ui.touch-punch.min.js\",\"ckbase.js\",\"../ckeditor/ckeditor.js\",\"../ckeditor/adapters/jquery.js\",\"jquery.filedrop.js\",\"notifIt.js\",\"jquery.multiple.select.js\",\"private.js\"]'"
+						"value":"'[\"jquery-2.1.4.min.js\",\"jquery-ui.js\",\"jquery.ui.touch-punch.min.js\",\"ckbase.js\",\"../ckeditor/ckeditor.js\",\"../ckeditor/adapters/jquery.js\",\"jquery.filedrop.js\",\"notifIt.js\",\"jquery.multiple.select.js\",\"private.js\"]'"
 					},
 					{
 						"name":"'live'",
