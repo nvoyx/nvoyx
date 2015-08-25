@@ -15,7 +15,7 @@ foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
 	<!-- START -->
 	<div class='col sml100 med50 lge50 pad-r10 sml-pad-r0 pad-b20'>
 		<label class='col all100 fs13 c-white pad-b5'><?=ucwords($OUTLINE['name']);?></label>
-		<input class='col all100 fs14 tb' name='<?="datebox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-start";?>' id='<?="datebox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-start";?>' type='date' value='<?=$v;?>' placeholder='Start Date'>
+		<input class='col all100 fs14 tb date <?=$OUTLINE['measure'];?>picker' name='<?="datebox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-start";?>' id='<?="datebox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-start";?>' type='text' value='<?=$v;?>' readonly placeholder='Start <?=ucwords($OUTLINE['measure']);?>'>
 	</div>
 
 	<?php
@@ -29,7 +29,7 @@ foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
 		<!-- FINISH -->
 		<div class='col sml100 med50 lge50 pad-r10 sml-pad-r0 med-pad-r0 lge-pad-r0 pad-b40'>
 			<label class='col all100 fs13 c-white pad-b5'>Finish Date</label>
-			<input class='col all100 fs14 tb' name='<?="datebox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-finish";?>' id='<?="datebox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-finish";?>' type='date' value='<?=$v;?>' placeholder='Finish Date'>
+			<input class='col all100 fs14 tb date <?=$OUTLINE['measure'];?>picker' name='<?="datebox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-finish";?>' id='<?="datebox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-finish";?>' type='text' value='<?=$v;?>' readonly placeholder='Finish <?=ucwords($OUTLINE['measure']);?>'>
 		</div>
 		<?php
 	}

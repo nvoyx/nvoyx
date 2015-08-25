@@ -16,7 +16,7 @@
 $tid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
 
 /* convert the current microtime to MySQL datetime format */
-$mt =  date('Y-m-d H:i:00',$NVX_BOOT->FETCH_ENTRY("microstamp"));
+$mt =  date('Y-m-d H:i',$NVX_BOOT->FETCH_ENTRY("microstamp"));
 
 /* encode the microtime as an alias */
 $alias = $NVX_BOOT->ALIAS($mt);
@@ -40,8 +40,8 @@ $nvids = $NVX_BOOT->JSON($nvids,"encode");
 
 /* add a page to the database and grab its nid */
 $NVX_DB->CLEAR(array("ALL"));
-$q = "INTO `page` (`id`,`tid`,`nvids`,`title`,`alias`,`heading`,`date`,`modified`,`by`) VALUES " .
-		"(null,{$tid},'{$nvids}','nvoyxid{$mt}','nvoyxid{$alias}','{$mt}','{$mt}','{$mt}',{$NVX_USER->FETCH_ENTRY("id")})";
+$q = "INTO `page` (`id`,`tid`,`nvids`,`title`,`alias`,`heading`,`date`,`modified`,`ttc`,`ttp`,`by`) VALUES " .
+		"(null,{$tid},'{$nvids}','nvoyxid{$mt}','nvoyxid{$alias}','{$mt}','{$mt}','{$mt}','{$mt}','{$mt}',{$NVX_USER->FETCH_ENTRY("id")})";
 $nid = $NVX_DB->QUERY("INSERT",$q);
 
 

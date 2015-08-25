@@ -323,6 +323,9 @@ function addVariant(nid,tid,lnk,gid,mvid){
 			});
 			if($('#group-' + gid +' .ckPrivate').length > 0){launchCK('#group-' + gid +' .ckPrivate');}
 			if($('#group-' + gid +' .ckPublic').length > 0){launchCK('#group-' + gid +' .ckPublic');}
+			if($('#group-' + gid +' .datepicker').length > 0){launchPicker('#group-' + gid +' .datepicker');}
+			if($('#group-' + gid +' .datetimepicker').length > 0){launchPicker('#group-' + gid +' .datetimepicker');}
+			if($('#group-' + gid +' .timepicker').length > 0){launchPicker('#group-' + gid +' .timepicker');}
 			ckSortable();
 			if($("#group-" + gid).children("li").length === mvid){
 				$(lnk).addClass("hide");
@@ -523,6 +526,26 @@ function ckSortable(){
 	});
 }
 
+function launchPicker(obj){
+	$(obj).each(function(i,itm){
+		if($(itm).hasClass('datepicker')){
+			$(obj).datepicker({
+				dateFormat:'dd-mm-yy'
+			});
+		}
+		if($(itm).hasClass('timepicker')){
+			$(obj).timepicker({
+				dateFormat:'dd-mm-yy'
+			});
+		}
+		if($(itm).hasClass('datetimepicker')){
+			$(obj).datetimepicker({
+				dateFormat:'dd-mm-yy'
+			});
+		}
+	});
+}
+
 /* we need to cache references to the individual ckeditors */
 var ckStore = {};
 
@@ -543,6 +566,11 @@ $(document).ready(function(){
 			}
 		});
 	}
+	
+	/* enable the datepicker */
+	if($('.datepicker').length > 0){launchPicker('.datepicker');}
+	if($('.datetimepicker').length > 0){launchPicker('.datetimepicker');}
+	if($('.timepicker').length > 0){launchPicker('.timepicker');}
 
 	/* enable NEW mutliple and single select boxes */
 	sel('.ms,.ss');

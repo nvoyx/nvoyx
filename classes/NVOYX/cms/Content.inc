@@ -222,7 +222,7 @@ class Content{
 					}
 
 					/* update the time to publish value with the rounded figure */
-					$p['ttp'] = "'". date('Y-m-d H:i:00.00',$r) . "'";
+					$p['ttp'] = "'". date('Y-m-d H:i',$r) . "'";
 				
 				} else {
 					
@@ -249,7 +249,7 @@ class Content{
 					}
 
 					/* update the time to close value with the rounded figure */
-					$p['ttc'] = "'". date('Y-m-d H:i:00',$r) . "'";
+					$p['ttc'] = "'". date('Y-m-d H:i',$r) . "'";
 				
 				} else {
 					
@@ -258,10 +258,10 @@ class Content{
 				}
 				
 				/* convert the posted date to a mysql datetime format */
-				$p['date'] = date('Y-m-d H:i:00',strtotime($p['date']));
+				$p['date'] = date('Y-m-d H:i',strtotime($p['date']));
 				
 				/* create a modified variable of the current time, in mysql datetime format */
-				$p['modified'] = date('Y-m-d H:i:00',self::$BOOT->FETCH_ENTRY("timestamp"));
+				$p['modified'] = date('Y-m-d H:i',self::$BOOT->FETCH_ENTRY("timestamp"));
 				
 				/* create an alias from the page title */
 				$p['alias'] = self::$BOOT->ALIAS($p['title']);

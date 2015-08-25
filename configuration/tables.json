@@ -647,6 +647,8 @@
 						"importance":"1.0",
 						"published":"1",
 						"date":"'2014-01-01 08:00:00'",
+						"ttc":"'2014-01-01 08:00:00'",
+						"ttp":"'2014-01-01 08:00:00'",
 						"modified":"'2014-01-01 08:00:00'",
 						"by":"1"
 					},
@@ -661,6 +663,8 @@
 						"importance":"0.0",
 						"published":"1",
 						"date":"'2014-01-01 09:00:00'",
+						"ttp":"'2014-01-01 08:00:00'",
+						"ttc":"'2014-01-01 08:00:00'",
 						"modified":"'2014-01-01 09:00:00'",
 						"by":"1"
 					}
@@ -1561,12 +1565,12 @@
 					{
 						"name":"'cssprivate'",
 						"notes":"'<p>references to any css or scss files being used by public pages</p>'",
-						"value":"'[\"normalize.css\",\"jquery-ui.css\",\"notifIt.css\",\"multiple-select.css\",\"private.scss\"]'"
+						"value":"'[\"normalize.css\",\"jquery-ui.css\",\"jquery-ui-timepicker-addon.css\",\"notifIt.css\",\"multiple-select.css\",\"private.scss\"]'"
 					},
 					{
 						"name":"'jsprivate'",
 						"notes":"'<p>references to any javascript files used on the public pages</p>'",
-						"value":"'[\"jquery-2.1.4.min.js\",\"jquery-ui.js\",\"jquery.ui.touch-punch.min.js\",\"ckbase.js\",\"../ckeditor/ckeditor.js\",\"../ckeditor/adapters/jquery.js\",\"jquery.filedrop.js\",\"notifIt.js\",\"jquery.multiple.select.js\",\"private.js\"]'"
+						"value":"'[\"jquery-2.1.4.min.js\",\"jquery-ui.js\",\"jquery-ui-timepicker-addon.js\",\"jquery.ui.touch-punch.min.js\",\"ckbase.js\",\"../ckeditor/ckeditor.js\",\"../ckeditor/adapters/jquery.js\",\"jquery.filedrop.js\",\"notifIt.js\",\"jquery.multiple.select.js\",\"private.js\"]'"
 					},
 					{
 						"name":"'live'",

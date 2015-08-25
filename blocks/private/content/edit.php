@@ -213,7 +213,7 @@ $r = $NVX_HTML->URL(array("NID"=>$PAGE["id"],
 				<input class='col all100 fs14 tb' name='page-teaser' id='page-teaser' type='text' maxlength='2048' value='<?=$PAGE['teaser'];?>' placeholder='Page Teaser'>
 			</div>
 
-			<!-- NOTES -->
+			<!-- PAGE BODY -->
 			<div class='col all100 pad-b20'>
 				<label class='col all100 fs13 c-blue pad-b5'>Body</label>
 				<div class='col all100'>
@@ -450,7 +450,7 @@ $r = $NVX_HTML->URL(array("NID"=>$PAGE["id"],
 			<?php if($PAGE["sttp"]==0){$visibility=" hide";}else{$visibility="";} ?>
 			<div id='page-ttp-wrapper' class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 pad-b20<?=$create;?><?=$visibility;?>'>
 				<label class='col all100 fs13 c-blue pad-b5'>Publish Date</label>
-				<input class='col all100 fs14 tb' name="page-ttp" id="page-ttp" type="datetime-local" value="<?=str_replace(" ","T",$PAGE["ttp"]) . ".00";?>">
+				<input class='col all100 fs14 tb date datetimepicker' name="page-ttp" id="page-ttp" type="text" value="<?=$PAGE["ttp"];?>">
 			</div>
 
 			<div class='col all100'></div>
@@ -468,7 +468,7 @@ $r = $NVX_HTML->URL(array("NID"=>$PAGE["id"],
 			<?php if($PAGE["sttc"]==0){$visibility=" hide";}else{$visibility="";} ?>
 			<div id='page-ttc-wrapper' class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 pad-b20<?=$create;?><?=$visibility;?>'>
 				<label class='col all100 fs13 c-blue pad-b5'>Close Date</label>
-				<input class='col all100 fs14 tb' name="page-ttc" id="page-ttc" type="datetime-local" value="<?=str_replace(" ","T",$PAGE["ttc"]) . ".00";?>">
+				<input class='col all100 fs14 tb date datetimepicker' name="page-ttc" id="page-ttc" type="text" value="<?=$PAGE["ttc"];?>">
 			</div>
 
 			<div class='col all100'></div>
@@ -476,7 +476,7 @@ $r = $NVX_HTML->URL(array("NID"=>$PAGE["id"],
 			<!-- CREATED DATE -->
 			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 pad-b20'>
 				<label class='col all100 fs13 c-blue pad-b5'>Created</label>
-				<input class='col all100 fs14 tb' name="page-date" id="page-date" type="datetime-local" value="<?=str_replace(" ","T",$PAGE["date"]) . ".00";?>">
+				<input class='col all100 fs14 tb date datetimepicker' name="page-date" id="page-date" type="text" value="<?=$PAGE["date"];?>">
 			</div>
 
 

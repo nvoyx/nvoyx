@@ -120,6 +120,7 @@ class Datebox{
 			$outline[] = array("fid"=>$fid,
 							"type"=>"datebox",
 							"name"=>self::$BOOT->FETCH_ENTRY("timestamp"),
+							"measure"=>"date",
 							"finish"=>0);
 			
 			/* JSON encode the outline array */
@@ -189,6 +190,7 @@ class Datebox{
 				
 				switch($key):
 					case "name":
+					case "measure":
 					case "finish":
 						
 						/* add the sanitised field value into the group outline array */
