@@ -70,6 +70,16 @@ if(isset($group)){
 							<label class='col all100 fs13 c-blue pad-b5'>Name</label>
 							<input class='col all100 fs14 tb' name='name' id='name' type='text' maxlength='255' value='<?=$g['name'];?>' placeholder='Name' autofocus>
 						</div>
+						
+						<!-- MEASURE -->
+						<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 pad-b20'>
+							<label class='col all100 fs13 c-blue pad-b5'>Measure</label>
+							<select class='col all100 fs14 ss' name='measure' id='measure' placeholder="Please Select">
+								<option<?php if($g["measure"]=='time'){echo " selected";}?> value='time'>Time</option>
+								<option<?php if($g["measure"]=='date'){echo " selected";}?> value='date'>Date</option>
+								<option<?php if($g["measure"]=='datetime'){echo " selected";}?> value='datetime'>Date Time</option>
+							</select>
+						</div>
 
 						<!-- RANGE -->
 						<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 pad-b20'>
