@@ -91,7 +91,7 @@ $response['html'].=<<<HTML
 HTML;
 
 $response['error']=0;
-$response['console']=$GROUP;
+$response['console']=0;
 
 /* convert the response array to a json string and pass it back */
 echo $NVX_BOOT->JSON($response,'encode');

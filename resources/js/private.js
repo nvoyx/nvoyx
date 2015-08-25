@@ -321,8 +321,8 @@ function addVariant(nid,tid,lnk,gid,mvid){
 			$('.drop').each( function(){
 				dropZone(this);
 			});
-			if($('#group-' + gid +'.ckPrivate').length > 0){launchCK('#group-' + gid +'.ckPrivate');}
-			if($('#group-' + gid +'.ckPublic').length > 0){launchCK('#group-' + gid +'.ckPublic');}
+			if($('#group-' + gid +' .ckPrivate').length > 0){launchCK('#group-' + gid +' .ckPrivate');}
+			if($('#group-' + gid +' .ckPublic').length > 0){launchCK('#group-' + gid +' .ckPublic');}
 			ckSortable();
 			if($("#group-" + gid).children("li").length === mvid){
 				$(lnk).addClass("hide");

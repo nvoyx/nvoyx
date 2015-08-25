@@ -181,7 +181,7 @@
 	#ui_notifIt.info{
 		cursor:default;
 	}
-
+	
 /* *** SHARED CSS  (EDITABLE) *** */
 
 	html, body {width:100%;overflow-x: hidden;}
@@ -227,6 +227,7 @@
 		border-radius: 0;
 		-moz-border-radius: 0;
 		-webkit-border-radius: 0;
+		font-family:'Lato';
 	}
 	
 	textarea {resize:vertical;}
@@ -290,6 +291,138 @@
 	
 	.ta {height:200px;line-height:20px;padding:10px 20px;}
 	
+	.cke {border:($c-lblue) 1px solid!important;}
+
+	.cke_reset_all,
+	.cke_reset_all *,
+	.cke_reset_all textarea {
+		color:#000!important;
+	}
+	
+	.cke_top {
+		box-shadow:none!important;
+		background-image: none!important;
+		filter: none!important;
+		border-bottom:1px ($c-lblue) solid!important;
+		background-color:($c-vlblue)!important;
+	}
+	
+	.cke_bottom {
+		box-shadow:none!important;
+		background-color:($c-vlblue)!important;
+		background-image:none!important;
+		filter:none!important;
+		border-top:1px ($c-lblue) solid!important;
+	}
+	
+	.cke_resizer {
+		border-color:transparent #fff transparent transparent!important;
+	}
+	
+	.cke_path_item {
+		color:#fff!important;
+	}
+	
+	a.cke_path_item {
+		color:#fff!important;
+		text-shadow:none!important;
+	}
+	
+	a.cke_path_item:hover,a.cke_path_item:focus,a.cke_path_item:active {
+		text-shadow:none!important;
+		box-shadow:none!important;
+		color:($c-lblue)!important;
+		background-color:#fff!important;
+	}
+	
+	.cke_toolgroup {
+		background-image:none!important;
+		filter:none!important;
+		background:#eee!important;
+		box-shadow:none!important;
+		border-bottom-color:($c-lblue)!important;
+		border-color:($c-lblue)!important;
+	}
+	
+	a.cke_button_off:hover,a.cke_button_off:focus,a.cke_button_off:active,a.cke_button_disabled:hover,a.cke_button_disabled:focus,a.cke_button_disabled:active{
+		background:#fff!important;
+		background-image:none!important;
+		filter:none!important;
+	}
+	
+	a.cke_button_on {
+		background:#fff!important;
+		background-image:none!important;
+		filter:none!important;
+		box-shadow:none!important;
+	}
+	
+	a.cke_button_on:hover,a.cke_button_on:focus,a.cke_button_on:active {
+		box-shadow:none!important;
+	}
+	
+	a.cke_combo_button {
+		border:($c-lblue) 1px solid!important;
+		border-bottom-color:($c-lblue)!important;
+		box-shadow:none!important;
+		background-image:none!important;
+		filter:none!important;
+		background:#eee!important;
+	}
+	
+	.cke_combo_off a.cke_combo_button:hover,.cke_combo_off a.cke_combo_button:focus {
+		background-image:none!important;
+		filter: none!important;
+		background:#fff!important;
+	}
+	
+	.cke_combo_off a.cke_combo_button:active, .cke_combo_on a.cke_combo_button {
+		background:#fff!important;
+		background-image:none!important;
+		filter:none!important;
+	}
+	
+	.cke_button_label,
+	.cke_combo_text {
+		color:#000!important;
+	}
+
+	.cke_dialog_ui_button {
+		color:#000!important;
+		box-shadow:none!important;
+	}
+	
+	.cke_dialog_title {
+		color:#fff!important;
+		text-shadow: none!important;
+		background-image:none!important;
+		filter: none!important;
+		box-shadow:none!important;
+		background:($c-vlblue)!important;
+		border-bottom:#637d9d 1px solid!important;
+	}
+	
+	.cke_dialog_body {
+		background:#fff!important;
+		border:($c-lblue) 1px solid!important;
+		border-bottom:#637d9d 1px solid!important;
+		box-shadow:none!important;
+	}
+	
+	.cke_dialog_ui_html,
+	.cke_dialog_ui_html * {
+		color:#000!important;
+	}
+	
+	.cke_dialog_footer {
+		outline:none!important;
+		box-shadow:none!important;
+		background: ($c-vlblue)!important;
+		background-image:none!important;
+		filter:none!important;
+		border-top:($c-lblue) 1px solid!important;
+	}
+	
 	.sortable {
 		padding:0;
 		list-style-type: none;
@@ -299,6 +432,9 @@
 				background-color:($c-vlblue);
 				color:($c-white);
 			}
+			.cke {border:($c-blue) 1px solid!important;}
+			.cke_top {border-bottom:($c-blue) 1px solid!important;}
+			.cke_bottom {border-top:($c-blue) 1px solid!important;}
 		}
 		.b-vlblue {
 			.ta,.tb,.ms-choice,.progressbar-container {
@@ -306,6 +442,9 @@
 				background-color:($c-lblue);
 				color:($c-white);
 			}
+			.cke {border:($c-blue) 1px solid!important;}
+			.cke_top {border-bottom:($c-blue) 1px solid!important;background-color:($c-lblue)!important;}
+			.cke_bottom {border-top:($c-blue) 1px solid!important;background-color:($c-lblue)!important;}
 		}
 		.ms-choice {
 			border:($c-blue) 1px solid;
