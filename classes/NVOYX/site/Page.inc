@@ -199,10 +199,10 @@ class Page{
 					$tpage=array();
 					
 					/* the database holds fractions of seconds, these need stripping out */
-					$page['page.modified']=date('d-m-Y H:i',strtotime($page['page.modified']));
-					$page['page.date']=date('d-m-Y H:i',strtotime($page['page.date']));
-					$page['page.ttp']=date('d-m-Y H:i',strtotime($page['page.ttp']));
-					$page['page.ttc']=date('d-m-Y H:i',strtotime($page['page.ttc']));
+					$page['page.modified']=date('Y-m-d H:i',strtotime($page['page.modified']));
+					$page['page.date']=date('Y-m-d H:i',strtotime($page['page.date']));
+					$page['page.ttp']=date('Y-m-d H:i',strtotime($page['page.ttp']));
+					$page['page.ttc']=date('Y-m-d H:i',strtotime($page['page.ttc']));
 					
 					/* add the page into the page array */					
 					$tpage = array(
