@@ -137,6 +137,11 @@ $tooltip = ".jpeg .png .gif ";
 		<div class="col all100 progressbar-container">
 			<div class="col hgt30 progressbar b-white"></div>
 		</div>
+		<?php if($NVX_BOOT->FETCH_ENTRY('mobtab')==1) { ?>
+			<div class='col all100 pad-tb10'>
+				<input id='<?="imagelist-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-dropfallback";?>' class='col all100 fs12 c-white' type="file" accept="image/*" capture="camera">
+			</div>
+		<?php } ?>
 	</div>
 	<p class='fs13 c-white pad0'>
 		<span><?=$icount;?></span> of <?=$OUTLINE["total"];?> ( <?=round($OUTLINE["size"]/1024);?> Mb ) <?=$tooltip;?>
