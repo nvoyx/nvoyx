@@ -56,6 +56,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.toolbarCanCollapse = false;
 	config.filebrowserBrowseUrl='/settings/ajax/ckbrowse';
 	config.filebrowserUploadUrl='/settings/ajax/ckupload';
+	config.stylesSet = 'nvx:/settings/resources/js/ckstyles.js';
 	config.filebrowserWindowWidth = '620';
 	config.filebrowserWindowHeight = '470';
 	config.entities = false;
@@ -64,14 +65,14 @@ CKEDITOR.editorConfig = function( config ) {
 	
 	config.toolbar = 'Private';
 	config.toolbar_Private = [
+		['Styles'],
 		['Source'],
 		['Scayt'],
 		['PasteText','PasteFromWord'],
-		['Bold','Italic','Underline','Subscript','Superscript','TextColor'],
+		['Bold','Italic','Underline','Subscript','Superscript'],
 		['BulletedList','NumberedList'],
 		['Link','Unlink','Table','SpecialChar'],
-		['Image'],
-		['Format']
+		['Image']
 	];
 	
 	config.toolbar = 'Public';

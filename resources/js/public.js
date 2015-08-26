@@ -28,6 +28,14 @@ $(document).ready(function(){
 		});
 	}
 	
+	/* animations which are in view on page load */
+	$('.nv-fx:in-viewport').addClass('animated');
+	
+	/* animations which have come into view as a result of scrolling */
+	$(window).scroll(function() {
+		$('.nv-fx:in-viewport').run(function(){$(this).addClass('animated');});
+	});
+	
 	/* dropdown filters example */
 	if($('.XX-ss').length>0){
 		$('.XX-ss').each(function(){

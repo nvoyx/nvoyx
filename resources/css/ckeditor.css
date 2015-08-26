@@ -132,3 +132,31 @@ a > img {
 	border: none;
 	outline: 1px solid #0782C1;
 }
+
+.cke_panel_grouptitle {
+	background-image:none!important;
+	box-shadow:none!important;
+	text-shadow:none!important;
+	font-weight:normal!important;
+	border-radius:0!important;
+	background:#8199b5!important;
+	border-bottom: #637d9d 1px solid!important;
+	color:#fff!important;
+}
+
+.cke_panel_list {
+	margin:0!important;
+}
+
+.cke_panel_listItem a {
+	border:none!important;
+	border-radius:0!important;
+}
+
+.cke_panel_listItem a:hover,
+.cke_panel_listItem.cke_selected a {
+	border:none!important;
+	box-shadow:none!important;
+	background-color:#637d9d!important;
+	color:#fff!important;
+}
