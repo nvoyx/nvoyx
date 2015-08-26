@@ -42,11 +42,12 @@
 
 		<?php /* HELPER */ $rs = $NVX_BLOCK->LOADER($BLOCKS,2);if($rs){include($rs);} ?>
 
-		<div class="row">
+		<section class="row">
 			<div class="col all100">
 				<h1><?=$PAGE["heading"];?></h1>
+				<?=$PAGE["body"];?>
 			</div>
-		</div>
+		</section>
 		
 		<?php /* 404 ERROR */ $rs = $NVX_BLOCK->LOADER($BLOCKS,4);if($rs){include($rs);} ?>
 								
