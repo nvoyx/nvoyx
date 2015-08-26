@@ -997,5 +997,8 @@ class Boot{
 		self::$SYS["modjspublic"] = 0;
 		self::$SYS["modcssprivate"] = 0;
 		self::$SYS["modjsprivate"] = 0;
+		if(stristr($_SERVER['HTTP_USER_AGENT'],'iPhone') || stristr($_SERVER['HTTP_USER_AGENT'],'iPad') || stristr($_SERVER['HTTP_USER_AGENT'],'iPod') || stristr($_SERVER['HTTP_USER_AGENT'],'Android') || stristr($_SERVER['HTTP_USER_AGENT'],'IEMobile')){
+			self::$SYS["mobtab"] = 1;
+		} else {self::$SYS["mobtab"] = 0;}
 	}
 }
