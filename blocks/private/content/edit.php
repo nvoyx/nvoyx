@@ -432,7 +432,7 @@ $r = $NVX_HTML->URL(array("NID"=>$PAGE["id"],
 						$by = $NVX_BOOT->CYPHER(array("STRING"=>$NVX_DB->QUERY("SELECT","`user`.`contact` FROM `user`")[0]["user.contact"],"TYPE"=>'decrypt'));
 						?>
 						<div class='col all100'>
-							<label class='col all100 fs13 c-blue pad-b5'>Last modified <?=date('d-m-Y H:i',strtotime($PAGE["modified"]));?> by <?=$by;?></label>
+							<label class='col all100 fs13 c-blue pad-b5'>Last modified <?=$PAGE["modified"];?> by <?=$by;?></label>
 						</div>
 				</div>
 			</div>
