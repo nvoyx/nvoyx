@@ -364,6 +364,7 @@ function deleteListItem(obj){
 function dropZone(obj){
 	var did = "#" + $(obj).attr("id");
 	var ref = did.replace("drop","");
+	var fallback = $(obj).attr("id") + 'fallback';
 	var dul = ref + "list";
 	var type = $(obj).data('type');
 	var allowed = $(obj).data('allowed');
@@ -391,6 +392,7 @@ function dropZone(obj){
 	}
 	
 	$(obj).filedrop({
+		fallback_id: fallback,
 		url: '/settings/ajax/upload',
 		paramname: type,
 		maxFiles: 1, /* maximum parallel uploads, not to be confused with maximum allowed files */
