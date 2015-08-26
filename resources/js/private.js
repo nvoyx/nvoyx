@@ -530,17 +530,17 @@ function launchPicker(obj){
 	$(obj).each(function(i,itm){
 		if($(itm).hasClass('datepicker')){
 			$(obj).datepicker({
-				dateFormat:'dd-mm-yy'
+				dateFormat:'yy-mm-dd'
 			});
 		}
 		if($(itm).hasClass('timepicker')){
 			$(obj).timepicker({
-				dateFormat:'dd-mm-yy'
+				dateFormat:'yy-mm-dd'
 			});
 		}
 		if($(itm).hasClass('datetimepicker')){
 			$(obj).datetimepicker({
-				dateFormat:'dd-mm-yy'
+				dateFormat:'yy-mm-dd'
 			});
 		}
 	});
