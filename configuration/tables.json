@@ -1557,12 +1557,12 @@
 					{
 						"name":"'csspublic'",
 						"notes":"'<p>references to any css or scss files being used by public pages</p>'",
-						"value":"'[\"normalize.css\",\"notifIt.css\",\"public.scss\"]'"
+						"value":"'[\"normalize.css\",\"animate.css\",\"notifIt.css\",\"public.scss\"]'"
 					},
 					{
 						"name":"'jspublic'",
 						"notes":"'<p>references to any javascript files used on the public pages</p>'",
-						"value":"'[\"jquery-2.1.4.min.js\",\"nvx.pagi.1.0.0.js\",\"notifIt.js\",\"public.js\"]'"
+						"value":"'[\"jquery-2.1.4.min.js\",\"isInViewport.min.js\",\"nvx.pagi.1.0.0.js\",\"notifIt.js\",\"public.js\"]'"
 					},
 					{
 						"name":"'cssprivate'",
