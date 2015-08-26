@@ -361,6 +361,10 @@
 		box-shadow:none!important;
 	}
 	
+	.cke_combo_text {
+		width:150px!important;
+	}
+	
 	a.cke_combo_button {
 		border:($c-lblue) 1px solid!important;
 		border-bottom-color:($c-lblue)!important;
@@ -422,7 +426,7 @@
 		filter:none!important;
 		border-top:($c-lblue) 1px solid!important;
 	}
-	
+		
 	.sortable {
 		padding:0;
 		list-style-type: none;
