@@ -193,7 +193,7 @@ $r = $nvHtml->url(array("NID"=>$page["id"],
 
 			<!-- PAGE TITLE -->
 			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 pad-b20'>
-				<label class='col all100 fs13 c-blue pad-b5'>Node Id</label>
+				<label class='col all100 fs13 c-blue pad-b5'>Title & Url</label>
 				<input name="page-oldtitle" id="page-oldtitle" type="hidden" maxlength="255" value="<?=$page["title"];?>">
 				<input name="page-prefix" id="page-oldprefix" type="hidden" maxlength="2048" value="<?=substr($r['URL'],strpos($r['URL'],'/'),strrpos($r['URL'],'/')-strpos($r['URL'],'/'));?>">
 				<input class='col all100 fs14 tb' name='page-title' id='page-title' type='text' maxlength='255' value='<?=$page['title'];?>' placeholder='Page Title' autofocus>
