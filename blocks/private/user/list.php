@@ -13,8 +13,8 @@
  */
 
 /* grab all currently registered users */
-$NVX_DB->CLEAR(array("ALL"));
-$users = $NVX_DB->QUERY("SELECT","* FROM `user`");
+$nvDb->clear(array("ALL"));
+$users = $nvDb->query("SELECT","* FROM `user`");
 
 ?>
 
@@ -50,10 +50,10 @@ $users = $NVX_DB->QUERY("SELECT","* FROM `user`");
 			$r['bc']=($x%2==0)?'b-lblue':'b-vlblue';?>
 			<div class='row pad10 c-white <?=$r['bc'];?>'>
 				<div class='col all70 fs14 pad-r20'>
-					<p class='pad0 bw'><?=$NVX_BOOT->CYPHER(array("TYPE"=>"decrypt","STRING"=>$r["user.username"]));?></p>
+					<p class='pad0 bw'><?=$nvBoot->cypher('decrypt',$r["user.username"]);?></p>
 				</div>
 				<div class='col all30 fs14 tar'>
-					<?php if($r['user.type']!='s' || $NVX_USER->GRANTED('s')){ ?>
+					<?php if($r['user.type']!='s' || $nvUser->granted('s')){ ?>
 					<a href='/settings/user/edit/<?=$r['user.id'];?>' class='pad-r5 pad-b0 hvr-white'>Edit</a>
 					<a onclick='deleteCheck("/settings/user/delete/<?=$r['user.id'];?>");' class='pad-l5 pad-b0 hvr-white'>Delete</a>
 					<?php } ?>
