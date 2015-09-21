@@ -7,4 +7,4 @@
  *
  */
 
-include($NVX_CMS->FETCH_HTML());
+include($nvCms->fetch_html());

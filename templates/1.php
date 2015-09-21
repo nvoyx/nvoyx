@@ -7,16 +7,16 @@
  *
  */
 
-if($NVX_BOOT->FETCH_ENTRY("current")!='unit'){ ?>
+if($nvBoot->fetch_entry("current")!='unit'){ ?>
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>NVOY - <?=$NVX_BOOT->FETCH_ENTRY("current");?></title>
+		<title>NVOY - <?=$nvBoot->fetch_entry("current");?></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<meta name="Generator" content="NVOYX Open Source CMS">
-		<link rel="icon" type="image/png" href="<?= $NVX_BOOT->FETCH_ENTRY("favicon"); ?>" />
-		<link rel="stylesheet" href="/settings/resources/files/compress/private/<?=$NVX_BOOT->FETCH_ENTRY("modcssprivate");?>.css" type="text/css" />
-		<script src="/settings/resources/files/compress/private/<?=$NVX_BOOT->FETCH_ENTRY("modjsprivate");?>.js"></script>
+		<link rel="icon" type="image/png" href="<?= $nvBoot->fetch_entry("favicon"); ?>" />
+		<link rel="stylesheet" href="/settings/resources/files/compress/private/<?=$nvBoot->fetch_entry("modcssprivate");?>.css" type="text/css" />
+		<script src="/settings/resources/files/compress/private/<?=$nvBoot->fetch_entry("modjsprivate");?>.js"></script>
 		<link href='//fonts.googleapis.com/css?family=Lato:300normal,400normal&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 		
 		<!--[if IE 9]>
@@ -38,10 +38,10 @@ if($NVX_BOOT->FETCH_ENTRY("current")!='unit'){ ?>
 		<?php unset($_SESSION['notify']);}
 				
 }
-		include($NVX_CMS->FETCH_HTML());
-if($NVX_BOOT->FETCH_ENTRY("current")!='unit'){ ?>
+		include($nvCms->fetch_html());
+if($nvBoot->fetch_entry("current")!='unit'){ ?>
 		
-		<div style="display: none"><a href="/settings/resources/honeypot/<?= $NVX_VAR->FETCH_ENTRY("honeyfile")[0]; ?>">tendentious-parliamentary</a></div>
+		<div class='hide'><a href="/settings/resources/honeypot/<?= $nvVar->fetch_entry("honeyfile")[0]; ?>">tendentious-parliamentary</a></div>
 	</body>
 </html>
 <?php } ?>
