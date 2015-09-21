@@ -25,12 +25,14 @@ foreach($nvType->fetch_array() as $type){
 		$nvDb->set_order(array("`page`.`title`"=>"ASC"));
 		$pages = $nvDb->query("SELECT","`page`.`id`,`page`.`title`,`page`.`alias`,`page`.`modified` FROM `page`");
 		
-		$pages = $nvBoot->sort_by_keys(array(
-			'ARRAY'=>$pages,
-			'SORT'=>array(
-				array('KEYS'=>array('page.title'),'DIRECTION'=>'SORT_ASC')
-			))
-		);
+		if($pages){
+			$pages = $nvBoot->sort_by_keys(array(
+				'ARRAY'=>$pages,
+				'SORT'=>array(
+					array('KEYS'=>array('page.title'),'DIRECTION'=>'SORT_ASC')
+				))
+			);
+		}
 		
 		$opts[$type['id']]=array(
 			'name'=>$type['name'],
