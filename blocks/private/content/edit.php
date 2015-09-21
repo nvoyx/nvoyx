@@ -212,7 +212,7 @@ $r = $nvHtml->url(array("NID"=>$page["id"],
 			</div>
 
 			<!-- PAGE BODY -->
-			<div class='col all100 pad-b20'>
+			<div class='col all100 pad-b20<?php if($type['body']!=1) {echo ' hide';} ?>'>
 				<label class='col all100 fs13 c-blue pad-b5'>Body</label>
 				<div class='col all100'>
 					<textarea class='col all100 fs14 ta ckPrivate' name='page-body' id='page-body' maxlength='16777215'><?=$page["body"];?></textarea>
