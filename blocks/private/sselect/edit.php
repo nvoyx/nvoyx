@@ -141,11 +141,11 @@ if(isset($group)){
 								<div class='col all80 pad-r20'>
 									<div class='col all50 sml100 fs14 pad-r5 sml-pad-r0 sml-pad-b10'>
 										<label class='col all100 fs13 c-white pad-b5 grip'>&#8597;&nbsp;&nbsp;External</label>
-										<input class='col all100 fs14 tb' name='external-<?=$x;?>' id='external-<?=$x;?>' type='text' value='<?=$k;?>' placeholder='External'>
+										<input class='col all100 fs14 tb' name='external-<?=$x;?>' id='external-<?=$x;?>' type='text' value='<?=htmlentities($k,ENT_QUOTES);?>' placeholder='External'>
 									</div>
 									<div class='col all50 sml100 fs14 pad-l5 sml-pad-l0'>
 										<label class='col all100 fs13 c-white pad-b5'>Internal</label>
-										<input class='col all100 fs14 tb' name='internal-<?=$x;?>' id='internal-<?=$x;?>' type='text' value='<?=$v;?>' placeholder='Internal'>
+										<input class='col all100 fs14 tb' name='internal-<?=$x;?>' id='internal-<?=$x;?>' type='text' value='<?=htmlentities($v,ENT_QUOTES);?>' placeholder='Internal'>
 									</div>
 									</div>
 								<div class='col all20 fs14 tar'>
