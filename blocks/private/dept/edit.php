@@ -13,12 +13,12 @@
  */
 
 /* user id */
-$did = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
+$did = $nvBoot->fetch_entry("breadcrumb",3);
 
 
 /* grab all departments */
-$NVX_DB->CLEAR(array("ALL"));
-$departments = $NVX_DB->QUERY("SELECT","* FROM `dept`");
+$nvDb->clear(array("ALL"));
+$departments = $nvDb->query("SELECT","* FROM `dept`");
 
 /* lookup the department details */
 foreach($departments as $department){if($department["dept.id"]==$did){break;}}
@@ -28,12 +28,12 @@ if(isset($department)){
 
 	/* grab a list of all types */
 	$types=array();
-	foreach($NVX_TYPE->FETCH_ARRAY() as $rs){
+	foreach($nvType->fetch_array() as $rs){
 		$types[$rs['name']]=$rs['id'];
 	}
 
 	/* explode the access tids for this dept. */
-	$access=$NVX_BOOT->JSON($department['dept.access'],'decode');
+	$access=$nvBoot->json($department['dept.access'],'decode');
 
 	?>
 

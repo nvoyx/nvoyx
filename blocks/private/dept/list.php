@@ -9,8 +9,8 @@
  */
 
 /* grab all departments */
-$NVX_DB->CLEAR(array("ALL"));
-$departments = $NVX_DB->QUERY("SELECT","* FROM `dept`");
+$nvDb->clear(array("ALL"));
+$departments = $nvDb->query("SELECT","* FROM `dept`");
 
 ?>
 
