@@ -13,17 +13,17 @@
  */
 
 /* rebuild the GROUP array */
-$NVX_GROUP->BUILD_ARRAY();
+$nvGroup->build_array();
 
 /* field gid */
-$gid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
+$gid = $nvBoot->fetch_entry("breadcrumb",3);
 
 /* field id */
-$fid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",4);
+$fid = $nvBoot->fetch_entry("breadcrumb",4);
 
 $rs = array();
 
-$files = array_diff(scandir($NVX_BOOT->FETCH_ENTRY("blocks")."/private/ajax"), array('.','..'));
+$files = array_diff(scandir($nvBoot->fetch_entry("blocks")."/private/ajax"), array('.','..'));
 $x=0;
 foreach ($files as $file) {
 	$rs[] = str_replace(".php","",$file);
@@ -31,7 +31,7 @@ foreach ($files as $file) {
 }
 
 /* lookup the group details */
-foreach($NVX_GROUP->FETCH_ARRAY() as $r){if($r["id"]==$gid){break;}}
+foreach($nvGroup->fetch_array() as $r){if($r["id"]==$gid){break;}}
 
 /* have we found the group */
 if(isset($r)){
