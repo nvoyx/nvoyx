@@ -65,7 +65,7 @@ foreach($field["fid-{$outline["fid"]}"] as $iteration=>$values){
 		<!-- FILE -->
 		<div class='col all100 pad-b20'>
 			<label class='col all100 fs13 c-white pad-b5 grip bw'>&#8597;&nbsp;&nbsp;Description</label>
-			<input class='col all100 fs14 tb mar-b5' name='<?="filelist-{$group["id"]}-{$vari}-{$outline["fid"]}-{$iteration}-desc";?>' id='<?="filelist-{$group["id"]}-{$vari}-{$outline["fid"]}-{$iteration}-desc";?>' type='text' maxlength='1024' value='<?=$v;?>' placeholder='Description'>
+			<input class='col all100 fs14 tb mar-b5' name='<?="filelist-{$group["id"]}-{$vari}-{$outline["fid"]}-{$iteration}-desc";?>' id='<?="filelist-{$group["id"]}-{$vari}-{$outline["fid"]}-{$iteration}-desc";?>' type='text' maxlength='1024' value='<?=htmlentities($v,ENT_QUOTES);?>' placeholder='Description'>
 			<a class='fs14 c-white' target='_blank' href='<?="/settings/resources/files/documents/".$values['name'];?>'>Download</a>&nbsp;&nbsp;
 			<a class='fs14 c-white' onclick="deleteListItem(this);">Delete</a>
 		</div>

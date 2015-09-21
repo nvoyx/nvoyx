@@ -38,7 +38,7 @@ foreach($outline["content"] as $key => $value){
 		<?php 
 		foreach ($rs as $r){
 		if(in_array($r["INTERNAL"],$v)){$flg = " selected";} else {$flg="";} ?>
-		<option<?=$flg;?> value="<?=$r["INTERNAL"];?>"><?=$r["EXTERNAL"];?></option>
+		<option<?=$flg;?> value="<?=htmlentities($r["INTERNAL"],ENT_QUOTES);?>"><?=$r["EXTERNAL"];?></option>
 		<?php } ?>
 	</select>
 </div>

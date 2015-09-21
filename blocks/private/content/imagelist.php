@@ -70,7 +70,7 @@ foreach($field["fid-{$outline["fid"]}"] as $iteration=>$values){
 			<!-- IMAGE DESCRIPTION -->
 			<div class='col sml100 med66 lge<?=$lge;?> pad-r10 sml-pad-r0 med-pad-r0<?=$lgepad;?> pad-b20'>
 				<label class='col all100 fs13 c-white pad-b5'>Description</label>
-				<input class='col all100 fs14 tb' name='<?="imagelist-{$group["id"]}-{$vari}-{$outline["fid"]}-{$iteration}-desc";?>' id='<?="imagelist-{$group["id"]}-{$vari}-{$outline["fid"]}-{$iteration}-desc";?>' type='text' maxlength='1024' value='<?=$v;?>' placeholder='Description'>
+				<input class='col all100 fs14 tb' name='<?="imagelist-{$group["id"]}-{$vari}-{$outline["fid"]}-{$iteration}-desc";?>' id='<?="imagelist-{$group["id"]}-{$vari}-{$outline["fid"]}-{$iteration}-desc";?>' type='text' maxlength='1024' value='<?=htmlentities($v,ENT_QUOTES);?>' placeholder='Description'>
 			</div>
 
 			<?php
@@ -86,7 +86,7 @@ foreach($field["fid-{$outline["fid"]}"] as $iteration=>$values){
 				<!-- IMAGE LINK -->
 				<div class='col sml100 med100 lge33 pad-b20'>
 					<label class='col all100 fs13 c-white pad-b5'>Link</label>
-					<input class='col all100 fs14 tb' name='<?="imagelist-{$group["id"]}-{$vari}-{$outline["fid"]}-{$iteration}-link";?>' id='<?="imagelist-{$group["id"]}-{$vari}-{$outline["fid"]}-{$iteration}-link";?>' type='text' maxlength='255' value='<?=$v;?>' placeholder='Link'>
+					<input class='col all100 fs14 tb' name='<?="imagelist-{$group["id"]}-{$vari}-{$outline["fid"]}-{$iteration}-link";?>' id='<?="imagelist-{$group["id"]}-{$vari}-{$outline["fid"]}-{$iteration}-link";?>' type='text' maxlength='255' value='<?=htmlentities($v,ENT_QUOTES);?>' placeholder='Link'>
 				</div>
 				<?php
 			}

@@ -194,21 +194,21 @@ $r = $nvHtml->url(array("NID"=>$page["id"],
 			<!-- PAGE TITLE -->
 			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 pad-b20'>
 				<label class='col all100 fs13 c-blue pad-b5'>Title & Url</label>
-				<input name="page-oldtitle" id="page-oldtitle" type="hidden" maxlength="255" value="<?=$page["title"];?>">
+				<input name="page-oldtitle" id="page-oldtitle" type="hidden" maxlength="255" value="<?=htmlentities($page["title"],ENT_QUOTES);?>">
 				<input name="page-prefix" id="page-oldprefix" type="hidden" maxlength="2048" value="<?=substr($r['URL'],strpos($r['URL'],'/'),strrpos($r['URL'],'/')-strpos($r['URL'],'/'));?>">
-				<input class='col all100 fs14 tb' name='page-title' id='page-title' type='text' maxlength='255' value='<?=$page['title'];?>' placeholder='Page Title' autofocus>
+				<input class='col all100 fs14 tb' name='page-title' id='page-title' type='text' maxlength='255' value='<?=htmlentities($page['title'],ENT_QUOTES);?>' placeholder='Page Title' autofocus>
 			</div>
 
 			<!-- PAGE HEADING -->
 			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 pad-b20'>
 				<label class='col all100 fs13 c-blue pad-b5'>Heading</label>
-				<input class='col all100 fs14 tb' name='page-heading' id='page-heading' type='text' maxlength='2048' value='<?=$page['heading'];?>' placeholder='Page Heading'>
+				<input class='col all100 fs14 tb' name='page-heading' id='page-heading' type='text' maxlength='2048' value='<?=htmlentities($page['heading'],ENT_QUOTES);?>' placeholder='Page Heading'>
 			</div>
 
 			<!-- PAGE TEASER -->
 			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 lge-pad-r0 pad-b20'>
 				<label class='col all100 fs13 c-blue pad-b5'>Teaser</label>
-				<input class='col all100 fs14 tb' name='page-teaser' id='page-teaser' type='text' maxlength='2048' value='<?=$page['teaser'];?>' placeholder='Page Teaser'>
+				<input class='col all100 fs14 tb' name='page-teaser' id='page-teaser' type='text' maxlength='2048' value='<?=htmlentities($page['teaser'],ENT_QUOTES);?>' placeholder='Page Teaser'>
 			</div>
 
 			<!-- PAGE BODY -->
@@ -402,7 +402,7 @@ $r = $nvHtml->url(array("NID"=>$page["id"],
 			<!-- META DESCRIPTION -->
 			<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 pad-b20'>
 				<label class='col all100 fs13 c-blue pad-b5'>Meta Description</label>
-				<input class='col all100 fs14 tb' name="page-description" id="page-description" type="text" maxlength="255" value="<?=$page["description"];?>" placeholder='Short Description'>
+				<input class='col all100 fs14 tb' name="page-description" id="page-description" type="text" maxlength="255" value="<?=htmlentities($page["description"],ENT_QUOTES);?>" placeholder='Short Description'>
 			</div>
 		</div>
 		<div class='col sml5 med10 lge15'></div>

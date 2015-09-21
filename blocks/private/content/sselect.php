@@ -31,7 +31,7 @@ foreach($field["fid-{$outline["fid"]}"] as $iteration=>$values){
 			<?php 
 			foreach ($rs as $r){
 			if($v==$r["INTERNAL"]){$flg = " selected";} else {$flg="";} ?>
-			<option<?=$flg;?> value="<?=$r["INTERNAL"];?>"><?=$r["EXTERNAL"];?></option>
+			<option<?=$flg;?> value="<?=htmlentities($r["INTERNAL"],ENT_QUOTES);?>"><?=$r["EXTERNAL"];?></option>
 			<?php } ?>
 		</select>
 	</div>
