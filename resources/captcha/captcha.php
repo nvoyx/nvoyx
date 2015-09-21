@@ -10,10 +10,8 @@
 
 
 /* create a simple captcha instance */
-$NVX_CAPTCHA = \NVOYX\site\SimpleCaptcha::CONNECT(self::$BOOT);
+$nvCaptcha = \nvoy\site\SimpleCaptcha::connect(self::$boot);
 
 
 /* create a captcha image */
-$NVX_CAPTCHA->CreateImage();
-
-?>
+$nvCaptcha->CreateImage();
