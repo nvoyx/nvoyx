@@ -13,13 +13,13 @@
  */
 
 /* rebuild the VARIABLE array */
-$NVX_VAR->BUILD_ARRAY(false);
+$nvVar->build_array(false);
 
 /* variable id */
-$vid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
+$vid = $nvBoot->fetch_entry("breadcrumb",3);
 
 /* lookup the variables details */
-foreach($NVX_VAR->FETCH_ARRAY() as $r){if($r["id"]==$vid){break;}}
+foreach($nvVar->fetch_array() as $r){if($r["id"]==$vid){break;}}
 
 /* have we found the variable */
 if(isset($r)){ ?>
@@ -64,7 +64,7 @@ if(isset($r)){ ?>
 				<!-- VALUE -->
 				<div class='col all100 pad-b20'>
 					<label class='col all100 fs13 c-blue pad-b5'>Value</label>
-					<textarea class='col all100 fs14 ta' name='value' id='value' maxlength='16777215' placeholder='Value'><?=$NVX_BOOT->JSON($r["value"],"encode"); ?></textarea>
+					<textarea class='col all100 fs14 ta' name='value' id='value' maxlength='16777215' placeholder='Value'><?=$nvBoot->json($r["value"],"encode"); ?></textarea>
 				</div>
 				
 				<!-- NOTES -->

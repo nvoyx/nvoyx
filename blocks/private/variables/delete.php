@@ -13,9 +13,9 @@
  */
 
 /* delete a variable entry */
-$NVX_DB->CLEAR(array("ALL"));
-$NVX_DB->SET_FILTER("`id`={$NVX_BOOT->FETCH_ENTRY("breadcrumb",3)}");
-$NVX_DB->QUERY("DELETE","FROM `variables`");
+$nvDb->clear(array("ALL"));
+$nvDb->set_filter("`id`={$nvBoot->fetch_entry("breadcrumb",3)}");
+$nvDb->query("DELETE","FROM `variables`");
 
 /* issue a notification */
 $_SESSION['notify']=array(
@@ -24,4 +24,4 @@ $_SESSION['notify']=array(
 );
 
 /* redirect to the variable listings */
-$NVX_BOOT->HEADER(array("LOCATION"=>"/settings/variables/list"));
+$nvBoot->header(array("LOCATION"=>"/settings/variables/list"));
