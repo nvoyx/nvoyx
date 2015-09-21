@@ -13,9 +13,9 @@
  */
 
 /* add a blank type entry */
-$NVX_DB->CLEAR(array("ALL"));
-$tid = $NVX_DB->QUERY("INSERT","INTO `type` (`id`,`name`,`parent`,`prefix`,`view`,`createdelete`,`rss`,`body`,`template`,`tags`) " . 
-							"VALUES (NULL,'{$NVX_BOOT->FETCH_ENTRY("timestamp")}',-1,'','s','s',0,0,3,'[]')");
+$nvDb->clear(array("ALL"));
+$tid = $nvDb->query("INSERT","INTO `type` (`id`,`name`,`parent`,`prefix`,`view`,`createdelete`,`rss`,`body`,`template`,`tags`) " . 
+							"VALUES (NULL,'{$nvBoot->fetch_entry("timestamp")}',-1,'','s','s',0,0,3,'[]')");
 							
 /* issue a notification */
 $_SESSION['notify']=array(
@@ -24,4 +24,4 @@ $_SESSION['notify']=array(
 );
 
 /* redirect to the new type-edit */
-$NVX_BOOT->HEADER(array("LOCATION"=>"/settings/type/edit/{$tid}"));
+$nvBoot->header(array("LOCATION"=>"/settings/type/edit/{$tid}"));

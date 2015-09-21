@@ -13,17 +13,17 @@
  */
 
 /* remove the page */
-$NVX_DB->CLEAR(array("ALL"));
-$NVX_DB->SET_FILTER("`id`={$NVX_BOOT->FETCH_ENTRY("breadcrumb",3)}");
-$NVX_DB->QUERY("DELETE","FROM `type`");
+$nvDb->clear(array("ALL"));
+$nvDb->set_filter("`id`={$nvBoot->fetch_entry("breadcrumb",3)}");
+$nvDb->query("DELETE","FROM `type`");
 
 /* grab an array of all pages of this type */
-$NVX_DB->CLEAR(array("ALL"));
-$NVX_DB->SET_FILTER("`tid`={$NVX_BOOT->FETCH_ENTRY("breadcrumb",3)}");
-$rs = $NVX_DB->QUERY("SELECT","`page`.`id` FROM `page`");
+$nvDb->clear(array("ALL"));
+$nvDb->set_filter("`tid`={$nvBoot->fetch_entry("breadcrumb",3)}");
+$rs = $nvDb->query("SELECT","`page`.`id` FROM `page`");
 
 /* create an array of field types */
-$fts = array("datebox","filelist","heirarchy","imagelist","mselect","sselect","textarea","textbox","heirarchy","tagbox");
+$fts = array("ajaxbox","datebox","filelist","heirarchy","imagelist","mselect","sselect","textarea","textbox","heirarchy","tagbox");
 
 /* if we have any pages of this type */
 if($rs){
@@ -35,9 +35,9 @@ if($rs){
 		foreach($fts as $ft){
 	
 				/* remove any field entries for the current node */
-				$NVX_DB->CLEAR(array("ALL"));
-				$NVX_DB->SET_FILTER("`nid`={$r["page.id"]}");
-				$NVX_DB->QUERY("DELETE","FROM `{$ft}`");
+				$nvDb->clear(array("ALL"));
+				$nvDb->set_filter("`nid`={$r["page.id"]}");
+				$nvDb->query("DELETE","FROM `{$ft}`");
 		}
 	}	
 }
@@ -50,4 +50,4 @@ $_SESSION['notify']=array(
 
 
 /* redirect to the type list */
-$NVX_BOOT->HEADER(array("LOCATION"=>"/settings/type/list"));
+$nvBoot->header(array("LOCATION"=>"/settings/type/list"));
