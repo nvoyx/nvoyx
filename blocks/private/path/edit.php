@@ -13,13 +13,13 @@
  */
 
 /* rebuild the PATH array */
-$NVX_PATH->BUILD_ARRAY();
+$nvPath->build_array();
 
 /* path id */
-$pid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
+$pid = $nvBoot->fetch_entry("breadcrumb",3);
 
 /* lookup the path details */
-foreach($NVX_PATH->FETCH_ARRAY() as $r){if($r["id"]==$pid){break;}}
+foreach($nvPath->fetch_array() as $r){if($r["id"]==$pid){break;}}
 
 /* have we found the path */
 if(isset($r)){ ?>
