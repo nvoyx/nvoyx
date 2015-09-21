@@ -13,16 +13,16 @@
  */
 
 /* rebuild the GROUP array */
-$NVX_GROUP->BUILD_ARRAY();
+$nvGroup->build_array();
 
 /* field gid */
-$gid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
+$gid = $nvBoot->fetch_entry("breadcrumb",3);
 
 /* field id */
-$fid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",4);
+$fid = $nvBoot->fetch_entry("breadcrumb",4);
 
 /* lookup the group details */
-foreach($NVX_GROUP->FETCH_ARRAY() as $group){if($group["id"]==$gid){break;}}
+foreach($nvGroup->fetch_array() as $group){if($group["id"]==$gid){break;}}
 
 /* have we found the group */
 if(isset($group)){
@@ -105,7 +105,7 @@ if(isset($group)){
 						<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 med-pad-r0 lge-pad-r0 pad-b20'>
 							<label class='col all100 fs13 c-blue pad-b5'>Extra Editor</label>
 							<select class='col all100 fs14 ss' name='extra-editor' id='extra-editor' placeholder="Please Select">
-								<?php foreach($NVX_VAR->FETCH_ENTRY("editors") as $e){
+								<?php foreach($nvVar->fetch_entry("editors") as $e){
 									if($g["extra-editor"]==$e){$flg = " selected";} else {$flg="";} ?>
 									<option<?=$flg;?> value='<?=$e;?>'><?=$e;?></option>
 								<?php } ?>
