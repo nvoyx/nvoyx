@@ -248,6 +248,7 @@ class Boot{
 			default:
 				$r = json_encode($a,JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 				if($r!=''){if(substr($r,0,1)!="{" && substr($r,0,1)!="["){$r = "[".$r."]";}}
+				$r=str_replace("\\\\","\\",$r);
 				return $r;
 		endswitch;	
 	}
