@@ -13,9 +13,9 @@
  */
 
 /* grab the imagecaches */
-$NVX_DB->CLEAR(array("ALL"));
-$NVX_DB->SET_ORDER(array("`imagecache`.`name`"=>"ASC"));
-$imagecaches = $NVX_DB->QUERY("SELECT","* FROM `imagecache`");
+$nvDb->clear(array("ALL"));
+$nvDb->set_order(array("`imagecache`.`name`"=>"ASC"));
+$imagecaches = $nvDb->query("SELECT","* FROM `imagecache`");
 ?>
 
 <!-- MAIN MENU -->
@@ -54,7 +54,7 @@ $imagecaches = $NVX_DB->QUERY("SELECT","* FROM `imagecache`");
 			</div>
 			<div class='col all30 fs14 tar'>
 				<a href='/settings/imagecache/edit/<?=$r['imagecache.id'];?>' class='pad-r5 pad-b0 hvr-white'>Edit</a>
-				<a onclick='deleteCheck("/settings/imagcache/delete/<?=$r['imagecache.id'];?>");' class='pad-l5 pad-b0 hvr-white'>Delete</a>
+				<a onclick='deleteCheck("/settings/imagecache/delete/<?=$r['imagecache.id'];?>");' class='pad-l5 pad-b0 hvr-white'>Delete</a>
 			</div>
 		</div>
 		<?php $x++;}} ?>
