@@ -13,43 +13,43 @@
  */
 
 /* the page type to be created */
-$tid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
+$tid = $nvBoot->fetch_entry("breadcrumb",3);
 
 /* convert the current microtime to MySQL datetime format */
-$mt =  date('Y-m-d H:i',$NVX_BOOT->FETCH_ENTRY("microstamp"));
+$mt =  date('Y-m-d H:i',$nvBoot->fetch_entry("microstamp"));
 
 /* encode the microtime as an alias */
-$alias = $NVX_BOOT->ALIAS($mt);
+$alias = $nvBoot->alias($mt);
 
 /* create an empty array of nvids */
 $nvids = array();
 
 /* cycle thru the groups */
-foreach($NVX_GROUP->FETCH_ARRAY() as $GROUP){
+foreach($nvGroup->fetch_array() as $group){
 	
 	/* is this group associated with the current content type */
-	if(in_array($tid,$GROUP["assoc"])){
+	if(in_array($tid,$group["assoc"])){
 		
 		/* update nvids array */
-		$nvids[$GROUP["id"]]=0;
+		$nvids[$group["id"]]=0;
 	}
 }
 
 /* convert nvids array to a json string */
-$nvids = $NVX_BOOT->JSON($nvids,"encode");
+$nvids = $nvBoot->json($nvids,"encode");
 
 /* add a page to the database and grab its nid */
-$NVX_DB->CLEAR(array("ALL"));
+$nvDb->clear(array("ALL"));
 $q = "INTO `page` (`id`,`tid`,`nvids`,`title`,`alias`,`heading`,`date`,`modified`,`ttc`,`ttp`,`by`) VALUES " .
-		"(null,{$tid},'{$nvids}','nvoyxid{$mt}','nvoyxid{$alias}','{$mt}','{$mt}','{$mt}','{$mt}','{$mt}',{$NVX_USER->FETCH_ENTRY("id")})";
-$nid = $NVX_DB->QUERY("INSERT",$q);
+		"(null,{$tid},'{$nvids}','nvoyxid{$mt}','nvoyxid{$alias}','{$mt}','{$mt}','{$mt}','{$mt}','{$mt}',{$nvUser->fetch_entry("id")})";
+$nid = $nvDb->query("INSERT",$q);
 
 
 /* check that a new page has been created, create a rollback folder then go visit it */
 if(is_numeric($nid)){
 	
-	if(!file_exists($NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid)){
-		mkdir($NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid);
+	if(!file_exists($nvBoot->fetch_entry("rollback")."/".$nid)){
+		mkdir($nvBoot->fetch_entry("rollback")."/".$nid);
 	}
 	
 	/* issue a notification */
@@ -58,5 +58,5 @@ if(is_numeric($nid)){
 		'type'=>'success'
 	);
 	
-	$NVX_BOOT->HEADER(array("LOCATION"=>"/settings/content/edit/".$nid));
+	$nvBoot->header(array("LOCATION"=>"/settings/content/edit/".$nid));
 }

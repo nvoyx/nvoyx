@@ -7,19 +7,19 @@
  */
 
 /* if we have a zero max value (unlimited), set this to 999 */
-if($OUTLINE["max"]==0){$OUTLINE["max"]=999;}
+if($outline["max"]==0){$outline["max"]=999;}
 
 /* create a counter to make sure we don't return more than the maximum number of heirarchies */
 $x=0;
 
 /* cycle through the available heirarchy options */
-foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
+foreach($field["fid-{$outline["fid"]}"] as $iteration=>$values){
 
 	?>
 
 	<!-- HEIRARCHY -->
 	<div class='col all100 pad-b35 heirarchy-wrapper'>
-		<label class='col all100 fs13 c-white pad-b5'><?=ucwords($OUTLINE['name']);?></label>
+		<label class='col all100 fs13 c-white pad-b5'><?=ucwords($outline['name']);?></label>
 	<?php
 
 	/* iterate the heirarchy counter */
@@ -29,21 +29,20 @@ foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
 	$selecteds = false;
 
 	/* have we examined no more than the max permissible heirarchies */
-	if($x<=$OUTLINE["max"]){
+	if($x<=$outline["max"]){
 
 		/* if we do not have any values */
-		if(!array_key_exists("parent",$VALUES)){
+		if(!array_key_exists("parent",$values)){
 
 			/* make a single blank entry */
-			$VALUES["parent"][0] = -1;
+			$values["parent"][0] = -1;
 		}
 
 		/* cycle through the levels */
-		foreach($VALUES["parent"] as $parent){
+		foreach($values["parent"] as $parent){
 
 			/* which content type does the current parent nid belong to */
-			$ptid = $NVX_TYPE->FETCH_MATCHES(array("NID"=>$parent,
-													"USER"=>$NVX_USER->FETCH_ENTRY("type")));
+			$ptid = $nvType->fetch_matches($nvUser->fetch_entry("type"),false,$parent);
 
 			if($ptid){
 
@@ -58,9 +57,9 @@ foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
 		}
 
 		/* grab the parent from this page type array and create the first single select */
-		$NVX_DB->CLEAR(array("ALL"));
-		$NVX_DB->SET_FILTER("`tid`={$TYPE["parent"]}");
-		$options = $NVX_DB->QUERY("SELECT","`page`.`title`,`page`.`id` FROM `page`");
+		$nvDb->clear(array("ALL"));
+		$nvDb->set_filter("`tid`={$type["parent"]}");
+		$options = $nvDb->query("SELECT","`page`.`title`,`page`.`id` FROM `page`");
 
 		/* do we have options */
 		if($options){
@@ -78,7 +77,7 @@ foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
 			}
 			?>
 
-			<select class='col all100 fs14 ss pad-b5' onchange='<?="heirarchyChange({$PAGE["id"]},this,0,{$OUTLINE["max"]});"; ?>' name="<?="heirarchy-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-0";?>" id="<?="heirarchy-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-0";?>">
+			<select class='col all100 fs14 ss pad-b5' onchange='<?="heirarchyChange({$page["id"]},this,0,{$outline["max"]});"; ?>' name="<?="heirarchy-{$group["id"]}-{$vari}-{$outline["fid"]}-{$iteration}-0";?>" id="<?="heirarchy-{$group["id"]}-{$vari}-{$outline["fid"]}-{$iteration}-0";?>">
 				<?php 
 
 				/* cycle through the options */
@@ -111,9 +110,9 @@ foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
 						/* grab the nid from the heirarchy responses where the previous nid is in the heirarchy array */
 						/* first run will be a bit rough ie, nid might be in the wrong heirarchy iteration, 10 might be returned when requesting 1 etc. */
 						/* shorten the list, then let php find valid entries */
-						$NVX_DB->CLEAR(array("ALL"));
-						$NVX_DB->SET_FILTER("`heirarchy`.`values` LIKE '%\"{$selecteds[$a-1]["NID"]}\"%' AND `heirarchy`.`nid`!={$PAGE["id"]}");
-						$possibles = $NVX_DB->QUERY("SELECT","`heirarchy`.`values`,`heirarchy`.`nid` FROM `heirarchy`");
+						$nvDb->clear(array("ALL"));
+						$nvDb->set_filter("`heirarchy`.`values` LIKE '%\"{$selecteds[$a-1]["NID"]}\"%' AND `heirarchy`.`nid`!={$page["id"]}");
+						$possibles = $nvDb->query("SELECT","`heirarchy`.`values`,`heirarchy`.`nid` FROM `heirarchy`");
 						if($possibles==false){$possibles=true;}
 					} else {$possibles = false;}
 
@@ -131,7 +130,7 @@ foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
 
 							/* NEW SHIT */
 							$heirs=false;
-							$heirs = $NVX_BOOT->JSON($possible["heirarchy.values"],"decode");
+							$heirs = $nvBoot->json($possible["heirarchy.values"],"decode");
 							foreach($heirs as $heir){
 
 								if(in_array($selecteds[$a-1]["NID"],$heir)){
@@ -140,17 +139,17 @@ foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
 									
 									if($heir[$a]!=-1){
 
-										$NVX_DB->CLEAR(array("ALL"));
-										$NVX_DB->SET_FILTER("`page`.`id`={$heir[$a]} AND `page`.`id`!={$PAGE["id"]}");
-										$title = $NVX_DB->QUERY("SELECT","`page`.`title` FROM `page`");
+										$nvDb->clear(array("ALL"));
+										$nvDb->set_filter("`page`.`id`={$heir[$a]} AND `page`.`id`!={$page["id"]}");
+										$title = $nvDb->query("SELECT","`page`.`title` FROM `page`");
 										if($title){
 											$rs[$heir[$a]] = array("INTERNAL"=>$heir[$a],"EXTERNAL"=>$title[0]["page.title"]);
 										}
 									} else {
 
-										$NVX_DB->CLEAR(array("ALL"));
-										$NVX_DB->SET_FILTER("`page`.`id`={$possible["heirarchy.nid"]} AND `page`.`id`!={$PAGE["id"]}");
-										$title = $NVX_DB->QUERY("SELECT","`page`.`title` FROM `page`");
+										$nvDb->clear(array("ALL"));
+										$nvDb->set_filter("`page`.`id`={$possible["heirarchy.nid"]} AND `page`.`id`!={$page["id"]}");
+										$title = $nvDb->query("SELECT","`page`.`title` FROM `page`");
 										if($title){
 											$rs[$possible["heirarchy.nid"]] = array("INTERNAL"=>$possible["heirarchy.nid"],"EXTERNAL"=>$title[0]["page.title"]);
 										}
@@ -180,7 +179,7 @@ foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
 						if($flag==0){$selecteds[$a]["NID"]=-1;}
 
 						if(count($rs)>0){ ?>
-						<select class='col all100 fs14 ss pad-b5' onchange='<?="heirarchyChange({$PAGE["id"]},this,{$a},{$OUTLINE["max"]});"; ?>' name="<?="heirarchy-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-{$a}";?>" id="<?="heirarchy-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-{$ITERATION}-{$a}";?>">
+						<select class='col all100 fs14 ss pad-b5' onchange='<?="heirarchyChange({$page["id"]},this,{$a},{$outline["max"]});"; ?>' name="<?="heirarchy-{$group["id"]}-{$vari}-{$outline["fid"]}-{$iteration}-{$a}";?>" id="<?="heirarchy-{$group["id"]}-{$vari}-{$outline["fid"]}-{$iteration}-{$a}";?>">
 							<?php 
 							foreach ($rs as $r){
 							if($selecteds[$a]["NID"]==$r["INTERNAL"]){$flg = " selected";} else {$flg="";} ?>

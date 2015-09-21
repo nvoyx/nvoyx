@@ -11,14 +11,14 @@ $v=array();
 $jsonv = array();
 
 /* cycle through the values stored for this field */
-foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
+foreach($field["fid-{$outline["fid"]}"] as $iteration=>$values){
 
 	/* do we have a tag */
-	if(key_exists("tag",$VALUES)){
+	if(key_exists("tag",$values)){
 
 			/* wrap each of the tags in a-tags */ 
-			$v[] = "<span class='tag'><a class=\"fs14 c-white pad-r10\" onclick=\"deleteTag(this,'#tagbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-tags','{$VALUES["tag"]}')\">{$VALUES["tag"]}</a></span>";
-			$jsonv[] = $VALUES["tag"];
+			$v[] = "<span class='tag'><a class=\"fs14 c-white pad-r10\" onclick=\"deleteTag(this,'#tagbox-{$group["id"]}-{$vari}-{$outline["fid"]}-0-tags','{$values["tag"]}')\">{$values["tag"]}</a></span>";
+			$jsonv[] = $values["tag"];
 	}
 }
 
@@ -31,26 +31,26 @@ if(count($v)==0){
 } else {
 
 	/* encode the json array */
-	$jsonv = $NVX_BOOT->JSON($jsonv,"encode");
+	$jsonv = $nvBoot->json($jsonv,"encode");
 }
 
 ?>
 
 <!-- TAG LOOKUP -->
 <div class='col all100 pad-b20'>
-	<label class='col all100 fs13 c-white pad-b5'><?=ucwords($OUTLINE['name']);?></label>
-	<input class='col all100 fs14 tb' onkeyup='fetchTags(this,<?=$TYPE['id'];?>,<?="\"#tagbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-addtags\""; ?>);' name="<?php echo "ignore-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-tags";?>" id="<?php echo "ignore-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-tags";?>" type="text" value="">
-	<input name="<?="tagbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-tags";?>" id="<?="tagbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-tags";?>" type="hidden" value='<?=$jsonv;?>'>
+	<label class='col all100 fs13 c-white pad-b5'><?=ucwords($outline['name']);?></label>
+	<input class='col all100 fs14 tb' onkeyup='fetchTags(this,<?=$type['id'];?>,<?="\"#tagbox-{$group["id"]}-{$vari}-{$outline["fid"]}-0-addtags\""; ?>);' name="<?php echo "ignore-{$group["id"]}-{$vari}-{$outline["fid"]}-0-tags";?>" id="<?php echo "ignore-{$group["id"]}-{$vari}-{$outline["fid"]}-0-tags";?>" type="text" value="">
+	<input name="<?="tagbox-{$group["id"]}-{$vari}-{$outline["fid"]}-0-tags";?>" id="<?="tagbox-{$group["id"]}-{$vari}-{$outline["fid"]}-0-tags";?>" type="hidden" value='<?=$jsonv;?>'>
 </div>
 
 <!-- CURRENT TAGS -->
 <div class='col all50 sml100 med50 lge50 pad-r10 sml-pad-r0 pad-b40'>
 	<label class='col all100 fs13 c-white pad-b5'>Current Tags</label>
-	<div id='<?="tagbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-deletetags";?>' class='col all100 fs14 ta current-tags'><?php echo implode("",$v); ?></div>
+	<div id='<?="tagbox-{$group["id"]}-{$vari}-{$outline["fid"]}-0-deletetags";?>' class='col all100 fs14 ta current-tags'><?php echo implode("",$v); ?></div>
 </div>
 
 <!-- AVAILABLE TAGS -->
 <div class='col all50 sml100 med50 lge50 pad-b40'>
 	<label class='col all100 fs13 c-white pad-b5'>Available Tags</label>
-	<div id='<?="tagbox-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-addtags";?>' class='col all100 fs14 ta current-tags'></div>
+	<div id='<?="tagbox-{$group["id"]}-{$vari}-{$outline["fid"]}-0-addtags";?>' class='col all100 fs14 ta current-tags'></div>
 </div>

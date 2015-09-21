@@ -13,27 +13,27 @@
  */
 
 /* the page to be deleted */
-$nid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
+$nid = $nvBoot->FETCH_ENTRY("breadcrumb",3);
 
 /* select the page tid */
-$NVX_DB->CLEAR(array("ALL"));
-$NVX_DB->SET_FILTER("`page`.`id`={$nid}");
-$tid = $NVX_DB->QUERY("SELECT","`page`.`tid` FROM `page`");
+$nvBoot->clear(array("ALL"));
+$nvDb->set_filter("`page`.`id`={$nid}");
+$tid = $nvDb->query("SELECT","`page`.`tid` FROM `page`");
 
 /* if we have a page type */
 if($tid){
 	
 	/* grab information on the page type */
-	$type = $NVX_TYPE->FETCH_BY_TID($tid[0]['page.tid']);
+	$type = $nvType->fetch_by_tid($tid[0]['page.tid']);
 	
 	/* is the current user allowed to delete this page */
-	if(stristr($NVX_USER->FETCH_ENTRY("type"),$type["createdelete"])){
+	if(stristr($nvUser->fetch_entry("type"),$type["createdelete"])){
 		
 		/* check that the rollback folder exists */
-		if(file_exists($NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid)){
+		if(file_exists($nvBoot->fetch_entry("rollback")."/".$nid)){
 			
 			/* cycle through the relevant rollback node folder and return a list of files */
-			$files = glob($NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid."/*.zip");
+			$files = glob($nvBoot->fetch_entry("rollback")."/".$nid."/*.zip");
 			
 			/* if  we have an array */
 			if(is_array($files)){
@@ -49,23 +49,23 @@ if($tid){
 				rsort($files,SORT_NUMERIC);
 				
 				/* if we don't already have a recovery folder for pages of this type */
-				if(!file_exists($NVX_BOOT->FETCH_ENTRY("recovery")."/".$tid[0]['page.tid'])){
+				if(!file_exists($nvBoot->fetch_entry("recovery")."/".$tid[0]['page.tid'])){
 					
 					/* make it */
-					mkdir($NVX_BOOT->FETCH_ENTRY("recovery")."/".$tid[0]['page.tid']);
+					mkdir($nvBoot->fetch_entry("recovery")."/".$tid[0]['page.tid']);
 				}
 				
 				/* copy the latest rollback to its tid recovery folder  - name it by nid */
 				if(end($files)!=''){
-					copy($NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid."/".end($files).".zip", $NVX_BOOT->FETCH_ENTRY("recovery")."/".$tid[0]['page.tid']."/".$nid.".zip");
+					copy($nvBoot->fetch_entry("rollback")."/".$nid."/".end($files).".zip", $nvBoot->fetch_entry("recovery")."/".$tid[0]['page.tid']."/".$nid.".zip");
 				}
 			}
 		}
 		
 		/* delete the page reference */
-		$NVX_DB->CLEAR(array("ALL"));
-		$NVX_DB->SET_FILTER("`page`.`id`={$nid}");
-		$NVX_DB->QUERY("DELETE","FROM `page`");
+		$nvDb->clear(array("ALL"));
+		$nvDb->set_filter("`page`.`id`={$nid}");
+		$nvDb->query("DELETE","FROM `page`");
 
 		/* create an array of field types */
 		$ftypes = array("datebox","filelist","imagelist","mselect","sselect","textarea","textbox","heirarchy","tagbox");
@@ -74,16 +74,16 @@ if($tid){
 		foreach($ftypes as $ftype){
 			
 			/* delete any field references */
-			$NVX_DB->CLEAR(array("ALL"));
-			$NVX_DB->SET_FILTER("`{$ftype}`.`nid`={$nid}");
-			$NVX_DB->QUERY("DELETE","FROM `{$ftype}`");
+			$nvDb->clear(array("ALL"));
+			$nvDb->set_filter("`{$ftype}`.`nid`={$nid}");
+			$nvDb->query("DELETE","FROM `{$ftype}`");
 		}		
 	}
 }
 
 /* we need to delete the rollback folder */
-if(file_exists($NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid)){
-	$NVX_BOOT->DEL_TREE($NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid);
+if(file_exists($nvBoot->fetch_entry("rollback")."/".$nid)){
+	$nvBoot->del_tree($nvBoot->fetch_entry("rollback")."/".$nid);
 }
 
 /* issue a notification */
@@ -93,4 +93,4 @@ $_SESSION['notify']=array(
 );
 
 /* redirect to the content listing page */
-$NVX_BOOT->HEADER(array("LOCATION"=>"/settings/content/list"));
+$nvBoot->header(array("LOCATION"=>"/settings/content/list"));

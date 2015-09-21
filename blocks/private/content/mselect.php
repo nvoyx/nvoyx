@@ -10,20 +10,20 @@
 $v=array();
 
 /* cycle through the available select options (one in each array entry) */
-foreach($FIELD["fid-{$OUTLINE["fid"]}"] as $ITERATION=>$VALUES){
+foreach($field["fid-{$outline["fid"]}"] as $iteration=>$values){
 
 	/* if we have a selected entry */
-	if(key_exists("selected",$VALUES)){
+	if(key_exists("selected",$values)){
 
 		/* add the selected item to an array */
-		$v[]=$VALUES["selected"];
+		$v[]=$values["selected"];
 	}
 }
 
 /* reset the results variable */
 $rs=array();
 
-foreach($OUTLINE["content"] as $key => $value){
+foreach($outline["content"] as $key => $value){
 
 	/* cycle through any select options associated with this field */
 	$rs[] = array("INTERNAL"=>$value,"EXTERNAL"=>$key);
@@ -33,8 +33,8 @@ foreach($OUTLINE["content"] as $key => $value){
 
 <!-- MULTIPLE SELECT -->
 <div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 pad-b40'>
-	<label class='col all100 fs13 c-white pad-b5'><?=ucwords($OUTLINE['name']);?></label>
-	<select class='col all100 fs14 ms' name='<?="mselect-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-options[]";?>' id='<?="mselect-{$GROUP["id"]}-{$VARI}-{$OUTLINE["fid"]}-0-options";?>' placeholder="Please Select" multiple>
+	<label class='col all100 fs13 c-white pad-b5'><?=ucwords($outline['name']);?></label>
+	<select class='col all100 fs14 ms' name='<?="mselect-{$group["id"]}-{$vari}-{$outline["fid"]}-0-options[]";?>' id='<?="mselect-{$group["id"]}-{$vari}-{$outline["fid"]}-0-options";?>' placeholder="Please Select" multiple>
 		<?php 
 		foreach ($rs as $r){
 		if(in_array($r["INTERNAL"],$v)){$flg = " selected";} else {$flg="";} ?>
