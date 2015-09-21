@@ -16,9 +16,9 @@
 $bid = pathinfo(__FILE__, PATHINFO_FILENAME);
 
 /* grab the params */
-$p = $NVX_BLOCK->FETCH_PARAMS($bid);
+$p = $nvBlock->fetch_params($bid);
 
 ?>
 
 <!-- 404 ERROR (7) -->
-<p><?=$PAGE['body'];?></p>
+<p><?=$page['body'];?></p>

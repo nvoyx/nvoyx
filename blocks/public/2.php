@@ -17,7 +17,7 @@
 $bid = pathinfo(__FILE__, PATHINFO_FILENAME);
 
 /* grab the params */
-$p = $NVX_BLOCK->FETCH_PARAMS($bid);
+$p = $nvBlock->fetch_params($bid);
 
 /* notify code */
 if(array_key_exists('notify',$_SESSION)){ ?>
