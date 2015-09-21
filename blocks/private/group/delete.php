@@ -13,12 +13,12 @@
  */
 
 /* the group type to be deleted */
-$gid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
+$gid = $nvBoot->fetch_entry("breadcrumb",3);
 
 /* delete the group */
-$NVX_DB->CLEAR(array("ALL"));
-$NVX_DB->SET_FILTER("`group`.`id`={$gid}");
-$NVX_DB->QUERY("DELETE","FROM `group`");
+$nvDb->clear(array("ALL"));
+$nvDb->set_filter("`group`.`id`={$gid}");
+$nvDb->query("DELETE","FROM `group`");
 
 /* create an array of field types */
 $fts = array("ajaxbox","datebox","filelist","heirarchy","imagelist","mselect","sselect","textarea","textbox","heirarchy","tagbox");
@@ -27,9 +27,9 @@ $fts = array("ajaxbox","datebox","filelist","heirarchy","imagelist","mselect","s
 foreach($fts as $ft){
 	
 	/* delete any data held for this field */
-	$NVX_DB->CLEAR(array("ALL"));
-	$NVX_DB->SET_FILTER("`{$ft}`.`gid`={$gid}");
-	$NVX_DB->QUERY("DELETE","FROM `{$ft}`");
+	$nvDb->clear(array("ALL"));
+	$nvDb->set_filter("`{$ft}`.`gid`={$gid}");
+	$nvDb->query("DELETE","FROM `{$ft}`");
 }
 
 /* issue a notification */
@@ -39,4 +39,4 @@ $_SESSION['notify']=array(
 );
 
 /* redirect to the group listings */
-$NVX_BOOT->HEADER(array("LOCATION"=>"/settings/group/list"));
+$nvBoot->header(array("LOCATION"=>"/settings/group/list"));
