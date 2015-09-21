@@ -804,7 +804,7 @@ class Content{
 			$human = self::$boot->json($human,"encode");
 			/* we need this here as well as at the new page create as the CMS has some pages present upon install */
 			if(!file_exists(self::$boot->fetch_entry("rollback")."/".$nid)){
-				mkdir($nvBoot->fetch_entry("rollback")."/".$nid);
+				mkdir(self::$boot->fetch_entry("rollback")."/".$nid);
 			}
 			$files = glob(self::$boot->fetch_entry("rollback")."/".$nid."/*.zip");
 			if(count($files)==20){
