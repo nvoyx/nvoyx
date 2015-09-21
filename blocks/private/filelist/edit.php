@@ -13,16 +13,16 @@
  */
 
 /* rebuild the GROUP array */
-$NVX_GROUP->BUILD_ARRAY();
+$nvGroup->build_array();
 
 /* field gid */
-$gid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
+$gid = $nvBoot->fetch_entry("breadcrumb",3);
 
 /* field id */
-$fid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",4);
+$fid = $nvBoot->fetch_entry("breadcrumb",4);
 
 /* lookup the group details */
-foreach($NVX_GROUP->FETCH_ARRAY() as $group){if($group["id"]==$gid){break;}}
+foreach($nvGroup->fetch_array() as $group){if($group["id"]==$gid){break;}}
 
 /* have we found the group */
 if(isset($group)){
@@ -85,7 +85,7 @@ if(isset($group)){
 						<!-- FILETYPES -->
 						<div class='col all100 pad-b20'>
 							<label class='col all100 fs13 c-blue pad-b5'>Filetypes</label>
-							<textarea class='col all100 fs14 ta' name='filetypes' id='filetypes' placeholder='Valid Filetypes'><?=$NVX_BOOT->JSON($g['filetypes'],'encode');?></textarea>
+							<textarea class='col all100 fs14 ta' name='filetypes' id='filetypes' placeholder='Valid Filetypes'><?=$nvBoot->json($g['filetypes'],'encode');?></textarea>
 						</div>
 
 						<!-- SAVE -->
