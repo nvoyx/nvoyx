@@ -16,30 +16,30 @@
 if(array_key_exists("clear",$_GET)){
 	
 	/* sanitise the request */
-	$c = $NVX_BOOT->TEXT($_GET["clear"]);
+	$c = $nvBoot->text($_GET["clear"]);
 	
 	/* check that the request has the correct value */
 	if($c=="1"){
 		
 		/* remove the current log file from the server */
-		unlink($NVX_BOOT->FETCH_ENTRY("log")."/error.log");
+		unlink($nvBoot->fetch_entry("log")."/error.log");
 		
 		/* create a new log file on the server */
-		touch($NVX_BOOT->FETCH_ENTRY("log")."/error.log");
+		touch($nvBoot->fetch_entry("log")."/error.log");
 		
 		/* redirect to this page (important to remove the clear request) */
-		$NVX_BOOT->HEADER(array("LOCATION"=>"/settings/debug/log"));
+		$nvBoot->header(array("LOCATION"=>"/settings/debug/log"));
 	}
 }
 
 /* do we have a log file */
-if(file_exists($NVX_BOOT->FETCH_ENTRY("log")."/error.log")){
+if(file_exists($nvBoot->fetch_entry("log")."/error.log")){
 	
 	/*is the file readable */
-	if(is_readable($NVX_BOOT->FETCH_ENTRY("log")."/error.log")){
+	if(is_readable($nvBoot->fetch_entry("log")."/error.log")){
 		
 		/* grab the contents of the file into an array */
-		$rs=$NVX_BOOT->TAIL($NVX_BOOT->FETCH_ENTRY("log").'/error.log',100,true);
+		$rs=$nvBoot->tail($nvBoot->fetch_entry("log").'/error.log',100,true);
 		$rs=explode("\n",$rs);
 		
 		/* create an array to hold the formatted log entries array */
