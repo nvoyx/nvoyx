@@ -11,9 +11,9 @@
  */
 
 /* add a blank redirect entry */
-$NVX_DB->CLEAR(array("ALL"));
-$pid = $NVX_DB->QUERY("INSERT","INTO `redirects` (`id`,`old`,`new`) " . 
-							"VALUES (NULL,'{$NVX_BOOT->FETCH_ENTRY("timestamp")}','{$NVX_BOOT->FETCH_ENTRY("timestamp")}')");
+$nvDb->clear(array("ALL"));
+$pid = $nvDb->query("INSERT","INTO `redirects` (`id`,`old`,`new`) " . 
+							"VALUES (NULL,'{$nvBoot->fetch_entry("timestamp")}','{$nvBoot->fetch_entry("timestamp")}')");
 
 /* issue a notification */
 $_SESSION['notify']=array(
@@ -22,4 +22,4 @@ $_SESSION['notify']=array(
 );
 
 /* redirect to the new redirects-edit */
-$NVX_BOOT->HEADER(array("LOCATION"=>"/settings/redirects/edit/{$pid}"));
+$nvBoot->header(array("LOCATION"=>"/settings/redirects/edit/{$pid}"));
