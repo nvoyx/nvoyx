@@ -13,13 +13,13 @@
  */
 
 /* rebuild the GROUP array */
-$NVX_GROUP->BUILD_ARRAY();
+$nvGroup->build_array();
 
 /* field gid */
-$gid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
+$gid = $nvBoot->fetch_entry("breadcrumb",3);
 
 /* field id */
-$fid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",4);
+$fid = $nvBoot->fetch_entry("breadcrumb",4);
 
 /* item insert */
 $html=<<<HTML
@@ -65,7 +65,7 @@ function addSelectOption(){
 
 <?php
 /* lookup the group details */
-foreach($NVX_GROUP->FETCH_ARRAY() as $group){if($group["id"]==$gid){break;}}
+foreach($nvGroup->fetch_array() as $group){if($group["id"]==$gid){break;}}
 
 /* have we found the group */
 if(isset($group)){
@@ -135,7 +135,7 @@ if(isset($group)){
 						<ul class='sortable b-lgrey'>
 						<?php 
 							$x=0;
-							$t = $NVX_BOOT->FETCH_ENTRY("timestamp");
+							$t = $nvBoot->fetch_entry("timestamp");
 							foreach($g["content"] as $k=>$v){
 							$r['bc']=($x%2==0)?'b-lblue':'b-vlblue';?>
 							<li class='row pad20 c-white <?=$r['bc'];?>'>
