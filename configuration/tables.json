@@ -394,14 +394,14 @@
 						"name":"'CMS thumbnails'",
 						"x":"0",
 						"y":"30",
-						"mime":"png",
+						"mime":"'png'",
 						"effects":"'[\"\"]'"
 					},
 					{
 						"name":"'Original'",
 						"x":"0",
 						"y":"0",
-						"mime":"png",
+						"mime":"'png'",
 						"effects":"'[\"\"]'"
 					}
 				]
