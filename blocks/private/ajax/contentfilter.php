@@ -13,7 +13,7 @@
  */
 
 /* sanitise any data passed by _POST */
-$p = $NVX_BOOT->TEXT($_POST);
+$p = $nvBoot->text($_POST);
 
 /* do we have an action */
 if(array_key_exists("filter",$p) && array_key_exists("user",$p)){
@@ -22,8 +22,8 @@ if(array_key_exists("filter",$p) && array_key_exists("user",$p)){
 	if(is_numeric($p["filter"]) && is_numeric($p["user"])){
 		
 		/* push filter choice onto database */
-		$NVX_DB->CLEAR(array("ALL"));
-		$NVX_DB->SET_FILTER("`user`.`id`={$p["user"]}");
-		$NVX_DB->QUERY("UPDATE","`user` SET `user`.`filter`={$p["filter"]}");
+		$nvDb->clear(array("ALL"));
+		$nvDb->set_filter("`user`.`id`={$p["user"]}");
+		$nvDb->query("UPDATE","`user` SET `user`.`filter`={$p["filter"]}");
 	}
 }

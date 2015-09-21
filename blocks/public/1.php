@@ -14,13 +14,13 @@
  * returns admin navigation
  */
 
-if($NVX_USER->GRANTED("s")){
-	if(isset($DEBUG)){
-		if(is_array($DEBUG)){
-			$DEBUG=$NVX_HTML->UL($DEBUG);
+if($nvUser->granted("s")){
+	if(isset($debug)){
+		if(is_array($debug)){
+			$debu=$nvHtml->ul($debug);
 		}
 	} else {
-		$DEBUG = 'pass an array or variable to $DEBUG to view here.';
+		$debug = 'pass an array or variable to $debug to view here.';
 	}
 }
 
@@ -33,30 +33,30 @@ if($NVX_USER->GRANTED("s")){
 <div id="admin" class="hide col all100 pad20">
 	<div id='admin-nav' class='col all100 pad10 fs16 tar'>
 		<a href="/settings/content/list">Admin</a> | 
-		<?php if($NVX_DEPT->GRANTED($NVX_USER->FETCH_ARRAY()['dept'],$PAGE['tid'])){ ?>
-		<a href="/settings/content/edit/<?php echo $PAGE["id"]; ?>">Edit</a> | 
+		<?php if($nvDept->granted($nvUser->fetch_array()['dept'],$page['tid'])){ ?>
+		<a href="/settings/content/edit/<?=$page["id"]; ?>">Edit</a> | 
 		<?php } ?>
 		<a href="/settings/user/logout">Logout</a>
 	</div>
-	<?php if($NVX_USER->GRANTED("s")){ ?>
+	<?php if($nvUser->granted("s")){ ?>
 	<div class="row pad-t20">
 		<div class='col all100'>
 			<p class='fs12 pad-b15'>
-				Memory usage: <?=implode(' ',$NVX_BOOT->HUMAN_FILESIZE(memory_get_peak_usage()));?><br>
-				Db usage: <?=$NVX_DB->CALLS();?> calls<br>
-				Execution time: <?=number_format(microtime(true)-$NVX_BOOT->FETCH_ENTRY('microstamp'),5);?> seconds
+				Memory usage: <?=implode(' ',$nvBoot->human_filesize(memory_get_peak_usage()));?><br>
+				Db usage: <?=$nvDb->calls();?> calls<br>
+				Execution time: <?=number_format(microtime(true)-$nvBoot->fetch_entry('microstamp'),5);?> seconds
 			</p>
 			<p class='fs12 pad-b0'>
 				Page:
 			</p>
 			<div class='col all100 fs12 pad-lr20 pad-tb10 mar-b15' style='background-color:#f8f8f8;max-height:200px;overflow:scroll;'>
-				<?=$NVX_HTML->UL($PAGE);?>
+				<?=$nvHtml->ul($page);?>
 			</div>
 			<p class='fs12 pad-b0'>
 				Debug:
 			</p>
 			<div class='col all100 fs12 pad-lr20 pad-tb10 mar-b15' style='background-color:#f8f8f8;max-height:200px;overflow:scroll;'>
-				<?=$DEBUG;?>
+				<?=$debug;?>
 			</div>
 		</div>
 	</div>

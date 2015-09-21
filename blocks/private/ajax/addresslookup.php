@@ -1,6 +1,7 @@
 <?php
 
-$post = $NVX_BOOT->TEXT($_POST);
+
+$post = $nvBoot->text($_POST);
 
 if($post['lookup']==''){die();}
 
@@ -30,4 +31,4 @@ if($coord->status == 'OK'){
 }
 
 /* all good, so lets see it */
-echo $NVX_BOOT->JSON($response,'encode');
+echo $nvBoot->json($response,'encode');

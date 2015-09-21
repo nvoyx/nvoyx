@@ -13,12 +13,12 @@
  */
 
 /* imagecache iid */
-$iid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
+$iid = $nvBoot->fetch_entry("breadcrumb",3);
 
 /* grab the imagecache */
-$NVX_DB->CLEAR(array("ALL"));
-$NVX_DB->SET_FILTER("`imagecache`.`id`={$iid}");
-$r = $NVX_DB->QUERY("SELECT","* FROM `imagecache`");
+$nvDb->clear(array("ALL"));
+$nvDb->set_filter("`imagecache`.`id`={$iid}");
+$r = $nvDb->query("SELECT","* FROM `imagecache`");
 ?>
 
 <!-- MAIN MENU -->

@@ -18,10 +18,10 @@
 $bid = pathinfo(__FILE__, PATHINFO_FILENAME);
 
 /* grab the params */
-$p = $NVX_BLOCK->FETCH_PARAMS($bid);
+$p = $nvBlock->fetch_params($bid);
 
 /* has an analytics code been entered into the parameter called reference and the tld given in domain */
-if($p["reference"]!="" && $PAGE["published"]==1){ ?>
+if($p["reference"]!="" && $page["published"]==1){ ?>
 
 <script>
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

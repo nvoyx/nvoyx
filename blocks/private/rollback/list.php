@@ -13,17 +13,17 @@
  */
 
 /*grab the page id we are interested in */
-$nid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
+$nid = $nvBoot->fetch_entry("breadcrumb",3);
 
 /* check that the rollback folder exists */
-if(!file_exists($NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid)){
+if(!file_exists($nvBoot->fetch_entry("rollback")."/".$nid)){
 	
 	/* make the rollback folder */
-	mkdir($NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid);
+	mkdir($nvBoot->fetch_entry("rollback")."/".$nid);
 }
 
 /* cycle through the relevant rollback node folder and return a list of files */
-$files = glob($NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid."/*.zip");
+$files = glob($nvBoot->fetch_entry("rollback")."/".$nid."/*.zip");
 
 /* if we have an array*/
 if(is_array($files)){
@@ -42,12 +42,12 @@ if(is_array($files)){
 	for($a=0;$a<count($files);$a++){
 
 		/* add the timestamp and filetype back in */
-		$files[$a] = $NVX_BOOT->FETCH_ENTRY("rollback")."/".$nid."/".$files[$a].".zip";
+		$files[$a] = $nvBoot->fetch_entry("rollback")."/".$nid."/".$files[$a].".zip";
 	}
 
 	/* grab all currently registered users */
-	$NVX_DB->CLEAR(array("ALL"));
-	$users = $NVX_DB->QUERY("SELECT","* FROM `user`");
+	$nvDb->clear(array("ALL"));
+	$users = $nvDb->query("SELECT","* FROM `user`");
 
 	/* create an empty user array */
 	$u = array();
@@ -56,7 +56,7 @@ if(is_array($files)){
 	foreach($users as $user){
 
 		/* create a new array based on the user id containing the decrypted user contact details */
-		$u[$user["user.id"]] = $NVX_BOOT->CYPHER(array("STRING"=>$user["user.contact"],"TYPE"=>"decrypt"));
+		$u[$user["user.id"]] = $nvBoot->cypher('decrypt',$user["user.contact"]);
 	}
 
 	/* reset the response array */
@@ -72,7 +72,7 @@ if(is_array($files)){
 		$f=str_replace(".zip","", pathinfo($f, PATHINFO_FILENAME) );
 
 		/* decode the contents of the json array (database script) */
-		$r = $NVX_BOOT->JSON($c,"decode");
+		$r = $nvBoot->json($c,"decode");
 
 		/* create an empty group string */
 		$g = "<br>";
@@ -84,14 +84,14 @@ if(is_array($files)){
 
 				$gid = str_replace("gid-","",$key);
 				$g .= "<strong>Group Name: </strong>"
-						.$NVX_GROUP->FETCH_ARRAY()["id-{$gid}"]["name"]."<br>";
+						.$nvGroup->fetch_array()["id-{$gid}"]["name"]."<br>";
 
 				foreach($value as $vari){
 
 					foreach($vari as $fkey=>$fvalue){
 						$fid = str_replace("fid-","",$fkey);
 
-						foreach($NVX_GROUP->FETCH_ARRAY()["id-{$gid}"]["outline"] as $outline){
+						foreach($nvGroup->fetch_array()["id-{$gid}"]["outline"] as $outline){
 
 							if($outline["fid"]==$fid){
 
@@ -130,45 +130,59 @@ if(is_array($files)){
 
 ?>
 
-
-<img class="blank" src="/settings/resources/files/images/private/header-top.png" width="714" height="26">
-<div class="blank box" id="header">
-	<img height='24' src="/settings/resources/files/images/private/nvoy.svg">
-	<a class="fr" href="/settings/user/logout">LOGOUT</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/settings/content/list">ADMIN</a><span class="fr">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a class="fr" href="/">FRONT</a>
-</div>
-
-<div class="blank box">
-	<div class="blank header">
-		<img class="blank icon fl" src="/settings/resources/files/images/private/group-icon-rollback.png">
-		<h2 class="blank fl">ROLLBACK</h2>
-		<a class="fr" href="/settings/content/edit/<?=$nid;?>">UP</a>
-	</div>
-	
-	<?php if(is_array($files)){$i=0;foreach($rs as $r){ ?>
-	<div class="blank row" style="margin-bottom:10px;">
-		<?php if($i!=0){?>
-		<label class="blank fl half">Saved: <?php echo date("jS M Y - H:i:s",$r["timestamp"]);?><br>By: <?=$r["by"];?></label>
-		<a title="roll" href="<?php echo "/settings/rollback/roll/".$nid."/".$r["timestamp"];?>"><img class="blank icon fr" src="/settings/resources/files/images/private/group-button-edit.png"></a>
-		<?php } else { ?>
-		<label class="blank fl half">Current Version<br>By: <?=$r["by"];?></label>
-		<?php } ?>
-		<div class="cb" style="padding-top:10px;max-height:300px;overflow-y:scroll;">
-			<pre style="background-color:#fff;padding:10px;">
-				<strong>** SCROLL TO VIEW **</strong><br><br>
-				<h2>[NODE]</h2><br><br>
-				<strong>Heading:</strong><br>
-				<?= $r["heading"];?><br><br>
-				<strong>Teaser:</strong><br>
-				<?= $r["teaser"];?><br><br>
-				<strong>Body:</strong>
-				<div  style="padding:10px;padding-top:0;">
-					<?= $r["body"];?>
-				</div>
-				<h2>[GROUPS]</h2><br>
-				<?= $r["groups"];?><br><br>
-			</pre>
+<!-- MAIN MENU -->
+<section class='col all100'>
+	<div class='col sml5 med10 lge15'></div>
+	<div class='col box sml90 med80 lge70'>
+		<div class='col all40'>
+			<img height='24' src="/settings/resources/files/images/private/nvoy.svg">
+		</div>
+		<div class='col all60 tar fs14 pad-t5'>
+			<a href='/settings/content/list' class='pad-r5 c-blue pad-b0'>Admin</a>
+			<a href='/' class='pad-lr5 c-blue pad-b0'>Front</a>
+			<a href='/settings/user/logout' class='pad-l5 c-blue pad-b0'>Logout</a>
 		</div>
 	</div>
-	<?php $i++;}} ?>
-	
-</div>
+	<div class='col sml5 med10 lge15'></div>
+</section>
+
+<!-- ROLLBACK LIST -->
+<section class='col all100'>
+	<div class='col sml5 med10 lge15'></div>
+	<div class='col box sml90 med80 lge70'>
+		<div class='row pad-b20'>
+			<div class='col all70 pad-r20'>
+				<h1 class='pad0 fs20 c-blue'>Rollback</h1>
+			</div>
+			<div class='col all30 tar fs14 lh30'>
+				<a href='/settings/content/edit/<?=$nid;?>' class='pad-r5 c-blue pad-b0'>Up</a>
+			</div>
+		</div>
+		
+	<?php if(is_array($files)){$i=0;foreach($rs as $r){ ?>
+	<div class="col all100 pad-t20">
+		<?php if($i!=0){?>
+		<label class='col all100 fs13 c-blue pad-b5'>Saved: <?=date("jS M Y - H:i:s",$r["timestamp"]);?><br>By: <?=$r["by"];?></label>
+		<a class='col all100 fs13 c-blue pad-b5' href="<?php echo "/settings/rollback/roll/".$nid."/".$r["timestamp"];?>">Click to Rollback</a>
+		<?php } else { ?>
+		<label class="col all100 fs13 c-blue pad-b5">Current Version<br>By: <?=$r["by"];?></label>
+		<?php } ?>
+		<pre class="col all100 pad-lr10 pad-tb20 hgt300 b-blue c-white fs13" style="overflow-y:scroll;">
+			<strong>** SCROLL TO VIEW **</strong><br><br>
+			<h2 class='c-white pad-b10'>[NODE]</h2><br><br>
+			<strong>Heading:</strong><br>
+			<?= $r["heading"];?><br><br>
+			<strong>Teaser:</strong><br>
+			<?= $r["teaser"];?><br><br>
+			<strong>Body:</strong>
+			<div  style="padding:10px;padding-top:0;">
+				<?= $r["body"];?>
+			</div>
+			<h2 class='c-white pad-b10'>[GROUPS]</h2><br>
+			<?= $r["groups"];?><br><br>
+	</div>
+	<?php $i++;}} ?>		
+		
+	</div>
+	<div class='col sml5 med10 lge15'></div>
+</section>

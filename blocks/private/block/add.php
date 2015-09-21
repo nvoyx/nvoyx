@@ -13,12 +13,12 @@
  */
 
 /* add a blank block entry */
-$NVX_DB->CLEAR(array("ALL"));
-$pid = $NVX_DB->QUERY("INSERT","INTO `block` (`id`,`name`,`tid`,`access`,`params`) " . 
-							"VALUES (NULL,'{$NVX_BOOT->FETCH_ENTRY("timestamp")}','[\"\"]','s','[\"\"]')");
+$nvDb->clear(array("ALL"));
+$pid = $nvDb->query("INSERT","INTO `block` (`id`,`name`,`tid`,`access`,`params`) " . 
+							"VALUES (NULL,'{$nvBoot->fetch_entry("timestamp")}','[\"\"]','s','[\"\"]')");
 
 /* path to public blocks */
-$pb =  $NVX_BOOT->FETCH_ENTRY("blocks")."/public";
+$pb = $nvBoot->fetch_entry("blocks")."/public";
 							
 /* does a file already exist */
 if(!file_exists("{$pb}/{$pid}.php")){
@@ -33,7 +33,7 @@ if(!file_exists("{$pb}/{$pid}.php")){
 		$r = "<";
 		$r .= "?php\n\n\n";
 		$r .= "/*\n* @block {$pid} ()\n* param \n* returns  \n*/\n\n/* current block id */\n";
-		$r .= '$bid = pathinfo(__FILE__, PATHINFO_FILENAME);'."\n\n".'/* grab the params */'."\n".'$p = $NVX_BLOCK->FETCH_PARAMS($bid);'."\n\n";
+		$r .= '$bid = pathinfo(__FILE__, PATHINFO_FILENAME);'."\n\n".'/* grab the params */'."\n".'$p = $nvBlock->fetch_params($bid);'."\n\n";
 		
 		/* put the string in the file */
 		file_put_contents("{$pb}/{$pid}.php", $r);
@@ -47,4 +47,4 @@ $_SESSION['notify']=array(
 );
 
 /* redirect to the new block edit page */
-$NVX_BOOT->HEADER(array("LOCATION"=>"/settings/block/edit/{$pid}"));
+$nvBoot->header(array("LOCATION"=>"/settings/block/edit/{$pid}"));

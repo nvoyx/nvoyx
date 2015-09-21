@@ -13,13 +13,13 @@
  */
 
 /* type id */
-$tid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
+$tid = $nvBoot->fetch_entry("breadcrumb",3);
 
 /* lookup the type details */
-foreach($NVX_TYPE->FETCH_ARRAY() as $r){if($r["id"]==$tid){break;}}
+foreach($nvType->fetch_array() as $r){if($r["id"]==$tid){break;}}
 
 $opts=array();
-foreach($NVX_TYPE->FETCH_ARRAY() as $t){
+foreach($nvType->fetch_array() as $t){
 	if($t["id"]!=$tid){
 		$opts[$t['id']] = $t["name"];
 	}

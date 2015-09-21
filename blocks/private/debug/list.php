@@ -39,7 +39,7 @@
 				<h1 class='pad0 fs20 c-blue'>Debug</h1>
 			</div>
 		</div>
-		<?php if($NVX_DB->IS_CACHED()) { ?>
+		<?php if($nvDb->is_cached()) { ?>
 		<div class='row pad10 c-white b-lblue'>
 			<div class='col all70 fs14 pad-r20'>
 				<p class='pad0'>Xcache</p>

@@ -13,9 +13,9 @@
  */
 
 /* add a blank variable entry */
-$NVX_DB->CLEAR(array("ALL"));
-$pid = $NVX_DB->QUERY("INSERT","INTO `variables` (`id`,`name`,`notes`,`value`) " . 
-							"VALUES (NULL,'{$NVX_BOOT->FETCH_ENTRY("timestamp")}','','[\"\"]')");
+$nvDb->clear(array("ALL"));
+$pid = $nvDb->query("INSERT","INTO `variables` (`id`,`name`,`notes`,`value`) " . 
+							"VALUES (NULL,'{$nvBoot->fetch_entry("timestamp")}','','[\"\"]')");
 
 /* issue a notification */
 $_SESSION['notify']=array(
@@ -24,4 +24,4 @@ $_SESSION['notify']=array(
 );
 							
 /* redirect to the new variable edit */
-$NVX_BOOT->HEADER(array("LOCATION"=>"/settings/variables/edit/{$pid}"));
+$nvBoot->header(array("LOCATION"=>"/settings/variables/edit/{$pid}"));

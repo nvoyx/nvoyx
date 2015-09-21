@@ -13,16 +13,16 @@
  */
 
 /* block id */
-$bid = $NVX_BOOT->FETCH_ENTRY('breadcrumb',3);
+$bid = $nvBoot->fetch_entry('breadcrumb',3);
 
 /* prepare a list of available page types to pass into tid select */
 $opts=array();
-foreach($NVX_TYPE->FETCH_ARRAY() as $type){
+foreach($nvType->fetch_array() as $type){
 	$opts[$type['id']]=$type['name'];
 }
 
 /* lookup the block details */
-foreach($NVX_BLOCK->FETCH_ARRAY() as $r){
+foreach($nvBlock->fetch_array() as $r){
 	if($r['id']==$bid){
 		break;
 	}
@@ -92,7 +92,7 @@ if(isset($r)){ ?>
 				<!-- PARAMETERS -->
 				<div class='col all100 pad-b20'>
 					<label class='col all100 fs13 c-blue pad-b5'>Params</label>
-					<textarea class='col all100 fs14 ta' name='params' id='params' maxlength='16777215' placeholder='Parameters'><?=$NVX_BOOT->JSON($r["params"],"encode");?></textarea>
+					<textarea class='col all100 fs14 ta' name='params' id='params' maxlength='16777215' placeholder='Parameters'><?=$nvBoot->json($r["params"],"encode");?></textarea>
 				</div>
 				
 				<!-- SAVE -->

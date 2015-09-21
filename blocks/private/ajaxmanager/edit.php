@@ -13,13 +13,13 @@
  */
 
 /* ajax file id */
-$id = $NVX_BOOT->FETCH_ENTRY('breadcrumb',3);
+$id = $nvBoot->fetch_entry('breadcrumb',3);
 
 /* rebuild the path array */
-$NVX_PATH->BUILD_ARRAY();
+$nvPath->build_array();
 
 /* lookup the path details */
-foreach($NVX_PATH->FETCH_ARRAY() as $r){
+foreach($nvPath->fetch_array() as $r){
 	if($r['id']==$id){
 		$r['url']=str_replace('/settings/ajax/','',$r['url']);
 		break;
@@ -62,7 +62,7 @@ if(isset($r)){ ?>
 				
 				<!-- URL -->
 				<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 pad-b20'>
-					<label class='col all100 fs13 c-blue pad-b5'>Url</label>
+					<label class='col all100 fs13 c-blue pad-b5'>Name</label>
 					<input class='col all100 fs14 tb' name='url' id='url' type='text' maxlength='255' value='<?=$r['url'];?>' placeholder='Name' autofocus>
 				</div>
 				

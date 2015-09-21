@@ -13,7 +13,7 @@
  */
 
 /* rebuild the GROUP array */
-$NVX_GROUP->BUILD_ARRAY(false);
+$nvGroup->build_array(false);
 ?>
 
 <!-- MAIN MENU -->
@@ -47,7 +47,7 @@ $NVX_GROUP->BUILD_ARRAY(false);
 		</div>
 		<form method="post">
 			<ul class='sortable b-lgrey'>
-			<?php $x=0;foreach($NVX_GROUP->FETCH_ARRAY() as $r){
+			<?php $x=0;foreach($nvGroup->fetch_array() as $r){
 				$r['bc']=($x%2==0)?'b-lblue':'b-vlblue';?>
 				<li class='row pad10 c-white <?=$r['bc'];?>'>
 					<div class='col all70 fs14 pad-r20'>

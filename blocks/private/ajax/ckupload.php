@@ -44,10 +44,10 @@ if(key_exists("upload",$_FILES)){
 		if($f==0){
 			
 			/* grab the page microstamp */
-			$now = $NVX_BOOT->FETCH_ENTRY("microstamp");
+			$now = $nvBoot->fetch_entry("microstamp");
 			
 			/* grab a path to the directory where ckeditor uploaded images are to be stored */
-			$fpath =  $NVX_BOOT->FETCH_ENTRY("ckimages");
+			$fpath =  $nvBoot->fetch_entry("ckimages");
 			
 			/* hook into a mime-type library */
 			$ext = pathinfo($_FILES['upload']['name'], PATHINFO_EXTENSION);
@@ -62,16 +62,16 @@ if(key_exists("upload",$_FILES)){
 			if($move){
 				
 				/* connect to the media class */
-				$NVX_MEDIA = \NVOYX\site\Media::CONNECT($NVX_BOOT);
+				$nvMedia = \nvoy\site\Media::connect($nvBoot);
 				
 				/* convert the image to a png (if necessary) */
-				$img = $NVX_MEDIA->IMAGE(array("FILE"=>$ckimage));
+				$img = $nvMedia->image(array("FILE"=>$ckimage));
 				
 				/* update the return image details */
 				$retimg = "/settings/resources/files/images/ckeditor/".$img;
 				
 				/* sync the file with other servers on the network */
-				$NVX_BOOT->SYNC('images/ckeditor/'.$img,'file');
+				$nvBoot->sync('images/ckeditor/'.$img,'file');
 				
 				/* set the error message to blank */
 				$error="";

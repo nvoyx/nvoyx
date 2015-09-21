@@ -14,13 +14,13 @@
 
 $rs = array();
 
-$files = array_diff(scandir($NVX_BOOT->FETCH_ENTRY("blocks")."/private/ajax"), array('.','..'));
+$files = array_diff(scandir($nvBoot->fetch_entry("blocks")."/private/ajax"), array('.','..'));
 $x=0;
 foreach ($files as $file) {
 	$rs[] = array(
-		"id"=>$NVX_PATH->FETCH_ENTRY("/settings/ajax/".str_replace(".php","",$file))["id"],
+		"id"=>$nvPath->fetch_entry("/settings/ajax/".str_replace(".php","",$file))["id"],
 		"name"=>$file,
-		"path"=>$NVX_BOOT->FETCH_ENTRY("blocks")."/private/ajax/".$file,
+		"path"=>$nvBoot->fetch_entry("blocks")."/private/ajax/".$file,
 		"bc"=>($x%2==0)?'b-lblue':'b-vlblue'
 	);
 	$x++;

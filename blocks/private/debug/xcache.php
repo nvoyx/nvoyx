@@ -16,7 +16,7 @@
 if(array_key_exists("cache",$_GET)){
 	
 	/* sanitise the cache name */
-	$r = $NVX_BOOT->TEXT($_GET["cache"]);
+	$r = $nvBoot->text($_GET["cache"]);
 
 /* default to the user cache if non specified */
 } else {$r = "user";}
@@ -25,13 +25,13 @@ if(array_key_exists("cache",$_GET)){
 if(array_key_exists("clear",$_GET)){
 	
 	/* sanitise the clear request */
-	$c = $NVX_BOOT->TEXT($_GET["clear"]);
+	$c = $nvBoot->text($_GET["clear"]);
 
 	/* if the clear request is positive */
 	if($c==1){
 		
 		/* delete the specified cache */
-		$NVX_BOOT->DELETE_CACHE($r);
+		$nvBoot->delete_cache($r);
 	}
 }
 
@@ -56,7 +56,7 @@ if($r=="user"){
 }
 
 /* grab the cache array */
-$entries = $NVX_BOOT->GET_CACHE_ARRAY($r);
+$entries = $nvBoot->get_cache_array($r);
 
 
 /* has the user cache been requested */
@@ -83,7 +83,7 @@ if($r=="user"){
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>NVOY - <?=$NVX_BOOT->FETCH_ENTRY("current");?></title>
+		<title>NVOY - <?=$nvBoot->fetch_entry("current");?></title>
 		<meta name="Generator" content="NVOYX Open Source CMS">
 		<link rel="icon" type="image/png" href="/favicon.png">
 		<link href='//fonts.googleapis.com/css?family=Lato:300normal,400normal&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
@@ -124,8 +124,8 @@ if($r=="user"){
 					<td><?=$i["hits"];?></td>
 					<td><?=$i["errors"];?></td>
 					<td><?=$i["cached"];?></td>
-					<td><?=implode($NVX_BOOT->HUMAN_FILESIZE($i["size"]));?></td>
-					<td><?=implode($NVX_BOOT->HUMAN_FILESIZE($i["avail"]));?></td>
+					<td><?=implode($nvBoot->human_filesize($i["size"]));?></td>
+					<td><?=implode($nvBoot->human_filesize($i["avail"]));?></td>
 				</tr>
 				<?php } ?>
 			</tbody>
@@ -156,11 +156,11 @@ if($r=="user"){
 							$entry[$column] = date("j/M/Y",$entry[$column])."<br>".date("H:i:s",$entry[$column]);
 						}
 						if($column=="size" || $column=="file_size"){
-							$entry[$column] = implode($NVX_BOOT->HUMAN_FILESIZE($entry[$column]));
+							$entry[$column] = implode($nvBoot->human_filesize($entry[$column]));
 						}
 						if($r=="user"){
 							if($column=="ttl"){
-								$entry[$column]=$NVX_BOOT->HUMAN_TIME($entry[$column]);
+								$entry[$column]=$nvBoot->human_time($entry[$column]);
 							}
 						}
 					?>

@@ -13,12 +13,12 @@
  */
 
 /* add a blank path entry */
-$NVX_DB->CLEAR(array("ALL"));
-$pid = $NVX_DB->QUERY("INSERT","INTO `path` (`id`,`url`,`access`) " . 
-							"VALUES (NULL,'/settings/ajax/{$NVX_BOOT->FETCH_ENTRY("timestamp")}','s')");
+$nvDb->clear(array("ALL"));
+$pid = $nvDb->query("INSERT","INTO `path` (`id`,`url`,`access`) " . 
+							"VALUES (NULL,'/settings/ajax/{$nvBoot->fetch_entry("timestamp")}','s')");
 
 /* create the ajax file */
-touch($NVX_BOOT->FETCH_ENTRY("blocks")."/private/ajax/".$NVX_BOOT->FETCH_ENTRY("timestamp").".php");
+touch($nvBoot->fetch_entry("blocks")."/private/ajax/".$nvBoot->fetch_entry("timestamp").".php");
 
 /* issue a notification */
 $_SESSION['notify']=array(
@@ -27,4 +27,4 @@ $_SESSION['notify']=array(
 );
 
 /* redirect to the new ajaxmanager page */
-$NVX_BOOT->HEADER(array("LOCATION"=>"/settings/ajaxmanager/edit/{$pid}"));
+$nvBoot->header(array("LOCATION"=>"/settings/ajaxmanager/edit/{$pid}"));

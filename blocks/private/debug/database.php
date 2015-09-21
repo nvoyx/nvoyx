@@ -12,24 +12,24 @@
  * returns database tables
  */
 
-$NVX_DB->CLEAR(array("ALL"));
-$tables = $NVX_DB->QUERY("SHOW TABLES",false);
+$nvDb->clear(array("ALL"));
+$tables = $nvDb->query("SHOW TABLES",false);
 
 if(array_key_exists("table",$_GET)){
 	
-	$t = $NVX_BOOT->TEXT($_GET["table"]);
+	$t = $nvBoot->text($_GET["table"]);
 } else {
 	
 	$t = $tables[0];
 }
 
 /* grab the auto_increment value for this table */
-$NVX_DB->CLEAR(array("ALL"));
-$next_id = $NVX_DB->QUERY("NEXT ID",$t);
+$nvDb->clear(array("ALL"));
+$next_id = $nvDb->query("NEXT ID",$t);
 
 /* grab the table columns */
-$NVX_DB->CLEAR(array("ALL"));
-$columns = $NVX_DB->QUERY("FETCH COLUMNS",$t);
+$nvDb->clear(array("ALL"));
+$columns = $nvDb->query("FETCH COLUMNS",$t);
 
 /* has data been posted */
 if(!empty($_POST)){
@@ -49,7 +49,7 @@ if(!empty($_POST)){
 		$p["key"] = explode("-",$p["key"]);
 		
 		/* sanitise the posted key */
-		$p["key"] = $NVX_BOOT->TEXT($p["key"]);
+		$p["key"] = $nvBoot->text($p["key"]);
 		
 		/* check that the posted entry is refering to the current table */
 		if($p["key"][0]==$t){
@@ -70,7 +70,7 @@ if(!empty($_POST)){
 						if(array_key_exists("{$t}-{$query["id"]}-action",$_POST)){
 							
 							/* set the query action to perform (update  / delete / add) */
-							$query["action"] = $NVX_BOOT->TEXT($_POST["{$t}-{$query["id"]}-action"]);
+							$query["action"] = $nvBoot->text($_POST["{$t}-{$query["id"]}-action"]);
 						}
 					}
 				}
@@ -137,9 +137,9 @@ if(!empty($_POST)){
 		if($query["id"]>-1){
 			
 			/* remove the row from the table */
-			$NVX_DB->CLEAR(array("ALL"));
-			$NVX_DB->SET_FILTER("`id`={$query["id"]}");
-			$NVX_DB->QUERY("DELETE","FROM `{$t}`");
+			$nvDb->clear(array("ALL"));
+			$nvDb->set_filter("`id`={$query["id"]}");
+			$nvDb->query("DELETE","FROM `{$t}`");
 		}
 	}
 	
@@ -153,9 +153,9 @@ if(!empty($_POST)){
 			$query["outline"] = "`{$t}` SET ".implode(", ",$query["outline"]);
 			
 			/* push changes into the table */
-			$NVX_DB->CLEAR(array("ALL"));
-			$NVX_DB->SET_FILTER("`{$t}`.`id`={$query["id"]}");
-			$NVX_DB->QUERY("UPDATE",$query["outline"]);
+			$nvDb->clear(array("ALL"));
+			$nvDB->set_filter("`{$t}`.`id`={$query["id"]}");
+			$nvDB->query("UPDATE",$query["outline"]);
 			
 		}
 	}
@@ -180,20 +180,20 @@ if(!empty($_POST)){
 		$query["output"] .= " VALUES (".implode(", ",$query["outline"]).")";
 		
 		/* push changes into the table */
-		$NVX_DB->CLEAR(array("ALL"));
-		$NVX_DB->QUERY("INSERT",$query["output"]);
+		$nvDb->clear(array("ALL"));
+		$nvDb->query("INSERT",$query["output"]);
 	}
 }
 
-$NVX_DB->CLEAR(array("ALL"));
-$rows = $NVX_DB->QUERY("SELECT","* FROM `{$t}`");
+$nvDb->clear(array("ALL"));
+$rows = $nvDb->query("SELECT","* FROM `{$t}`");
 
 ?>
 
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>NVOY - <?=$NVX_BOOT->FETCH_ENTRY("current");?></title>
+		<title>NVOY - <?=$nvBoot->fetch_entry("current");?></title>
 		<meta name="Generator" content="NVOYX Open Source CMS">
 		<link rel="icon" type="image/png" href="/favicon.png" />
 		<link href='//fonts.googleapis.com/css?family=Lato:300normal,400normal&subset=latin,latin-ext' rel='stylesheet' type='text/css'>

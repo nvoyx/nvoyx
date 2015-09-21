@@ -13,9 +13,9 @@
  */
 
 /* add a blank path entry */
-$NVX_DB->CLEAR(array("ALL"));
-$pid = $NVX_DB->QUERY("INSERT","INTO `path` (`id`,`url`,`access`) " . 
-							"VALUES (NULL,'/{$NVX_BOOT->FETCH_ENTRY("timestamp")}','s')");
+$nvDb->clear(array("ALL"));
+$pid = $nvDb->QUERY("INSERT","INTO `path` (`id`,`url`,`access`) " . 
+							"VALUES (NULL,'/{$nvBoot->fetch_entry("timestamp")}','s')");
 
 /* issue a notification */
 $_SESSION['notify']=array(
@@ -24,4 +24,4 @@ $_SESSION['notify']=array(
 );
 							
 /* redirect to the new path-edit */
-$NVX_BOOT->HEADER(array("LOCATION"=>"/settings/path/edit/{$pid}"));
+$nvBoot->header(array("LOCATION"=>"/settings/path/edit/{$pid}"));

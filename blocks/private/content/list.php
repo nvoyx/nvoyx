@@ -15,17 +15,17 @@
 $opts=array();
 
 /* cycle through the content types */
-foreach($NVX_TYPE->FETCH_ARRAY() as $type){
+foreach($nvType->fetch_array() as $type){
 	
 	/* check permissions to see the current page type */
-	if(stristr($NVX_USER->FETCH_ENTRY("type"),$type["view"])){
+	if(stristr($nvUser->fetch_entry("type"),$type["view"])){
 		
-		$NVX_DB->CLEAR(array("ALL"));
-		$NVX_DB->SET_FILTER("`page`.`tid`={$type['id']}");
-		$NVX_DB->SET_ORDER(array("`page`.`title`"=>"ASC"));
-		$pages = $NVX_DB->QUERY("SELECT","`page`.`id`,`page`.`title`,`page`.`alias`,`page`.`modified` FROM `page`");
+		$nvDb->clear(array("ALL"));
+		$nvDb->set_filter("`page`.`tid`={$type['id']}");
+		$nvDb->set_order(array("`page`.`title`"=>"ASC"));
+		$pages = $nvDb->query("SELECT","`page`.`id`,`page`.`title`,`page`.`alias`,`page`.`modified` FROM `page`");
 		
-		$pages = $NVX_BOOT->SORT_BY_KEYS(array(
+		$pages = $nvBoot->sort_by_keys(array(
 			'ARRAY'=>$pages,
 			'SORT'=>array(
 				array('KEYS'=>array('page.title'),'DIRECTION'=>'SORT_ASC')
@@ -34,8 +34,8 @@ foreach($NVX_TYPE->FETCH_ARRAY() as $type){
 		
 		$opts[$type['id']]=array(
 			'name'=>$type['name'],
-			'create'=>stristr($NVX_USER->FETCH_ENTRY("type"),$type["createdelete"])?1:0,
-			'dept'=>$NVX_DEPT->GRANTED($NVX_USER->FETCH_ARRAY()['dept'],$type['id'])?1:0,
+			'create'=>stristr($nvUser->fetch_entry("type"),$type["createdelete"])?1:0,
+			'dept'=>$nvDept->granted($nvUser->fetch_array()['dept'],$type['id'])?1:0,
 			'prefix'=>$type['prefix'],
 			'tid'=>$type['id'],
 			'pages'=>$pages
@@ -44,24 +44,24 @@ foreach($NVX_TYPE->FETCH_ARRAY() as $type){
 }
 
 /* grab the "type filter variable" */
-$NVX_DB->CLEAR(array("ALL"));
-$NVX_DB->SET_FILTER("`user`.`id`={$_SESSION['id']}");
-$type_filter = $NVX_DB->QUERY("SELECT","`user`.`filter` FROM `user`")[0]["user.filter"];
+$nvDb->clear(array("ALL"));
+$nvDb->set_filter("`user`.`id`={$_SESSION['id']}");
+$type_filter = $nvDb->query("SELECT","`user`.`filter` FROM `user`")[0]["user.filter"];
 
 /* current cms links */
 $links = array(
-	array("link"=>"/settings/redirects/list","txt"=>"301 Redirects"),
-	array("link"=>"/settings/ajaxmanager/list","txt"=>"Ajax"),
-	array("link"=>"/settings/block/list","txt"=>"Blocks"),
-	array("link"=>"/settings/debug/list","txt"=>"Debug"),
-	array("link"=>"/settings/dept/list","txt"=>"Departments"),
-	array("link"=>"/settings/group/list","txt"=>"Groups"),
-	array("link"=>"/settings/imagecache/list","txt"=>"Image Cache"),
-	array("link"=>"/settings/path/list","txt"=>"Paths"),
-	array("link"=>"/settings/recovery/list","txt"=>"Recovery"),
-	array("link"=>"/settings/type/list","txt"=>"Types"),
-	array("link"=>"/settings/user/list","txt"=>"Users"),
-	array("link"=>"/settings/variables/list","txt"=>"Variables")
+	array("link"=>"/settings/redirects/list","txt"=>"301 Redirects","id"=>"301-redirects"),
+	array("link"=>"/settings/ajaxmanager/list","txt"=>"Ajax","id"=>"ajax"),
+	array("link"=>"/settings/block/list","txt"=>"Blocks","id"=>"blocks"),
+	array("link"=>"/settings/debug/list","txt"=>"Debug","id"=>"debug"),
+	array("link"=>"/settings/dept/list","txt"=>"Departments","id"=>"departments"),
+	array("link"=>"/settings/group/list","txt"=>"Groups","id"=>"groups"),
+	array("link"=>"/settings/imagecache/list","txt"=>"Image Cache","id"=>"image-cache"),
+	array("link"=>"/settings/path/list","txt"=>"Paths","id"=>"paths"),
+	array("link"=>"/settings/recovery/list","txt"=>"Recovery","id"=>"recovery"),
+	array("link"=>"/settings/type/list","txt"=>"Types","id"=>"types"),
+	array("link"=>"/settings/user/list","txt"=>"Users","id"=>"users"),
+	array("link"=>"/settings/variables/list","txt"=>"Variables","id"=>"variables")
 );
 
 ?>
@@ -82,7 +82,7 @@ $links = array(
 </section>
 
 <!-- SYSTEM -->
-<?php if($NVX_DEPT->GRANTED($NVX_USER->FETCH_ENTRY('dept'))){ ?>
+<?php if($nvDept->granted($nvUser->fetch_entry('dept'))){ ?>
 <section class='col all100'>
 	<div class='col sml5 med10 lge15'></div>
 	<div class='col box sml90 med80 lge70'>
@@ -93,14 +93,14 @@ $links = array(
 		</div>
 		
 		<?php $x=0;foreach($links as $r){
-			if($NVX_USER->GRANTED($NVX_PATH->FETCH_ENTRY($r["link"])["access"])){
+			if($nvUser->granted($nvPath->fetch_entry($r["link"])["access"])){
 			$r['bc']=($x%2==0)?'b-lblue':'b-vlblue';?>
 			<div class='col all100 med50 lge33 pad10 c-white <?=$r['bc'];?>'>
 				<div class='col all70 fs14 pad-r20'>
 					<p class='pad0 bw'><?=$r['txt'];?></p>
 				</div>
 				<div class='col all30 fs14 tar'>
-					<a href='<?=$r['link'];?>' class='pad-r5 pad-b0 hvr-white'>View</a>
+					<a id='<?=$r['id'];?>' href='<?=$r['link'];?>' class='pad-r5 pad-b0 hvr-white'>View</a>
 				</div>
 			</div>
 		<?php $x++;}} ?>

@@ -13,7 +13,7 @@
  */
 
 /* grab the path where ckeditor uploaded images are stored */
-$fpath =  $NVX_BOOT->FETCH_ENTRY("ckimages");
+$fpath =  $nvBoot->fetch_entry("ckimages");
 
 /* grab the function number as supplied by ckeditor */
 $funcnum =  filter_var($_GET['CKEditorFuncNum'], FILTER_SANITIZE_NUMBER_INT);

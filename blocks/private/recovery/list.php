@@ -13,13 +13,13 @@
  */
 
 /* grab the "type filter variable" */
-$NVX_DB->CLEAR(array("ALL"));
-$NVX_DB->SET_FILTER("`user`.`id`={$_SESSION['id']}");
-$type_filter = $NVX_DB->QUERY("SELECT","* FROM `user`")[0]["user.filter"];
+$nvDb->clear(array("ALL"));
+$nvDb->set_filter("`user`.`id`={$_SESSION['id']}");
+$type_filter = $nvDb->query("SELECT","* FROM `user`")[0]["user.filter"];
 
 /* grab all currently registered users */
-$NVX_DB->CLEAR(array("ALL"));
-$users = $NVX_DB->QUERY("SELECT","* FROM `user`");
+$nvDb->clear(array("ALL"));
+$users = $nvDb->query("SELECT","* FROM `user`");
 
 /* create an empty user array */
 $u = array();
@@ -28,7 +28,7 @@ $u = array();
 foreach($users as $user){
 
 	/* create a new array based on the user id containing the decrypted user contact details */
-	$u[$user["user.id"]] = $NVX_BOOT->CYPHER(array("STRING"=>$user["user.contact"],"TYPE"=>"decrypt"));
+	$u[$user["user.id"]] = $nvBoot->cypher('decrypt',$user["user.contact"]);
 }
 
 /* create an empty array to hold page type details */
@@ -38,7 +38,7 @@ $type = array();
 $pages = array();
 
 /* cycle over the page types */
-foreach($NVX_TYPE->FETCH_ARRAY() as $t){
+foreach($nvType->fetch_array() as $t){
 	
 	/* create key value pairs of type name and id */
 	$type[$t["name"]]=$t["id"];
@@ -60,10 +60,10 @@ foreach($type as $t){
 	if($tcnt==$type_filter){$tfilter = $t;}
 	
 	/* do we have a recovery folder for this page type */
-	if(file_exists($NVX_BOOT->FETCH_ENTRY("recovery") ."/".$t)){
+	if(file_exists($nvBoot->fetch_entry("recovery") ."/".$t)){
 		
 		/* grab a list of any recovery files */
-		$files = glob($NVX_BOOT->FETCH_ENTRY("recovery")."/".$t."/*.zip");
+		$files = glob($nvBoot->fetch_entry("recovery")."/".$t."/*.zip");
 				
 		/* do we have an array */
 		if(is_array($files)){
@@ -72,10 +72,10 @@ foreach($type as $t){
 			foreach($files as $f){
 				
 				/* grab the contents of the archive human-readable script */
-				$c=file_get_contents("zip://".$NVX_BOOT->FETCH_ENTRY("recovery")."/".$t."/".pathinfo($f, PATHINFO_BASENAME)."#record/script/human.json");
+				$c=file_get_contents("zip://".$nvBoot->fetch_entry("recovery")."/".$t."/".pathinfo($f, PATHINFO_BASENAME)."#record/script/human.json");
 				
 				/*decode the json script */
-				$c = $NVX_BOOT->JSON($c,"decode");
+				$c = $nvBoot->json($c,"decode");
 				
 				/* add the details for this page to the array */
 				$pages[$t][]=array(
@@ -87,7 +87,7 @@ foreach($type as $t){
 				);
 			}
 			
-			$pages[$t] = $NVX_BOOT->SORT_BY_KEYS(array(
+			$pages[$t] = $nvBoot->sort_by_keys(array(
 				"ARRAY"=>$pages[$t],
 				"SORT"=> array(
 					array("KEYS"=>array("timestamp"),"DIRECTION"=>"SORT_DESC")

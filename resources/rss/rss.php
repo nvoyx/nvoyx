@@ -17,21 +17,21 @@ echo"<?xml version='1.0' encoding='UTF-8'?>";
 ?>
 <rss version='2.0' xmlns:atom='http://www.w3.org/2005/Atom'>
 <channel>
-<title><?php echo self::$VAR->FETCH_ENTRY("company")[0]; ?> - RSS Feed</title>
-<description><?php echo self::$VAR->FETCH_ENTRY("company")[0]; ?> - news</description>
-<link>http://<?php echo self::$BOOT->FETCH_ENTRY('domain');?>/settings/resources/rss/rss.xml</link>
-<atom:link href='http://<?php echo self::$BOOT->FETCH_ENTRY('domain');?>/settings/resources/rss/rss.xml' rel='self' type='application/rss+xml' />
+<title><?php echo self::$var->fetch_entry("company")[0]; ?> - RSS Feed</title>
+<description><?php echo self::$var->fetch_entry("company")[0]; ?> - news</description>
+<link>http://<?php echo self::$var->fetch_entry('domain');?>/settings/resources/rss/rss.xml</link>
+<atom:link href='http://<?=self::$boot->fetch_entry('domain');?>/settings/resources/rss/rss.xml' rel='self' type='application/rss+xml' />
 <?php
 	/*  grab the type class*/
-	$TYPE = \NVOYX\site\Type::CONNECT(self::$DB,
-					self::$BOOT,
-					self::$VAR->FETCH_ENTRY("front")[0]);
+	$type = \nvoy\site\Type::connect(self::$db,
+					self::$boot,
+					self::$var->fetch_entry("front")[0]);
 
 	/* set a temporary value to store the page types with rss feeds enabled */
 	$r =  false;
 	
 	/* cycle through the type array */
-	foreach($TYPE->FETCH_ARRAY() as $t){
+	foreach($type->fetch_array() as $t){
 		
 		/* if this page type is to be included in the rss feed and the public are allowed to view this page type, add to $r array */
 		if($t["rss"]==1 && $t["view"]=="u"){
@@ -45,22 +45,22 @@ echo"<?xml version='1.0' encoding='UTF-8'?>";
 	if(is_array($r)){
 				
 		/* grab any pages that have feeds and order by creation date */
-		self::$DB->CLEAR(array("ALL"));
-		self::$DB->SET_ORDER(array("`page`.`date`"=>"DESC"));
-		self::$DB->SET_FILTER("(`page`.`tid`=".implode(" OR `page`.`tid`=",$r).") AND `page`.`published`=1");
-		$pages = self::$DB->QUERY("SELECT","`page`.`id`,`page`.`tid`,`page`.`alias`,`page`.`heading`,`page`.`date`,`page`.`description`,`page`.`date` FROM `page`");
+		self::$db->clear(array("ALL"));
+		self::$db->set_order(array("`page`.`date`"=>"DESC"));
+		self::$db->set_filter("(`page`.`tid`=".implode(" OR `page`.`tid`=",$r).") AND `page`.`published`=1");
+		$pages = self::$db->query("SELECT","`page`.`id`,`page`.`tid`,`page`.`alias`,`page`.`heading`,`page`.`date`,`page`.`description`,`page`.`date` FROM `page`");
 		
 		if($pages){
 			for($a=0;$a<count($pages);$a++){
 				
 				/* strip the page. substring from the keys */
-				$pages[$a] = self::$BOOT->KEY_SUBSTR_STRIP($pages[$a],"page.");
+				$pages[$a] = self::$boot->key_substr_strip($pages[$a],"page.");
 				
 				/* convert the page creation date to the rss pubDate format */
 				$pages[$a]["date"] = date("r",strtotime($pages[$a]["date"]));
 				
 				/* resolve the page prefix */
-				$r = $TYPE->PREFIXER($pages[$a]);
+				$r = $type->prefixer($pages[$a]);
 			
 				if($r){
 									
@@ -73,18 +73,18 @@ echo"<?xml version='1.0' encoding='UTF-8'?>";
 				}
 				
 				/* are we looking at the homepage */
-				if($pages[$a]["id"]==self::$VAR->FETCH_ENTRY('front')[0]){
+				if($pages[$a]["id"]==self::$var->fetch_entry('front')[0]){
 					
 					/* set the alias to blank */
 					$pages[$a]["alias"]="";
 				} 				
 			?>
 <item>
-<title><?php echo $pages[$a]["heading"];?></title>
-<description><?php echo $pages[$a]["description"];?></description>
-<link>http://<?php echo self::$BOOT->FETCH_ENTRY('domain').$pages[$a]["alias"]; ?></link>
-<guid isPermaLink='false'><?php echo $pages[$a]["id"];?> - <?php echo $pages[$a]["heading"];?></guid>
-<pubDate><?php echo $pages[$a]["date"];?></pubDate>
+<title><?=$pages[$a]["heading"];?></title>
+<description><?=$pages[$a]["description"];?></description>
+<link>http://<?=self::$boot->fetch_entry('domain').$pages[$a]["alias"]; ?></link>
+<guid isPermaLink='false'><?=$pages[$a]["id"];?> - <?=$pages[$a]["heading"];?></guid>
+<pubDate><?=$pages[$a]["date"];?></pubDate>
 </item>		
 			<?php	
 			}

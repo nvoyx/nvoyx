@@ -15,11 +15,11 @@
 		<meta charset="utf-8">
 		<meta name="Generator" content="NVOYX Open Source CMS">
 		<meta name="format-detection" content="telephone=no">
-		<meta name="description" content="<?=$PAGE["description"];?>">
+		<meta name="description" content="<?=$page["description"];?>">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<title><?=$PAGE["title"];?> | <?=$NVX_VAR->FETCH_ENTRY("company")[0];?></title>
-		<link rel="icon" type="image/png" href="<?=$NVX_BOOT->FETCH_ENTRY("favicon"); ?>">
-		<link rel="alternate" type="application/rss+xml" title="<?=$NVX_VAR->FETCH_ENTRY("company")[0];?> RSS" href="/settings/resources/rss/rss.php">
+		<title><?=$page["title"];?> | <?=$nvVar->fetch_entry("company")[0];?></title>
+		<link rel="icon" type="image/png" href="<?=$nvBoot->fetch_entry("favicon"); ?>">
+		<link rel="alternate" type="application/rss+xml" title="<?=$nvVar->fetch_entry("company")[0];?> RSS" href="/settings/resources/rss/rss.php">
 		<link href='//fonts.googleapis.com/css?family=Lato:300normal,400normal&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 		<script>
 			/* is the screen of high pixel density */
@@ -30,33 +30,33 @@
 			function isTouchDevice(){return true == ("ontouchstart" in window || (window.DocumentTouch && document instanceof DocumentTouch) || navigator.msMaxTouchPoints);}
 			if(isTouchDevice()){document.documentElement.className += " touch";} else {document.documentElement.className += " no-touch";}
 		</script>
-		<link rel="stylesheet" href="/settings/resources/files/compress/public/<?=$NVX_BOOT->FETCH_ENTRY("modcsspublic");?>.css">
-		<?php if($NVX_USER->GRANTED("s")){ 
-			foreach($NVX_VAR->FETCH_ENTRY('jspublic') as $r){ ?>
-				<script src="/settings/resources/js/<?=$r;?>?uid=<?=$NVX_BOOT->FETCH_ENTRY('timestamp');?>" defer></script>
+		<link rel="stylesheet" href="/settings/resources/files/compress/public/<?=$nvBoot->fetch_entry("modcsspublic");?>.css">
+		<?php if($nvUser->granted("s")){ 
+			foreach($nvVar->fetch_entry('jspublic') as $r){ ?>
+				<script src="/settings/resources/js/<?=$r;?>?uid=<?=$nvBoot->fetch_entry('timestamp');?>" defer></script>
 		<?php }} else { ?>
- 			<script src="/settings/resources/files/compress/public/<?=$NVX_BOOT->FETCH_ENTRY("modjspublic");?>.js" defer></script>
+ 			<script src="/settings/resources/files/compress/public/<?=$nvBoot->fetch_entry("modjspublic");?>.js" defer></script>
  		<?php } ?>
 	</head>
 	<body>
 
-		<?php /* HELPER */ $rs = $NVX_BLOCK->LOADER($BLOCKS,2);if($rs){include($rs);} ?>
+		<?php /* helper */ $rs = $nvBlock->loader($blocks,2);if($rs){include($rs);} ?>
 
 		<section class="row">
 			<div class="col all100">
-				<h1><?=$PAGE["heading"];?></h1>
-				<?=$PAGE["body"];?>
+				<h1><?=$page["heading"];?></h1>
+				<?=$page["body"];?>
 			</div>
 		</section>
-		
-		<?php /* 404 ERROR */ $rs = $NVX_BLOCK->LOADER($BLOCKS,4);if($rs){include($rs);} ?>
+				
+		<?php /* 404 error */ $rs = $nvBlock->loader($blocks,4);if($rs){include($rs);} ?>
 								
-		<?php if($NVX_VAR->FETCH_ENTRY("honeyfile")[0]!=""){ ?>
-			<div style="display: none"><a href="/settings/resources/honeypot/<?=$NVX_VAR->FETCH_ENTRY("honeyfile")[0];?>">tendentious-parliamentary</a></div>
+		<?php if($nvVar->fetch_entry("honeyfile")[0]!=""){ ?>
+			<div class='hide'><a href="/settings/resources/honeypot/<?=$nvVar->fetch_entry("honeyfile")[0];?>">tendentious-parliamentary</a></div>
 		<?php } ?>
 		
-		<?php /* GOOGLE ANALYTICS */ $rs = $NVX_BLOCK->LOADER($BLOCKS,3);if($rs){include($rs);} ?>
+		<?php /* google analytics */ $rs = $nvBlock->loader($blocks,3);if($rs){include($rs);} ?>
 			
-		<?php /* ADMIN BAR */ $rs = $NVX_BLOCK->LOADER($BLOCKS,1);if($rs){include($rs);} ?>
+		<?php /* admin bar */ $rs = $nvBlock->loader($blocks,1);if($rs){include($rs);} ?>
 	</body>
 </html>

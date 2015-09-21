@@ -11,12 +11,12 @@
  */
 
 /* redirects id */
-$rid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
+$rid = $nvBoot->fetch_entry("breadcrumb",3);
 
 
 /* grab all current redirects */
-$NVX_DB->CLEAR(array("ALL"));
-$redirects = $NVX_DB->QUERY("SELECT","* FROM `redirects`");
+$nvDb->clear(array("ALL"));
+$redirects = $nvDb->query("SELECT","* FROM `redirects`");
 
 /* lookup the redirects details */
 foreach($redirects as $redirect){if($redirect["redirects.id"]==$rid){break;}}

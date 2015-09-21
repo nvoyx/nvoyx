@@ -13,10 +13,10 @@
  */
 
 /* rebuild the GROUP array */
-$NVX_GROUP->BUILD_ARRAY(false);
+$nvGroup->build_array(false);
 
 /* group id */
-$gid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
+$gid = $nvBoot->fetch_entry("breadcrumb",3);
 
 $fs=array(
 	'ajaxbox',
@@ -33,13 +33,13 @@ $fs=array(
 
 /* prepare a list of available types to pass into assoc select */
 $opts=array();
-foreach($NVX_TYPE->FETCH_ARRAY() as $type){
+foreach($nvType->fetch_array() as $type){
 	$opts[$type["id"]]=$type["name"];
 }
 
 
 /* lookup the group details */
-foreach($NVX_GROUP->FETCH_ARRAY() as $r){if($r["id"]==$gid){break;}}
+foreach($nvGroup->fetch_array() as $r){if($r["id"]==$gid){break;}}
 
 /* have we found the group */
 if(isset($r)){ ?>

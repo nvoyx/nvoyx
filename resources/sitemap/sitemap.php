@@ -21,20 +21,20 @@ xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
 <?php
 
 /*  grab the type class*/
-$TYPE = \NVOYX\site\Type::CONNECT(self::$DB,
-					self::$BOOT,
-					self::$VAR->FETCH_ENTRY("front")[0]);
+$type = \nvoy\site\Type::connect(self::$db,
+					self::$boot,
+					self::$var->fetch_entry("front")[0]);
 
 /* cycle through the type array */
-foreach($TYPE->FETCH_ARRAY() as $t){
+foreach($type->fetch_array() as $t){
 	
 	/* we should only add public pages to the sitemap */
 	if($t["view"]=="u"){
 	
 		/* grab any pages belonging to this type */
-		self::$DB->CLEAR(array("ALL"));
-		self::$DB->SET_FILTER("`page`.`tid`={$t['id']} AND `page`.`published`=1");
-		$pages = self::$DB->QUERY("SELECT","`page`.`id`,`page`.`tid`,`page`.`alias`,`page`.`modified`,`page`.`importance`,`page`.`date` FROM `page`");
+		self::$db->clear(array("ALL"));
+		self::$db->set_filter("`page`.`tid`={$t['id']} AND `page`.`published`=1");
+		$pages = self::$db->query("SELECT","`page`.`id`,`page`.`tid`,`page`.`alias`,`page`.`modified`,`page`.`importance`,`page`.`date` FROM `page`");
 		
 		/* if we have any pages of this type */
 		if($pages){
@@ -43,13 +43,13 @@ foreach($TYPE->FETCH_ARRAY() as $t){
 			for($a=0;$a<count($pages);$a++){
 				
 				/* strip the page. substring from the keys */
-				$pages[$a] = self::$BOOT->KEY_SUBSTR_STRIP($pages[$a],"page.");
+				$pages[$a] = self::$boot->key_substr_strip($pages[$a],"page.");
 				
 				/* convert modified to Y-m-d format */
 				$pages[$a]["modified"] = date("Y-m-d",strtotime($pages[$a]["modified"]));
 				
 				/* resolve the page prefix */
-				$t['prefix'] = $TYPE->PREFIXER($pages[$a]);
+				$t['prefix'] = $type->prefixer($pages[$a]);
 		
 				/* tag the prefix onto the page alias */
 				if($t['prefix']){
@@ -63,7 +63,7 @@ foreach($TYPE->FETCH_ARRAY() as $t){
 				}
 
 				/* are we looking at the homepage */
-				if($pages[$a]["id"]==self::$VAR->FETCH_ENTRY('front')[0]){
+				if($pages[$a]["id"]==self::$var->fetch_entry('front')[0]){
 					
 					/* set the alias to blank */
 					$pages[$a]["alias"]="";
@@ -71,7 +71,7 @@ foreach($TYPE->FETCH_ARRAY() as $t){
 				
 				?>
 				<url>
-					<loc>http://<?php echo self::$BOOT->FETCH_ENTRY('domain').$pages[$a]["alias"]; ?></loc>
+					<loc>http://<?php echo self::$boot->fetch_entry('domain').$pages[$a]["alias"]; ?></loc>
 					<lastmod><?php echo $pages[$a]["modified"]; ?></lastmod>
 					<changefreq>weekly</changefreq>
 					<priority><?php echo $pages[$a]["importance"]; ?></priority>

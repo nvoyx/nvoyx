@@ -13,13 +13,13 @@
  */
 
 /* user id */
-$uid = $NVX_BOOT->FETCH_ENTRY("breadcrumb",3);
+$uid = $nvBoot->fetch_entry("breadcrumb",3);
 
 
 /* grab all currently registered users */
-$NVX_DB->CLEAR(array("ALL"));
-$users = $NVX_DB->QUERY("SELECT","* FROM `user`");
-$depts = $NVX_DB->QUERY("SELECT","* FROM `dept`");
+$nvDb->clear(array("ALL"));
+$users = $nvDb->query("SELECT","* FROM `user`");
+$depts = $nvDb->query("SELECT","* FROM `dept`");
 
 /* lookup the user details */
 foreach($users as $user){if($user["user.id"]==$uid){break;}}
@@ -28,14 +28,14 @@ foreach($users as $user){if($user["user.id"]==$uid){break;}}
 if(isset($user)){ 
 	
 	$r=array(
-		'username'=>$NVX_BOOT->CYPHER(array("TYPE"=>"decrypt","STRING"=>$user["user.username"])),
-		'password'=>$NVX_BOOT->CYPHER(array("TYPE"=>"decrypt","STRING"=>$user["user.password"])),
+		'username'=>$nvBoot->cypher('decrypt',$user["user.username"]),
+		'password'=>$nvBoot->cypher('decrypt',$user["user.password"]),
 		'type'=>$user['user.type'],
 		'dept'=>$user['user.dept'],
 		'filter'=>$user['user.filter'],
-		'contact'=>$NVX_BOOT->CYPHER(array("TYPE"=>"decrypt","STRING"=>$user["user.contact"])),
-		'telephone'=>$NVX_BOOT->CYPHER(array("TYPE"=>"decrypt","STRING"=>$user["user.telephone"])),
-		'email'=>$NVX_BOOT->CYPHER(array("TYPE"=>"decrypt","STRING"=>$user["user.email"]))
+		'contact'=>$nvBoot->cypher('decrypt',$user["user.contact"]),
+		'telephone'=>$nvBoot->cypher('decrypt',$user["user.telephone"]),
+		'email'=>$nvBoot->cypher('decrypt',$user["user.email"])
 	);
 	
 	?>

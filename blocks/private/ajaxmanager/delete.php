@@ -12,25 +12,26 @@
  * deletes an ajax file - both physical file and db reference (held in the path table) and redirects to the ajaxmanager list page
  */
 
+
 /* cycle through the stored paths */
-foreach($NVX_PATH->FETCH_ARRAY() as $r){
-	
+foreach($nvPath->fetch_array() as $r){
+
 	/* do we have an id match */
-	if($r["id"]==$NVX_BOOT->FETCH_ENTRY("breadcrumb",3)){
+	if($r["id"]==$nvBoot->fetch_entry("breadcrumb",3)){
 		
 		/* does the referenced file actually exist */
-		if(file_exists($NVX_BOOT->FETCH_ENTRY("blocks")."/private/ajax/".str_replace("/settings/ajax/","",$r["url"]).".php")){
+		if(file_exists($nvBoot->fetch_entry("blocks")."/private/ajax/".str_replace("/settings/ajax/","",$r["url"]).".php")){
 			
 			/* delete the file */
-			unlink($NVX_BOOT->FETCH_ENTRY("blocks")."/private/ajax/".str_replace("/settings/ajax/","",$r["url"]).".php");
+			unlink($nvBoot->fetch_entry("blocks")."/private/ajax/".str_replace("/settings/ajax/","",$r["url"]).".php");
 		}
 	}
 }
 
 /* delete the path entry */
-$NVX_DB->CLEAR(array("ALL"));
-$NVX_DB->SET_FILTER("`id`={$NVX_BOOT->FETCH_ENTRY("breadcrumb",3)}");
-$NVX_DB->QUERY("DELETE","FROM `path`");
+$nvDb->clear(array("ALL"));
+$nvDb->set_filter("`id`={$nvBoot->fetch_entry("breadcrumb",3)}");
+$nvDb->query("DELETE","FROM `path`");
 
 /* issue a notification */
 $_SESSION['notify']=array(
@@ -39,4 +40,4 @@ $_SESSION['notify']=array(
 );
 
 /* redirect to the ajaxmanager listings */
-$NVX_BOOT->HEADER(array("LOCATION"=>"/settings/ajaxmanager/list"));
+$nvBoot->header(array("LOCATION"=>"/settings/ajaxmanager/list"));

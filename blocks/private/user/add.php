@@ -13,11 +13,11 @@
  */
 
 /* add a blank user entry */
-$NVX_DB->CLEAR(array("ALL"));
-$date = date('Y-m-d',$NVX_BOOT->FETCH_ENTRY("timestamp"));
-$pid = $NVX_DB->QUERY("INSERT","INTO `user` (`id`,`username`,`password`,`type`,`filter`,`dept`,`date`,`last`) " . 
-							"VALUES (NULL,'{$NVX_BOOT->CYPHER(array("TYPE"=>"encrypt","STRING"=>$NVX_BOOT->FETCH_ENTRY("timestamp")))}',".
-											"'{$NVX_BOOT->CYPHER(array("TYPE"=>"encrypt","STRING"=>$NVX_BOOT->FETCH_ENTRY("timestamp")))}','a',1,1,'{$date}','0000-00-00 00:00:00')");
+$nvDb->clear(array("ALL"));
+$date = date('Y-m-d',$nvBoot->fetch_entry("timestamp"));
+$pid = $nvDb->query("INSERT","INTO `user` (`id`,`username`,`password`,`type`,`filter`,`dept`,`date`,`last`) " . 
+							"VALUES (NULL,'{$nvBoot->cypher('encrypt',$nvBoot->fetch_entry("timestamp"))}',".
+											"'{$nvBoot->cypher('encrypt',$nvBoot->fetch_entry("timestamp"))}','a',1,1,'{$date}','0000-00-00 00:00:00')");
 
 /* issue a notification */
 $_SESSION['notify']=array(
@@ -26,4 +26,4 @@ $_SESSION['notify']=array(
 );
 											
 /* redirect to the new user-edit */
-$NVX_BOOT->HEADER(array("LOCATION"=>"/settings/user/edit/{$pid}"));
+$nvBoot->header(array("LOCATION"=>"/settings/user/edit/{$pid}"));
