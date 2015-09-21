@@ -20,7 +20,7 @@ $response=array(
 /* is this an imagelist upload */
 if(array_key_exists("imagelist",$_FILES)){
 		
-	$post = $NVX_BOOT->TEXT($_POST['data']);
+	$post = $nvBoot->text($_POST['data']);
 			
 	/* does the file have a name, is the upload size greater than zero, is the file of an allowed mime type, do we have a temp file name */
 	if($_FILES['imagelist'] != "none" && 
@@ -39,10 +39,10 @@ if(array_key_exists("imagelist",$_FILES)){
 		if($f==0){
 			
 			/* grab the current microstamp */
-			$now = $NVX_BOOT->FETCH_ENTRY("microstamp");
+			$now = $nvBoot->fetch_entry("microstamp");
 			
 			/* grab the path to the images folder */
-			$fpath =  $NVX_BOOT->FETCH_ENTRY("images");
+			$fpath =  $nvBoot->fetch_entry("images");
 			
 			/* grab the image extension */
 			$ext = pathinfo($_FILES['imagelist']['name'], PATHINFO_EXTENSION);
@@ -57,10 +57,10 @@ if(array_key_exists("imagelist",$_FILES)){
 			if($move){
 				
 				/* create new media instance */
-				$NVX_MEDIA = \NVOYX\site\Media::CONNECT($NVX_BOOT);
+				$nvMedia = \nvoy\site\Media::connect($nvBoot);
 					
 				/* convert the image to a webp and compress */
-				$img = $NVX_MEDIA->CWEBP(array("FILE"=>$image));
+				$img = $nvMedia->cwebp(array("FILE"=>$image));
 				
 				/* create an URL to the new image */
 				$retimg = "/settings/resources/files/images/cms/".$img;
@@ -69,7 +69,7 @@ if(array_key_exists("imagelist",$_FILES)){
 				$imgname = str_replace('.webp','',$img);
 				
 				/* sync the file with other servers on the network */
-				$NVX_BOOT->SYNC('images/cms/'.$img,'file');
+				$nvBoot->sync('images/cms/'.$img,'file');
 				
 				/* set the response error to zero as all is good */
 				$response['error']=0;
@@ -149,7 +149,7 @@ HTML;
 	}
 	
 	/* convert the response array to a json string and pass it back */
-	echo $NVX_BOOT->JSON($response,'encode');
+	echo $nvBoot->json($response,'encode');
 	die();
 }
 
@@ -157,7 +157,7 @@ HTML;
 /* is this a filelist upload */
 if(array_key_exists("filelist",$_FILES)){
 	
-	$post = $NVX_BOOT->TEXT($_POST['data']);
+	$post = $nvBoot->text($_POST['data']);
 	
 	/* does the file have a name, is the upload size greater than zero, is the file of an allowed mime type, do we have a temp file name */
 	if($_FILES['filelist'] != "none" && 
@@ -176,10 +176,10 @@ if(array_key_exists("filelist",$_FILES)){
 		if($f==0){
 			
 			/* grab the current microstamp */
-			$now = $NVX_BOOT->FETCH_ENTRY("microstamp");
+			$now = $nvBoot->fetch_entry("microstamp");
 			
 			/* grab the path to the filelist folder */
-			$fpath =  $NVX_BOOT->FETCH_ENTRY("documents");
+			$fpath = $nvBoot->fetch_entry("documents");
 			
 			/* grab the file extension */
 			$ext = pathinfo($_FILES['filelist']['name'], PATHINFO_EXTENSION);
@@ -197,7 +197,7 @@ if(array_key_exists("filelist",$_FILES)){
 			if($move){
 				
 				/* sync the file with other servers on the network */
-				$NVX_BOOT->SYNC('documents/'.$now.'/'.$ext,'file');
+				$nvBoot->sync('documents/'.$now.'/'.$ext,'file');
 				
 				/* grab the filesize */
 				$fs = filesize($file);
@@ -255,6 +255,6 @@ HTML;
 	}
 	
 	/* convert the response array to a json string and pass it back */
-	echo $NVX_BOOT->JSON($response,'encode');
+	echo $nvBoot->json($response,'encode');
 	die();
 }

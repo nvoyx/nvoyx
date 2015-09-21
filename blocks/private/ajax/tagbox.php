@@ -16,7 +16,7 @@
 /* add a marker */
 //echo "!nvx_marker";
 
-$post = $NVX_BOOT->TEXT($_POST);
+$post = $nvBoot->text($_POST);
 
 /* we always return the search string (assuming it isn't blank)*/
 if($post["lookup"]!=""){ ?>
@@ -24,7 +24,7 @@ if($post["lookup"]!=""){ ?>
 <?php }
 
 /* go fetch data on the current page type */
-$type = $NVX_TYPE->FETCH_BY_TID($post["typeid"]);
+$type = $nvType->fetch_by_tid($post["typeid"]);
 
 /* check we have an array */
 if(is_array($type["tags"])){

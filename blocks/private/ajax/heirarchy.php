@@ -16,39 +16,38 @@
 if(array_key_exists("parents",$_POST)){
 	
 	/* grab a sanitised version of the group id */
-	$gid = $NVX_BOOT->TEXT($_POST["gid"]);
+	$gid = $nvBoot->text($_POST["gid"]);
 	
 	/* grab a sanitised version of the node id */
-	$nid = $NVX_BOOT->TEXT($_POST["node"]);
+	$nid = $nvBoot->text($_POST["node"]);
 		
 	/* grab a sanitised version of the field id */
-	$fid = $NVX_BOOT->TEXT($_POST["fid"]);
+	$fid = $nvBoot->text($_POST["fid"]);
 	
 	/* decode the json array of nids */
-	$nids = $NVX_BOOT->JSON($_POST["parents"],"decode");
+	$nids = $nvBoot->json($_POST["parents"],"decode");
 		
 	/* was this a valid json array */
 	if(is_array($nids)){
 	
 		/* sanitise the nids array */
-		$nids = $NVX_BOOT->TEXT($nids);
+		$nids = $nvBoot->text($nids);
 	
 		/* json encode the sanitised array */
-		$nids = $NVX_BOOT->JSON($nids,"encode");
+		$nids = $nvBoot->json($nids,"encode");
 		
 		/* grab any suitable pages */
-		$NVX_DB->CLEAR(array("ALL"));
-		$NVX_DB->SET_FILTER("`heirarchy`.`gid`={$gid} AND `heirarchy`.`fid`={$fid} AND `heirarchy`.`values` LIKE '%{$nids}%' AND `page`.`id`=`heirarchy`.`nid` AND `page`.`id`!={$nid}");
-		$pages = $NVX_DB->QUERY("SELECT","DISTINCT(`page`.`id`),`page`.`title` FROM `heirarchy`,`page`");
+		$nvDb->clear(array("ALL"));
+		$nvDb->set_filter("`heirarchy`.`gid`={$gid} AND `heirarchy`.`fid`={$fid} AND `heirarchy`.`values` LIKE '%{$nids}%' AND `page`.`id`=`heirarchy`.`nid` AND `page`.`id`!={$nid}");
+		$pages = $nvDb->query("SELECT","DISTINCT(`page`.`id`),`page`.`title` FROM `heirarchy`,`page`");
 		
 		/* if we have suitable entries */
 		if($pages){
 			/* json encode the array */
-			$pages = $NVX_BOOT->JSON($pages,"encode");
+			$pages = $nvBoot->json($pages,"encode");
 			echo $pages;
 		} else {
 			echo "empty";
 		}
-
 	}
 }
