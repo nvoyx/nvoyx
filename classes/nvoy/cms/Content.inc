@@ -597,7 +597,7 @@ class Content{
 											}
 											
 											/* sanitise the values and store using the new increment value */
-											$v[$use_key][$pkey[5]] = self::$boot->text($pvalue);
+											$v[$use_key][] = self::$boot->text($pvalue);
 										}
 									}
 								}
