@@ -1512,7 +1512,12 @@
 					{
 						"name":"'version'",
 						"notes":"'<p>nvoyx version number</p>'",
-						"value":"'[\"2.2.0\"]'"
+						"value":"'[\"3.0.0\"]'"
+					},
+					{
+						"name":"'international'",
+						"notes":"'<p>enable as an international website</p>'",
+						"value":"'[\"\"]'"
 					},
 					{
 						"name":"'front'",
