@@ -30,9 +30,9 @@ $nvPage = \nvoy\site\Page::connect($nvDb,$nvVar->fetch_entry("front")[0],$nvFiel
 $cache = $nvBoot->get_cache("PAGE" . implode("*",$nvBoot->fetch_entry("breadcrumb")));
 
 /* non cms page is not cached */
-if(!$cache){		
+if(!$cache){
 	$rs = $nvType->fetch_matches($nvUser->fetch_entry("type"),$nvBoot->fetch_entry("breadcrumb"),false);
-	if(isset($rs)){		
+	if(isset($rs)){
 		$nvPage->find(array("TIDS" => $rs,
 					"ALIAS" => $nvBoot->fetch_entry("current"),
 					"USER" => $nvUser->fetch_entry("type"),
