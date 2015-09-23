@@ -1,5 +1,28 @@
 <?php
 
+/* grab the international list, including default and decide which is being requested
+ * if we have an international ref in the url, strip this out of breadcrumb and update the current
+ */
+$rs=$nvVar->fetch_entry('international');
+$international=array('default'=>array(),'opts'=>array(),'this'=>false);
+foreach($rs as $r){
+	$international['opts'][]=$r;
+	if($r['default']==1){
+		$international['default']=$r;
+	}
+	if($nvBoot->fetch_entry("breadcrumb",0) == $r['url']){
+		$international['this']=$r;
+		$bc=$nvBoot->fetch_entry("breadcrumb");
+		array_shift($bc);
+		if(count($bc)==0){$bc[]='';}
+		$nvBoot->set_entry("breadcrumb",$bc);
+		$nvBoot->set_entry("current",$bc[0]);
+	}
+}
+if(!$international['this']){
+	$international['this']=$international['default'];
+}
+
 $nvType = \nvoy\site\Type::connect($nvDb,$nvBoot,$nvVar->fetch_entry("front")[0]);
 $nvGroup = \nvoy\site\Group::connect($nvDb,$nvBoot);
 $nvField = \nvoy\site\Field::connect($nvDb,$nvGroup,$nvBoot);
