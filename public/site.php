@@ -19,30 +19,28 @@ if(!$cache){
 
 		$rs = $nvPage->fetch_array();
 		if(isset($rs)){
-			if(count($rs)>1){
-				foreach($rs as $r){
-					$bcc=count($nvBoot->fetch_entry("breadcrumb"));						
-					if(substr_count( $nvType->fetch_by_tid($r["tid"])["prefix"], "/")){
-						$pc=substr_count( $nvType->fetch_by_tid($r["tid"])["prefix"], "/")+2;
-					} elseif($nvType->fetch_by_tid($r["tid"])["prefix"]!=""){
-						$pc=2;
-					} elseif($nvType->fetch_by_tid($r["tid"])["prefix"]==""){
-						$pc=1;
-					}
+			foreach($rs as $r){
+				$bcc=count($nvBoot->fetch_entry("breadcrumb"));						
+				if(substr_count( $nvType->fetch_by_tid($r["tid"])["prefix"], "/")){
+					$pc=substr_count( $nvType->fetch_by_tid($r["tid"])["prefix"], "/")+2;
+				} elseif($nvType->fetch_by_tid($r["tid"])["prefix"]!=""){
+					$pc=2;
+				} elseif($nvType->fetch_by_tid($r["tid"])["prefix"]==""){
+					$pc=1;
+				}
 
-					if($bcc != $pc){
-						unset($rs["nid-{$r['id']}"]);
-						$nvPage->clear_entry("nid-{$r['id']}");
-						if(empty($rs)){unset($rs);break;}							
-					}
+				if($bcc != $pc){
+					unset($rs["nid-{$r['id']}"]);
+					$nvPage->clear_entry("nid-{$r['id']}");
+					if(empty($rs)){unset($rs);break;}							
+				}
 
-					if(array_key_exists("nid-{$r['id']}",$rs)){
-						if($nvType->fetch_by_tid($r["tid"])["prefix"]!=""){
-							if($nvType->prefixer($r)."/".$r["alias"] != implode("/",$nvBoot->fetch_entry("breadcrumb"))){
-								unset($rs["nid-{$r['id']}"]);
-								$nvPage->clear_entry("nid-{$r['id']}");
-								if(empty($rs)){unset($rs);break;}
-							}
+				if(array_key_exists("nid-{$r['id']}",$rs)){
+					if($nvType->fetch_by_tid($r["tid"])["prefix"]!=""){
+						if($nvType->prefixer($r)."/".$r["alias"] != implode("/",$nvBoot->fetch_entry("breadcrumb"))){
+							unset($rs["nid-{$r['id']}"]);
+							$nvPage->clear_entry("nid-{$r['id']}");
+							if(empty($rs)){unset($rs);break;}
 						}
 					}
 				}
