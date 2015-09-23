@@ -805,6 +805,7 @@ class Content{
 			/* we need this here as well as at the new page create as the CMS has some pages present upon install */
 			if(!file_exists(self::$boot->fetch_entry("rollback")."/".$nid)){
 				mkdir(self::$boot->fetch_entry("rollback")."/".$nid);
+				self::$boot->sync($nid,'newrollbackfolder');
 			}
 			$files = glob(self::$boot->fetch_entry("rollback")."/".$nid."/*.zip");
 			if(count($files)==20){
@@ -813,6 +814,7 @@ class Content{
 				}
 				sort($files,SORT_NUMERIC);
 				unlink(self::$boot->fetch_entry("rollback")."/".$nid."/{$files[0]}.zip");
+				self::$boot->sync($nid."/{$files[0]}.zip",'deleterollbackzip');
 			}
 
 			$zip = new \ZipArchive();
@@ -833,7 +835,7 @@ class Content{
 			}
 			$zip->close();
 			
-			/* todo - should check whether we are running an array of servers using sync */
+			self::$boot->sync($nid."/".self::$boot->fetch_entry("timestamp").".zip",'addrollbackzip');
 			
 			$_SESSION['notify']=array(
 				'message'=>'Success: entry updated',

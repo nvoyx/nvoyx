@@ -53,11 +53,13 @@ if($tid){
 					
 					/* make it */
 					mkdir($nvBoot->fetch_entry("recovery")."/".$tid[0]['page.tid']);
+					$nvBoot->sync($tid[0]['page.tid'],'newrecoveryfolder');
 				}
 				
 				/* copy the latest rollback to its tid recovery folder  - name it by nid */
 				if(end($files)!=''){
 					copy($nvBoot->fetch_entry("rollback")."/".$nid."/".end($files).".zip", $nvBoot->fetch_entry("recovery")."/".$tid[0]['page.tid']."/".$nid.".zip");
+					$nvBoot->sync($tid[0]['page.tid']."/".$nid.".zip",'addrecoveryzip');
 				}
 			}
 		}
@@ -84,6 +86,7 @@ if($tid){
 /* we need to delete the rollback folder */
 if(file_exists($nvBoot->fetch_entry("rollback")."/".$nid)){
 	$nvBoot->del_tree($nvBoot->fetch_entry("rollback")."/".$nid);
+	$nvBoot->sync($nid,'deleterollbackfolder');
 }
 
 /* issue a notification */

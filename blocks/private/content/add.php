@@ -50,6 +50,7 @@ if(is_numeric($nid)){
 	
 	if(!file_exists($nvBoot->fetch_entry("rollback")."/".$nid)){
 		mkdir($nvBoot->fetch_entry("rollback")."/".$nid);
+		$nvBoot->sync($nid,'newrollbackfolder');
 	}
 	
 	/* issue a notification */

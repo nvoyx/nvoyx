@@ -105,6 +105,7 @@ foreach($dtypes as $dt){
 						if($f["name"]!=""){
 							$zip->extractTo($nvBoot->fetch_entry("documents")."/","record/documents/".$f["name"]);
 							rename($nvBoot->fetch_entry("documents")."/record/documents/".$f["name"],$nvBoot->fetch_entry("documents")."/".$f["name"]);
+							$nvBoot->sync('documents/'.$f["name"],'file');
 						}
 					}
 					break;
@@ -126,7 +127,8 @@ foreach($dtypes as $dt){
 								$f['name'].='.webp';
 							}
 							$zip->extractTo($nvBoot->fetch_entry("images")."/","record/cms/".$f["name"]);
-							rename($nvBoot->fetch_entry("images")."/record/cms/".$f["name"],$nvBoot->fetch_entry("images")."/".$f["name"]);							
+							rename($nvBoot->fetch_entry("images")."/record/cms/".$f["name"],$nvBoot->fetch_entry("images")."/".$f["name"]);
+							$nvBoot->sync('images/cms'.$f["name"],'file');
 						}
 					}
 					break;					
@@ -151,6 +153,7 @@ $zip->close();
 
 /* copy the rollback to a new archive */
 copy($nvBoot->fetch_entry("rollback")."/".$nid."/".$rid.".zip",$nvBoot->fetch_entry("rollback")."/".$nid."/".$nvBoot->fetch_entry("timestamp").".zip");
+$nvBoot->sync($nid."/".$nvBoot->fetch_entry("timestamp").".zip",'addrollbackzip');
 
 /* grab a list of the archives that exist for this page */
 $files = glob($nvBoot->fetch_entry("rollback")."/".$nid."/*.zip");
@@ -170,6 +173,7 @@ if(count($files)==21){
 					
 	/* delete the oldest archive */
 	unlink($nvBoot->fetch_entry("rollback")."/".$nid."/{$files[0]}.zip");
+	$nvBoot->sync($nid."/{$files[0]}.zip",'deleterollbackzip');
 }
 
 /* issue a notification */
