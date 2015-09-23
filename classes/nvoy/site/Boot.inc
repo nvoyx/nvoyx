@@ -698,8 +698,12 @@ class Boot{
 		self::$sys["modjspublic"] = 0;
 		self::$sys["modcssprivate"] = 0;
 		self::$sys["modjsprivate"] = 0;
-		if(stristr($_SERVER['HTTP_USER_AGENT'],'iPhone') || stristr($_SERVER['HTTP_USER_AGENT'],'iPad') || stristr($_SERVER['HTTP_USER_AGENT'],'iPod') || stristr($_SERVER['HTTP_USER_AGENT'],'Android') || stristr($_SERVER['HTTP_USER_AGENT'],'IEMobile')){
-			self::$sys["mobtab"] = 1;
-		} else {self::$sys["mobtab"] = 0;}
+		if(!array_key_exists('HTTP_USER_AGENT',$_SERVER)){
+			self::$sys["mobtab"] = 0;
+		} else {
+			if(stristr($_SERVER['HTTP_USER_AGENT'],'iPhone') || stristr($_SERVER['HTTP_USER_AGENT'],'iPad') || stristr($_SERVER['HTTP_USER_AGENT'],'iPod') || stristr($_SERVER['HTTP_USER_AGENT'],'Android') || stristr($_SERVER['HTTP_USER_AGENT'],'IEMobile')){
+				self::$sys["mobtab"] = 1;
+			} else {self::$sys["mobtab"] = 0;}
+		}
 	}
 }
