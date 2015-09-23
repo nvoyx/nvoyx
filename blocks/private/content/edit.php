@@ -47,7 +47,7 @@ $types = $nvType->fetch_array();
 $type = $nvType->fetch_by_tid($page["tid"]);
 
 /* does the current user have sufficient privileges to create and delete pages of this type */
-if(stristr($nvUser->fetch_entry("type"),$type["createdelete"])){
+if($nvUser->granted($type["createdelete"])){
 	$create = "";
 } else {$create = " hide";}
 
@@ -149,9 +149,11 @@ $r = $nvHtml->url(array("NID"=>$page["id"],
 					<h1 class='pad0 fs20 c-blue'>Content</h1>
 				</div>
 				<div class='col all80 sml100 tar sml-tal fs14 lh30'>
-					<a href='/settings/content/add/<?=$page['tid'];?>' class='pad-r5 c-blue pad-b0'>New</a>
+					<a href='/settings/content/add/<?=$page['tid'];?>' class='pad-r5 c-blue pad-b0<?=$create;?>'>New</a>
 					<a href='/settings/content/list' class='pad-lr5 c-blue pad-b0'>Up</a>
-					<a onclick="deleteCheck('/settings/content/delete/<?=$page['id'];?>');" class='pad-lr5 c-blue pad-b0'>Delete</a>
+					
+					<a onclick="deleteCheck('/settings/content/delete/<?=$page['id'];?>');" class='pad-lr5 c-blue pad-b0<?=$create;?>'>Delete</a>
+					
 					<a href='/settings/rollback/list/<?=$page['id'];?>' class='pad-lr5 c-blue pad-b0'>Rollback</a>
 					<a onclick="$('#submit').click();" class='pad-lr5 c-blue pad-b0'>Save</a>
 					<a href='//<?=$r['URL'];?>' class='pad-l5 c-blue pad-b0'>View</a>
