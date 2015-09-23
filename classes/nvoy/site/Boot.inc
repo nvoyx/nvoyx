@@ -568,6 +568,48 @@ class Boot{
 						$file = $server['FILES'].'../../terminal/'.$f;
 						$sftp->exec('php '.$file);
 						break;
+					case 'newrollbackfolder':
+						$file = $server['FILES'].'../../rollback/'.$f;
+						$sftp->mkdir($file);
+						$sftp->chown($file, $server['UID']);
+						$sftp->chgrp($file, $server['GID']);
+						break;
+					case 'deleterollbackfolder':
+						$file = $server['FILES'].'../../rollback/'.$f;
+						$sftp->delete($file,true);
+						break;
+					case 'newrecoveryfolder':
+						$file = $server['FILES'].'../../recovery/'.$f;
+						$sftp->mkdir($file);
+						$sftp->chown($file, $server['UID']);
+						$sftp->chgrp($file, $server['GID']);
+						break;
+					case 'addrecoveryzip':
+						$file = array(
+							'local'=>self::$sys["files"].'/../../recovery/'.$f,
+							'remote'=>$server['FILES'].'../../recovery'.$f
+						);
+						$sftp->put($file['remote'], $file['local'], NET_SFTP_LOCAL_FILE);
+						$sftp->chown($file['remote'], $server['UID']);
+						$sftp->chgrp($file['remote'], $server['GID']);
+						break;
+					case 'deleterollbackzip':
+						$file = $server['FILES'].'../../rollback/'.$f;
+						$sftp->delete($file,false);
+						break;
+					case 'addrollbackzip':
+						$file = array(
+							'local'=>self::$sys["files"].'/../../rollback/'.$f,
+							'remote'=>$server['FILES'].'../../rollback'.$f
+						);
+						$sftp->put($file['remote'], $file['local'], NET_SFTP_LOCAL_FILE);
+						$sftp->chown($file['remote'], $server['UID']);
+						$sftp->chgrp($file['remote'], $server['GID']);
+						break;
+					case 'deleterecoveryzip':
+						$file = $server['FILES'].'../../recovery/'.$f;
+						$sftp->delete($file,false);
+						break;
 				}
 			}
 		}

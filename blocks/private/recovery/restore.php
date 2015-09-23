@@ -86,6 +86,7 @@ foreach($dtypes as $dt){
 						if($f["name"]!=""){
 							$zip->extractTo($nvBoot->fetch_entry("documents")."/","record/documents/".$f["name"]);
 							rename($nvBoot->fetch_entry("documents")."/record/documents/".$f["name"],$nvBoot->fetch_entry("documents")."/".$f["name"]);
+							$nvBoot->sync('documents/'.$f["name"],'file');
 						}
 					}
 					break;
@@ -102,7 +103,8 @@ foreach($dtypes as $dt){
 						/* check we have a valid file name */
 						if($f["name"]!=""){
 							$zip->extractTo($nvBoot->fetch_entry("images")."/","record/cms/".$f["name"]);
-							rename($nvBoot->fetch_entry("images")."/record/cms/".$f["name"],$nvBoot->fetch_entry("images")."/".$f["name"]);							
+							rename($nvBoot->fetch_entry("images")."/record/cms/".$f["name"],$nvBoot->fetch_entry("images")."/".$f["name"]);
+							$nvBoot->sync('images/cms'.$f["name"],'file');
 						}
 					}
 					break;
@@ -130,13 +132,17 @@ if(!file_exists($nvBoot->fetch_entry("rollback")."/".$nid)){
 	
 	/* make the rollback directory for this page */
 	mkdir($nvBoot->fetch_entry("rollback")."/".$nid);
+	$nvBoot->sync($nid,'newrollbackfolder');
 }
 
 /* copy the rollback to a new archive */
 copy($nvBoot->fetch_entry("recovery")."/".$tid."/".$nid.".zip",$nvBoot->fetch_entry("rollback")."/".$nid."/".$nvBoot->fetch_entry("timestamp").".zip");
+$nvBoot->sync($nid."/".$nvBoot->fetch_entry("timestamp").".zip",'addrollbackzip');
+
 
 /* delete the recovery file */
 unlink($nvBoot->fetch_entry("recovery")."/".$tid."/".$nid.".zip");
+$nvBoot->sync($tid."/".$nid.".zip",'deleterecoveryzip');
 
 /* issue a notification */
 $_SESSION['notify']=array(
