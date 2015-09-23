@@ -97,7 +97,6 @@ if(isset($r)){ ?>
 				<div class='col sml100 med50 lge33 pad-r10 sml-pad-r0 pad-b20'>
 					<label class='col all100 fs13 c-blue pad-b5'>Create / Delete</label>
 					<select class='col all100 fs14 ss' name='createdelete' id='createdelete' placeholder="Please Select">
-						<option<?php if($r["createdelete"]=="u"){echo " selected";}?> value='u'>User</option>
 						<option<?php if($r["createdelete"]=="a"){echo " selected";}?> value='a'>Admin</option>
 						<option<?php if($r["createdelete"]=="s"){echo " selected";}?> value='s'>Superuser</option>
 					</select>
