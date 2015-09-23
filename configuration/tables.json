@@ -635,6 +635,12 @@
 						"UNSIGNED":"1",
 						"NULL":"yes",
 						"DEFAULT":"NULL"
+					},
+					{
+						"NAME":"international",
+						"TYPE":"VARCHAR",
+						"LENGTH":"2048",
+						"DEFAULT":"[]"
 					}
 				],
 		"ENTRIES":	[
