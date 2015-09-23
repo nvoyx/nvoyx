@@ -36,7 +36,7 @@ foreach($nvType->fetch_array() as $type){
 		
 		$opts[$type['id']]=array(
 			'name'=>$type['name'],
-			'create'=>stristr($nvUser->fetch_entry("type"),$type["createdelete"])?1:0,
+			'create'=>$nvUser->granted($type['createdelete']),
 			'dept'=>$nvDept->granted($nvUser->fetch_array()['dept'],$type['id'])?1:0,
 			'prefix'=>$type['prefix'],
 			'tid'=>$type['id'],
@@ -134,17 +134,19 @@ $links = array(
 		<?php foreach($opts as $k=>$v){
 			$hide=($k==$type_filter)?'':' hide';
 			$x=0;
-			?>
-			<div class='dropfilter filter-<?=$k;?> row pad10 c-white b-lblue<?=$hide;?>'>
-				<div class='col all70 pad-r20'>
-					<p class='pad0 fs14 bw'>Create New Page</p>
-				</div>
-				<div class='col all30 fs14 tar'>
-					<a href='/settings/content/add/<?=$k;?>' class='pad-b0 hvr-white'>Add</a>
-				</div>
-			</div>		
-			<?php
-			$x=1;
+			if($v['create']){
+				?>
+				<div class='dropfilter filter-<?=$k;?> row pad10 c-white b-lblue<?=$hide;?>'>
+					<div class='col all70 pad-r20'>
+						<p class='pad0 fs14 bw'>Create New Page</p>
+					</div>
+					<div class='col all30 fs14 tar'>
+						<a href='/settings/content/add/<?=$k;?>' class='pad-b0 hvr-white'>Add</a>
+					</div>
+				</div>		
+				<?php
+				$x=1;
+			}
 			if($v['pages']){
 				foreach($v['pages'] as $r){
 					$r['bc']=($x%2==0)?'b-lblue':'b-vlblue';
@@ -156,8 +158,12 @@ $links = array(
 							<p class='pad0 fs12 bw'><?=$r['page.modified'];?></p>
 						</div>
 						<div class='col all30 fs14 tar'>
+							<?php if($v['create']){ ?>
 							<a href='/settings/content/edit/<?=$r['page.id'];?>' class='pad-r5 pad-b0 hvr-white'>Edit</a>
 							<a onclick='deleteCheck("/settings/content/delete/<?=$r['page.id'];?>");' class='pad-l5 pad-b0 hvr-white'>Delete</a>
+							<?php } else { ?>
+							<a href='/settings/content/edit/<?=$r['page.id'];?>' class='pad-b0 hvr-white'>Edit</a>
+							<?php } ?>
 						</div>
 					</div>
 					<?php $x++;
