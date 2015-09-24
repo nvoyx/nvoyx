@@ -118,6 +118,7 @@ class Setup{
 							case "DATETIME":
 							case "TEXT":
 							case "MEDIUMTEXT":
+							case "LONGTEXT":
 								if(array_key_exists("NULL",$c)){$c['NULL']=" NULL";} else {$c['NULL']=" NOT NULL";}
 								if(array_key_exists("DEFAULT",$c)){
 									if($c['DEFAULT']=="NULL"){$c['DEFAULT']=" DEFAULT NULL";} else {$c['DEFAULT']=" DEFAULT '{$c['DEFAULT']}'";}

@@ -119,12 +119,12 @@ class Page{
 						"id"=>$page["page.id"],
 						"tid"=>$page["page.tid"],
 						"nvids"=>self::$boot->json($page["page.nvids"],"decode"),
-						"title"=>$page["page.title"],
-						"heading"=>$page["page.heading"],
-						"teaser"=>$page["page.teaser"],
+						"title"=>self::$boot->json($page["page.title"],"decode"),
+						"heading"=>self::$boot->json($page["page.heading"],"decode"),
+						"teaser"=>self::$boot->json($page["page.teaser"],"decode"),
 						"alias"=>$page["page.alias"],
-						"description"=>$page["page.description"],
-						"body"=>$page["page.body"],
+						"description"=>self::$boot->json($page["page.description"],"decode"),
+						"body"=>self::$boot->json($page["page.body"],"decode"),
 						"importance"=>$page["page.importance"],
 						"sttp"=>$page["page.sttp"],
 						"sttc"=>$page["page.sttc"],
@@ -133,7 +133,8 @@ class Page{
 						"ttc"=>$page["page.ttc"],
 						"date"=>$page["page.date"],
 						"modified"=>$page["page.modified"],
-						"by"=>$page["page.by"]
+						"by"=>$page["page.by"],
+						"international"=>self::$boot->json($page["page.international"],"decode")
 					);
 					if(self::$with_fields){
 						self::$page["nid-{$tpage['id']}"] = array_merge($tpage,self::$field->fetch_fields($tpage['id'],$tpage['tid']));

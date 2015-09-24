@@ -536,22 +536,19 @@
 					},
 					{
 						"NAME":"title",
-						"TYPE":"VARCHAR",
-						"LENGTH":"255",
+						"TYPE":"TEXT",
 						"NULL":"yes",
 						"DEFAULT":"NULL"
 					},
 					{
 						"NAME":"heading",
-						"TYPE":"VARCHAR",
-						"LENGTH":"2048",
+						"TYPE":"TEXT",
 						"NULL":"yes",
 						"DEFAULT":"NULL"
 					},
 					{
 						"NAME":"teaser",
-						"TYPE":"VARCHAR",
-						"LENGTH":"2048",
+						"TYPE":"TEXT",
 						"NULL":"yes",
 						"DEFAULT":"NULL"
 					},
@@ -564,14 +561,13 @@
 					},
 					{
 						"NAME":"description",
-						"TYPE":"VARCHAR",
-						"LENGTH":"255",
+						"TYPE":"TEXT",
 						"NULL":"yes",
 						"DEFAULT":"NULL"
 					},
 					{
 						"NAME":"body",
-						"TYPE":"MEDIUMTEXT",
+						"TYPE":"LONGTEXT",
 						"NULL":"yes",
 						"DEFAULT":"NULL"
 					},
@@ -646,35 +642,37 @@
 		"ENTRIES":	[
 					{
 						"tid": "1",
-						"title":"'Home'",
-						"heading":"'Home'",
+						"title":"'{\"uk\":\"Home\"}'",
+						"heading":"'{\"uk\":\"Home\"}'",
 						"alias":"'home'",
-						"teaser":"'Lorem ipsum dolor'",
-						"body":"'<p>coming soon</p>'",
-						"description":"'Lorem ipsum dolor'",
+						"teaser":"'{\"uk\":\"Welcome to the website\"}'",
+						"body":"'{\"uk\":\"<p>Coming soon.</p>\"}'",
+						"description":"'{\"description\":\"Description of the page\"}'",
 						"importance":"1.0",
 						"published":"1",
 						"date":"'2014-01-01 08:00'",
 						"ttc":"'2014-01-01 08:00'",
 						"ttp":"'2014-01-01 08:00'",
 						"modified":"'2014-01-01 08:00'",
-						"by":"1"
+						"by":"1",
+						"international":"'[\"uk\"]'"
 					},
 					{
 						"tid": "2",
-						"title":"'404'",
-						"heading":"'404 Not Found'",
+						"title":"'{\"uk\":\"404\"}'",
+						"heading":"'{\"uk\":\"404 Not Found\"}'",
 						"alias":"'404'",
-						"teaser":"'Sorry, that page does not exist on this site.'",
-						"body":"'<h2>Sorry, that page does not exist on this site.</h2>'",
-						"description":"''",
+						"teaser":"'{\"uk\":\"Sorry, that page does not exist on this site.\"}'",
+						"body":"'{\"uk\":\"<h2>Sorry, that page does not exist on this site.</h2>\"}'",
+						"description":"'{\"uk\":\"Description of the page\"}'",
 						"importance":"0.0",
 						"published":"1",
 						"date":"'2014-01-01 09:00'",
 						"ttp":"'2014-01-01 09:00'",
 						"ttc":"'2014-01-01 09:00'",
 						"modified":"'2014-01-01 09:00'",
-						"by":"1"
+						"by":"1",
+						"international":"'[\"uk\"]'"
 					}
 				]
 	},
@@ -1523,7 +1521,7 @@
 					{
 						"name":"'international'",
 						"notes":"'<p>enable as an international website</p>'",
-						"value":"'[\"\"]'"
+						"value":"'{\"uk\":{\"name\":\"British\",\"default\":\"1\",\"language\":\"en\",\"direction\":\"ltr\"}}'"
 					},
 					{
 						"name":"'front'",

@@ -4,30 +4,32 @@
  * if we have an international ref in the url, strip this out of breadcrumb and update the current
  */
 $rs=$nvVar->fetch_entry('international');
-$international=array('default'=>array(),'opts'=>array(),'this'=>false);
-foreach($rs as $r){
-	$international['opts'][]=$r;
-	if($r['default']==1){
-		$international['default']=$r;
+$n=array('default'=>false,'opts'=>array(),'this'=>false,'canon'=>false);
+foreach($rs as $key=>$val){
+	$n['opts'][$key]=$val;
+	if($val['default']==1){
+		$n['default']=$key;
 	}
-	if($nvBoot->fetch_entry("breadcrumb",0) == $r['url']){
-		$international['this']=$r;
+	if($nvBoot->fetch_entry("breadcrumb",0) == $key){
+		$n['this']=$key;
+		if($val['default']==1){$n['canon']=true;}
 		$bc=$nvBoot->fetch_entry("breadcrumb");
 		array_shift($bc);
 		if(count($bc)==0){$bc[]='';}
 		$nvBoot->set_entry("breadcrumb",$bc);
-		$nvBoot->set_entry("current",$bc[0]);
+		$nvBoot->set_entry("current",end($bc));
 	}
 }
-if(!$international['this']){
-	$international['this']=$international['default'];
+if(!$n['this']){
+	$n['this']=$n['default'];
 }
 
 $nvType = \nvoy\site\Type::connect($nvDb,$nvBoot,$nvVar->fetch_entry("front")[0]);
 $nvGroup = \nvoy\site\Group::connect($nvDb,$nvBoot);
 $nvField = \nvoy\site\Field::connect($nvDb,$nvGroup,$nvBoot);
 $nvPage = \nvoy\site\Page::connect($nvDb,$nvVar->fetch_entry("front")[0],$nvField,$nvBoot);
-$cache = $nvBoot->get_cache("PAGE" . implode("*",$nvBoot->fetch_entry("breadcrumb")));
+//$cache = $nvBoot->get_cache("PAGE" . implode("*",$nvBoot->fetch_entry("breadcrumb")));
+$cache=false;
 
 /* non cms page is not cached */
 if(!$cache){
@@ -40,32 +42,30 @@ if(!$cache){
 					"SINGLE" => true
 					));
 
-		$rs = $nvPage->fetch_array();
+		$rs = $nvPage->fetch_array();	
 		if(isset($rs)){
-			if(count($rs)>1){
-				foreach($rs as $r){
-					$bcc=count($nvBoot->fetch_entry("breadcrumb"));						
-					if(substr_count( $nvType->fetch_by_tid($r["tid"])["prefix"], "/")){
-						$pc=substr_count( $nvType->fetch_by_tid($r["tid"])["prefix"], "/")+2;
-					} elseif($nvType->fetch_by_tid($r["tid"])["prefix"]!=""){
-						$pc=2;
-					} elseif($nvType->fetch_by_tid($r["tid"])["prefix"]==""){
-						$pc=1;
-					}
+			foreach($rs as $r){
+				$bcc=count($nvBoot->fetch_entry("breadcrumb"));						
+				if(substr_count( $nvType->fetch_by_tid($r["tid"])["prefix"], "/")){
+					$pc=substr_count( $nvType->fetch_by_tid($r["tid"])["prefix"], "/")+2;
+				} elseif($nvType->fetch_by_tid($r["tid"])["prefix"]!=""){
+					$pc=2;
+				} elseif($nvType->fetch_by_tid($r["tid"])["prefix"]==""){
+					$pc=1;
+				}
 
-					if($bcc != $pc){
-						unset($rs["nid-{$r['id']}"]);
-						$nvPage->clear_entry("nid-{$r['id']}");
-						if(empty($rs)){unset($rs);break;}							
-					}
+				if($bcc != $pc){
+					unset($rs["nid-{$r['id']}"]);
+					$nvPage->clear_entry("nid-{$r['id']}");
+					if(empty($rs)){unset($rs);break;}							
+				}
 
-					if(array_key_exists("nid-{$r['id']}",$rs)){
-						if($nvType->fetch_by_tid($r["tid"])["prefix"]!=""){
-							if($nvType->prefixer($r)."/".$r["alias"] != implode("/",$nvBoot->fetch_entry("breadcrumb"))){
-								unset($rs["nid-{$r['id']}"]);
-								$nvPage->clear_entry("nid-{$r['id']}");
-								if(empty($rs)){unset($rs);break;}
-							}
+				if(array_key_exists("nid-{$r['id']}",$rs)){
+					if($nvType->fetch_by_tid($r["tid"])["prefix"]!=""){
+						if($nvType->prefixer($r)."/".$r["alias"] != implode("/",$nvBoot->fetch_entry("breadcrumb"))){
+							unset($rs["nid-{$r['id']}"]);
+							$nvPage->clear_entry("nid-{$r['id']}");
+							if(empty($rs)){unset($rs);break;}
 						}
 					}
 				}
@@ -141,6 +141,45 @@ if(!$cache){
 
 /* if we have a non cms page, either from the cache or freshly gathered */
 if(isset($page)){
+	
+	/* we need to check whether the page exists for the requested language - if not redirect to the 404 page */
+	if(!in_array($n['this'],$page['international'])){
+
+		$nvPage->clear();
+		$nvPage->find(array("NID"=>$nvVar->fetch_entry('404')[0],"USER"=>$nvUser->fetch_entry("type"),"FIELDS"=>true));
+		$rs = $nvPage->fetch_array();
+		if(isset($rs)){
+			$r=array_keys($rs);
+			$page = $rs[array_shift($r)];
+			$type = $nvType->fetch_by_tid($page["tid"]);
+			$nvDept = \nvoy\site\Dept::connect($nvBoot,$nvDb,$nvUser);
+			$nvBlock = \nvoy\site\Block::connect($nvDb,$nvBoot,$nvPage,$page);
+			$blocks = $nvBlock->fetch_id($page["tid"],$nvUser->fetch_entry("type"));
+			$rs = $nvBoot->test_include("template",$type["template"]);
+			if($rs){
+
+				$nvBoot->compress("css",$nvVar->fetch_entry("csspublic"),"public");
+				$nvBoot->compress("js",$nvVar->fetch_entry("jspublic"),"public");
+				$nvHtml = \nvoy\site\Html5::connect($nvBoot,$nvVar,$page);
+				$nvIc = \nvoy\site\ImageCache::connect($nvDb,$nvBoot);
+
+				ob_start();
+					include($rs);
+				$rs = ob_get_clean();
+
+				$rs = preg_replace("/\s+/", " ", $rs);
+				$rs = str_replace(array("[format:newline]","[format:tab]"),array("\n","\t"),$rs);
+
+				ob_start();
+					$nvBoot->header(array("404"=>true));
+					echo $rs;
+				ob_end_flush();
+			}
+			die();
+		}
+		
+	}
+	
 	$type = $nvType->fetch_by_tid($page["tid"]);
 	if(!$nvUser->granted($type["view"])){
 		$nvBoot->header(array("LOCATION"=>"/"));

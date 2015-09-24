@@ -9,15 +9,18 @@
  ?>
 
 <!DOCTYPE HTML>
-<html>
+<html lang="<?=$n['opts'][$n['this']]['language'];?>" dir="<?=$n['opts'][$n['this']]['direction'];?>">
 	<head>
 		<!--[if lt IE 9]><meta http-equiv="REFRESH" content="0;url=/settings/resources/browser/upgrade.php" /><![endif]-->
 		<meta charset="utf-8">
-		<meta name="Generator" content="NVOYX Open Source CMS">
+		<meta name="Generator" content="NVOY Open Source CMS">
 		<meta name="format-detection" content="telephone=no">
-		<meta name="description" content="<?=$page["description"];?>">
+		<meta name="description" content="<?=$page["description"][$n['this']];?>">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<title><?=$page["title"];?> | <?=$nvVar->fetch_entry("company")[0];?></title>
+		<title><?=$page["title"][$n['this']];?> | <?=$nvVar->fetch_entry("company")[0];?></title>
+		<?php if($n['canon']){ ?>
+		<link rel="canonical" href="<?=$nvBoot->fetch_entry('protocol');?>://<?=$nvBoot->fetch_entry('domain');?>/<?=implode('/',$nvBoot->fetch_entry('breadcrumb'));?>">
+		<?php } ?>
 		<link rel="icon" type="image/png" href="<?=$nvBoot->fetch_entry("favicon"); ?>">
 		<link rel="alternate" type="application/rss+xml" title="<?=$nvVar->fetch_entry("company")[0];?> RSS" href="/settings/resources/rss/rss.php">
 		<link href='//fonts.googleapis.com/css?family=Lato:300normal,400normal&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
@@ -41,11 +44,12 @@
 	<body>
 
 		<?php /* helper */ $rs = $nvBlock->loader($blocks,2);if($rs){include($rs);} ?>
-
+		
 		<section class="row">
 			<div class="col all100">
-				<h1><?=$page["heading"];?></h1>
-				<?=$page["body"];?>
+				<h1><?=$page["heading"][$n['this']];?></h1>
+				<h2><?=$page["teaser"][$n['this']];?></h2>
+				<?=$page["body"][$n['this']];?>
 			</div>
 		</section>
 				
