@@ -12,7 +12,7 @@
 
 $folders = array("tmp","session");
 foreach($folders as $folder){
-	$i = new DirectoryIterator(self::$boot->fetch_entry($folder));
+	$i = new \DirectoryIterator(self::$boot->fetch_entry($folder));
 	foreach ($i as $fileinfo) {
 		if (!$fileinfo->isDot() && !$fileinfo->isDir()) {
 			if($fileinfo->getMTime() < self::$boot->fetch_entry("timestamp") - 604800){

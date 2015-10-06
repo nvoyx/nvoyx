@@ -18,7 +18,7 @@ $orphans = array(array("documents","filelist"),array("images","imagelist"));
 
 foreach($orphans as $orphan){
 	$r = array();
-	$i = new DirectoryIterator(self::$boot->fetch_entry($orphan[0]));
+	$i = new \DirectoryIterator(self::$boot->fetch_entry($orphan[0]));
 	foreach ($i as $fileinfo) {
 		if (!$fileinfo->isDot() && !$fileinfo->isDir()) {
 			$r[$fileinfo->getFilename()] = 0;
