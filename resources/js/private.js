@@ -460,6 +460,7 @@ function launchCK(obj){
 				wordcount:{
 					showCharCount: true,
 					maxCharCount: $(this).prop('maxlength'),
+					maxWordCount: false,
 					countSpacesAsChars: true,
 					showWordCount: false,
 					showParagraphs: false,
@@ -480,6 +481,7 @@ function launchCK(obj){
 				wordcount:{
 					showCharCount: true,
 					maxCharCount: $(this).prop('maxlength'),
+					maxWordCount: false,
 					countSpacesAsChars: true,
 					showWordCount: false,
 					showParagraphs: false,
